@@ -1,0 +1,13 @@
+<section class="min-h-screen w-full flex flex-col items-center justify-start gap-8 bg-gradient-to-b from-amber-100 to-amber-200 text-amber-950 px-6 pt-10 pb-6">
+  <h1 class="text-5xl sm:text-6xl font-black tracking-[0.25em] uppercase text-center">
+    Pixel Quest
+  </h1>
+  <div class="w-full h-full flex items-center justify-center">
+    <app-scene-container class="block w-full h-full max-h-[720px] min-h-[720px] min-w-[1280px] max-w-[1280px]">
+      <div class="w-full h-full absolute">
+        <router-outlet></router-outlet>
+      </div>
+    </app-scene-container>
+  </div>
+</section>
+

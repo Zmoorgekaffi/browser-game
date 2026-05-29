@@ -1,0 +1,13 @@
+<div
+  class="redirect-hotspot"
+  [class.dev-mode]="devMode"
+  [style.left.px]="x"
+  [style.top.px]="y"
+  [style.width.px]="width"
+  [style.height.px]="height"
+  role="button"
+  tabindex="0"
+  (click)="onClick()"
+  (keydown)="onKeydown($event)"
+  [attr.aria-label]="'Redirect hotspot to ' + redirect"
+></div>

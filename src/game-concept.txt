@@ -1,0 +1,31 @@
+Browser-Spiel Konzept
+
+Titel: Pixel Quest
+Genre: RPG
+
+Übersicht:
+- Ein Browser-Spiel, in dem der Charakter nicht direkt sichtbar ist.
+- Am Anfang sieht der Spieler nur das Dorf.
+- Der Spieler kann verschiedene Häuser anklicken und gelangt dann zu einer neuen Benutzeroberfläche.
+- Beispiele für diese UIs sind Shop, Level-Screen, etc.
+- Auf Abenteuer gehen führt zu einem Kampf, ähnlich wie in Pokémon.
+
+Kernfunktionen:
+- Startbildschirm mit Spielstart und Einstellungen.
+- Dorfübersicht als zentrale Szene am Anfang.
+- Anklickbare Häuser, die zu unterschiedlichen Menüs führen.
+- Shop-Interface für Items und Ausrüstung.
+- Level- oder Fortschrittsbildschirm.
+- Abenteuer-Modus mit Kampfsystem.
+
+Spielablauf:
+1. Startbildschirm und Ladebildschirm.
+2. Dorfansicht als Einstieg, ohne sichtbaren Charakter.
+3. Der Spieler klickt auf Häuser und öffnet verschiedene UIs.
+4. Im Dorf können Shop, Level-Ansicht und andere Bereiche geöffnet werden.
+5. Über das Abenteuer-Menü startet ein Kampf wie in Pokémon.
+
+Notizen:
+- Die erste Version soll schlank bleiben und später erweiterbar sein.
+- Angular-Komponenten sollen die verschiedenen UI-Bereiche abbilden.
+- Der Stil kann pixelig und freundlich sein.

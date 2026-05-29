@@ -1,0 +1,72 @@
+# Projektübersicht: Browser-Game (Pixel Quest)
+
+## Projektstruktur
+
+Das Projekt ist eine Angular-Anwendung namens "Pixel Quest" mit folgender Struktur:
+
+### Hauptkomponenten:
+- **MainFrontendComponent**: Hauptansicht mit Navigation und Router-Outlet
+- **SceneContainerComponent**: Wrapper-Komponente für Szenen mit visuellem Design
+- **VillageSceneComponent**: Spezifische Szenenkomponente für Dorf-Szenen
+
+### Dateistruktur:
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── main-frontend/
+│   │   ├── shared/ (SceneContainer)
+│   │   └── village-scene/
+│   └── assets/ (Bilder, Sounds)
+└── public/ (Veröffentlichte Assets)
+```
+
+## Funktionsweise
+
+### 1. Hauptanzeige (MainFrontend)
+- Enthält Header mit Titel "Pixel Quest"
+- Verwaltet die Navigation zwischen verschiedenen Szenen
+- Verwendet `router-outlet` zur dynamischen Inhaltsanzeige
+
+### 2. Szenen-Container (SceneContainer)
+- Wrapper-Komponente mit visuellem Design
+- Stellt einen abgerundeten Container mit Halbtransparentem Hintergrund bereit
+- Verwaltet die Höhe mit `min-h-[calc(100vh-14rem)]`
+
+### 3. Dorf-Szene (VillageScene)
+- Zeigt Dorf-Szenen mit Hintergrundbildern an
+- Verwendet `w-full h-full` für korrekte Dimensionierung
+- Bild-Assets werden aus dem `public`-Verzeichnis geladen
+
+## Technische Umsetzung
+
+### CSS/Design:
+- Verwendung von Tailwind CSS für Responsive Design
+- Flexbox und Grid für Layouts
+- Gradienten und visuelle Effekte
+
+### Asset-Verwaltung:
+- Assets im `public`-Ordner (direkte Referenzierung möglich)
+- Verwendung von `village/village_0.webp` als Bildquelle
+
+### Responsive Design:
+- Anpassung an verschiedene Bildschirmgrößen
+- Verwendung von `w-full`, `h-full` für volle Ausnutzung des Platzes
+
+## Aktuelle Problemlösung
+
+Das Problem mit der Breiten- und Höhenvererbung wurde durch:
+1. Verwendung von `w-full h-full` Klassen
+2. Korrekte Verwendung von `flex` und `relative`/`absolute` Positionierung
+3. Anpassung der `village-scene.html` mit korrekten Klassen
+
+Das Projekt ist eine moderne, responsive Angular-Anwendung mit klarer Trennung der Komponenten und effizienter Asset-Verwaltung.
+
+## Funktionen
+
+- Navigation zwischen verschiedenen Szenen
+- Responsive Design für verschiedene Bildschirmgrößen
+- Effiziente Bildverwaltung über das public-Verzeichnis
+- Visuell ansprechende Darstellung mit Tailwind CSS
+
+Das Projekt ist bereit für weitere Entwicklung und kann leicht erweitert werden.
