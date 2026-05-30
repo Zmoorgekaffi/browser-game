@@ -1,0 +1,16 @@
+{
+  "name": "Amethyst Amulet",
+  "description": "Ein schönes Amulett aus Amethyst. Es wird gesagt, dass es magische Eigenschaften besitzt, die die Fähigkeiten des Trägers verbessern können.",
+  "img-path": "items/magic/amethyst-amulet_0.webp",
+  "price": 50,
+  "stats": {
+    "intelligence": 5,
+    "dexterity": 2,
+    "strength": 0,
+    "vitality": 0,
+    "luck": 3,
+    "energy-shield": 10,
+    "magic-find": 5,
+    "armor": 0
+  }
+}
