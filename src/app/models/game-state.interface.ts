@@ -14,3 +14,7 @@ export interface ProfileData {
   level: number;
   exp: number;
 }
+
+export interface InventarData {
+  items: any[];
+}

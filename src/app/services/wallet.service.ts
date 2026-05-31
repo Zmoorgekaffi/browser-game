@@ -1,6 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { WalletData } from '../models/game-state.interface';
-import { GameStateService } from './game-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +10,6 @@ export class WalletService {
   gold = computed(() => this.state().gold);
   rubies = computed(() => this.state().rubies);
 
-  constructor(private gameStateService: GameStateService) {}
-
   init(data: WalletData): void {
     this.state.set(data);
   }
@@ -22,7 +19,6 @@ export class WalletService {
     
     this.state.update(state => {
       const newState = { ...state, gold: state.gold + amount };
-      this.gameStateService.saveData('wallet', newState);
       return newState;
     });
   }
@@ -35,7 +31,6 @@ export class WalletService {
     
     this.state.update(state => {
       const newState = { ...state, gold: state.gold - amount };
-      this.gameStateService.saveData('wallet', newState);
       return newState;
     });
     

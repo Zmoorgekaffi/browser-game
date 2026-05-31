@@ -1,69 +1,56 @@
 import { Injectable, signal } from '@angular/core';
-import { WalletData, SkillsData, ProfileData } from '../models/game-state.interface';
-import { WalletService } from './wallet.service'; 
+import { Router } from '@angular/router';
+import { UtilityService } from './utility.service';
+import { WalletService } from './wallet.service';
 import { SkillsService } from './skills.service';
+import { InventarService } from './inventar.service';
 import { ProfileService } from './profile.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GameStateService {
-  currentCharacterId = signal<string | null>(null);
+  //variablen
+  currentCharId:any = signal(null);
 
   constructor(
-    private walletService: WalletService,
-    private skillsService: SkillsService,
-    private profileService: ProfileService
-  ) {}
-
-  loginCharacter(charId: string): void {
-    this.currentCharacterId.set(charId);
-    
-    // Crawl all data for the character
-    const walletData = this.crawlData<WalletData>('wallet', charId);
-    const skillsData = this.crawlData<SkillsData>('skills', charId);
-    const profileData = this.crawlData<ProfileData>('profile', charId);
-    
-    // Initialize services with loaded data
-    this.walletService.init(walletData || this.getDefaultData('wallet'));
-    this.skillsService.init(skillsData || this.getDefaultData('skills'));
-    this.profileService.init(profileData || this.getDefaultData('profile'));
-  }
-
-  crawlData<T>(dataType: string, charId: string): T | null {
-    const key = `${charId}_${dataType}`;
-    const data = localStorage.getItem(key);
-    
-    if (data) {
-      try {
-        return JSON.parse(data);
-      } catch (e) {
-        console.error(`Error parsing ${dataType} data for character ${charId}:`, e);
-        return null;
-      }
+    public wallet: WalletService,
+    public skills: SkillsService,
+    public inventar: InventarService,
+    public profile: ProfileService,
+    public utility: UtilityService,
+    private router: Router
+  ) {
+    this.currentCharId.set(sessionStorage.getItem('pixel-quest-currentUser') || null);
+    if (this.currentCharId()) {
+      this.loadCharacterData(this.currentCharId());
+    } else {
+      this.router.navigate(['/login']);
     }
-    
-    return null;
   }
 
-  saveData(dataType: string, data: any): void {
-    const charId = this.currentCharacterId();
-    if (!charId) return;
-    
-    const key = `${charId}_${dataType}`;
-    localStorage.setItem(key, JSON.stringify(data));
-  }
+  loadCharacterData(charId: string) {
+    // Load data from localStorage or create new character
+    const profileKey = `${charId}_profile`;
+    const profileData = localStorage.getItem(profileKey);
 
-  getDefaultData(dataType: string): any {
-    switch (dataType) {
-      case 'wallet':
-        return { gold: 0, rubies: 0 };
-      case 'skills':
-        return { attack: 1, defense: 1, spells: [] };
-      case 'profile':
-        return { name: 'Hero', level: 1, exp: 0 };
-      default:
-        return null;
+    if (!profileData) {
+      // Create new character with default data
+      const defaultProfile = { id: `${charId}`, name: 'Hero', level: 1, exp: 0 };
+      const defaultSkills = { attack: 1, defense: 1, spells: [] };
+      const defaultWallet = { gold: 0, rubies: 0 };
+      const defaultInventar = { items: [] };
+
+      localStorage.setItem(profileKey, JSON.stringify(defaultProfile));
+      localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
+      localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));
+      localStorage.setItem(`${charId}_inventar`, JSON.stringify(defaultInventar));
     }
+
+    // Load all data into services
+    this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
+    this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
+    this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'));
+    this.inventar.init(JSON.parse(localStorage.getItem(`${charId}_inventar`) || '{}'));
   }
 }

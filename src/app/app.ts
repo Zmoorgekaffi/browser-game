@@ -11,3 +11,4 @@ import { MainFrontendComponent } from './components/main-frontend/main-frontend'
 export class App {
   protected readonly title = signal('browser-game');
 }
+

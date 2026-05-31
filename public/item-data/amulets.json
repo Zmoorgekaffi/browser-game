@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Amethyst Amulet",
+    "description": "Ein schönes Amulett aus Amethyst. Es wird gesagt, dass es magische Eigenschaften besitzt, die die Fähigkeiten des Trägers verbessern können.",
+    "img-path": "imgs/items/amulets/amethyst-amulet_0.webp",
+    "price": 50,
+    "stats": {
+      "intelligence": 5,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 3,
+      "energy-shield": 10,
+      "magic-find": 5,
+      "armor": 0
+    }
+  },
+  {
+    "name": "Rubin-Medaillon",
+    "description": "Ein schweres, warmes Medaillon. Die feurige Glut des Rubins stärkt die Lebenskraft und schützt vor Kälte.",
+    "img-path": "imgs/items/amulets/ruby-amulet_1.webp",
+    "price": 45,
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 4,
+      "vitality": 6,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 5
+    }
+  },
+  {
+    "name": "Saphir-Halskette",
+    "description": "Die tiefblauen Kristalle pulsieren im Takt deines Herzschlags und erweitern deinen Geist spürbar.",
+    "img-path": "imgs/items/amulets/sapphire-amulet_2.webp",
+    "price": 60,
+    "stats": {
+      "intelligence": 8,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 2,
+      "luck": 1,
+      "energy-shield": 15,
+      "magic-find": 0,
+      "armor": 0
+    }
+  },
+  {
+    "name": "Topas-Talisman",
+    "description": "Ein vom Blitz geformter Kristall. Er verleiht dem Träger katzenartige Reflexe und flinke Finger.",
+    "img-path": "imgs/items/amulets/topaz-amulet_3.webp",
+    "price": 55,
+    "stats": {
+      "intelligence": 2,
+      "dexterity": 7,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 2,
+      "energy-shield": 5,
+      "magic-find": 2,
+      "armor": 2
+    }
+  },
+  {
+    "name": "Smaragd-Auge",
+    "description": "Das grüne Juwel schärft die Sinne für verborgene Schätze und schützt vor tückischen Giften.",
+    "img-path": "imgs/items/amulets/emerald-amulet_4.webp",
+    "price": 75,
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 4,
+      "strength": 0,
+      "vitality": 3,
+      "luck": 4,
+      "energy-shield": 0,
+      "magic-find": 10,
+      "armor": 0
+    }
+  },
+  {
+    "name": "Jadestein-Kette",
+    "description": "Uralte Runen wurden in diese Jade geritzt. Sie fördert die natürliche Regeneration des Körpers.",
+    "img-path": "imgs/items/amulets/jade-amulet_5.webp",
+    "price": 40,
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 2,
+      "strength": 2,
+      "vitality": 8,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4
+    }
+  },
+  {
+    "name": "Malachit-Kollier",
+    "description": "Ein klobiger, roher Brocken aus den tiefsten Minen. Bietet exzellenten physischen Schutz.",
+    "img-path": "imgs/items/amulets/malachite-amulet_6.webp",
+    "price": 90,
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 10,
+      "vitality": 5,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 20
+    }
+  },
+  {
+    "name": "Obsidian-Herz",
+    "description": "Geschmiedet im Feuer eines aktiven Vulkans. Dieser dunkle Stein absorbiert magische Angriffe.",
+    "img-path": "imgs/items/amulets/obsidian-amulet_7.webp",
+    "price": 110,
+    "stats": {
+      "intelligence": 5,
+      "dexterity": 0,
+      "strength": 5,
+      "vitality": 4,
+      "luck": 0,
+      "energy-shield": 30,
+      "magic-find": 0,
+      "armor": 8
+    }
+  },
+  {
+    "name": "Onyx-Amulett des Kriechers",
+    "description": "Ein düsteres Schmuckstück, das die Schatten um dich herum zu biegen scheint.",
+    "img-path": "imgs/items/amulets/onyx-amulet_8.webp",
+    "price": 85,
+    "stats": {
+      "intelligence": 4,
+      "dexterity": 8,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 5,
+      "energy-shield": 12,
+      "magic-find": 4,
+      "armor": 0
+    }
+  },
+  {
+    "name": "Glücks-Kleeblatt-Anhänger",
+    "description": "Ein unscheinbares Amulett, das die Schicksalsfäden webt. Monster lassen wie durch Wunder mehr Beute fallen.",
+    "img-path": "imgs/items/amulets/clover-amulet_9.webp",
+    "price": 130,
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 3,
+      "strength": 0,
+      "vitality": 2,
+      "luck": 12,
+      "energy-shield": 0,
+      "magic-find": 25,
+      "armor": 0
+    }
+  },
+  {
+    "name": "Amulett des Sternenlichts",
+    "description": "Es enthält ein winziges Fragment einer herabgefallenen Sternenschnuppe. Pure kosmische Energie.",
+    "img-path": "imgs/items/amulets/starlight-amulet_10.webp",
+    "price": 200,
+    "stats": {
+      "intelligence": 10,
+      "dexterity": 10,
+      "strength": 10,
+      "vitality": 10,
+      "luck": 5,
+      "energy-shield": 25,
+      "magic-find": 5,
+      "armor": 10
+    }
+  }
+]

@@ -6,6 +6,7 @@ import { GeneralSupplies } from './components/general-supplies/general-supplies'
 import { Tavern } from './components/tavern/tavern';
 import { Shrine } from './components/shrine/shrine';
 import { Smither } from './components/smither/smither';
+import { Login } from './components/login/login';
 
 export const routes: Routes = [
   { path: 'village', component: VillageSceneComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'tavern', component: Tavern },
   { path: 'shrine', component: Shrine },
   { path: 'smither', component: Smither },
-  { path: '', redirectTo: 'village', pathMatch: 'full' }
+  { path: 'login', component: Login },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

@@ -1,6 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { ProfileData } from '../models/game-state.interface';
-import { GameStateService } from './game-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,6 @@ export class ProfileService {
   level = computed(() => this.state().level);
   exp = computed(() => this.state().exp);
 
-  constructor(private gameStateService: GameStateService) {}
-
   init(data: ProfileData): void {
     this.state.set(data);
   }
@@ -21,7 +18,7 @@ export class ProfileService {
   updateName(name: string): void {
     this.state.update(state => {
       const newState = { ...state, name };
-      this.gameStateService.saveData('profile', newState);
+      // Speicherung wird im GameStateService gehandhabt
       return newState;
     });
   }
@@ -31,7 +28,7 @@ export class ProfileService {
     
     this.state.update(state => {
       const newState = { ...state, exp: state.exp + amount };
-      this.gameStateService.saveData('profile', newState);
+      // Speicherung wird im GameStateService gehandhabt
       return newState;
     });
   }
@@ -39,7 +36,7 @@ export class ProfileService {
   levelUp(): void {
     this.state.update(state => {
       const newState = { ...state, level: state.level + 1, exp: 0 };
-      this.gameStateService.saveData('profile', newState);
+      // Speicherung wird im GameStateService gehandhabt
       return newState;
     });
   }
