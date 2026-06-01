@@ -37,11 +37,10 @@ export class LoginService {
   }
 
   checkIfAllreadyLoggedIn() {
-    let currentUser = sessionStorage.getItem('pixel-quest-currentUser') || null;
-    console.log(currentUser);
+    let toLogInUser = sessionStorage.getItem('pixel-quest-currentUser') || null;
     
-    if(currentUser) {
-      console.log(currentUser);
+    if(toLogInUser) {
+      console.log(toLogInUser);
       
       this.router.navigate(['/village'])
     }

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ItemInfoCard } from '../item-info-card/item-info-card';
 
 
 @Component({
   selector: 'app-shop-item',
-  imports: [CommonModule],
+  imports: [CommonModule,ItemInfoCard],
   templateUrl: './shop-item.html',
   styleUrl: './shop-item.scss',
 })

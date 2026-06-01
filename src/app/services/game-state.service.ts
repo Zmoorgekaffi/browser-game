@@ -10,8 +10,7 @@ import { ProfileService } from './profile.service';
   providedIn: 'root',
 })
 export class GameStateService {
-  //variablen
-  currentCharId:any = signal(null);
+  currentCharId = signal<string | null>(null);
 
   constructor(
     public wallet: WalletService,
@@ -21,36 +20,45 @@ export class GameStateService {
     public utility: UtilityService,
     private router: Router
   ) {
-    this.currentCharId.set(sessionStorage.getItem('pixel-quest-currentUser') || null);
-    if (this.currentCharId()) {
-      this.loadCharacterData(this.currentCharId());
+    const storedId = sessionStorage.getItem('pixel-quest-currentUser');
+    this.currentCharId.set(storedId);
+    
+    if (storedId) {
+      this.loadCharacterData(storedId);
     } else {
       this.router.navigate(['/login']);
     }
   }
 
   loadCharacterData(charId: string) {
-    // Load data from localStorage or create new character
     const profileKey = `${charId}_profile`;
     const profileData = localStorage.getItem(profileKey);
 
+    // Wenn kein Profil existiert, erstellen wir den Charakter neu
     if (!profileData) {
-      // Create new character with default data
-      const defaultProfile = { id: `${charId}`, name: 'Hero', level: 1, exp: 0 };
-      const defaultSkills = { attack: 1, defense: 1, spells: [] };
-      const defaultWallet = { gold: 0, rubies: 0 };
-      const defaultInventar = { items: [] };
-
-      localStorage.setItem(profileKey, JSON.stringify(defaultProfile));
-      localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
-      localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));
-      localStorage.setItem(`${charId}_inventar`, JSON.stringify(defaultInventar));
+      this.createNewCharacter(charId);
     }
 
-    // Load all data into services
+    // Daten laden und in die jeweiligen Services jagen
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
     this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
     this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'));
-    this.inventar.init(JSON.parse(localStorage.getItem(`${charId}_inventar`) || '{}'));
+    
+    // Korrigiert: Nutzt jetzt ein leeres Array als Fallback, passend zum InventarService
+    this.inventar.init(JSON.parse(localStorage.getItem(`${charId}_inventar`) || '[]'));
+  }
+
+  createNewCharacter(charId: string) {
+    const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
+    const defaultSkills = { attack: 1, defense: 1, spells: [] };
+    const defaultWallet = { gold: 0, rubies: 0 };
+    
+    // Korrigiert: Ein reines Array für das Inventar deklarieren
+    const defaultInventar: any[] = []; 
+
+    localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));
+    localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
+    localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));
+    localStorage.setItem(`${charId}_inventar`, JSON.stringify(defaultInventar));
   }
 }

@@ -1,33 +1,23 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { InventarData } from '../models/game-state.interface';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventarService {
-  private state = signal<InventarData>({ items: [] });
-  
-  items = computed(() => this.state().items);
+  public inventar = signal<any[]>([]);
 
-  init(data: InventarData): void {
-    this.state.set(data);
+  init(data: any[]): void {
+    this.inventar.set(data);
   }
 
-  addItem(item: any): void {
-    this.state.update(state => {
-      const newState = { ...state, items: [...state.items, item] };
-      return newState;
-    });
-  }
-
-  removeItem(itemId: string): void {
-    this.state.update(state => {
-      const newState = {
-        ...state,
-        items: state.items.filter(item => item.id !== itemId)
-      };
-      return newState;
-    });
+  // Diese Methode fügt ein neues Objekt hinzu
+  addItem(item: { name: string; [key: string]: any }): void {
+    this.inventar.update(aktuellesInventar => [...aktuellesInventar, item]);
+    
+    // Speicher den neuen Zustand direkt im LocalStorage ab
+    const charId = sessionStorage.getItem('pixel-quest-currentUser');
+    if (charId) {
+      localStorage.setItem(`${charId}_inventar`, JSON.stringify(this.inventar()));
+    }
   }
 }
-
