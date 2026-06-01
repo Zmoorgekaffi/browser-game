@@ -3,10 +3,10 @@
   cursor: pointer;
   background-color: transparent;
   outline: none;
-}
 
-.redirect-hotspot.dev-mode {
-  border: 3px solid rgba(59, 130, 246, 0.9);
-  background-color: rgba(59, 130, 246, 0.12);
-  box-sizing: border-box;
+  &.dev-mode {
+    border: 3px solid rgba(59, 130, 246, 0.9);
+    background-color: rgba(59, 130, 246, 0.12);
+    box-sizing: border-box;
+  }
 }

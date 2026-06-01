@@ -1,23 +1,14 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventarService {
-  public inventar = signal<any[]>([]);
+  // Das Signal hält das Hauptobjekt, welches das 'items'-Array besitzt
+  public inventar: WritableSignal<any> = signal<any>({ items: [] });
 
-  init(data: any[]): void {
+  // Wird vom GameStateService aufgerufen, um die Daten zu setzen
+  init(data: any): void {
     this.inventar.set(data);
-  }
-
-  // Diese Methode fügt ein neues Objekt hinzu
-  addItem(item: { name: string; [key: string]: any }): void {
-    this.inventar.update(aktuellesInventar => [...aktuellesInventar, item]);
-    
-    // Speicher den neuen Zustand direkt im LocalStorage ab
-    const charId = sessionStorage.getItem('pixel-quest-currentUser');
-    if (charId) {
-      localStorage.setItem(`${charId}_inventar`, JSON.stringify(this.inventar()));
-    }
   }
 }

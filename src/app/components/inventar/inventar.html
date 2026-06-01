@@ -3,26 +3,13 @@
     <img src="/imgs/inventar/inventar.webp" alt="" class="w-full h-full object-cover" />
   </div>
 
-  <div
-    class="absolute overflow-y-auto min-w-[509px]  max-w-[509px] min-h-[464px]  max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col item-start justify-start gap-2"
-  >
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
-    <app-inventar-item [item]="{}"></app-inventar-item>
+  <div class="absolute overflow-y-auto min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2">
+    
+    @for (item of inventar()?.items; track $index) {
+      <app-inventar-item [item]="item"></app-inventar-item>
+    } @empty {
+      <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
+    }
+    
   </div>
 </section>

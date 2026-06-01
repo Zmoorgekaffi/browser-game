@@ -10,4 +10,6 @@
   (click)="onClick()"
   (keydown)="onKeydown($event)"
   [attr.aria-label]="'Redirect hotspot to ' + redirect"
-></div>
+>
+  <ng-content></ng-content>
+</div>
