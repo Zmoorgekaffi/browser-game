@@ -1,44 +1,27 @@
-import { Component } from '@angular/core';
-import { UtilityService } from '../../services/utility.service';
-import { ShopService } from '../../services/shop.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { GameStateService } from '../../services/game-state.service';
 import { ShopItem } from '../shared/shop-item/shop-item';
-
-// Import the JSON data
+import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import amuletsData from '../../../../public/item-data/amulets.json';
+
 @Component({
   selector: 'app-magic-shop',
-  imports: [ShopItem],
+  standalone: true,
+  imports: [ShopItem, ItemInfoCard],
   templateUrl: './magic-shop.html',
   styleUrl: './magic-shop.scss',
 })
-export class MagicShop {
-  // Das Array für dein HTML-Template (bleibt mit shopItems[0] bedienbar)
-  amuletsArray: any[] = [];
+export class MagicShop implements OnInit {
+  public gameStateService = inject(GameStateService);
 
-  // Das Objekt für die schnelle Suche im TypeScript
+  amuletsArray: any[] = [];
   amuletsMap: Record<string, any> = {};
 
-  // Aktuell verfügbare Items im Shop
-  currentShopItems: any[] = [];
+  // Direkt das Signal binden!
+  currentShopItems = this.gameStateService.shop.currentMagicItems;
 
-  constructor(
-    private shopService: ShopService,
-    private utilityService: UtilityService,
-  ) {
+  ngOnInit() {
     this.amuletsArray = amuletsData;
-    utilityService.mapArray(this.amuletsMap, this.amuletsArray); // Erstelle das Map-Objekt für schnelle Suche
-
-
-    this.setUpCurrentShopItems();
-    console.log(this.currentShopItems);
-  }
-
-  //HOLT GRAD NUR AMULETTEN
-  setUpCurrentShopItems() {
-    for (let i = 0; i < 6; i++) {
-      this.currentShopItems.push(
-        amuletsData[this.utilityService.getRandomIndex(this.amuletsArray)],
-      );
-    }
+    this.gameStateService.utility.mapArray(this.amuletsMap, this.amuletsArray);
   }
 }

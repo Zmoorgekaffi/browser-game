@@ -29,7 +29,7 @@ export class Header {
     this.exp = this.gameStateService.profile.exp;
     this.lvl = this.gameStateService.profile.level;
     // Wenn du hier loggst, siehst du den INITIALEN Wert des Signals (z.B. 0 oder null)
-    console.log('Initiales Gold im TS:', this.gold());
+    console.log('Initiales Gold im TS: HEADER WIRD AUSGEFèHRT', this.gold());
   }
 }
 

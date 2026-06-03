@@ -1,3 +1,5 @@
-<div class="shop-item rounded-[50%] p-[0.7rem] cursor-pointer bg-[rgba(255,255,255,0.4)]" [ngStyle]="{'left.px': x, 'top.px': y}">
+@if(itemObject) {
+<div (click)="showInfoCard(itemObject)" class="shop-item rounded-[50%] p-[0.7rem] cursor-pointer bg-[rgba(255,255,255,0.4)]" [ngStyle]="{'left.px': x, 'top.px': y}">
   <img [src]="itemObject['img-path']" [alt]="itemObject.name" class="item-image">
 </div>
+}

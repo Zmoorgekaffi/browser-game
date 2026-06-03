@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RedirectHotspotComponent } from '../shared/redirect-hotspot/redirect-hotspot.component';
 import { GameStateService } from '../../services/game-state.service';
 
@@ -10,7 +10,10 @@ import { GameStateService } from '../../services/game-state.service';
   styleUrls: ['./village-scene.scss'],
 })
 export class VillageSceneComponent {
-  constructor(private gameStateService: GameStateService) {
+
+  public gameStateService = inject(GameStateService);
+
+  constructor() {
     this.getCurrentUserId();
   }
 

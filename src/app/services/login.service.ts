@@ -1,49 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
   
-  constructor(
-    private router: Router
-  ) {
+  loggedInAs = signal<string | null>(null);
+
+  constructor(private router: Router) {
     this.checkIfAllreadyLoggedIn();
   }
 
   login(charId: string): void {
-    
-    // Check if character exists - direkter localStorage Zugriff
-    const profileKey = `${charId}_profile`;
-    const profileData = localStorage.getItem(profileKey);
-
-    if (!profileData) {
-      // Create new character with default data
-      const defaultProfile = { id: `${charId}`, name: 'Hero', level: 1, exp: 0 };
-      const defaultSkills = { attack: 1, defense: 1, spells: [] };
-      const defaultWallet = { gold: 0, rubies: 0 };
-      const defaultInventar = { items: [] };
-
-      localStorage.setItem(profileKey, JSON.stringify(defaultProfile));
-      localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
-      localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));
-      localStorage.setItem(`${charId}_inventar`, JSON.stringify(defaultInventar));
-    } 
-    
+    // Wir setzen NUR noch den sessionStorage Key.
+    // Die Datenprüfung und Erstellung übernimmt der GameStateService beim Laden von /village!
+    this.loggedInAs.set(charId);
     sessionStorage.setItem('pixel-quest-currentUser', `${charId}`);
-    // Navigate to village
+
+    // Weiterleitung zum Dorf
     this.router.navigate(['/village']);
   }
 
   checkIfAllreadyLoggedIn() {
-    let toLogInUser = sessionStorage.getItem('pixel-quest-currentUser') || null;
-    
-    if(toLogInUser) {
-      console.log(toLogInUser);
-      
-      this.router.navigate(['/village'])
+    const toLogInUser = sessionStorage.getItem('pixel-quest-currentUser');
+
+    if (toLogInUser) {
+      console.log('Bereits eingeloggt als:', toLogInUser);
+      this.router.navigate(['/village']);
     }
   }
-
 }

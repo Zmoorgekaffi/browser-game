@@ -1,1 +1,12 @@
-<p>item-info-card works!</p>
+@if (show()) {
+  <div
+    class="flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
+  >
+  
+    <div class="border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col">
+        <span>name: {{currentDisplayedItem().name}}</span>
+        <span>description: {{currentDisplayedItem().description}}</span>
+        <span>price: {{currentDisplayedItem().price}}</span>
+    </div>
+  </div>
+}

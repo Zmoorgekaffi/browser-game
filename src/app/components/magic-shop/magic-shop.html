@@ -1,40 +1,57 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
   <img src="imgs/magic-shop/magic-shop_0.webp" class="w-full h-full object-cover" alt="" />
 
-  <app-shop-item
-    [devmode]="true"
-    [x]="135"
-    [y]="360"
-    [itemObject]="currentShopItems[0]"
-  ></app-shop-item>
-  <app-shop-item
-    [devmode]="true"
-    [x]="319"
-    [y]="360"
-    [itemObject]="currentShopItems[1]"
-  ></app-shop-item>
-  <app-shop-item
-    [devmode]="true"
-    [x]="504"
-    [y]="360"
-    [itemObject]="currentShopItems[2]"
-  ></app-shop-item>
-  <app-shop-item
-    [devmode]="true"
-    [x]="688"
-    [y]="360"
-    [itemObject]="currentShopItems[3]"
-  ></app-shop-item>
-  <app-shop-item
-    [devmode]="true"
-    [x]="866"
-    [y]="360"
-    [itemObject]="currentShopItems[4]"
-  ></app-shop-item>
-  <app-shop-item
-    [devmode]="true"
-    [x]="1047"
-    [y]="360"
-    [itemObject]="currentShopItems[5]"
-  ></app-shop-item>
+  <app-item-info-card></app-item-info-card>
+
+  @if (currentShopItems() && currentShopItems().length >= 6) {
+    <app-shop-item
+      [devmode]="true"
+      [x]="135"
+      [y]="360"
+      [itemObject]="currentShopItems()[0]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="319"
+      [y]="360"
+      [itemObject]="currentShopItems()[1]"
+    ></app-shop-item>
+    
+    <span class="text-white absolute top-4 left-4 bg-black p-2 z-50">
+      Anzahl Items im Service-Signal: {{ currentShopItems().length }}
+    </span> 
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="504"
+      [y]="360"
+      [itemObject]="currentShopItems()[2]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="688"
+      [y]="360"
+      [itemObject]="currentShopItems()[3]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="866"
+      [y]="360"
+      [itemObject]="currentShopItems()[4]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="1047"
+      [y]="360"
+      [itemObject]="currentShopItems()[5]"
+    ></app-shop-item>
+  } @else {
+    <div class="text-white absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+      Lade magische Waren...
+    </div>
+  }
 </div>

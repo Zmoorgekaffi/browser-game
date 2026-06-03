@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
+  standalone: true, // Falls noch nicht aktiv, hier standalone aktivieren
   imports: [FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
@@ -23,4 +24,3 @@ export class Login {
     }
   }
 }
-

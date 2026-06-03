@@ -6,7 +6,10 @@
   </h1>
 
   <section class="flex items-center-justify-center flex-col gap-2 w-[1280px]">
-    <app-header></app-header>
+    @if (showHeader()) {
+      <app-header></app-header>
+    }
+
     <app-scene-container>
       <router-outlet></router-outlet>
     </app-scene-container>
