@@ -5,6 +5,8 @@ import { RedirectHotspotComponent } from '../redirect-hotspot/redirect-hotspot.c
 import { LoginService } from '../../../services/login.service';
 import { SceneService } from '../../../services/scene.service'; // Pfad zu deinem neuen Service anpassen
 import { GameStateService } from '../../../services/game-state.service';
+import { AudioService } from '../../../services/audio-object.service';
+
 
 @Component({
   selector: 'app-scene-container',
@@ -14,10 +16,11 @@ import { GameStateService } from '../../../services/game-state.service';
   styleUrls: ['./scene-container.scss'],
 })
 export class SceneContainerComponent {
-  // Services modern via inject() holen
+  // Services
   private loginService = inject(LoginService);
   private sceneService = inject(SceneService);
   private gameStateService = inject(GameStateService);
+  private audioService = inject(AudioService);
 
   constructor() {
     effect(() => {
@@ -32,6 +35,7 @@ export class SceneContainerComponent {
       // 2. In JEDEM anderen Fall: Ausführen!
       console.log('Gültige Route gefunden! GameStateService wird initialisiert:', currentScene);
       this.gameStateService.init();
+
     });
   }
 

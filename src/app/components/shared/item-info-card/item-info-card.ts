@@ -20,4 +20,8 @@ export class ItemInfoCard {
     this.currentDisplayedItem = this.gameStateService.shop.currentDisplayedItem;
   }
 
+  closeInfoCard() {
+    this.gameStateService.shop.itemInfoCardShow.set(false);
+  }
+
 }

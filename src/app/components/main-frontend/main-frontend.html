@@ -5,14 +5,19 @@
     Pixel Quest
   </h1>
 
-  <section class="flex items-center-justify-center flex-col gap-2 w-[1280px]">
+  <button class="w-5 h-5 border" (click)="screenSizingService.toggleFullscreen(gameContainer)">
+  </button>
+
+  <section class="flex items-center justify-center flex-col gap-2 w-[1280px]">
     @if (showHeader()) {
       <app-header></app-header>
     }
 
-    <app-scene-container>
-      <router-outlet></router-outlet>
-    </app-scene-container>
+    <div #gameContainer class="w-full h-full">
+      <app-scene-container>
+        <router-outlet></router-outlet>
+      </app-scene-container>
+    </div>
   </section>
 
   <div></div>

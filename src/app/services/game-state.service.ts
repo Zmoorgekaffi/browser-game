@@ -1,4 +1,4 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, inject, effect } from '@angular/core';
 import { Router } from '@angular/router'; // Wird nur noch für den initialen Login-Redirect benötigt
 import { WalletService } from './wallet.service';
 import { SkillsService } from './skills.service';
@@ -32,6 +32,19 @@ export class GameStateService {
   // Verweist direkt auf das Signal im SceneService. 
   // Alle anderen Komponenten, die gameStateService.scene() aufrufen, merken keinen Unterschied!
   public scene = this.sceneService.currentScene;
+
+  constructor() {
+    effect(() => {
+      // Wir holen uns den aktuellen Wert (den Zeitstempel). 
+      // Das sorgt dafür, dass dieser Effekt bei JEDEM Routenwechsel anspringt.
+      const timestamp = this.sceneService.onSceneChange();
+      
+      // Beim App-Start ist der Wert 0, da wollen wir noch nicht würfeln
+      if (timestamp > 0) {
+        this.shop.itemInfoCardShow.set(false);
+      }
+    });
+  }
 
   init() {
      console.log('GAMMESTATESERVICE wird ausgeführt');
@@ -84,7 +97,7 @@ export class GameStateService {
   private createNewCharacter(charId: string) {
     const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
     const defaultSkills = { attack: 1, defense: 1, spells: [] };
-    const defaultWallet = { gold: 0, rubies: 0 };
+    const defaultWallet = { gold: 100, rubies: 0 };
     const defaultInventar = { items: [] };
 
     localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));

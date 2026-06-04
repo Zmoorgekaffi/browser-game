@@ -1,3 +1,51 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
   <img src="imgs/general-supplies/general-supplies_0.webp" class="w-full h-full object-cover" alt="" />
+
+    <app-item-info-card></app-item-info-card>
+
+    <div class="absolute w-[15rem] h-[15rem] top-[172px] right-[520px]" >
+      <app-animation-object Name="merchant-greet" [Duration]="1000" [spritePaths]="greetAnimationPaths"></app-animation-object>
+    </div>
+
+    @if (currentShopItems() && currentShopItems().length >= 5) {
+    <app-shop-item
+      [devmode]="true"
+      [x]="163"
+      [y]="420"
+      [itemObject]="currentShopItems()[0]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="374"
+      [y]="420"
+      [itemObject]="currentShopItems()[1]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="586"
+      [y]="420"
+      [itemObject]="currentShopItems()[2]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="803"
+      [y]="420"
+      [itemObject]="currentShopItems()[3]"
+    ></app-shop-item>
+    
+    <app-shop-item
+      [devmode]="true"
+      [x]="1017"
+      [y]="420"
+      [itemObject]="currentShopItems()[4]"
+    ></app-shop-item>
+
+  } @else {
+    <div class="text-white absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+      Lade magische Waren...
+    </div>
+  }
 </div>

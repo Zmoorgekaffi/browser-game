@@ -8,11 +8,13 @@ import { filter } from 'rxjs/operators';
 export class SceneService {
   private router = inject(Router);
 
-  // Internes, veränderbares Signal
+  // 1. Dein bestehendes Signal für die aktuelle URL
   private _currentScene = signal<string>('');
-
-  // Öffentliches, schreibgeschütztes Signal für andere Services/Komponenten
   public currentScene = this._currentScene.asReadonly();
+
+  // 2. NEU: Das reine "Feuer"-Signal für den Event-Trigger (gibt die Millisekunden des Wechsels zurück)
+  private _onSceneChange = signal<number>(0);
+  public onSceneChange = this._onSceneChange.asReadonly();
 
   constructor() {
     // Initiale Szene beim Start setzen
@@ -22,7 +24,12 @@ export class SceneService {
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
+        // A) Die aktuelle Szene updaten
         this._currentScene.set(event.urlAfterRedirects);
+        
+        // B) FEUERN: Wir setzen einen neuen Zeitstempel. 
+        // Jedes Mal, wenn sich diese Zahl ändert, schlägt das Signal bei allen Lauschenden Alarm!
+        this._onSceneChange.set(Date.now());
       });
   }
 

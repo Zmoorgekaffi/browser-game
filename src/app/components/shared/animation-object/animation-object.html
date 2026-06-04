@@ -1,0 +1,15 @@
+<div 
+  class="animation-container" 
+  [style.width]="width" 
+  [style.height]="height"
+>
+  @if (currentSpritePath()) {
+    <img 
+      [src]="currentSpritePath()" 
+      [alt]="Name" 
+      class="pixel-sprite"
+    />
+  } @else {
+    <div class="animation-placeholder"></div>
+  }
+</div>
