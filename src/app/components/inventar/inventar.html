@@ -1,12 +1,19 @@
 <section class="w-full h-full relative bg-black">
-  <div class="absolute inset-0">
+  <div class="absolute inset-0 z-0">
     <img src="/imgs/inventar/inventar.webp" alt="" class="w-full h-full object-cover" />
   </div>
 
-  <div class="absolute overflow-y-auto min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2">
+  <div 
+    (click)="closeInventar()" 
+    class="absolute top-4 right-4 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
+  >
+    Schließen ✕
+  </div>
+
+  <div class="absolute overflow-y-auto z-10 min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2">
     
     @for (item of inventar()?.items; track $index) {
-      <app-inventar-item [item]="item"></app-inventar-item>
+      <app-inventar-item [item]="item" [index]="$index"></app-inventar-item>
     } @empty {
       <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
     }

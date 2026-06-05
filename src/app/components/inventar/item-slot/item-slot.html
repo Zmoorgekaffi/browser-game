@@ -1,0 +1,14 @@
+<div 
+  class="absolute"
+  [class.dev-border]="devmode()"
+  [ngStyle]="{
+    'top': x() + 'px', 
+    'left': y() + 'px', 
+    'width': width(), 
+    'height': height()
+  }"
+>
+  @if (imgPath()) {
+    <img [src]="imgPath()" alt="Item slot" class="w-full h-full object-contain">
+  }
+</div>

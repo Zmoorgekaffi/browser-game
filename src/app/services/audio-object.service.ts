@@ -15,7 +15,6 @@ export class AudioService {
   public ambientVolume = signal<number>(0.25); 
   public sfxVolume = signal<number>(0.7);     
 
-  // NEU: Ein globales Signal, um den Mute-Status zu tracken
   public isMuted = signal<boolean>(false);
 
   private musicRoutes: Record<string, { music: string; musicVol?: number; ambient?: string; ambientVol?: number }> = {
@@ -46,6 +45,8 @@ export class AudioService {
       musicVol: 0.12,
       ambient: '/audio/music/merchant_ambient.mp3' 
     },
+    // HINWEIS: Falls das Inventar irgendwann eigene Musik bekommen soll,
+    // kannst du es hier eintragen. Solange es fehlt, läuft die alte Musik weiter!
   };
 
   constructor() {
@@ -56,27 +57,29 @@ export class AudioService {
       }
     });
 
-    // REAKTIV: Passt die Musik-Lautstärke an, wenn sich das Volume, die Scene ODER der Mute-Status ändert!
     effect(() => {
       if (this.bgmAudio) {
         if (this.isMuted()) {
           this.bgmAudio.volume = 0;
         } else {
           const currentScene = this.sceneService.currentScene();
-          const routeConfig = this.musicRoutes[currentScene || ''];
+          // KORREKTUR: Wenn wir im Inventar sind, behalten wir die Lautstärke-Konfiguration bei
+          const activeScene = currentScene === '/inventar' ? this.getPlayingRoute() : (currentScene || '');
+          const routeConfig = this.musicRoutes[activeScene];
           this.bgmAudio.volume = routeConfig?.musicVol !== undefined ? routeConfig.musicVol : this.musicVolume();
         }
       }
     });
 
-    // REAKTIV: Passt Ambient-Lautstärke an bei Änderung von Volume, Scene ODER Mute-Status!
     effect(() => {
       if (this.ambientAudio) {
         if (this.isMuted()) {
           this.ambientAudio.volume = 0;
         } else {
           const currentScene = this.sceneService.currentScene();
-          const routeConfig = this.musicRoutes[currentScene || ''];
+          // KORREKTUR: Auch für Ambient den Lautstärken-Bezug im Inventar halten
+          const activeScene = currentScene === '/inventar' ? this.getPlayingRoute() : (currentScene || '');
+          const routeConfig = this.musicRoutes[activeScene];
           this.ambientAudio.volume = routeConfig?.ambientVol !== undefined ? routeConfig.ambientVol : this.ambientVolume();
         }
       }
@@ -92,21 +95,21 @@ export class AudioService {
     window.addEventListener('click', unlockAutoplay);
   }
 
-  /**
-   * NEU: Schaltet den Sound um (An / Aus)
-   */
   public toggleMute() {
     this.isMuted.update(muted => !muted);
   }
 
-  /**
-   * NEU: Setzt den Mute-Status explizit
-   */
   public setMute(mute: boolean) {
     this.isMuted.set(mute);
   }
 
   private playAudioForRoute(route: string) {
+    // DER TRICK: Wenn der Spieler ins Inventar wechselt, brechen wir hier ab.
+    // Die aktuelle Musik bleibt einfach unberührt und läuft weiter!
+    if (route === '/inventar' && !this.musicRoutes['/inventar']) {
+      return;
+    }
+
     const audioConfig = this.musicRoutes[route];
     
     if (!audioConfig) {
@@ -117,18 +120,16 @@ export class AudioService {
     // --- 1. KANAL: HINTERGRUNDMUSIK (BGM) ---
     if (audioConfig.music) {
       if (this.bgmAudio && this.bgmAudio.src.endsWith(audioConfig.music)) {
-        // KORREKTUR: Mute-Status beim Aktualisieren direkt mit einberechnen
         this.bgmAudio.volume = this.isMuted() ? 0 : (audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume());
         
         if (this.bgmAudio.paused) {
-          this.bgmAudio.play().catch(err => console.warn('BGM Autoplay-Retry fehlgeschlagen:', err.message));
+          this.bgmAudio.play().catch(err => console.warn('BGM Autoplay-Retry failed:', err.message));
         }
       } else {
         if (this.bgmAudio) this.bgmAudio.pause();
         
         this.bgmAudio = new Audio(audioConfig.music);
         this.bgmAudio.loop = true;
-        // KORREKTUR: Mute-Status beim Erstellen direkt mit einberechnen
         this.bgmAudio.volume = this.isMuted() ? 0 : (audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume());
         this.bgmAudio.play().catch(err => console.warn('BGM Fehler:', err.message));
       }
@@ -142,18 +143,16 @@ export class AudioService {
     // --- 2. KANAL: UMGEBUNGSGERÄUSCHE (AMBIENT) ---
     if (audioConfig.ambient) {
       if (this.ambientAudio && this.ambientAudio.src.endsWith(audioConfig.ambient)) {
-        // KORREKTUR: Mute-Status beim Aktualisieren direkt mit einberechnen
         this.ambientAudio.volume = this.isMuted() ? 0 : (audioConfig.ambientVol !== undefined ? audioConfig.ambientVol : this.ambientVolume());
         
         if (this.ambientAudio.paused) {
-          this.ambientAudio.play().catch(err => console.warn('Ambient Autoplay-Retry fehlgeschlagen:', err.message));
+          this.ambientAudio.play().catch(err => console.warn('Ambient Autoplay-Retry failed:', err.message));
         }
       } else {
         if (this.ambientAudio) this.ambientAudio.pause();
         
         this.ambientAudio = new Audio(audioConfig.ambient);
         this.ambientAudio.loop = true;
-        // KORREKTUR: Mute-Status beim Erstellen direkt mit einberechnen
         this.ambientAudio.volume = this.isMuted() ? 0 : (audioConfig.ambientVol !== undefined ? audioConfig.ambientVol : this.ambientVolume());
         this.ambientAudio.play().catch(err => console.warn('Ambient Fehler:', err.message));
       }
@@ -165,8 +164,20 @@ export class AudioService {
     }
   }
 
+  /**
+   * Hilfsfunktion: Findet heraus, welche Route mathematisch/namentlich am ehesten 
+   * zu der aktuell laufenden bgmAudio-Datei passt.
+   */
+  private getPlayingRoute(): string {
+    if (!this.bgmAudio) return '';
+    const currentSrc = this.bgmAudio.src;
+    const foundRoute = Object.keys(this.musicRoutes).find(key => 
+      this.musicRoutes[key].music && currentSrc.endsWith(this.musicRoutes[key].music)
+    );
+    return foundRoute || '';
+  }
+
   public playSFX(soundPath: string) {
-    // Wenn gemuted ist, überspringen wir das Abspielen von Soundeffekten direkt komplett
     if (this.isMuted()) return;
 
     try {

@@ -18,7 +18,7 @@ import { AudioService } from '../../../services/audio-object.service';
 export class SceneContainerComponent {
   // Services
   private loginService = inject(LoginService);
-  private sceneService = inject(SceneService);
+  public sceneService = inject(SceneService);
   private gameStateService = inject(GameStateService);
   public audioService = inject(AudioService);
 
