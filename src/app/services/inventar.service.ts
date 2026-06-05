@@ -18,6 +18,8 @@ export interface EquippedSlots {
   'weapon-1': any | null;
   'weapon-2': any | null;
   back: any | null;
+
+  [key: string]: any;
 }
 
 @Injectable({

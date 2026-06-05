@@ -2,12 +2,13 @@ import { Component, Signal, effect } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { InventarItem } from './inventar-item/inventar-item';
 import { CommonModule } from '@angular/common';
-import { ItemSlot } from './item-slot/item-slot';
+import { ArmorSlot } from './armor-slot/armor-slot';
+
 
 @Component({
   selector: 'app-inventar',
   standalone: true,
-  imports: [InventarItem, CommonModule, ItemSlot],
+  imports: [InventarItem, CommonModule, ArmorSlot],
   templateUrl: './inventar.html',
   styleUrl: './inventar.scss',
 })

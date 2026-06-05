@@ -3,20 +3,137 @@
     <img src="/imgs/inventar/inventar.webp" alt="" class="w-full h-full object-cover" />
   </div>
 
-  <div 
-    (click)="closeInventar()" 
+<app-armor-slot
+    [slotName]="'head'"
+    [x]="295"
+    [y]="80"
+    [width]="'95px'"
+    [height]="'94px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'accessoires-left'"
+    [x]="200"
+    [y]="109"
+    [width]="'63px'"
+    [height]="'60px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'accessoires-right'"
+    [x]="424"
+    [y]="109"
+    [width]="'63px'"
+    [height]="'59px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'necklace'"
+    [x]="520"
+    [y]="109"
+    [width]="'59px'"
+    [height]="'55px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'ring-right'"
+    [x]="521"
+    [y]="186"
+    [width]="'58px'"
+    [height]="'55px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'chest'"
+    [x]="503"
+    [y]="269"
+    [width]="'81px'"
+    [height]="'163px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'weapon-1'"
+    [x]="480"
+    [y]="465"
+    [width]="'108px'"
+    [height]="'165px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'footwear'"
+    [x]="364"
+    [y]="554"
+    [width]="'77px'"
+    [height]="'74px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'leg'"
+    [x]="252"
+    [y]="554"
+    [width]="'77px'"
+    [height]="'76px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'weapon-2'"
+    [x]="106"
+    [y]="464"
+    [width]="'105px'"
+    [height]="'166px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'gloves'"
+    [x]="104"
+    [y]="369"
+    [width]="'85px'"
+    [height]="'65px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'back'"
+    [x]="105"
+    [y]="268"
+    [width]="'83px'"
+    [height]="'80px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'ring-left'"
+    [x]="110"
+    [y]="185"
+    [width]="'58px'"
+    [height]="'57px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <div
+    (click)="closeInventar()"
     class="absolute top-4 right-4 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
   >
     Schließen ✕
   </div>
 
-  <div class="absolute overflow-y-auto z-10 min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2">
-    
+  <div
+    class="absolute overflow-y-auto z-10 min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2"
+  >
     @for (item of inventar()?.items; track $index) {
       <app-inventar-item [item]="item" [index]="$index"></app-inventar-item>
     } @empty {
       <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
     }
-    
   </div>
 </section>

@@ -3,18 +3,17 @@ import { CommonModule } from '@angular/common';
 import { InventarService } from '../../../services/inventar.service';
 
 @Component({
-  selector: 'app-item-slot',
-  standalone: true,
+  selector: 'app-armor-slot',
   imports: [CommonModule],
-  templateUrl: './item-slot.html',
-  styleUrl: './item-slot.scss',
+  templateUrl: './armor-slot.html',
+  styleUrl: './armor-slot.scss',
 })
-export class ItemSlot {
+export class ArmorSlot {
   public inventarService = inject(InventarService);
 
   // Wichtig: Exakt 'slotName' schreiben
-  public slotName = input.required<string>(); 
-  
+  public slotName = input.required<string>();
+
   public x = input.required<number>();
   public y = input.required<number>();
   public height = input.required<string>();
