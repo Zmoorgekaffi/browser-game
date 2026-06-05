@@ -15,6 +15,9 @@ export class AudioService {
   public ambientVolume = signal<number>(0.25); 
   public sfxVolume = signal<number>(0.7);     
 
+  // NEU: Ein globales Signal, um den Mute-Status zu tracken
+  public isMuted = signal<boolean>(false);
+
   private musicRoutes: Record<string, { music: string; musicVol?: number; ambient?: string; ambientVol?: number }> = {
     '/login': { 
       music: '/audio/login/login_0.mp3',
@@ -28,13 +31,13 @@ export class AudioService {
     },
     '/magic-shop': { 
       music: '/audio/village/village-music_0.mp3', 
-      musicVol: 0.12,                              
+      musicVol: 0.12,                               
       ambient: '/audio/music/magic_shop_ambient.mp3', 
       ambientVol: 0.4
     },
     '/smither': { 
       music: '/audio/village/village-music_0.mp3', 
-      musicVol: 0.12,                              
+      musicVol: 0.12,                               
       ambient: '/audio/music/blacksmith_ambient.mp3', 
       ambientVol: 0.3
     },
@@ -53,19 +56,29 @@ export class AudioService {
       }
     });
 
+    // REAKTIV: Passt die Musik-Lautstärke an, wenn sich das Volume, die Scene ODER der Mute-Status ändert!
     effect(() => {
       if (this.bgmAudio) {
-        const currentScene = this.sceneService.currentScene();
-        const routeConfig = this.musicRoutes[currentScene || ''];
-        this.bgmAudio.volume = routeConfig?.musicVol !== undefined ? routeConfig.musicVol : this.musicVolume();
+        if (this.isMuted()) {
+          this.bgmAudio.volume = 0;
+        } else {
+          const currentScene = this.sceneService.currentScene();
+          const routeConfig = this.musicRoutes[currentScene || ''];
+          this.bgmAudio.volume = routeConfig?.musicVol !== undefined ? routeConfig.musicVol : this.musicVolume();
+        }
       }
     });
 
+    // REAKTIV: Passt Ambient-Lautstärke an bei Änderung von Volume, Scene ODER Mute-Status!
     effect(() => {
       if (this.ambientAudio) {
-        const currentScene = this.sceneService.currentScene();
-        const routeConfig = this.musicRoutes[currentScene || ''];
-        this.ambientAudio.volume = routeConfig?.ambientVol !== undefined ? routeConfig.ambientVol : this.ambientVolume();
+        if (this.isMuted()) {
+          this.ambientAudio.volume = 0;
+        } else {
+          const currentScene = this.sceneService.currentScene();
+          const routeConfig = this.musicRoutes[currentScene || ''];
+          this.ambientAudio.volume = routeConfig?.ambientVol !== undefined ? routeConfig.ambientVol : this.ambientVolume();
+        }
       }
     });
 
@@ -79,6 +92,20 @@ export class AudioService {
     window.addEventListener('click', unlockAutoplay);
   }
 
+  /**
+   * NEU: Schaltet den Sound um (An / Aus)
+   */
+  public toggleMute() {
+    this.isMuted.update(muted => !muted);
+  }
+
+  /**
+   * NEU: Setzt den Mute-Status explizit
+   */
+  public setMute(mute: boolean) {
+    this.isMuted.set(mute);
+  }
+
   private playAudioForRoute(route: string) {
     const audioConfig = this.musicRoutes[route];
     
@@ -89,11 +116,10 @@ export class AudioService {
 
     // --- 1. KANAL: HINTERGRUNDMUSIK (BGM) ---
     if (audioConfig.music) {
-      // KORREKTUR: Wenn das Lied bereits geladen ist, prüfen wir zusätzlich, ob es gerade pausiert ist (z.B. durch Autoplay-Block)
       if (this.bgmAudio && this.bgmAudio.src.endsWith(audioConfig.music)) {
-        this.bgmAudio.volume = audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume();
+        // KORREKTUR: Mute-Status beim Aktualisieren direkt mit einberechnen
+        this.bgmAudio.volume = this.isMuted() ? 0 : (audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume());
         
-        // Falls es geladen, aber wegen Autoplay pausiert ist -> Jetzt abspielen!
         if (this.bgmAudio.paused) {
           this.bgmAudio.play().catch(err => console.warn('BGM Autoplay-Retry fehlgeschlagen:', err.message));
         }
@@ -102,7 +128,8 @@ export class AudioService {
         
         this.bgmAudio = new Audio(audioConfig.music);
         this.bgmAudio.loop = true;
-        this.bgmAudio.volume = audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume();
+        // KORREKTUR: Mute-Status beim Erstellen direkt mit einberechnen
+        this.bgmAudio.volume = this.isMuted() ? 0 : (audioConfig.musicVol !== undefined ? audioConfig.musicVol : this.musicVolume());
         this.bgmAudio.play().catch(err => console.warn('BGM Fehler:', err.message));
       }
     } else {
@@ -114,9 +141,9 @@ export class AudioService {
 
     // --- 2. KANAL: UMGEBUNGSGERÄUSCHE (AMBIENT) ---
     if (audioConfig.ambient) {
-      // KORREKTUR: Gleiche Logik für den Ambient-Kanal
       if (this.ambientAudio && this.ambientAudio.src.endsWith(audioConfig.ambient)) {
-        this.ambientAudio.volume = audioConfig.ambientVol !== undefined ? route.endsWith(audioConfig.ambient) ? audioConfig.ambientVol : this.ambientVolume() : this.ambientVolume();
+        // KORREKTUR: Mute-Status beim Aktualisieren direkt mit einberechnen
+        this.ambientAudio.volume = this.isMuted() ? 0 : (audioConfig.ambientVol !== undefined ? audioConfig.ambientVol : this.ambientVolume());
         
         if (this.ambientAudio.paused) {
           this.ambientAudio.play().catch(err => console.warn('Ambient Autoplay-Retry fehlgeschlagen:', err.message));
@@ -126,7 +153,8 @@ export class AudioService {
         
         this.ambientAudio = new Audio(audioConfig.ambient);
         this.ambientAudio.loop = true;
-        this.ambientAudio.volume = audioConfig.ambientVol !== undefined ? audioConfig.ambientVol : this.ambientVolume();
+        // KORREKTUR: Mute-Status beim Erstellen direkt mit einberechnen
+        this.ambientAudio.volume = this.isMuted() ? 0 : (audioConfig.ambientVol !== undefined ? audioConfig.ambientVol : this.ambientVolume());
         this.ambientAudio.play().catch(err => console.warn('Ambient Fehler:', err.message));
       }
     } else {
@@ -138,6 +166,9 @@ export class AudioService {
   }
 
   public playSFX(soundPath: string) {
+    // Wenn gemuted ist, überspringen wir das Abspielen von Soundeffekten direkt komplett
+    if (this.isMuted()) return;
+
     try {
       this.sfxAudio = new Audio(soundPath);
       this.sfxAudio.volume = this.sfxVolume();

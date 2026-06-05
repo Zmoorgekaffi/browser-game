@@ -6,12 +6,21 @@ import { WalletData } from '../models/game-state.interface';
 })
 export class WalletService {
   private state = signal<WalletData>({ gold: 0, rubies: 0 });
+  private activeCharId: string | null = null;
 
   gold = computed(() => this.state().gold);
   rubies = computed(() => this.state().rubies);
 
-  init(data: WalletData): void {
-    this.state.set(data);
+  init(data: WalletData, charId: string): void {
+    this.state.set(data || { gold: 0, rubies: 0 });
+    this.activeCharId = charId;
+  }
+
+  private saveWalletToLocalStorage(updatedState: WalletData) {
+    if (this.activeCharId) {
+      localStorage.setItem(`${this.activeCharId}_wallet`, JSON.stringify(updatedState));
+      console.log('🪙 Wallet im LocalStorage aktualisiert!');
+    }
   }
 
   addGold(amount: number): void {
@@ -19,6 +28,7 @@ export class WalletService {
     
     this.state.update(state => {
       const newState = { ...state, gold: state.gold + amount };
+      this.saveWalletToLocalStorage(newState);
       return newState;
     });
   }
@@ -29,11 +39,18 @@ export class WalletService {
     const currentGold = this.state().gold;
     if (currentGold < amount) return false;
     
+    let transactionSuccess = false;
+
     this.state.update(state => {
-      const newState = { ...state, gold: state.gold - amount };
-      return newState;
+      if (state.gold >= amount) {
+        const newState = { ...state, gold: state.gold - amount };
+        this.saveWalletToLocalStorage(newState);
+        transactionSuccess = true;
+        return newState;
+      }
+      return state;
     });
     
-    return true;
+    return transactionSuccess;
   }
 }

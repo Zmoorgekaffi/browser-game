@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, effect } from '@angular/core';
-import { Router } from '@angular/router'; // Wird nur noch für den initialen Login-Redirect benötigt
+import { Router } from '@angular/router'; 
 import { WalletService } from './wallet.service';
 import { SkillsService } from './skills.service';
 import { InventarService } from './inventar.service';
@@ -7,7 +7,7 @@ import { ProfileService } from './profile.service';
 import { UtilityService } from './utility.service';
 import { ShopService } from './shop.service';
 import { LoginService } from './login.service';
-import { SceneService } from './scene.service'; // Neu importiert
+import { SceneService } from './scene.service'; 
 
 @Injectable({
   providedIn: 'root',
@@ -22,24 +22,18 @@ export class GameStateService {
   public shop = inject(ShopService);
   private login = inject(LoginService);
   
-  // Der neue SceneService ersetzt die direkte Router-Logik hier
   private sceneService = inject(SceneService); 
-  private router = inject(Router); // Nur noch für den Login-Redirect im Constructor
+  private router = inject(Router); 
 
   // 2. Reaktive Signale für den State
   public currentCharId = signal<string | null>(null);
   
-  // Verweist direkt auf das Signal im SceneService. 
-  // Alle anderen Komponenten, die gameStateService.scene() aufrufen, merken keinen Unterschied!
   public scene = this.sceneService.currentScene;
 
   constructor() {
     effect(() => {
-      // Wir holen uns den aktuellen Wert (den Zeitstempel). 
-      // Das sorgt dafür, dass dieser Effekt bei JEDEM Routenwechsel anspringt.
       const timestamp = this.sceneService.onSceneChange();
       
-      // Beim App-Start ist der Wert 0, da wollen wir noch nicht würfeln
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
       }
@@ -83,10 +77,14 @@ export class GameStateService {
     const inventarRaw = localStorage.getItem(`${charId}_inventar`) || '{"items": []}';
     const inventarObjekt = JSON.parse(inventarRaw);
 
-    this.inventar.init(inventarObjekt);
+    // KORREKTUR: Wir übergeben hier jetzt die charId als zweiten Parameter mit!
+    this.inventar.init(inventarObjekt, charId);
+    
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
     this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
-    this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'));
+    
+    // KORREKTUR: Auch das Wallet braucht die charId für das automatische Speichern beim Kaufen
+    this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'), charId);
 
     this.shop.init(charId);
   }
@@ -97,7 +95,7 @@ export class GameStateService {
   private createNewCharacter(charId: string) {
     const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
     const defaultSkills = { attack: 1, defense: 1, spells: [] };
-    const defaultWallet = { gold: 100, rubies: 0 };
+    const defaultWallet = { gold: 1000, rubies: 0 };
     const defaultInventar = { items: [] };
 
     localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));

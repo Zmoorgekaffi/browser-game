@@ -20,7 +20,7 @@ export class SceneContainerComponent {
   private loginService = inject(LoginService);
   private sceneService = inject(SceneService);
   private gameStateService = inject(GameStateService);
-  private audioService = inject(AudioService);
+  public audioService = inject(AudioService);
 
   constructor() {
     effect(() => {

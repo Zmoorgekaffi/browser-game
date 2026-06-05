@@ -1,53 +1,84 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
-  <img src="imgs/magic-shop/magic-shop_0.webp" class="w-full h-full object-cover" alt="" />
+  <img src="imgs/magic-shop/magic-shop_1.webp" class="w-full h-full object-cover" alt="" />
 
   <app-item-info-card></app-item-info-card>
 
+
+
   @if (currentShopItems() && currentShopItems().length >= 6) {
-    <app-shop-item
-      [devmode]="true"
-      [x]="135"
-      [y]="360"
-      [itemObject]="currentShopItems()[0]"
-    ></app-shop-item>
-    
-    <app-shop-item
-      [devmode]="true"
-      [x]="319"
-      [y]="360"
-      [itemObject]="currentShopItems()[1]"
-    ></app-shop-item>
-    
-    <app-shop-item
-      [devmode]="true"
-      [x]="504"
-      [y]="360"
-      [itemObject]="currentShopItems()[2]"
-    ></app-shop-item>
-    
-    <app-shop-item
-      [devmode]="true"
-      [x]="688"
-      [y]="360"
-      [itemObject]="currentShopItems()[3]"
-    ></app-shop-item>
-    
-    <app-shop-item
-      [devmode]="true"
-      [x]="866"
-      [y]="360"
-      [itemObject]="currentShopItems()[4]"
-    ></app-shop-item>
-    
-    <app-shop-item
-      [devmode]="true"
-      [x]="1047"
-      [y]="360"
-      [itemObject]="currentShopItems()[5]"
-    ></app-shop-item>
+    @if (!currentShopItems()[0].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="135"
+        [y]="360"
+        [itemObject]="currentShopItems()[0]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 0)"
+      ></app-shop-item>
+    }
+
+    @if (!currentShopItems()[1].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="319"
+        [y]="360"
+        [itemObject]="currentShopItems()[1]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 1)"
+      ></app-shop-item>
+    }
+
+    @if (!currentShopItems()[2].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="504"
+        [y]="360"
+        [itemObject]="currentShopItems()[2]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 2)"
+      ></app-shop-item>
+    }
+
+    @if (!currentShopItems()[3].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="688"
+        [y]="360"
+        [itemObject]="currentShopItems()[3]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 3)"
+      ></app-shop-item>
+    }
+
+    @if (!currentShopItems()[4].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="866"
+        [y]="360"
+        [itemObject]="currentShopItems()[4]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 4)"
+      ></app-shop-item>
+    }
+
+    @if (!currentShopItems()[5].isSold) {
+      <app-shop-item
+        [devmode]="true"
+        [x]="1047"
+        [y]="360"
+        [itemObject]="currentShopItems()[5]"
+        (click)="gameStateService.shop.selectItemForPreview('magic', 5)"
+      ></app-shop-item>
+    }
   } @else {
-    <div class="text-white absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+    <div
+      class="text-white absolute inset-0 flex items-center justify-center bg-black bg-opacity-70"
+    >
       Lade magische Waren...
     </div>
   }
+
+    <!-- merchant -->
+  <div class="absolute w-[360px] h-[480px] left-[350px] top-[6px]">
+    <app-animation-object
+      [Name]="'magic-shop-merchant'"
+      [Duration]="2200"
+      [spritePaths]="greetAnimationPaths"
+    ></app-animation-object>
+  </div>
 </div>

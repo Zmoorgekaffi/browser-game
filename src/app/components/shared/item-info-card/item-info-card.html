@@ -1,14 +1,25 @@
 @if (show()) {
   <div
-    class="flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
+    class="card-container w-full flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
   >
-    <div class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-[50%]" (click)="closeInfoCard()">
-
-    </div>
-    <div class="border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col">
-        <span>name: {{currentDisplayedItem().name}}</span>
-        <span>description: {{currentDisplayedItem().description}}</span>
-        <span>price: {{currentDisplayedItem().price}}</span>
+    <div
+      class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-[50%]"
+      (click)="closeInfoCard()"
+    ></div>
+    <div class="z-[9999] bg-[rgba(255,255,255,0.6)] border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col">
+      <span>name: {{ currentDisplayedItem().name }}</span>
+      <span>description: {{ currentDisplayedItem().description }}</span>
+      <span>price: {{ currentDisplayedItem().price }}</span>
+      <div class="w-full flex justify-end pt-5">
+        @if (gameStateService.wallet.gold() >= currentDisplayedItem().price) {
+          <button
+            (click)="buyItem()"
+            class="rounded-xl border border-black px-4 py-2 min-w-[3rem] leading-3 cursor-pointer hover:bg-[rgba(0,0,0,0.1)]"
+          >
+            buy item
+          </button>
+        }
+      </div>
     </div>
   </div>
 }
