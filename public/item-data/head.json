@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Flicken-Stoffhaube",
+    "description": "Eine einfache, aus Stoffresten zusammengenähte Haube. Bietet minimalen Schutz, wärmt aber den Kopf.",
+    "img-path": "imgs/items/helmets/cloth-hood_1.webp",
+    "price": 12,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 1,
+      "strength": 0,
+      "vitality": 1,
+      "luck": 0,
+      "energy-shield": 2,
+      "magic-find": 0,
+      "armor": 2
+    }
+  },
+  {
+    "name": "Verstärkte Lederkappe",
+    "description": "Gegerbtes Leder, das an den Schläfen mit kleinen Eisenplatten verstärkt wurde. Leicht und flexibel.",
+    "img-path": "imgs/items/helmets/leather-cap_2.webp",
+    "price": 22,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 4,
+      "strength": 2,
+      "vitality": 0,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 6
+    }
+  },
+  {
+    "name": "Novizen-Kapuze",
+    "description": "Eine tiefe Kapuze aus feiner Wolle, die die Konzentration des Trägers schärft und den Geist beruhigt.",
+    "img-path": "imgs/items/helmets/mage-hood_3.webp",
+    "price": 32,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 5,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 2,
+      "luck": 0,
+      "energy-shield": 10,
+      "magic-find": 0,
+      "armor": 1
+    }
+  },
+  {
+    "name": "Rostiger Eisenhelm",
+    "description": "Ein alter, schwerer Helm aus den Minen. Er hat einige Dellen, hält aber im Kampf einiges aus.",
+    "img-path": "imgs/items/helmets/iron-helm_4.webp",
+    "price": 40,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -1,
+      "strength": 4,
+      "vitality": 4,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 14
+    }
+  },
+  {
+    "name": "Banditenguck-Maske",
+    "description": "Eine dunkle Stoffmaske, die das Gesicht verbirgt. Schärft den Blick für lohnenswerte Beute und Schwachstellen.",
+    "img-path": "imgs/items/helmets/thief-mask_5.webp",
+    "price": 55,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 6,
+      "strength": 0,
+      "vitality": 1,
+      "luck": 4,
+      "energy-shield": 0,
+      "magic-find": 6,
+      "armor": 4
+    }
+  },
+  {
+    "name": "Visierhelm des Wächters",
+    "description": "Ein polierter Stahlhelm mit klappbarem Visier. Standardausrüstung der dörflichen Elite-Stadtwache.",
+    "img-path": "imgs/items/helmets/guard-helm_6.webp",
+    "price": 75,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -2,
+      "strength": 6,
+      "vitality": 8,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 22
+    }
+  },
+  {
+    "name": "Reif der arkanen Erleuchtung",
+    "description": "Ein graziler Stirnreif, in den ein pulsierender Fokus-Kristall eingelassen ist. Stärkt die magische Barriere.",
+    "img-path": "imgs/items/helmets/arcane-circlet_7.webp",
+    "price": 90,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 8,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 2,
+      "energy-shield": 25,
+      "magic-find": 0,
+      "armor": 3
+    }
+  },
+  {
+    "name": "Malachit-Krone",
+    "description": "Geschmiedet aus den grünen Erzen des Zonen-Bosses. Verleiht dem Träger eine fast unerschütterliche Physis.",
+    "img-path": "imgs/items/helmets/malachite-crown_8.webp",
+    "price": 140,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 10,
+      "vitality": 12,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 5,
+      "armor": 35
+    }
+  },
+  {
+    "name": "Glimmende Kristall-Kappe",
+    "description": "Eine seltene Kopfbedeckung aus den Tiefen der Kristallhöhle. Jede Faser ist mit purer magischer Energie geladen.",
+    "img-path": "imgs/items/helmets/crystal-helm_9.webp",
+    "price": 180,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 12,
+      "dexterity": 4,
+      "strength": 0,
+      "vitality": 4,
+      "luck": 3,
+      "energy-shield": 50,
+      "magic-find": 0,
+      "armor": 8
+    }
+  },
+  {
+    "name": "Antikes Schicksals-Visier",
+    "description": "Ein legendärer Helm aus vergessener Zeit. Seine Runen glühen auf, sobald Gefahr droht, und lenken das Schicksal.",
+    "img-path": "imgs/items/helmets/destiny-helm_10.webp",
+    "price": 280,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 7,
+      "dexterity": 7,
+      "strength": 7,
+      "vitality": 7,
+      "luck": 10,
+      "energy-shield": 30,
+      "magic-find": 15,
+      "armor": 20
+    }
+  }
+]

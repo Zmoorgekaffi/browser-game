@@ -123,7 +123,7 @@
     "description": "Geschmiedet im Feuer eines aktiven Vulkans. Dieser dunkle Stein absorbiert magische Angriffe.",
     "img-path": "imgs/items/amulets/obsidian-amulet_7.webp",
     "price": 110,
-    "armor-slot": "head",
+    "armor-slot": "necklace",
     "stats": {
       "intelligence": 5,
       "dexterity": 0,
@@ -157,7 +157,7 @@
     "description": "Ein unscheinbares Amulett, das die Schicksalsfäden webt. Monster lassen wie durch Wunder mehr Beute fallen.",
     "img-path": "imgs/items/amulets/clover-amulet_9.webp",
     "price": 130,
-    "armor-slot": "head",
+    "armor-slot": "necklace",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -174,7 +174,7 @@
     "description": "Es enthält ein winziges Fragment einer herabgefallenen Sternenschnuppe. Pure kosmische Energie.",
     "img-path": "imgs/items/amulets/starlight-amulet_10.webp",
     "price": 200,
-    "armor-slot": "head",
+    "armor-slot": "necklace",
     "stats": {
       "intelligence": 10,
       "dexterity": 10,

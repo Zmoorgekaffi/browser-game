@@ -3,9 +3,9 @@ import { UtilityService } from './utility.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
 
-import amuletsData from '../../../public/item-data/amulets.json';
-import weaponsData from '../../../public/item-data/amulets.json'; 
-import suppliesData from '../../../public/item-data/amulets.json'; 
+import amuletsData from '../../../public/item-data/necklace.json';
+import weaponsData from '../../../public/item-data/necklace.json'; 
+import suppliesData from '../../../public/item-data/necklace.json'; 
 
 interface AllShopsData {
   magic: any[];

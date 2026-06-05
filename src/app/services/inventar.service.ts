@@ -9,9 +9,8 @@ export interface EquippedSlots {
   leg: any | null;
   gloves: any | null;
   footwear: any | null;
-  'accessoires-left': any | null;
+  'accessoire-left': any | null;
   'accessoire-right': any | null;
-  'ear-right': any | null;
   necklace: any | null;
   'ring-left': any | null;
   'ring-right': any | null;
@@ -38,7 +37,7 @@ export class InventarService {
     leg: null,
     gloves: null,
     footwear: null,
-    'accessoires-left': null,
+    'accessoire-left': null,
     'accessoire-right': null,
     'ear-right': null,
     necklace: null,
@@ -159,7 +158,7 @@ export class InventarService {
     // Frisches leeres Slot-Objekt vorbereiten
     const newSlots: EquippedSlots = {
       head: null, chest: null, leg: null, gloves: null, footwear: null,
-      'accessoires-left': null, 'accessoire-right': null, 'ear-right': null,
+      'accessoire-left': null, 'accessoire-right': null, 'ear-right': null,
       necklace: null, 'ring-left': null, 'ring-right': null,
       'weapon-1': null, 'weapon-2': null, back: null
     };

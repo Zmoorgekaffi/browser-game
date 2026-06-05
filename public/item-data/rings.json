@@ -1,25 +1,10 @@
 [
   {
-    "name": "Arkaner Splitterring",
-    "description": "Ein einfacher Ring, besetzt mit einem winzigen, ungeschliffenen Kristallfragment. Er glimmt schwach und verleiht dir einen Hauch magischer Energie für den Start.",
-    "img-path": "items/rings/arcane-crystal-ring_0.webp",
-    "price": 8,
-    "stats": {
-      "intelligence": 2,
-      "dexterity": 0,
-      "strength": 0,
-      "vitality": 1,
-      "luck": 1,
-      "energy-shield": 5,
-      "magic-find": 0,
-      "armor": 0
-    }
-  },
-  {
     "name": "Einfacher Kupferring",
     "description": "Ein simpler, leicht oxidierter Ring. Nichts Besonderes, aber er gibt ein Gefühl von Sicherheit.",
-    "img-path": "items/rings/copper-ring_1.webp",
+    "img-path": "imgs/items/rings/copper-ring_1.webp",
     "price": 15,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -34,8 +19,9 @@
   {
     "name": "Gezackter Eisenring",
     "description": "Die scharfen Kanten stacheln den Kampfgeist des Trägers an und erhöhen die physische Schlagkraft.",
-    "img-path": "items/rings/iron-ring_2.webp",
+    "img-path": "imgs/items/rings/iron-ring_2.webp",
     "price": 25,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -50,8 +36,9 @@
   {
     "name": "Silberner Reif des Gelehrten",
     "description": "Das fein polierte Silber reflektiert das Licht und schärft den Verstand für komplexe Zauberformeln.",
-    "img-path": "items/rings/silver-ring_3.webp",
+    "img-path": "imgs/items/rings/silver-ring_3.webp",
     "price": 35,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 6,
       "dexterity": 0,
@@ -65,9 +52,10 @@
   },
   {
     "name": "Bernstein-Ring",
-    "description": "In diesem fossilen Harz ist eine uralte Fliege gefangen. Konserviert Lebenskraft über Äonen.",
-    "img-path": "items/rings/amber-ring_4.webp",
+    "description": "In diesem fossilen Harz ist eine uralte Fliege gefangen. Konserviert die Lebenskraft des Trägers.",
+    "img-path": "imgs/items/rings/amber-ring_4.webp",
     "price": 30,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -82,8 +70,9 @@
   {
     "name": "Prismatischer Bandring",
     "description": "Je nach Lichteinfall schimmert der Ring in allen Farben. Er webt eine leichte, schützende Manaschicht.",
-    "img-path": "items/rings/prismatic-ring_5.webp",
+    "img-path": "imgs/items/rings/prismatic-ring_5.webp",
     "price": 50,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 3,
       "dexterity": 3,
@@ -97,9 +86,10 @@
   },
   {
     "name": "Katzenaugen-Ring",
-    "description": "Der geschlifene Edelstein erinnert an das Auge eines Raubtiers. Erhöht die Reaktionsgeschwindigkeit.",
-    "img-path": "items/rings/cateye-ring_6.webp",
+    "description": "Der geschliffene Edelstein erinnert an das Auge eines Raubtiers. Erhöht die Reaktionsgeschwindigkeit.",
+    "img-path": "imgs/items/rings/cateye-ring_6.webp",
     "price": 45,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 1,
       "dexterity": 8,
@@ -114,8 +104,9 @@
   {
     "name": "Goldener Siegelring",
     "description": "Ein schwerer Ring, der Wohlstand und ein glückliches Händchen beim Plündern verspricht.",
-    "img-path": "items/rings/gold-ring_7.webp",
+    "img-path": "imgs/items/rings/gold-ring_7.webp",
     "price": 80,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -130,11 +121,12 @@
   {
     "name": "Knochenring des Nekromanten",
     "description": "Aus dem Fingerknochen eines Magiers geschnitzt. Entzieht der Umgebung essenzielle Lebensenergie.",
-    "img-path": "items/rings/bone-ring_8.webp",
+    "img-path": "imgs/items/rings/bone-ring_8.webp",
     "price": 95,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 7,
-      "dexterity": 0,
+      "cyan-shield": 0,
       "strength": 2,
       "vitality": 5,
       "luck": 0,
@@ -146,8 +138,9 @@
   {
     "name": "Kristalliner Matrix-Ring",
     "description": "Gefunden in den tiefsten Kristallhöhlen. Er verbindet sich direkt mit der magischen Barriere des Trägers.",
-    "img-path": "items/rings/crystal-ring_9.webp",
+    "img-path": "imgs/items/rings/crystal-ring_9.webp",
     "price": 120,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 9,
       "dexterity": 4,
@@ -162,8 +155,9 @@
   {
     "name": "Band des ewigen Schicksals",
     "description": "Ein Ring aus einem unbekannten, dunklen Metall. Er scheint die Realität um den Träger herum subtil zu manipulieren.",
-    "img-path": "items/rings/destiny-ring_10.webp",
+    "img-path": "imgs/items/rings/destiny-ring_10.webp",
     "price": 250,
+    "armor-slot": "ring",
     "stats": {
       "intelligence": 6,
       "dexterity": 6,
