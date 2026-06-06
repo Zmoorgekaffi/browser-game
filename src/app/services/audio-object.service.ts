@@ -40,6 +40,10 @@ export class AudioService {
       music: '/audio/village/village-music_0.mp3', 
       musicVol: 0.12,
     },
+    '/character': { 
+      music: '/audio/village/village-music_0.mp3', 
+      musicVol: 0.12,
+    },
     // HINWEIS: Falls das Inventar irgendwann eigene Musik bekommen soll,
     // kannst du es hier eintragen. Solange es fehlt, läuft die alte Musik weiter!
   };

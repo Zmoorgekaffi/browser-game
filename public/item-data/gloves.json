@@ -13,7 +13,21 @@
       "luck": 0,
       "energy-shield": 1,
       "magic-find": 0,
-      "armor": 1
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -30,7 +44,21 @@
       "luck": 0,
       "energy-shield": 0,
       "magic-find": 0,
-      "armor": 5
+      "armor": 5,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -47,7 +75,21 @@
       "luck": 0,
       "energy-shield": 10,
       "magic-find": 0,
-      "armor": 1
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -64,7 +106,21 @@
       "luck": 0,
       "energy-shield": 0,
       "magic-find": 0,
-      "armor": 12
+      "armor": 12,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -81,7 +137,21 @@
       "luck": 4,
       "energy-shield": 0,
       "magic-find": 6,
-      "armor": 4
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -98,7 +168,21 @@
       "luck": 0,
       "energy-shield": 0,
       "magic-find": 0,
-      "armor": 22
+      "armor": 22,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -115,7 +199,21 @@
       "luck": 1,
       "energy-shield": 25,
       "magic-find": 3,
-      "armor": 2
+      "armor": 2,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -132,7 +230,21 @@
       "luck": 0,
       "energy-shield": 0,
       "magic-find": 5,
-      "armor": 32
+      "armor": 32,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -149,7 +261,21 @@
       "luck": 2,
       "energy-shield": 45,
       "magic-find": 0,
-      "armor": 6
+      "armor": 6,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -166,7 +292,21 @@
       "luck": 12,
       "energy-shield": 25,
       "magic-find": 10,
-      "armor": 18
+      "armor": 18,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   }
 ]

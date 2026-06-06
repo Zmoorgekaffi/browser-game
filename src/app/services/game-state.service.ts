@@ -27,8 +27,10 @@ export class GameStateService {
 
   // 2. Reaktive Signale für den State
   public currentCharId = signal<string | null>(null);
-  
   public scene = this.sceneService.currentScene;
+
+  // 3. Facade Pattern: Exponiert die finalen, berechneten Kampfwerte ans UI
+  public combatStats = this.skills.combatStats;
 
   constructor() {
     effect(() => {
@@ -37,11 +39,15 @@ export class GameStateService {
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
       }
+
+      //test
+      console.log(this.combatStats(), "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier");
+      
     });
   }
 
   init() {
-     console.log('GAMMESTATESERVICE wird ausgeführt');
+    console.log('GAMMESTATESERVICE wird ausgeführt');
     
     const storedId = sessionStorage.getItem('pixel-quest-currentUser');
     console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier', storedId);
@@ -53,7 +59,6 @@ export class GameStateService {
       this.login.loggedInAs.set(storedId);
     }
 
-    // Login-Prüfung beim App-Start
     if (storedId && this.login.loggedInAs()) {
       this.loadCharacterData(storedId);
     } else {
@@ -61,9 +66,6 @@ export class GameStateService {
     }
   }
 
-  /**
-   * Lädt alle Sub-Services mit den persistenten Daten des Charakters
-   */
   public loadCharacterData(charId: string) {
     const profileKey = `${charId}_profile`;
     const profileData = localStorage.getItem(profileKey);
@@ -75,13 +77,9 @@ export class GameStateService {
     const inventarRaw = localStorage.getItem(`${charId}_inventar`) || '{"items": []}';
     const inventarObjekt = JSON.parse(inventarRaw);
 
-    // KORREKTUR: Wir übergeben hier jetzt die charId als zweiten Parameter mit!
     this.inventar.init(inventarObjekt, charId);
-    
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
     this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
-    
-    // KORREKTUR: Auch das Wallet braucht die charId für das automatische Speichern beim Kaufen
     this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'), charId);
 
     this.shop.init(charId);
@@ -89,10 +87,39 @@ export class GameStateService {
 
   /**
    * Erstellt die initialen Standard-Daten für einen brandneuen Charakter
+   * mit allen neuen RPG-Attributen.
    */
   private createNewCharacter(charId: string) {
     const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
-    const defaultSkills = { attack: 1, defense: 1, spells: [] };
+    
+    const defaultSkills = {
+      intelligence: 5,
+      dexterity: 5,
+      strength: 5,
+      vitality: 5,
+      luck: 5,
+      'energy-shield': 0,
+      'magic-find': 0,
+      armor: 0,
+      hp: 100,
+      mana: 20,
+      attack: 5,
+      magicAttack: 5,
+      initiative: 10,
+      evasion: 5,
+      critChance: 5,
+      critDamage: 150,
+      chaosDamage: 0,
+      charisma: 1,
+      resistances: {
+        fire: 0,
+        cold: 0,
+        lightning: 0,
+        chaos: 0
+      },
+      spells: []
+    };
+    
     const defaultWallet = { gold: 1000, rubies: 0 };
     const defaultInventar = { items: [] };
 

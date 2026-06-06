@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, WritableSignal, computed } from '@angular/core';
+import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -11,6 +11,7 @@ export interface EquippedSlots {
   footwear: any | null;
   'accessoire-left': any | null;
   'accessoire-right': any | null;
+  'ear-right': any | null;
   necklace: any | null;
   'ring-left': any | null;
   'ring-right': any | null;
@@ -69,7 +70,8 @@ export class InventarService {
     if (data && data.items) {
       data.items = data.items.map((item: any) => ({
         ...item,
-        equipped: item.equipped !== undefined ? item.equipped : false
+        equipped: item.equipped !== undefined ? item.equipped : false,
+        'assigned-slot': item['assigned-slot'] !== undefined ? item['assigned-slot'] : null
       }));
     }
     
@@ -77,7 +79,7 @@ export class InventarService {
     this.inventar.set(data || { items: [] });
     
     // Nach dem Laden des Inventars füllen wir das equippedSlots-Signal initial ab
-    this.updateEquippedSlotsSignal();
+    this.updateEquippedSlotsSignal(this.inventar().items);
   }
 
   public goBack(): void {
@@ -88,7 +90,8 @@ export class InventarService {
     this.inventar.update(currentInv => {
       const formattedItem = {
         ...newItem,
-        equipped: newItem.equipped !== undefined ? newItem.equipped : false
+        equipped: newItem.equipped !== undefined ? newItem.equipped : false,
+        'assigned-slot': null
       };
       const updatedItems = currentInv?.items ? [...currentInv.items, formattedItem] : [formattedItem];
       const newInventar = { ...currentInv, items: updatedItems };
@@ -99,61 +102,78 @@ export class InventarService {
   }
 
   /**
-   * Rüstet ein Item aus. Wenn der Slot besetzt ist, wird das alte Item automatisch abgelegt.
+   * Rüstet ein Item aus. Fängt dynamische Slots wie Ringe und Accessoires ab.
    */
   public toggleEquipItem(itemIndex: number): void {
+    let latestItems: any[] = [];
+
     this.inventar.update(currentInv => {
       if (!currentInv?.items || !currentInv.items[itemIndex]) return currentInv;
 
-      const updatedItems = [...currentInv.items];
+      // Deep Copy via JSON-Schnittstelle verhindert jegliche Objektreferenz-Konflikte
+      const updatedItems = JSON.parse(JSON.stringify(currentInv.items));
       const targetItem = updatedItems[itemIndex];
       
-      // Holt den zugewiesenen Slot aus dem Item-Objekt (z.B. "head", "necklace", "weapon-1")
-      const slot: keyof EquippedSlots = targetItem['armor-slot'];
+      const baseSlot = targetItem['armor-slot'];
+      let finalSlot: string = baseSlot;
 
-      if (!slot) {
+      if (!baseSlot) {
         console.warn(`⚠️ Item '${targetItem.name}' hat keinen gültigen 'armor-slot' definiert!`);
         return currentInv;
       }
 
-      // Zustand des ausgewählten Items umkehren
       const isEquipping = !targetItem.equipped;
 
       if (isEquipping) {
-        // 🔥 GARANTIE: Loop durch den Rucksack, um alle ANDEREN Items 
-        // auf demselben Slot zu finden und rigoros abzulegen (equipped = false)
-        updatedItems.forEach((item, index) => {
-          const itemSlot = item['armor-slot'];
-          if (index !== itemIndex && itemSlot === slot && item.equipped) {
-            updatedItems[index] = { ...item, equipped: false };
-            console.log(`🔄 Automatischer Austausch: Altes Item '${item.name}' vom Slot '${slot}' abgelegt.`);
+        const slots = this.equippedSlots();
+
+        // 🛠️ DYNAMISCHE SLOT-WEISUNG FÜR RINGE & ACCESSOIRES
+        if (baseSlot === 'ring') {
+          finalSlot = !slots['ring-left'] ? 'ring-left' : 'ring-right';
+        } else if (baseSlot === 'accessoire') {
+          finalSlot = !slots['accessoire-left'] ? 'accessoire-left' : 'accessoire-right';
+        }
+
+        // Wir merken uns den tatsächlichen Slot direkt auf dem Item
+        targetItem['assigned-slot'] = finalSlot;
+
+        // 🔥 AUTOMATISCHER AUSTAUSCH: Alle anderen Items auf diesem exakten Ziel-Slot ablegen
+        updatedItems.forEach((item: any, index: number) => {
+          const currentAssigned = item['assigned-slot'] || item['armor-slot'];
+          if (index !== itemIndex && currentAssigned === finalSlot && item.equipped) {
+            updatedItems[index].equipped = false;
+            updatedItems[index]['assigned-slot'] = null;
+            console.log(`🔄 Automatischer Austausch: '${item.name}' von Slot '${finalSlot}' abgelegt.`);
           }
         });
+      } else {
+        // Beim Ablegen den zugewiesenen Platz wieder löschen
+        targetItem['assigned-slot'] = null;
       }
 
       // Zustand des geklickten Items setzen
-      updatedItems[itemIndex] = {
-        ...targetItem,
-        equipped: isEquipping
-      };
+      targetItem.equipped = isEquipping;
+      updatedItems[itemIndex] = targetItem;
 
-      console.log(`🛡️ Item '${targetItem.name}' auf Slot '${slot}': ${isEquipping ? 'Ausgerüstet' : 'Abgelegt'}`);
+      console.log(`🛡️ Item '${targetItem.name}' auf Slot '${finalSlot}': ${isEquipping ? 'Ausgerüstet' : 'Abgelegt'}`);
 
       const newInventar = { ...currentInv, items: updatedItems };
       this.saveToLocalStorage(newInventar);
+      
+      // Speichern der lokalen Variable für den direkten Datenfluss nach dem Update
+      latestItems = updatedItems;
       return newInventar;
     });
 
-    // Nach dem Update des Haupt-Inventars berechnen wir das Slot-Signal komplett reaktiv neu
-    this.updateEquippedSlotsSignal();
+    // Wir übergeben die frisch berechneten Items direkt, um dem Signal-Lag zu entgehen!
+    this.updateEquippedSlotsSignal(latestItems);
   }
 
   /**
-   * Hilfsfunktion: Scannt das geänderte Inventar und füllt das `equippedSlots` Signal 
-   * mit den Objekten, die equipped: true sind.
+   * Hilfsfunktion: Bekommt die aktuellen Items und befüllt das `equippedSlots` Signal.
    */
-  private updateEquippedSlotsSignal(): void {
-    const items = this.inventar().items || [];
+  private updateEquippedSlotsSignal(itemsArray?: any[]): void {
+    const items = itemsArray || this.inventar().items || [];
     
     // Frisches leeres Slot-Objekt vorbereiten
     const newSlots: EquippedSlots = {
@@ -163,17 +183,17 @@ export class InventarService {
       'weapon-1': null, 'weapon-2': null, back: null
     };
 
-    // Verteilt alle Gegenstände, die "equipped: true" haben, auf ihre exakten Slots
+    // Verteilt alle Gegenstände anhand ihres tatsächlichen Slots
     items.forEach((item: any) => {
       if (item.equipped) {
-        const slot = item['armor-slot'] as keyof EquippedSlots;
+        const slot = (item['assigned-slot'] || item['armor-slot']) as keyof EquippedSlots;
         if (slot && slot in newSlots) {
           newSlots[slot] = item;
         }
       }
     });
 
-    // Das reaktive Signal für das UI updaten
+    // Das reaktive Signal updaten, damit SkillsService.combatStats anspringt
     this.equippedSlots.set(newSlots);
     console.log('✨ Ausgerüstete Slots reaktiv aktualisiert:', this.equippedSlots());
   }

@@ -8,6 +8,7 @@ import { Shrine } from './components/shrine/shrine';
 import { Smither } from './components/smither/smither';
 import { Login } from './components/login/login';
 import { Inventar } from './components/inventar/inventar';
+import { Character } from './components/character/character';
 
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'shrine', component: Shrine },
   { path: 'smither', component: Smither },
   { path: 'inventar', component: Inventar },
+  { path: 'character', component: Character },
   { path: 'login', component: Login },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
