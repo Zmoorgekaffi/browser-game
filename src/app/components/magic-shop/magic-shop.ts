@@ -4,7 +4,7 @@ import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 
-import amuletsData from '../../../../public/item-data/amulets.json';
+import necklace from '../../../../public/item-data/necklace.json';
 
 @Component({
   selector: 'app-magic-shop',
@@ -43,7 +43,7 @@ export class MagicShop implements OnInit {
   currentShopItems = this.gameStateService.shop.currentMagicItems;
 
   ngOnInit() {
-    this.amuletsArray = amuletsData;
+    this.amuletsArray = necklace;
     this.gameStateService.utility.mapArray(this.amuletsMap, this.amuletsArray);
   }
 }

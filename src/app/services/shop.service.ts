@@ -3,18 +3,19 @@ import { UtilityService } from './utility.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
 
-import amuletsData from '../../../public/item-data/necklace.json';
-import weaponsData from '../../../public/item-data/necklace.json'; 
-import suppliesData from '../../../public/item-data/necklace.json'; 
+// Import der korrekten JSON-Pools für deine 3 Shops
+import magicData from '../../../public/item-data/necklace.json';
+import smitherData from '../../../public/item-data/chest.json'; 
+import generalSuppliesData from '../../../public/item-data/head.json'; 
 
 interface AllShopsData {
   magic: any[];
-  weapon: any[];
-  armor: any[];
-  alchemist: any[];
+  smither: any[];
+  'general': any[];
 }
 
-export type ShopType = 'magic' | 'weapon' | 'alchemist' | 'armor';
+// Auf 3 feste Shop-Typen reduziert
+export type ShopType = 'magic' | 'smither' | 'general';
 
 @Injectable({
   providedIn: 'root',
@@ -24,23 +25,23 @@ export class ShopService {
   private walletService = inject(WalletService);
   private inventarService = inject(InventarService);
 
+  // Die 3 reaktiven Shop-Signals
   private magicShopItems = signal<any[]>([]);
-  private weaponShopItems = signal<any[]>([]);      
-  private armorShopItems = signal<any[]>([]);       
-  private alchemistShopItems = signal<any[]>([]);   
+  private smitherShopItems = signal<any[]>([]);      
+  private generalSuppliesShopItems = signal<any[]>([]);   
 
+  // Computed Properties für deine UI-Komponenten
   public currentMagicItems = computed(() => this.magicShopItems());
-  public currentWeaponItems = computed(() => this.weaponShopItems());
-  public currentArmorItems = computed(() => this.armorShopItems());
-  public currentAlchemistItems = computed(() => this.alchemistShopItems());
+  public currentSmitherItems = computed(() => this.smitherShopItems());
+  public currentGeneralSuppliesItems = computed(() => this.generalSuppliesShopItems());
 
   private activeCharId: string | null = null;
 
-  // item-info-card globaler Zustand
+  // Globaler Zustand für die info-card
   public itemInfoCardShow = signal<boolean>(false);
   public currentDisplayedItem = signal<any>(null);
 
-  // NEU: Hier speichern wir den Typ und den Index des aktuell ausgewählten Items ab
+  // Aktive Auswahl für den Kaufprozess
   public activeShopType = signal<ShopType | null>(null);
   public activeItemIndex = signal<number | null>(null);
 
@@ -54,9 +55,8 @@ export class ShopService {
       const shopsData: AllShopsData = JSON.parse(savedShopsRaw);
       
       this.magicShopItems.set(shopsData.magic || []);
-      this.weaponShopItems.set(shopsData.weapon || []);
-      this.armorShopItems.set(shopsData.armor || []);
-      this.alchemistShopItems.set(shopsData.alchemist || []);
+      this.smitherShopItems.set(shopsData.smither || []);
+      this.generalSuppliesShopItems.set(shopsData['general'] || []);
     } else {
       this.rerollAllShopsAtEndOfRun();
     }
@@ -73,24 +73,20 @@ export class ShopService {
     const item = shopSignal()[index];
     if (!item || item.isSold) return;
 
-    // Daten im Service hinterlegen
     this.activeShopType.set(shopType);
     this.activeItemIndex.set(index);
     this.currentDisplayedItem.set(item);
     
-    // Karte anzeigen
     this.itemInfoCardShow.set(true);
   }
 
   /**
-   * ZENTRALE KAUF-LOGIK (Wird nun aus der Info-Card getriggert)
-   * Nutzt die intern gespeicherten Variablen für den Kauf.
+   * ZENTRALE KAUF-LOGIK
    */
   public buyCurrentlySelectedItem(): boolean {
     const shopType = this.activeShopType();
     const index = this.activeItemIndex();
 
-    // Validierung, ob überhaupt ein Item ausgewählt ist
     if (shopType === null || index === null) {
       console.warn('❌ Kein Item zum Kaufen ausgewählt!');
       return false;
@@ -107,24 +103,19 @@ export class ShopService {
       return false;
     }
 
-    // 1. Wallet prüfen & Geld abziehen
     const hasEnoughGold = this.walletService.spendGold(item.price);
     if (!hasEnoughGold) {
       console.error('❌ Nicht genug Gold für dieses Item!');
       return false;
     }
 
-    // 2. Item ins Inventar transferieren
     this.inventarService.addItemToInventar(item);
 
-    // 3. Item im Shop durch einen "isSold"-Platzhalter ersetzen
     currentItems[index] = { isSold: true };
     shopSignal.set(currentItems);
 
-    // 4. Shop-Zustand im LocalStorage sichern
     this.saveAllShopsToLocalStorage();
 
-    // 5. Item-Details-Karte schließen & Zustand zurücksetzen
     this.itemInfoCardShow.set(false);
     this.activeShopType.set(null);
     this.activeItemIndex.set(null);
@@ -137,9 +128,8 @@ export class ShopService {
   private getSignalByShopType(type: ShopType) {
     switch (type) {
       case 'magic': return this.magicShopItems;
-      case 'weapon': return this.weaponShopItems;
-      case 'alchemist': return this.alchemistShopItems;
-      case 'armor': return this.armorShopItems;
+      case 'smither': return this.smitherShopItems;
+      case 'general': return this.generalSuppliesShopItems;
     }
   }
 
@@ -159,19 +149,21 @@ export class ShopService {
 
     const combinedShopsData: AllShopsData = {
       magic: this.magicShopItems(),
-      weapon: this.weaponShopItems(),
-      armor: this.armorShopItems(),
-      alchemist: this.alchemistShopItems()
+      smither: this.smitherShopItems(),
+      'general': this.generalSuppliesShopItems()
     };
 
     localStorage.setItem(`${this.activeCharId}_shops`, JSON.stringify(combinedShopsData));
   }
 
+  /**
+   * Generiert das Angebot für die 3 neuen Shops
+   */
   public rerollAllShopsAtEndOfRun() {
-    this.magicShopItems.set(this.generatePoolSelection(amuletsData, 6));
-    this.weaponShopItems.set(this.generatePoolSelection(weaponsData, 5));
-    this.alchemistShopItems.set(this.generatePoolSelection(suppliesData, 5));
-    this.armorShopItems.set([]);
+    this.magicShopItems.set(this.generatePoolSelection(magicData, 6));
+    this.smitherShopItems.set(this.generatePoolSelection(smitherData, 5));
+    this.generalSuppliesShopItems.set(this.generatePoolSelection(generalSuppliesData, 5));
+    
     this.saveAllShopsToLocalStorage();
   }
 }

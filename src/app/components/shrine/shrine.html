@@ -1,3 +1,27 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
-  <img src="imgs/shrine/shrine_0.webp" class="w-full h-full object-cover" alt="" />
+  <div class="absolute w-[400px] h-[400px] left-[850px] top-[200px]">
+    <app-animation-object
+      [Name]="'pilgrim-pray'"
+      [Duration]="3000"
+      [spritePaths]="pilgrimPrayPaths"
+    ></app-animation-object>
+  </div>
+
+  <div
+    #crystalContainer
+    class="absolute w-[480px] h-[410px] left-[428px] top-[132px]"
+  >
+    <app-animation-object
+      [Name]="'crystal-spin'"
+      [Duration]="2500"
+      [spritePaths]="shrineCrystalPath"
+      [Loop]="true"
+    ></app-animation-object>
+  </div>
+
+  <img
+    src="imgs/shrine/shrine_0.webp"
+    class="w-full h-full object-cover"
+    alt=""
+  />
 </div>

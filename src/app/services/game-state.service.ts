@@ -48,11 +48,9 @@ export class GameStateService {
 
     if (storedId === null) {
       this.currentCharId.set(this.login.loggedInAs());
-      console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier if', this.currentCharId());
     } else {
       this.currentCharId.set(storedId);
       this.login.loggedInAs.set(storedId);
-      console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier else', this.currentCharId());
     }
 
     // Login-Prüfung beim App-Start

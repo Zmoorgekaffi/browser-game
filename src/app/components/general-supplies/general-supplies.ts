@@ -4,8 +4,8 @@ import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 
-//jsons
-import suppliesData from '../../../../public/item-data/amulets.json';
+import supplies from '../../../../public/item-data/head.json';
+
 
 @Component({
   selector: 'app-general-supplies',
@@ -16,6 +16,9 @@ import suppliesData from '../../../../public/item-data/amulets.json';
 })
 export class GeneralSupplies implements OnInit {
   public gameStateService = inject(GameStateService);
+
+  suppliesArray: any[] = [];
+  suppliesMap: Record<string, any> = {};
 
   //Animation paths:
   greetAnimationPaths: any[] = [
@@ -32,14 +35,11 @@ export class GeneralSupplies implements OnInit {
     '/imgs/general-supplies/merchant-animations/hello/sprite_11.png',
   ];
 
-  suppliesArray: any[] = [];
-  suppliesMap: Record<string, any> = {};
-
   // Bindet sich live an das Alchemist/Supplies-Signal aus dem Service!
-  currentShopItems = this.gameStateService.shop.currentAlchemistItems;
+  currentShopItems = this.gameStateService.shop.currentGeneralSuppliesItems;
 
   ngOnInit() {
-    this.suppliesArray = suppliesData;
+    this.suppliesArray = supplies;
     this.gameStateService.utility.mapArray(this.suppliesMap, this.suppliesArray);
   }
 }

@@ -31,19 +31,14 @@ export class AudioService {
     '/magic-shop': { 
       music: '/audio/village/village-music_0.mp3', 
       musicVol: 0.12,                               
-      ambient: '/audio/music/magic_shop_ambient.mp3', 
-      ambientVol: 0.4
     },
     '/smither': { 
       music: '/audio/village/village-music_0.mp3', 
       musicVol: 0.12,                               
-      ambient: '/audio/music/blacksmith_ambient.mp3', 
-      ambientVol: 0.3
     },
     '/general-supplies': { 
       music: '/audio/village/village-music_0.mp3', 
       musicVol: 0.12,
-      ambient: '/audio/music/merchant_ambient.mp3' 
     },
     // HINWEIS: Falls das Inventar irgendwann eigene Musik bekommen soll,
     // kannst du es hier eintragen. Solange es fehlt, läuft die alte Musik weiter!

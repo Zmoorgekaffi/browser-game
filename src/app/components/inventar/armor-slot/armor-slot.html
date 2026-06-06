@@ -11,6 +11,6 @@
   @if (inventarService.equippedSlots()[slotName()]) {
     <img [src]="inventarService.equippedSlots()[slotName()]['img-path']" 
          [alt]="inventarService.equippedSlots()[slotName()].name" 
-         class="w-full h-full object-contain pointer-events-none" />
+         class="w-full h-full object-contain pointer-events-none bg-[rgba(255,255,255,0.75)]" />
   }
 </div>

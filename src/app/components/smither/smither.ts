@@ -4,7 +4,7 @@ import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 
-import weaponsData from '../../../../public/item-data/amulets.json';
+import weaponsData from '../../../../public/item-data/head.json';
 
 @Component({
   selector: 'app-smither',
@@ -20,7 +20,7 @@ export class Smither implements OnInit {
   weaponsMap: Record<string, any> = {};
 
   // Bindet sich live an das Waffen-Signal aus dem Service!
-  currentShopItems = this.gameStateService.shop.currentWeaponItems;
+  currentShopItems = this.gameStateService.shop.currentSmitherItems;
 
   //Animation paths:
   greetAnimationPaths: any[] = [
@@ -46,9 +46,5 @@ export class Smither implements OnInit {
   ngOnInit() {
     this.weaponsArray = weaponsData;
     this.gameStateService.utility.mapArray(this.weaponsMap, this.weaponsArray);
-    console.log(
-      'smither array ist geladen:',
-      this.currentShopItems() && this.currentShopItems().length >= 5,
-    );
   }
 }
