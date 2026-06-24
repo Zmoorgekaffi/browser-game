@@ -1,0 +1,9 @@
+[
+  {
+    "id": "spell_lightning_01",
+    "name": "Kettenblitz",
+    "manaCost": 50,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "lightning", "value": 70 }
+  }
+]

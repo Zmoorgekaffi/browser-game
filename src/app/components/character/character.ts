@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core'; // 💡 Signal großgeschrieben importieren, wenn du es als Typ nutzt
+import { Component, inject, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
 import { RouterLink } from '@angular/router';
@@ -14,18 +14,13 @@ import { AnimationObject } from '../shared/animation-object/animation-object';
 export class Character {
   public gameStateService = inject(GameStateService);
 
-  // Reaktiv verknüpfen (ohne den Wert einzufrieren)
   public name = this.gameStateService.profile.name;
   public level = this.gameStateService.profile.level;
   public exp = this.gameStateService.profile.exp;
 
-  // 🛡️ KORREKTUR: Signal mit großem "S" typisieren, oder den Typen einfach komplett weglassen
   public combatStats: Signal<any> = this.gameStateService.skills.combatStats;
-
-  // Direkte Referenz auf die nackten Basis-Werte
   public baseStats = this.gameStateService.skills.state;
 
-  //Animation-paths
   characterLookAraoundAnimation = [
     '/imgs/character/character-look-around/frame (1).png',
     '/imgs/character/character-look-around/frame (2).png',
@@ -41,16 +36,9 @@ export class Character {
     '/imgs/character/character-look-around/frame (12).png',
     '/imgs/character/character-look-around/frame (13).png',
     '/imgs/character/character-look-around/frame (14).png',
-    '/imgs/character/character-look-around/frame (15).png',
-    '/imgs/character/character-look-around/frame (16).png',
-    '/imgs/character/character-look-around/frame (17).png',
-    '/imgs/character/character-look-around/frame (18).png',
-    '/imgs/character/character-look-around/frame (17).png',
-    '/imgs/character/character-look-around/frame (16).png',
-    '/imgs/character/character-look-around/frame (15).png',
+    '/imgs/character/character-look-around/frame (1).png',
   ];
 
-  // Konfiguration für die automatische UI-Generierung
   public displayStats = [
     { key: 'strength', name: 'Stärke' },
     { key: 'intelligence', name: 'Intelligenz' },

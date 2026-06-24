@@ -39,4 +39,5 @@ export class UtilityService {
     // Mal der Länge und abgerundet mit Math.floor ergibt exakt die Range [0, length - 1]
     return Math.floor(Math.random() * array.length);
   }
+
 }

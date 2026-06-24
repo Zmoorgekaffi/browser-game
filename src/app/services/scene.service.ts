@@ -8,35 +8,35 @@ import { filter } from 'rxjs/operators';
 export class SceneService {
   private router = inject(Router);
 
-  // 1. Dein bestehendes Signal für die aktuelle URL
   private _currentScene = signal<string>('');
+  // Wir setzen das initial auf die aktuelle URL, falls wir schon im Spiel sind
+  private _previousScene = signal<string>(this.router.url || '/village');
+  
   public currentScene = this._currentScene.asReadonly();
-
-  // 2. NEU: Das reine "Feuer"-Signal für den Event-Trigger (gibt die Millisekunden des Wechsels zurück)
-  private _onSceneChange = signal<number>(0);
-  public onSceneChange = this._onSceneChange.asReadonly();
+  public onSceneChange = signal<number>(0);
 
   constructor() {
-    // Initiale Szene beim Start setzen
-    this._currentScene.set(this.router.url);
-
-    // Router-Events für Szenenwechsel abonnieren
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        // A) Die aktuelle Szene updaten
-        this._currentScene.set(event.urlAfterRedirects);
+        const newUrl = event.urlAfterRedirects;
+        const menuPages = ['/inventar', '/skills', '/character', '/login'];
         
-        // B) FEUERN: Wir setzen einen neuen Zeitstempel. 
-        // Jedes Mal, wenn sich diese Zahl ändert, schlägt das Signal bei allen Lauschenden Alarm!
-        this._onSceneChange.set(Date.now());
+        // Logik: Wir merken uns die neue URL als "Rückkehr-Ziel" NUR, 
+        // wenn es KEIN Menü ist.
+        if (!menuPages.includes(newUrl)) {
+          this._previousScene.set(newUrl);
+          console.log(`📌 Neue Rückkehr-Route gespeichert: ${newUrl}`);
+        }
+        
+        this._currentScene.set(newUrl);
+        this.onSceneChange.set(Date.now());
       });
   }
 
-  /**
-   * Hilfsmethode, falls man von außen aktiv die Route wechseln möchte
-   */
-  public navigateTo(path: string): void {
-    this.router.navigate([path]);
+  public goBack(): void {
+    const target = this._previousScene();
+    console.log('Navigiere zurück zu:', target);
+    this.router.navigateByUrl(target);
   }
 }

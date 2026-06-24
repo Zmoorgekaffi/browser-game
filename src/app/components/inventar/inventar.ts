@@ -1,9 +1,8 @@
-import { Component, Signal, effect } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { InventarItem } from './inventar-item/inventar-item';
 import { CommonModule } from '@angular/common';
 import { ArmorSlot } from './armor-slot/armor-slot';
-
 
 @Component({
   selector: 'app-inventar',
@@ -17,19 +16,13 @@ export class Inventar {
 
   constructor(public gameStateService: GameStateService) {
     this.inventar = this.gameStateService.inventar.inventar;
-
-    effect(() => {
-      console.log('Aktueller Inhalt des Inventar-Signals:', this.inventar());
-      if (this.inventar()?.items?.length > 0) {
-        console.log('Erstes gefundenes Item:', this.inventar().items[0]);
-      }
-    });
   }
 
   /**
-   * Schließt das Inventar und leitet den Spieler zurück zur alten Szene
+   * Schließt das Inventar und nutzt den zentralen SceneService, 
+   * um zur letzten Spiel-Szene zurückzukehren.
    */
   closeInventar(): void {
-    this.gameStateService.inventar.goBack();
+    this.gameStateService.sceneService.goBack();
   }
 }

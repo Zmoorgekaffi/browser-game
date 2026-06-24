@@ -178,3 +178,28 @@ src/
 │   ├── app.component.ts
 │   └── app.component.html
 ```
+
+
+
+ein spell sieht derzeit so aus:
+
+{
+  "id": "firebolt_1",
+  "name": "Firebolt",
+  "manaCost": 40,
+  "effectType": "ELEMENTAL_DAMAGE",
+  "effectValues": {
+    "element": "fire",
+    "value": 40
+  }
+}
+
+{
+  "id": "lesser_heal",
+  "name": "Minderwertige Heilung",
+  "manaCost": 20,
+  "effectType": "HEAL",
+  "effectValues": {
+    "value": 30
+  }
+}

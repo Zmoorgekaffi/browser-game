@@ -4,8 +4,10 @@
 
     <div>
       <span class="hover:underline cursor-pointer" routerLink="/character">Charakter</span>
-      <span> | </span>
-      <span class="hover:underline cursor-pointer" routerLink="/inventar">Inventar</span>
+      @if (gameStateService.adventureStateService.level() === null) {
+        <span> | </span>
+        <span class="hover:underline cursor-pointer" routerLink="/inventar">Inventar</span>
+      }
     </div>
 
     <div>Name: {{ name() }} | Level: {{ lvl() }}</div>

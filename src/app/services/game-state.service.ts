@@ -1,5 +1,5 @@
 import { Injectable, signal, inject, effect } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { WalletService } from './wallet.service';
 import { SkillsService } from './skills.service';
 import { InventarService } from './inventar.service';
@@ -7,12 +7,17 @@ import { ProfileService } from './profile.service';
 import { UtilityService } from './utility.service';
 import { ShopService } from './shop.service';
 import { LoginService } from './login.service';
-import { SceneService } from './scene.service'; 
+import { SceneService } from './scene.service';
+import { AdventureStateService } from './adventure-state.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameStateService {
+
+
+
   // 1. Moderne Dependency Injection
   public wallet = inject(WalletService);
   public skills = inject(SkillsService);
@@ -20,14 +25,14 @@ export class GameStateService {
   public profile = inject(ProfileService);
   public utility = inject(UtilityService);
   public shop = inject(ShopService);
+  public adventureStateService = inject(AdventureStateService);
   private login = inject(LoginService);
-  
-  private sceneService = inject(SceneService); 
-  private router = inject(Router); 
+
+  public sceneService = inject(SceneService);
+  private router = inject(Router);
 
   // 2. Reaktive Signale für den State
   public currentCharId = signal<string | null>(null);
-  public scene = this.sceneService.currentScene;
 
   // 3. Facade Pattern: Exponiert die finalen, berechneten Kampfwerte ans UI
   public combatStats = this.skills.combatStats;
@@ -35,22 +40,18 @@ export class GameStateService {
   constructor() {
     effect(() => {
       const timestamp = this.sceneService.onSceneChange();
-      
+
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
       }
-
-      //test
-      console.log(this.combatStats(), "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier");
-      
     });
   }
 
   init() {
     console.log('GAMMESTATESERVICE wird ausgeführt');
-    
+
     const storedId = sessionStorage.getItem('pixel-quest-currentUser');
-    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiier', storedId);
+    this.profile.charId.set(storedId);
 
     if (storedId === null) {
       this.currentCharId.set(this.login.loggedInAs());
@@ -79,10 +80,14 @@ export class GameStateService {
 
     this.inventar.init(inventarObjekt, charId);
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
+    this.skills.profileData = this.currentCharId;
     this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
     this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'), charId);
 
     this.shop.init(charId);
+
+
+
   }
 
   /**
@@ -91,7 +96,7 @@ export class GameStateService {
    */
   private createNewCharacter(charId: string) {
     const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
-    
+
     const defaultSkills = {
       intelligence: 5,
       dexterity: 5,
@@ -115,13 +120,43 @@ export class GameStateService {
         fire: 0,
         cold: 0,
         lightning: 0,
-        chaos: 0
+        chaos: 0,
       },
-      spells: []
+      spells: [],
     };
-    
+
     const defaultWallet = { gold: 1000, rubies: 0 };
-    const defaultInventar = { items: [] };
+    const defaultInventar = {
+      items: [
+        {
+          name: 'Verrostetes Kurzschwert',
+          description:
+            'Eine abgenutzte Klinge mit schartigem Rand. Kaum mehr als ein Stück Metall, aber es tut seinen Dienst.',
+          'img-path': 'imgs/items/weapon/shortsword_rusty.webp',
+          price: 8,
+          'armor-slot': 'weapon-1',
+          stats: {
+            intelligence: 0,
+            dexterity: 0,
+            strength: 0,
+            vitality: 0,
+            luck: 0,
+            'energy-shield': 0,
+            'magic-find': 0,
+            armor: 0,
+            attack: 12,
+            'magic-attack': 0,
+            initiative: 0,
+            evasion: 0,
+            'crit-chance': 0,
+            'crit-damage': 0,
+            chaosDamage: 0,
+            charisma: 0,
+            resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
+          },
+        },
+      ],
+    };
 
     localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));
     localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));

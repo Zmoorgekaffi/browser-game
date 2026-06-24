@@ -9,7 +9,12 @@ import { Smither } from './components/smither/smither';
 import { Login } from './components/login/login';
 import { Inventar } from './components/inventar/inventar';
 import { Character } from './components/character/character';
-
+import { Skills } from './components/skills/skills';
+import { IntroScene } from './components/adventure_scenes/intro-scene/intro-scene';
+import { QuizScene } from './components/adventure_scenes/quiz-scene/quiz-scene';
+import { FightScene } from './components/adventure_scenes/fight-scene/fight-scene';
+import { LootScene } from './components/adventure_scenes/loot-scene/loot-scene';
+import { DialogScene } from './components/adventure_scenes/dialog-scene/dialog-scene';
 
 export const routes: Routes = [
   { path: 'village', component: VillageSceneComponent },
@@ -21,6 +26,12 @@ export const routes: Routes = [
   { path: 'smither', component: Smither },
   { path: 'inventar', component: Inventar },
   { path: 'character', component: Character },
+  { path: 'skills', component: Skills },
+  { path: 'adventure/intro', component: IntroScene },
+  { path: 'adventure/dialog', component: DialogScene },
+  { path: 'adventure/loot', component: LootScene },
+  { path: 'adventure/fight', component: FightScene },
+  { path: 'adventure/quiz', component: QuizScene },
   { path: 'login', component: Login },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

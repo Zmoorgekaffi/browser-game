@@ -15,8 +15,7 @@
     width: 100%;
     height: 100%;
     
-    // Verhindert Verzerrungen und behält das Seitenverhältnis bei
-    object-fit: contain; 
+
     
     // CRITICAL FÜR BROWSER-RPGS: Verhindert, dass Pixel-Art beim Skalieren unscharf/matschig wird!
     image-rendering: pixelated;

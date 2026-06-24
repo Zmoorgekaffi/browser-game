@@ -1,0 +1,8 @@
+[{
+    "id": "spell_chaos_01",
+    "name": "Chaos-Kollaps",
+    "manaCost": 110,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "chaos", "value": 180 }
+  }
+]

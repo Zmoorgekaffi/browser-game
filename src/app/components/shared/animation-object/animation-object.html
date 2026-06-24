@@ -7,7 +7,9 @@
     <img 
       [src]="currentSpritePath()" 
       [alt]="Name" 
-      class="pixel-sprite"
+      class="pixel-sprite w-full h-full"
+      [class.object-contain]="contain"
+      [class.object-cover]="!contain"
     />
   } @else {
     <div class="animation-placeholder"></div>

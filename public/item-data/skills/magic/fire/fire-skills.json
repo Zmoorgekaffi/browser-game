@@ -1,0 +1,16 @@
+[
+  {
+    "id": "spell_fire_01",
+    "name": "Funke",
+    "manaCost": 15,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "fire", "value": 20 }
+  },
+  {
+    "id": "spell_fire_02",
+    "name": "Meteor",
+    "manaCost": 85,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "fire", "value": 130 }
+  }
+]

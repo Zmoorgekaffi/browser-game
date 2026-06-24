@@ -1,0 +1,37 @@
+[
+  {
+    "id": "heal_01",
+    "name": "Minderwertige Heilung",
+    "manaCost": 15,
+    "effectType": "HEAL",
+    "effectValues": { "value": 25 }
+  },
+  {
+    "id": "heal_02",
+    "name": "Verband anlegen",
+    "manaCost": 25,
+    "effectType": "HEAL",
+    "effectValues": { "value": 50 }
+  },
+  {
+    "id": "heal_03",
+    "name": "Lichtwelle",
+    "manaCost": 45,
+    "effectType": "HEAL",
+    "effectValues": { "value": 90 }
+  },
+  {
+    "id": "heal_04",
+    "name": "Große Genesung",
+    "manaCost": 70,
+    "effectType": "HEAL",
+    "effectValues": { "value": 160 }
+  },
+  {
+    "id": "heal_05",
+    "name": "Göttliche Sanierung",
+    "manaCost": 100,
+    "effectType": "HEAL",
+    "effectValues": { "value": 300 }
+  }
+]

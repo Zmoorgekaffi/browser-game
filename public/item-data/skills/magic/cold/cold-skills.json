@@ -1,0 +1,9 @@
+[
+  {
+    "id": "spell_cold_01",
+    "name": "Eislanze",
+    "manaCost": 30,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "cold", "value": 45 }
+  }
+]

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, signal, effect, computed } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,6 +16,9 @@ export class AnimationObject implements OnInit, OnDestroy {
   @Input() spritePaths: any[] = []; // Array aus Bild-Pfaden
   @Input() width: string = "100%";
   @Input() height: string = "100%";
+  
+  // 🔥 Steuert das Object-Fit Verhalten: true = contain, false = cover
+  @Input() contain: boolean = true;
 
   // Das aktive Bild, das gerade gerendert wird
   public currentFrameIndex = signal<number>(0);

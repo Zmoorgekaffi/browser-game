@@ -1,7 +1,7 @@
 <div
   class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative select-none"
 >
-  <div class="absolute top-[78px] left-[735px] w-[395px] h-[59px]">
+  <div class="absolute top-[19px] left-[735px] w-[395px] h-[52px]">
     <span
       class="pb-[3px] w-full h-full flex justify-center items-center text-[40px] leading-[48px] text-white font-bold tracking-wide"
     >
@@ -11,7 +11,7 @@
 
   <div
     #statList
-    class="absolute top-[175px] left-[667px] w-[533px] h-[485px] p-5 flex flex-col justify-start gap-1 items-center overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
+    class="absolute top-[112px] left-[652px] w-[556px] h-[589px] p-5 flex flex-col justify-start gap-1 items-center overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
   >
     <div
       class="w-full flex justify-between items-center text-white text-xs uppercase border-b pb-2 font-semibold"
@@ -40,24 +40,35 @@
     }
   </div>
 
-  <!-- bg -->
   <img
     src="imgs/character/character_0.webp"
     class="w-full h-full object-cover"
     alt="Character Render"
   />
 
-  <div
-    class="border-2 bg-[#EDE2D1] border-blue-600 w-[338px] h-[370px] absolute top-[164px] left-[175px]"
-  >
+  <div class="absolute bottom-[80px] left-[102px] w-[457px] flex justify-center items-center gap-1">
+    <span class="hover:underline cursor-pointer" routerLink="/skills">Skills</span>
+    <span> | </span>
+    <span class="hover:underline cursor-pointer" routerLink="/skills">Skills</span>
+  </div>
+
+  <div class="w-[342px] h-[475px] absolute top-[125px] left-[164px]">
     <app-animation-object
       [spritePaths]="characterLookAraoundAnimation"
-      [Duration]="4000"
+      [Duration]="2500"
       Name="Character Look Around Animation"
-      delay="7000"
+      [Delay]="7000"
+      [Loop]="false"
+      [contain]="false"
     ></app-animation-object>
   </div>
 
-  <!-- skills -->
   <div class="absolute" routerLink="/skills">Skills</div>
+
+  <div
+    (click)="gameStateService.sceneService.goBack()"
+    class="absolute top-4 right-4 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
+  >
+    Schließen ✕
+  </div>
 </div>
