@@ -1,10 +1,10 @@
 [
   {
-    "name": "Schuhe der arkanen Erleuchtung",
-    "description": "Hinterlassen beim Gehen leuchtende Mana-Spuren, die kurz darauf verblassen.",
-    "img-path": "imgs/items/boots/arcane-boots_4.webp",
+    "name": "Manschetten der Erleuchtung",
+    "description": "Diese Bänder scheinen die Hände des Magiers telekinetisch zu unterstützen.",
+    "img-path": "imgs/items/gloves/arcane-gloves_4.webp",
     "price": 66,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 14,
       "dexterity": 0,
@@ -31,11 +31,11 @@
     }
   },
   {
-    "name": "Schattenmeister-Stiefel",
-    "description": "Absorbieren jeglichen Trittschall, selbst auf knackendem Holz oder sprödem Glas.",
-    "img-path": "imgs/items/boots/shadow-boots_4.webp",
+    "name": "Schattenmeister-Griffe",
+    "description": "Geräuschlose Handschuhe, die Gegenstände beim Berühren visuell leicht verzerren.",
+    "img-path": "imgs/items/gloves/shadow-gloves_4.webp",
     "price": 73,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 12,
@@ -62,11 +62,11 @@
     }
   },
   {
-    "name": "Prunkvolle Obsidianstiefel",
-    "description": "Wie Ambosse an den Füßen. Schützen vor Erdbeben und Magma-Böden.",
-    "img-path": "imgs/items/boots/obsidian-boots_4.webp",
+    "name": "Prunkvolle Obsidianstulpen",
+    "description": "Brechen Angriffe mühelos. Fühlen sich massiv und extrem unnachgiebig an.",
+    "img-path": "imgs/items/gloves/obsidian-gloves_4.webp",
     "price": 73,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": -5,
@@ -93,11 +93,11 @@
     }
   },
   {
-    "name": "Sturmbringer-Stiefel",
-    "description": "Erlauben es, kurzzeitig wie vom Blitz getroffen nach vorne zu preschen.",
-    "img-path": "imgs/items/boots/storm-boots_4.webp",
+    "name": "Sturmbringer-Griffe",
+    "description": "Geben bei jedem Schlag kleine elektrostatische Entladungen an die Waffe ab.",
+    "img-path": "imgs/items/gloves/storm-gloves_4.webp",
     "price": 73,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 5,
       "dexterity": 8,
@@ -124,11 +124,11 @@
     }
   },
   {
-    "name": "Dämonen-Schreiter",
-    "description": "Aus den Hufen einer Albtraum-Kreatur geformt. Verbrennen den Boden unter dir.",
-    "img-path": "imgs/items/boots/demon-boots_4.webp",
+    "name": "Dämonen-Klauen",
+    "description": "Die Handschuhe verschmelzen temporär mit der Haut und verleihen enorme physische Gewalt.",
+    "img-path": "imgs/items/gloves/demon-gloves_4.webp",
     "price": 102,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

@@ -1,10 +1,10 @@
 [
   {
-    "name": "Flicken-Stoffschuhe",
-    "description": "Dünne Sohlen, durch die man jeden spitzen Kieselstein schmerzhaft spürt.",
-    "img-path": "imgs/items/boots/cloth-shoes_1.webp",
+    "name": "Flicken-Stoffwickel",
+    "description": "Einfache Leinenbänder, um die Knöchel vor Schürfwunden zu schützen.",
+    "img-path": "imgs/items/gloves/cloth-gloves_1.webp",
     "price": 9,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 2,
       "dexterity": 0,
@@ -31,11 +31,11 @@
     }
   },
   {
-    "name": "Abgewetzte Lederstiefel",
-    "description": "Etwas feucht im Inneren, bieten aber soliden Halt auf schlammigem Boden.",
-    "img-path": "imgs/items/boots/leather-boots_1.webp",
+    "name": "Abgewetzte Lederhandschuhe",
+    "description": "Die Fingerkuppen sind durchgescheuert, bieten aber noch etwas Grip.",
+    "img-path": "imgs/items/gloves/leather-gloves_1.webp",
     "price": 10,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -62,11 +62,11 @@
     }
   },
   {
-    "name": "Rostige Eisenstiefel",
-    "description": "Sehr schwer. Jeder Schritt hinterlässt tiefe Abdrücke und kostet Kraft.",
-    "img-path": "imgs/items/boots/iron-boots_1.webp",
+    "name": "Rostige Eisenhandschuhe",
+    "description": "Schwerfälliger Schutz. Das Greifen von Münzen wird damit zum Geduldsspiel.",
+    "img-path": "imgs/items/gloves/iron-gloves_1.webp",
     "price": 10,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -93,11 +93,11 @@
     }
   },
   {
-    "name": "Wilderer-Schuhe",
-    "description": "Weiche Sohlen aus Wildleder, die Schritte im Wald fast lautlos machen.",
-    "img-path": "imgs/items/boots/thief-boots_1.webp",
+    "name": "Wilderer-Griffe",
+    "description": "Dünne Handschuhe, die ein perfektes Tastgefühl für Fallenmechanismen bewahren.",
+    "img-path": "imgs/items/gloves/thief-gloves_1.webp",
     "price": 10,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -124,11 +124,11 @@
     }
   },
   {
-    "name": "Splitternde Knochenschreiter",
-    "description": "Spitze Knochenkrallen bohren sich bei jedem Schritt krallend in den Untergrund.",
-    "img-path": "imgs/items/boots/cursed-boots_1.webp",
+    "name": "Splitternde Knochenstulpen",
+    "description": "Scharfe Knochensplitter ragen aus den Fingerknöcheln hervor.",
+    "img-path": "imgs/items/gloves/cursed-gloves_1.webp",
     "price": 14,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

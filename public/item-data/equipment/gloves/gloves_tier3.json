@@ -1,10 +1,10 @@
 [
   {
-    "name": "Magister-Stiefel",
-    "description": "Ermöglichen ein elegantes Gleiten über unwegsames Gelände ohne Tempoverlust.",
-    "img-path": "imgs/items/boots/mage-boots_3.webp",
+    "name": "Magister-Manschetten",
+    "description": "Seidene Manschetten, die magische Schwingungen beim Zaubern harmonisieren.",
+    "img-path": "imgs/items/gloves/mage-gloves_3.webp",
     "price": 37,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 8,
       "dexterity": 0,
@@ -31,11 +31,11 @@
     }
   },
   {
-    "name": "Schlangenhaut-Stiefel",
-    "description": "Sorgen für blitzschnelle Richtungswechsel ohne die Gefahr des Umknickens.",
-    "img-path": "imgs/items/boots/snake-boots_3.webp",
+    "name": "Schlangenhaut-Griffe",
+    "description": "Erlauben einen extrem festen Griff und erhöhen die Schnelligkeit beim Waffenwechsel.",
+    "img-path": "imgs/items/gloves/snake-gloves_3.webp",
     "price": 42,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 7,
@@ -62,11 +62,11 @@
     }
   },
   {
-    "name": "Eisenstiefel des Wächters",
-    "description": "Schwere Stiefel mit eisernen Sporen. Verleihen festen Stand gegen Zurückstoßen.",
-    "img-path": "imgs/items/boots/guard-boots_3.webp",
+    "name": "Eisenstulpen des Wächters",
+    "description": "Schwere Plattenglieder schützen jeden einzelnen Finger perfekt vor Quetschungen.",
+    "img-path": "imgs/items/gloves/guard-gloves_3.webp",
     "price": 42,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": -3,
@@ -93,11 +93,11 @@
     }
   },
   {
-    "name": "Falkenaugen-Stiefel",
-    "description": "Sehr leichte Stiefel, die die Sprungkraft und Antrittsgeschwindigkeit optimieren.",
-    "img-path": "imgs/items/boots/hawk-boots_3.webp",
+    "name": "Falkenaugen-Stulpen",
+    "description": "Erhöhen die Präzision und das Feingefühl bei feingliedrigen Fernkampfmanövern.",
+    "img-path": "imgs/items/gloves/hawk-gloves_3.webp",
     "price": 42,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 3,
       "dexterity": 4,
@@ -124,11 +124,11 @@
     }
   },
   {
-    "name": "Gequälte Treter",
-    "description": "Hinterlassen versengte Fußabdrücke. Erhöhen die Brutalität deiner Offensivaktionen.",
-    "img-path": "imgs/items/boots/torment-boots_3.webp",
+    "name": "Gequälte Klauen",
+    "description": "Verwandeln deine Finger in tödliche Werkzeuge, schwächen jedoch deine Abwehrkräfte.",
+    "img-path": "imgs/items/gloves/torment-gloves_3.webp",
     "price": 58,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

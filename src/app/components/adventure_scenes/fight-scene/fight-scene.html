@@ -1,11 +1,23 @@
-<div class="fight-scene-container w-full h-full p-4 relative flex flex-col items-center justify-between text-white">
-
+<div
+  class="fight-scene-container w-full h-full p-4 relative flex flex-col items-center justify-between text-white"
+>
   <!-- Hintergrund: läuft IMMER (auch während Intro) -->
   <div class="z-[-1] absolute inset-0 w-full h-full">
     <app-animation-object
       [contain]="false"
       [spritePaths]="['imgs/areas/dark-forest/fight/background/dark-forest-fight-background.png']"
     ></app-animation-object>
+  </div>
+
+  <div class="w-[180px] h-[260px] absolute top-[280px] left-[540px]">
+    <app-animation-object
+      Name="monster-idle"
+      [Duration]="monsterIdleDuration()"
+      [spritePaths]="monsterIdlePaths()"
+      [Loop]="true"
+      [contain]="true"
+    >
+    </app-animation-object>
   </div>
 
   @if (showMonsterIntro()) {
@@ -31,7 +43,7 @@
       <p>{{ monsterHp() }} / {{ monsterMaxHp() }} HP</p>
     </div>
 
-    <div class="battle-log text-center my-4">
+    <div class="battle-log text-center absolute top-[24px] left-[76px] bg-[rgba(0,0,0,0.6)] p-4 rounded-md">
       <p class="text-lg">Runde: {{ round() }}</p>
       <p class="text-xl font-semibold text-yellow-300">
         {{ currentTurn() === 'player' ? 'Dein Zug!' : 'Gegner am Zug...' }}
@@ -41,7 +53,9 @@
 
     <div class="player-area w-full flex flex-col items-center gap-4">
       <div class="player-info text-center flex flex-col items-center gap-2">
-        <h2 class="text-2xl font-bold text-blue-600">{{ playerName() }} (Level {{ playerLevel() }})</h2>
+        <h2 class="text-2xl font-bold text-blue-600">
+          {{ playerName() }} (Level {{ playerLevel() }})
+        </h2>
 
         <div class="flex gap-4">
           <div class="w-64">

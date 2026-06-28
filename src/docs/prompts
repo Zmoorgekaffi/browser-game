@@ -1,14 +1,12 @@
-ffempeg prompt:
-schreib mir nen befehl für ffempeg, ich mcöhte aus meinem 5 sekunden video, 3 frames die sekunde haben.
+schreib mir bitte einen befehl für das programm ffempeg:
 
+ich habe das programm schon glabl installiert.
 
+im ordner indem wir uns befinden, sind:
 
-video liegt hier:
+1 ordner namens frames -> dort kommen die extrahierten bilder rein
+ein video namens LTX-2_3_00007_.mp4
 
-C:\Users\andre\Desktop\hier\5 video
+ich möchte 5 bilder die sekunde extrahiert haben.
 
-
-
-frames sollen hier rein:
-
-C:\Users\andre\Desktop\hier\6 frames raw
+ich möchte zwingend das erste bild extrahiert haben als seperaten befehl und das allerletzte frame auch in einem 2ten befehl

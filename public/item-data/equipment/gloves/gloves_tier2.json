@@ -1,10 +1,10 @@
 [
   {
-    "name": "Novizen-Schuhe",
-    "description": "Leichte Sandalen, die den Träger stets geerdet und empfänglich für Mana halten.",
-    "img-path": "imgs/items/boots/mage-shoes_2.webp",
+    "name": "Novizen-Handschuhe",
+    "description": "Mit feinen Runen bestickt, um die Kanalisierung von Zaubern zu stabilisieren.",
+    "img-path": "imgs/items/gloves/mage-gloves_2.webp",
     "price": 18,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 4,
       "dexterity": 0,
@@ -31,11 +31,11 @@
     }
   },
   {
-    "name": "Verstärkte Lederstiefel",
-    "description": "Mit dicker Gummi-Leder-Sohle und Stahlkappen an den Zehen ausgestattet.",
-    "img-path": "imgs/items/boots/leather-boots_2.webp",
+    "name": "Verstärkte Lederhandschuhe",
+    "description": "Mit Nieten besetzte Handschuhe. Schützen effektiv vor Schwerthieben.",
+    "img-path": "imgs/items/gloves/leather-gloves_2.webp",
     "price": 21,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -62,11 +62,11 @@
     }
   },
   {
-    "name": "Solide Kettenstiefel",
-    "description": "Schützen die Füße vor herabfallenden Trümmern oder tiefen Schnitten.",
-    "img-path": "imgs/items/boots/chain-boots_2.webp",
+    "name": "Solide Kettenhandschuhe",
+    "description": "Flexibler Schutz aus feinsten Stahlringen für maximale Fingerfertigkeit im Kampf.",
+    "img-path": "imgs/items/gloves/chain-gloves_2.webp",
     "price": 21,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -93,11 +93,11 @@
     }
   },
   {
-    "name": "Pirscher-Stiefel",
-    "description": "Wasserabweisende Stiefel mit hervorragender Dämpfung für lange Gewaltmärsche.",
-    "img-path": "imgs/items/boots/hunter-boots_2.webp",
+    "name": "Pirscher-Handschuhe",
+    "description": "Die Innenseiten sind geraut, um ein Abrutschen von Bogensehnen zu verhindern.",
+    "img-path": "imgs/items/gloves/hunter-gloves_2.webp",
     "price": 21,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 1,
       "dexterity": 2,
@@ -124,11 +124,11 @@
     }
   },
   {
-    "name": "Runenbeschriebene Sandalen",
-    "description": "Zwingen die Füße zu einem unnatürlich schnellen Rhythmus, ermüden aber rasch.",
-    "img-path": "imgs/items/boots/cursed-sandals_2.webp",
+    "name": "Runenbeschriebene Fäustlinge",
+    "description": "Umschließen die Hände mit einer unnatürlichen Hitze, die die Finger brennen lässt.",
+    "img-path": "imgs/items/gloves/cursed-mitts_2.webp",
     "price": 29,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

@@ -1,10 +1,10 @@
 [
   {
-    "name": "Glimmende Kristall-Stiefel",
-    "description": "Ermöglichen es dem Magier, sich in Notsituationen instinktiv kurz zu teleportieren.",
-    "img-path": "imgs/items/boots/crystal-boots_5.webp",
+    "name": "Glimmende Kristall-Griffe",
+    "description": "Die Fingerkuppen leuchten in reinem Mana-Blau und beschleunigen das Zaubertempo enorm.",
+    "img-path": "imgs/items/gloves/crystal-gloves_5.webp",
     "price": 113,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 24,
       "dexterity": 0,
@@ -31,11 +31,11 @@
     }
   },
   {
-    "name": "Nachtwandler-Stiefel",
-    "description": "Wer sie trägt, kann über Wasser wandeln und hinterlässt keinerlei Spuren.",
-    "img-path": "imgs/items/boots/night-boots_5.webp",
+    "name": "Nachtwandler-Handschuhe",
+    "description": "Hinterlassen keine Fingerabdrücke und machen geführte Waffen im Flug fast unsichtbar.",
+    "img-path": "imgs/items/gloves/night-gloves_5.webp",
     "price": 125,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 21,
@@ -62,11 +62,11 @@
     }
   },
   {
-    "name": "Unvergängliche Drachenstiefel",
-    "description": "Aus feuerfester Drachenhaut. Widerstehen selbst direkten Lava-Strömen schadlos.",
-    "img-path": "imgs/items/boots/dragon-boots_5.webp",
+    "name": "Unvergängliche Drachenklauen",
+    "description": "Aus den harten Krallenschuppen eines Drachen gefertigt. Können blanken Stein zerschlagen.",
+    "img-path": "imgs/items/gloves/dragon-gloves_5.webp",
     "price": 125,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": -9,
@@ -93,11 +93,11 @@
     }
   },
   {
-    "name": "Kosmische Stiefel",
-    "description": "Hebeln die Schwerkraft fast aus, sodass der Träger scheinbar durch die Luft wandelt.",
-    "img-path": "imgs/items/boots/cosmic-boots_5.webp",
+    "name": "Kosmische Stulpen",
+    "description": "Erlauben es dem Träger, die Gravitation seiner Waffen beim Schwingen minimal zu manipulieren.",
+    "img-path": "imgs/items/gloves/cosmic-gloves_5.webp",
     "price": 125,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 9,
       "dexterity": 14,
@@ -124,11 +124,11 @@
     }
   },
   {
-    "name": "Antike Schicksals-Stiefel",
-    "description": "Legendäre Stiefel, die dich instinktiv vor jedem herannahenden Projektil ausweichen lassen.",
-    "img-path": "imgs/items/boots/destiny-boots_5.webp",
+    "name": "Antike Schicksals-Handschuhe",
+    "description": "Führen die Hand des Kriegers wie von Geisterhand genau dorthin, wo der Feind ungeschützt ist.",
+    "img-path": "imgs/items/gloves/destiny-gloves_5.webp",
     "price": 176,
-    "armor-slot": "footwear",
+    "armor-slot": "gloves",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
