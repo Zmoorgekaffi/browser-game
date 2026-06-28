@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Magister-Stiefel",
+    "description": "Ermöglichen ein elegantes Gleiten über unwegsames Gelände ohne Tempoverlust.",
+    "img-path": "imgs/items/boots/mage-boots_3.webp",
+    "price": 37,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 8,
+      "dexterity": 0,
+      "strength": -3,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 32,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 0,
+      "magic-attack": 3,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 12,
+        "cold": 12,
+        "lightning": 12,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Schlangenhaut-Stiefel",
+    "description": "Sorgen für blitzschnelle Richtungswechsel ohne die Gefahr des Umknickens.",
+    "img-path": "imgs/items/boots/snake-boots_3.webp",
+    "price": 42,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 7,
+      "strength": 0,
+      "vitality": -3,
+      "luck": 3,
+      "energy-shield": 0,
+      "magic-find": 4,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 6,
+      "crit-chance": 3,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 8
+      }
+    }
+  },
+  {
+    "name": "Eisenstiefel des Wächters",
+    "description": "Schwere Stiefel mit eisernen Sporen. Verleihen festen Stand gegen Zurückstoßen.",
+    "img-path": "imgs/items/boots/guard-boots_3.webp",
+    "price": 42,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -3,
+      "strength": 8,
+      "vitality": 9,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 16,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -3,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 8,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Falkenaugen-Stiefel",
+    "description": "Sehr leichte Stiefel, die die Sprungkraft und Antrittsgeschwindigkeit optimieren.",
+    "img-path": "imgs/items/boots/hawk-boots_3.webp",
+    "price": 42,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 4,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 9,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 6,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -3,
+      "resistances": {
+        "fire": 0,
+        "cold": 8,
+        "lightning": 8,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Gequälte Treter",
+    "description": "Hinterlassen versengte Fußabdrücke. Erhöhen die Brutalität deiner Offensivaktionen.",
+    "img-path": "imgs/items/boots/torment-boots_3.webp",
+    "price": 58,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -6,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 6,
+      "magic-attack": 6,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 9,
+      "chaosDamage": 6,
+      "charisma": 0,
+      "resistances": {
+        "fire": -12,
+        "cold": -12,
+        "lightning": -12,
+        "chaos": 16
+      }
+    }
+  }
+]

@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Definition der verfügbaren Slots zur Typsicherheit
+// Definition der verfügbaren Slots zur Typsicherheit (ear-right entfernt)
 export interface EquippedSlots {
   head: any | null;
   chest: any | null;
@@ -10,7 +10,6 @@ export interface EquippedSlots {
   footwear: any | null;
   'accessoire-left': any | null;
   'accessoire-right': any | null;
-  'ear-right': any | null;
   necklace: any | null;
   'ring-left': any | null;
   'ring-right': any | null;
@@ -31,7 +30,7 @@ export class InventarService {
   
   public equippedSlots: WritableSignal<EquippedSlots> = signal<EquippedSlots>({
     head: null, chest: null, leg: null, gloves: null, footwear: null,
-    'accessoire-left': null, 'accessoire-right': null, 'ear-right': null,
+    'accessoire-left': null, 'accessoire-right': null,
     necklace: null, 'ring-left': null, 'ring-right': null,
     'weapon-1': null, 'weapon-2': null, back: null
   });
@@ -123,7 +122,7 @@ export class InventarService {
     const items = itemsArray || this.inventar().items || [];
     const newSlots: EquippedSlots = {
       head: null, chest: null, leg: null, gloves: null, footwear: null,
-      'accessoire-left': null, 'accessoire-right': null, 'ear-right': null,
+      'accessoire-left': null, 'accessoire-right': null,
       necklace: null, 'ring-left': null, 'ring-right': null,
       'weapon-1': null, 'weapon-2': null, back: null
     };

@@ -21,22 +21,22 @@ export class MagicShop implements OnInit {
 
   //Animation paths:
   greetAnimationPaths: any[] = [
-    '/imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-002-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-003-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-004-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-005-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-006-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-007-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-008-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-009-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-010-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-011-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-012-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-013-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-014-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-015-Photoroom.webp',
-    '/imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-002-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-003-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-004-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-005-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-006-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-007-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-008-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-009-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-010-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-011-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-012-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-013-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-014-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-015-Photoroom.webp',
+    'imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
   ];
 
   // Direkt das Signal binden!

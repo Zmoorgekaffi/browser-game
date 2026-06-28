@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Robe der arkanen Erleuchtung",
+    "description": "Fließender Stoff, der sich bewegt, als wäre er unter Wasser. Zieht Mana magisch aus der Luft an.",
+    "img-path": "imgs/items/chests/arcane-robe_4.webp",
+    "price": 151,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 26,
+      "dexterity": 0,
+      "strength": -10,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 105,
+      "magic-find": 0,
+      "armor": 12,
+      "attack": 0,
+      "magic-attack": 10,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 21,
+        "cold": 21,
+        "lightning": 21,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Schattenmeister-Gewand",
+    "description": "Schluckt jegliches Licht. Wer dieses Gewand fixiert, verliert schnell den Fokus.",
+    "img-path": "imgs/items/chests/shadow-chest_4.webp",
+    "price": 168,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 23,
+      "strength": 0,
+      "vitality": -10,
+      "luck": 10,
+      "energy-shield": 0,
+      "magic-find": 15,
+      "armor": 37,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 21,
+      "crit-chance": 10,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 14
+      }
+    }
+  },
+  {
+    "name": "Prunkvoller Obsidianpanzer",
+    "description": "Eine massive Panzerung aus schwarzem Vulkanglas. Schläge prallen wirkungslos an ihr ab.",
+    "img-path": "imgs/items/chests/obsidian-chest_4.webp",
+    "price": 168,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -10,
+      "strength": 26,
+      "vitality": 31,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 88,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -10,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 14,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Sturmbringer-Harnisch",
+    "description": "Aus blauem, modifiziertem Metall. Kleine Blitze zucken gelegentlich über die Oberfläche.",
+    "img-path": "imgs/items/chests/storm-chest_4.webp",
+    "price": 168,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 10,
+      "dexterity": 15,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 50,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 21,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -10,
+      "resistances": {
+        "fire": 0,
+        "cold": 14,
+        "lightning": 14,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Dämonenhaut-Kürass",
+    "description": "Fühlt sich warm und lebendig an. Die Rüstung scheint sich bei Treffern selbst zu regenerieren.",
+    "img-path": "imgs/items/chests/demon-chest_4.webp",
+    "price": 235,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -21,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 25,
+      "attack": 21,
+      "magic-attack": 21,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 31,
+      "chaosDamage": 21,
+      "charisma": 0,
+      "resistances": {
+        "fire": -21,
+        "cold": -21,
+        "lightning": -21,
+        "chaos": 28
+      }
+    }
+  }
+]

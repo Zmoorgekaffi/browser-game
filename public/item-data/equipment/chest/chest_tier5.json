@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Glimmender Kristall-Mantel",
+    "description": "Aus reinem Kristallfaden gewebt. Eine schimmernde Aura umgibt den Träger schützend.",
+    "img-path": "imgs/items/chests/crystal-chest_5.webp",
+    "price": 259,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 45,
+      "dexterity": 0,
+      "strength": -18,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 180,
+      "magic-find": 0,
+      "armor": 21,
+      "attack": 0,
+      "magic-attack": 18,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 36,
+        "cold": 36,
+        "lightning": 36,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Nachtwandler-Rüstung",
+    "description": "Federleicht und absolut lautlos. Sie absorbiert die kinetische Energie von Stürzen.",
+    "img-path": "imgs/items/chests/night-chest_5.webp",
+    "price": 288,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 39,
+      "strength": 0,
+      "vitality": -18,
+      "luck": 18,
+      "energy-shield": 0,
+      "magic-find": 27,
+      "armor": 64,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 36,
+      "crit-chance": 18,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 24
+      }
+    }
+  },
+  {
+    "name": "Unvergänglicher Drachenpanzer",
+    "description": "Meisterhafte Drachenschuppen-Panzerung. Keine irdische Klinge kann dieses Material ritzen.",
+    "img-path": "imgs/items/chests/dragon-chest_5.webp",
+    "price": 288,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -18,
+      "strength": 45,
+      "vitality": 54,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 151,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -18,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 24,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Kosmischer Harnisch",
+    "description": "In diesem Brustpanzer scheint sich der Nachthimmel mitsamt funkelnden Galaxien zu spiegeln.",
+    "img-path": "imgs/items/chests/cosmic-chest_5.webp",
+    "price": 288,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 18,
+      "dexterity": 27,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 86,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 36,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -18,
+      "resistances": {
+        "fire": 0,
+        "cold": 24,
+        "lightning": 24,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Antiker Schicksals-Kürass",
+    "description": "Ein Relikt der Götter. Biegt das Schicksal des Trägers so, dass tödliche Treffer ihr Ziel verfehlen.",
+    "img-path": "imgs/items/chests/destiny-chest_5.webp",
+    "price": 403,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -36,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 43,
+      "attack": 36,
+      "magic-attack": 36,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 54,
+      "chaosDamage": 36,
+      "charisma": 0,
+      "resistances": {
+        "fire": -36,
+        "cold": -36,
+        "lightning": -36,
+        "chaos": 48
+      }
+    }
+  }
+]

@@ -22,17 +22,17 @@ export class GeneralSupplies implements OnInit {
 
   //Animation paths:
   greetAnimationPaths: any[] = [
-    '/imgs/general-supplies/merchant-animations/hello/sprite_1.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_2.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_3.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_4.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_5.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_6.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_7.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_8.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_9.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_10.png',
-    '/imgs/general-supplies/merchant-animations/hello/sprite_11.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_1.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_2.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_3.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_4.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_5.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_6.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_7.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_8.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_9.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_10.png',
+    'imgs/general-supplies/merchant-animations/hello/sprite_11.png',
   ];
 
   // Bindet sich live an das Alchemist/Supplies-Signal aus dem Service!

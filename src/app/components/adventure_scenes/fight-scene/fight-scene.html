@@ -1,1 +1,121 @@
-<p>fight-scene works!</p>
+<div class="fight-scene-container w-full h-full p-4 relative flex flex-col items-center justify-between text-white">
+
+  <!-- Hintergrund: läuft IMMER (auch während Intro) -->
+  <div class="z-[-1] absolute inset-0 w-full h-full">
+    <app-animation-object
+      [contain]="false"
+      [spritePaths]="['imgs/areas/dark-forest/fight/background/dark-forest-fight-background.png']"
+    ></app-animation-object>
+  </div>
+
+  @if (showMonsterIntro()) {
+    <!-- ===== MONSTER-INTRO ===== -->
+    <div class="absolute inset-0 w-full h-full flex items-center justify-center">
+      <app-animation-object
+        Name="monster-intro"
+        [Duration]="monsterIntroDuration()"
+        [spritePaths]="monsterIntroPaths()"
+        [contain]="false"
+      ></app-animation-object>
+    </div>
+  } @else {
+    <!-- ===== KAMPF-UI ===== -->
+    <div class="enemy-area flex flex-col items-center gap-2">
+      <h2 class="text-2xl font-bold text-red-400">{{ monsterName() }}</h2>
+      <div class="hp-bar bg-gray-700 w-64 h-4 rounded-full">
+        <div
+          class="hp-fill bg-red-500 h-full rounded-full transition-all duration-300"
+          [style.width.%]="(monsterHp() / monsterMaxHp()) * 100"
+        ></div>
+      </div>
+      <p>{{ monsterHp() }} / {{ monsterMaxHp() }} HP</p>
+    </div>
+
+    <div class="battle-log text-center my-4">
+      <p class="text-lg">Runde: {{ round() }}</p>
+      <p class="text-xl font-semibold text-yellow-300">
+        {{ currentTurn() === 'player' ? 'Dein Zug!' : 'Gegner am Zug...' }}
+      </p>
+      <p>Hier kommen später Kampf-Nachrichten hin...</p>
+    </div>
+
+    <div class="player-area w-full flex flex-col items-center gap-4">
+      <div class="player-info text-center flex flex-col items-center gap-2">
+        <h2 class="text-2xl font-bold text-blue-600">{{ playerName() }} (Level {{ playerLevel() }})</h2>
+
+        <div class="flex gap-4">
+          <div class="w-64">
+            <div class="hp-bar bg-gray-700 w-full h-4 rounded-full mx-auto mb-1">
+              <div
+                class="hp-fill bg-green-600 h-full rounded-full transition-all duration-300"
+                [style.width.%]="(playerHp() / playerMaxHp()) * 100"
+              ></div>
+            </div>
+            <p class="text-sm text-green-600">{{ playerHp() }} / {{ playerMaxHp() }} HP</p>
+          </div>
+
+          <div class="w-64 mt-1">
+            <div class="mana-bar bg-gray-700 w-full h-3 rounded-full mx-auto mb-1">
+              <div
+                class="mana-fill bg-blue-500 h-full rounded-full transition-all duration-300"
+                [style.width.%]="(playerMana() / playerMaxMana()) * 100"
+              ></div>
+            </div>
+            <p class="text-sm text-blue-600">{{ playerMana() }} / {{ playerMaxMana() }} MP</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="player-actions flex gap-4 mt-4">
+        <button
+          class="px-6 py-3 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          (click)="onPlayerAttack()"
+          [disabled]="currentTurn() !== 'player'"
+        >
+          Angreifen
+        </button>
+        <button
+          class="px-6 py-3 bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="currentTurn() !== 'player'"
+        >
+          Verteidigen (TBD)
+        </button>
+
+        <ng-container *ngIf="playerEquippedSpells(); let spells">
+          <button
+            *ngIf="spells.spell_1"
+            class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onCastSpell(spells.spell_1)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_1)"
+          >
+            {{ getSpellName(spells.spell_1) }}
+          </button>
+          <button
+            *ngIf="spells.spell_2"
+            class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onCastSpell(spells.spell_2)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_2)"
+          >
+            {{ getSpellName(spells.spell_2) }}
+          </button>
+          <button
+            *ngIf="spells.spell_3"
+            class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onCastSpell(spells.spell_3)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_3)"
+          >
+            {{ getSpellName(spells.spell_3) }}
+          </button>
+          <button
+            *ngIf="spells.spell_4"
+            class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onCastSpell(spells.spell_4)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_4)"
+          >
+            {{ getSpellName(spells.spell_4) }}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  }
+</div>

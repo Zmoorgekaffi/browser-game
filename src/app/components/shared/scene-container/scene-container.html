@@ -20,12 +20,12 @@
 
   @if (showBackToVillageButton()) {
     <app-redirect-hotspot [x]="1135" [y]="580" [width]="128" [height]="128" redirect="/village">
-      <div
+      <div (click)="gameStateService.adventureStateService.clearAdventure()"
         class="absolute inset-0 p-4 bg-[radial-gradient(circle,_rgba(255,255,255,0.5)_0%,_rgba(0,0,0,0.2)_100%)] rounded-[50%] flex items-center justify-center"
       >
         <img
           class="w-full h-full object-contain"
-          src="/imgs/village/back-to-village-icon.png"
+          src="imgs/village/back-to-village-icon.png"
           alt="Zurück zum Dorf"
         />
       </div>

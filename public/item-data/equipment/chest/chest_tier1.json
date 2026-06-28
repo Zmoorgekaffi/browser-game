@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Flicken-Stoffrobe",
+    "description": "Mehr Löcher als Stoff, aber sie bedeckt das Nötigste. Riecht nach altem Keller.",
+    "img-path": "imgs/items/chests/cloth-robe_1.webp",
+    "price": 21,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 0,
+      "strength": -1,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 15,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 1,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 3,
+        "cold": 3,
+        "lightning": 3,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Abgewetztes Lederwams",
+    "description": "Ein steifes Oberteil mit sichtbaren Kampfspuren der Vorbesitzer.",
+    "img-path": "imgs/items/chests/leather-vest_1.webp",
+    "price": 24,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 3,
+      "strength": 0,
+      "vitality": -1,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 2,
+      "armor": 5,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 3,
+      "crit-chance": 1,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 2
+      }
+    }
+  },
+  {
+    "name": "Rostiger Brustpanzer",
+    "description": "Schützt das Herz, knarzt aber bei jedem Atemzug ohrenbetäubend.",
+    "img-path": "imgs/items/chests/iron-chest_1.webp",
+    "price": 24,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -1,
+      "strength": 3,
+      "vitality": 4,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 12,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 2,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Wilderer-Mantel",
+    "description": "Ein fleckiger Mantel mit unzähligen Innentaschen für Diebesgut oder Schlingen.",
+    "img-path": "imgs/items/chests/thief-chest_1.webp",
+    "price": 24,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 3,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 0,
+        "cold": 2,
+        "lightning": 2,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Splitternder Knochenpanzer",
+    "description": "Zusammengebundene Rippenknochen schützen deine Brust. Ein kalter Schauer geht von ihnen aus.",
+    "img-path": "imgs/items/chests/cursed-chest_1.webp",
+    "price": 33,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -3,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 3,
+      "attack": 3,
+      "magic-attack": 3,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 4,
+      "chaosDamage": 3,
+      "charisma": 0,
+      "resistances": {
+        "fire": -3,
+        "cold": -3,
+        "lightning": -3,
+        "chaos": 4
+      }
+    }
+  }
+]

@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Novizen-Gewand",
+    "description": "Die einfache Tracht arkaner Lehrlinge. Bequem und reibungsfrei für komplexe Zaubergesten.",
+    "img-path": "imgs/items/chests/mage-robe_2.webp",
+    "price": 43,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 7,
+      "dexterity": 0,
+      "strength": -3,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 30,
+      "magic-find": 0,
+      "armor": 3,
+      "attack": 0,
+      "magic-attack": 3,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 6,
+        "cold": 6,
+        "lightning": 6,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Verstärktes Lederwams",
+    "description": "Mit doppelten Nähten und Metallschnallen gefertigt. Hält Streifschüsse zuverlässig ab.",
+    "img-path": "imgs/items/chests/leather-chest_2.webp",
+    "price": 48,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 6,
+      "strength": 0,
+      "vitality": -3,
+      "luck": 3,
+      "energy-shield": 0,
+      "magic-find": 4,
+      "armor": 10,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 6,
+      "crit-chance": 3,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 4
+      }
+    }
+  },
+  {
+    "name": "Solides Kettenhemd",
+    "description": "Schutz und Flexibilität im Gleichgewicht. Jedes Ringglied wurde einzeln vernietet.",
+    "img-path": "imgs/items/chests/chain-mail_2.webp",
+    "price": 48,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -3,
+      "strength": 7,
+      "vitality": 9,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 25,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -3,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 4,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Pirscher-Mantel",
+    "description": "Aus wetterfestem Tuch gefertigt. Schützt vor kaltem Wind und dämpft das Rascheln von Ausrüstung.",
+    "img-path": "imgs/items/chests/hunter-chest_2.webp",
+    "price": 48,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 4,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 14,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 6,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -3,
+      "resistances": {
+        "fire": 0,
+        "cold": 4,
+        "lightning": 4,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Runenbeschriebene Robe",
+    "description": "Blutrote Runen ziehen sich über den Stoff und pulsieren im Takt deines Herzschlags.",
+    "img-path": "imgs/items/chests/cursed-robe_2.webp",
+    "price": 67,
+    "armor-slot": "chest",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -6,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 7,
+      "attack": 6,
+      "magic-attack": 6,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 9,
+      "chaosDamage": 6,
+      "charisma": 0,
+      "resistances": {
+        "fire": -6,
+        "cold": -6,
+        "lightning": -6,
+        "chaos": 8
+      }
+    }
+  }
+]

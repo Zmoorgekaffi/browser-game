@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Glimmende Kristall-Stiefel",
+    "description": "Ermöglichen es dem Magier, sich in Notsituationen instinktiv kurz zu teleportieren.",
+    "img-path": "imgs/items/boots/crystal-boots_5.webp",
+    "price": 113,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 24,
+      "dexterity": 0,
+      "strength": -9,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 96,
+      "magic-find": 0,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 9,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 36,
+        "cold": 36,
+        "lightning": 36,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Nachtwandler-Stiefel",
+    "description": "Wer sie trägt, kann über Wasser wandeln und hinterlässt keinerlei Spuren.",
+    "img-path": "imgs/items/boots/night-boots_5.webp",
+    "price": 125,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 21,
+      "strength": 0,
+      "vitality": -9,
+      "luck": 9,
+      "energy-shield": 0,
+      "magic-find": 14,
+      "armor": 21,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 19,
+      "crit-chance": 9,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 24
+      }
+    }
+  },
+  {
+    "name": "Unvergängliche Drachenstiefel",
+    "description": "Aus feuerfester Drachenhaut. Widerstehen selbst direkten Lava-Strömen schadlos.",
+    "img-path": "imgs/items/boots/dragon-boots_5.webp",
+    "price": 125,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -9,
+      "strength": 24,
+      "vitality": 28,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 50,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -9,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 24,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Kosmische Stiefel",
+    "description": "Hebeln die Schwerkraft fast aus, sodass der Träger scheinbar durch die Luft wandelt.",
+    "img-path": "imgs/items/boots/cosmic-boots_5.webp",
+    "price": 125,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 9,
+      "dexterity": 14,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 28,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 19,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -9,
+      "resistances": {
+        "fire": 0,
+        "cold": 24,
+        "lightning": 24,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Antike Schicksals-Stiefel",
+    "description": "Legendäre Stiefel, die dich instinktiv vor jedem herannahenden Projektil ausweichen lassen.",
+    "img-path": "imgs/items/boots/destiny-boots_5.webp",
+    "price": 176,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -19,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 14,
+      "attack": 19,
+      "magic-attack": 19,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 28,
+      "chaosDamage": 19,
+      "charisma": 0,
+      "resistances": {
+        "fire": -36,
+        "cold": -36,
+        "lightning": -36,
+        "chaos": 48
+      }
+    }
+  }
+]

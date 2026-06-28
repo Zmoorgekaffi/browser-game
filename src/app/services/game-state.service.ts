@@ -10,15 +10,10 @@ import { LoginService } from './login.service';
 import { SceneService } from './scene.service';
 import { AdventureStateService } from './adventure-state.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class GameStateService {
-
-
-
-  // 1. Moderne Dependency Injection
   public wallet = inject(WalletService);
   public skills = inject(SkillsService);
   public inventar = inject(InventarService);
@@ -27,20 +22,15 @@ export class GameStateService {
   public shop = inject(ShopService);
   public adventureStateService = inject(AdventureStateService);
   private login = inject(LoginService);
-
   public sceneService = inject(SceneService);
   private router = inject(Router);
 
-  // 2. Reaktive Signale für den State
   public currentCharId = signal<string | null>(null);
-
-  // 3. Facade Pattern: Exponiert die finalen, berechneten Kampfwerte ans UI
   public combatStats = this.skills.combatStats;
 
   constructor() {
     effect(() => {
       const timestamp = this.sceneService.onSceneChange();
-
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
       }
@@ -48,7 +38,7 @@ export class GameStateService {
   }
 
   init() {
-    console.log('GAMMESTATESERVICE wird ausgeführt');
+    console.log('GAMESTATESERVICE wird ausgeführt');
 
     const storedId = sessionStorage.getItem('pixel-quest-currentUser');
     this.profile.charId.set(storedId);
@@ -67,7 +57,14 @@ export class GameStateService {
     }
   }
 
-  public loadCharacterData(charId: string) {
+  /**
+   * Lädt alle Charakterdaten und das Abenteuer.
+   *
+   * SYNCHRON – kein await mehr nötig, da skills.init() und enrichSpells()
+   * komplett synchron arbeiten (JSONs per Build-Time-Import, kein fetch()).
+   * Dadurch ist hier auch kein try/catch um async-Fehler mehr nötig.
+   */
+  public loadCharacterData(charId: string): void {
     const profileKey = `${charId}_profile`;
     const profileData = localStorage.getItem(profileKey);
 
@@ -76,88 +73,63 @@ export class GameStateService {
     }
 
     const inventarRaw = localStorage.getItem(`${charId}_inventar`) || '{"items": []}';
-    const inventarObjekt = JSON.parse(inventarRaw);
-
-    this.inventar.init(inventarObjekt, charId);
+    this.inventar.init(JSON.parse(inventarRaw), charId);
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
     this.skills.profileData = this.currentCharId;
-    this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
-    this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'), charId);
 
+    // Spells werden synchron angereichert – kein await nötig
+    this.skills.init(JSON.parse(localStorage.getItem(`${charId}_skills`) || '{}'));
+
+    this.wallet.init(JSON.parse(localStorage.getItem(`${charId}_wallet`) || '{}'), charId);
     this.shop.init(charId);
 
-
-
+    // Adventure laden und fortsetzen – alles bereits synchron verfügbar
+    const loaded = this.adventureStateService.loadAdventureManually();
+    if (loaded) {
+      // Guard: NUR resumen, wenn wir noch NICHT in einer Adventure-Action-Szene sind.
+      // Sonst feuert loadCharacterData() bei jedem Szenenwechsel innerhalb des
+      // Adventures (intro → fight → loot ...) ein weiteres continueAdventure() –
+      // und überschreibt damit die laufende Navigation. Das produziert Sprünge
+      // bis hin zu Endlos-Schleifen. Step-Hopping läuft eh über IntroScene-Timer
+      // und FightService.handleFightEnd → continueAdventure().
+      const currentScene = this.sceneService.currentScene();
+      const inAdventureScene = currentScene.startsWith('/adventure/');
+      if (!inAdventureScene) {
+        console.log('✅ Adventure-Save gefunden, springe in den aktuellen Step...');
+        this.adventureStateService.continueAdventure();
+      } else {
+        console.log('ℹ️ Bereits in Adventure-Szene, kein Resume nötig.');
+      }
+    }
   }
 
-  /**
-   * Erstellt die initialen Standard-Daten für einen brandneuen Charakter
-   * mit allen neuen RPG-Attributen.
-   */
   private createNewCharacter(charId: string) {
     const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
-
     const defaultSkills = {
-      intelligence: 5,
-      dexterity: 5,
-      strength: 5,
-      vitality: 5,
-      luck: 5,
-      'energy-shield': 0,
-      'magic-find': 0,
-      armor: 0,
-      hp: 100,
-      mana: 20,
-      attack: 5,
-      magicAttack: 5,
-      initiative: 10,
-      evasion: 5,
-      critChance: 5,
-      critDamage: 150,
-      chaosDamage: 0,
-      charisma: 1,
-      resistances: {
-        fire: 0,
-        cold: 0,
-        lightning: 0,
-        chaos: 0,
-      },
+      intelligence: 5, dexterity: 5, strength: 5, vitality: 5, luck: 5,
+      'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, mana: 20,
+      attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
+      critChance: 5, critDamage: 150, chaosDamage: 0, charisma: 1,
+      resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
       spells: [],
     };
-
     const defaultWallet = { gold: 1000, rubies: 0 };
     const defaultInventar = {
-      items: [
-        {
-          name: 'Verrostetes Kurzschwert',
-          description:
-            'Eine abgenutzte Klinge mit schartigem Rand. Kaum mehr als ein Stück Metall, aber es tut seinen Dienst.',
-          'img-path': 'imgs/items/weapon/shortsword_rusty.webp',
-          price: 8,
-          'armor-slot': 'weapon-1',
-          stats: {
-            intelligence: 0,
-            dexterity: 0,
-            strength: 0,
-            vitality: 0,
-            luck: 0,
-            'energy-shield': 0,
-            'magic-find': 0,
-            armor: 0,
-            attack: 12,
-            'magic-attack': 0,
-            initiative: 0,
-            evasion: 0,
-            'crit-chance': 0,
-            'crit-damage': 0,
-            chaosDamage: 0,
-            charisma: 0,
-            resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
-          },
+      items: [{
+        name: 'Verrostetes Kurzschwert',
+        description: 'Eine abgenutzte Klinge mit schartigem Rand.',
+        'img-path': 'imgs/items/weapon/shortsword_rusty.webp',
+        price: 8,
+        'armor-slot': 'weapon-1',
+        stats: {
+          intelligence: 0, dexterity: 0, strength: 0, vitality: 0, luck: 0,
+          'energy-shield': 0, 'magic-find': 0, armor: 0, attack: 12,
+          'magic-attack': 0, initiative: 0, evasion: 0,
+          'crit-chance': 0, 'crit-damage': 0, chaosDamage: 0, charisma: 0,
+          resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
         },
-      ],
+      }],
     };
-
     localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));
     localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
     localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));

@@ -1,5 +1,5 @@
 // src/app/components/shared/scene-container/scene-container.ts
-import { Component, inject, computed, effect } from '@angular/core';
+import { Component, inject, computed, effect, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RedirectHotspotComponent } from '../redirect-hotspot/redirect-hotspot.component';
 import { LoginService } from '../../../services/login.service';
@@ -19,7 +19,7 @@ export class SceneContainerComponent {
   // Services
   private loginService = inject(LoginService);
   public sceneService = inject(SceneService);
-  private gameStateService = inject(GameStateService);
+  public gameStateService = inject(GameStateService);
   public audioService = inject(AudioService);
 
   constructor() {
@@ -34,8 +34,17 @@ export class SceneContainerComponent {
 
       // 2. In JEDEM anderen Fall: Ausführen!
       console.log('Gültige Route gefunden! GameStateService wird initialisiert:', currentScene);
-      this.gameStateService.init();
 
+      // ⚡ untracked: Signal-Reads INNERHALB von init() (z.B. steps(),
+      // currentStepIndex(), adventureId(), spellCache() ...) sollen NICHT
+      // als Abhängigkeiten dieses Effects registriert werden.
+      // Sonst entsteht eine Loop: loadAdventure() macht JSON.parse →
+      // steps.set([...neueArrayReferenz]) → tracked signal feuert →
+      // Effect läuft erneut → loadAdventure() → ...
+      // Wir wollen den Effect ausschließlich an currentScene koppeln.
+      untracked(() => {
+        this.gameStateService.init();
+      });
     });
   }
 

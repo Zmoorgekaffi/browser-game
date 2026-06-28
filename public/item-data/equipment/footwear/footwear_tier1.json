@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Flicken-Stoffschuhe",
+    "description": "Dünne Sohlen, durch die man jeden spitzen Kieselstein schmerzhaft spürt.",
+    "img-path": "imgs/items/boots/cloth-shoes_1.webp",
+    "price": 9,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 2,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 8,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 3,
+        "cold": 3,
+        "lightning": 3,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Abgewetzte Lederstiefel",
+    "description": "Etwas feucht im Inneren, bieten aber soliden Halt auf schlammigem Boden.",
+    "img-path": "imgs/items/boots/leather-boots_1.webp",
+    "price": 10,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 1,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 1,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 1,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 2
+      }
+    }
+  },
+  {
+    "name": "Rostige Eisenstiefel",
+    "description": "Sehr schwer. Jeder Schritt hinterlässt tiefe Abdrücke und kostet Kraft.",
+    "img-path": "imgs/items/boots/iron-boots_1.webp",
+    "price": 10,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 2,
+      "vitality": 2,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 2,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Wilderer-Schuhe",
+    "description": "Weiche Sohlen aus Wildleder, die Schritte im Wald fast lautlos machen.",
+    "img-path": "imgs/items/boots/thief-boots_1.webp",
+    "price": 10,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 1,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 2,
+        "lightning": 2,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Splitternde Knochenschreiter",
+    "description": "Spitze Knochenkrallen bohren sich bei jedem Schritt krallend in den Untergrund.",
+    "img-path": "imgs/items/boots/cursed-boots_1.webp",
+    "price": 14,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -1,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 1,
+      "magic-attack": 1,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 2,
+      "chaosDamage": 1,
+      "charisma": 0,
+      "resistances": {
+        "fire": -3,
+        "cold": -3,
+        "lightning": -3,
+        "chaos": 4
+      }
+    }
+  }
+]

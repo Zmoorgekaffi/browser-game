@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { InventarService } from './inventar.service';
+import { SpellLoaderService } from './spell-loader.service';
 
 type EquippedSpells = {
   spell_1: string | null;
@@ -13,6 +14,7 @@ type EquippedSpells = {
 })
 export class SkillsService {
   private inventarService = inject(InventarService);
+  private spellLoader = inject(SpellLoaderService);
 
   //test
   public profileData = signal<any>('');
@@ -27,14 +29,14 @@ export class SkillsService {
     'energy-shield': 0,
     'magic-find': 0,
     armor: 0,
-    hp: 100, // Basis-Leben (wird durch Vitality erhöht)
-    mana: 20, // Basis-Mana (wird durch Intelligence erhöht)
+    hp: 100,
+    mana: 20,
     attack: 5,
     magicAttack: 5,
     initiative: 10,
     evasion: 5,
-    critChance: 5, // In %
-    critDamage: 150, // In %
+    critChance: 5,
+    critDamage: 150,
     chaosDamage: 0,
     charisma: 1,
     resistances: {
@@ -48,8 +50,6 @@ export class SkillsService {
 
   /**
    * Reaktives Signal für die belegten Spell-Slots.
-   * Wird beim Init aus dem LocalStorage befüllt und nach jedem updateSpells() aktualisiert.
-   * Im UI via equippedSpells() lesbar.
    */
   public equippedSpells = signal<EquippedSpells>({
     spell_1: null,
@@ -88,7 +88,6 @@ export class SkillsService {
     const base = this.state();
     const slots = this.inventarService.equippedSlots();
 
-    // Tiefe Kopie für die Berechnungen
     const finalStats = {
       intelligence: base.intelligence,
       dexterity: base.dexterity,
@@ -111,32 +110,17 @@ export class SkillsService {
       resistances: { ...base.resistances },
     };
 
-    // 🛡️ Explizite Liste aller gültigen Ausrüstungsslots (verhindert Prototyp-Spam)
     const validSlots = [
-      'head',
-      'chest',
-      'leg',
-      'gloves',
-      'footwear',
-      'accessoire-left',
-      'accessoire-right',
-      'necklace',
-      'ring-left',
-      'ring-right',
-      'weapon-1',
-      'weapon-2',
-      'back',
+      'head', 'chest', 'leg', 'gloves', 'footwear',
+      'accessoire-left', 'accessoire-right', 'necklace',
+      'ring-left', 'ring-right', 'weapon-1', 'weapon-2', 'back',
     ];
 
-    // Iteriere nur über die echten Items der validen Slots
     validSlots.forEach((slotName) => {
       const item = slots[slotName];
-
-      // Sicherheits-Check: Existiert das Item und hat es ein valides 'stats'-Objekt?
       if (!item || !item.stats) return;
       const s = item.stats;
 
-      // 1. Direkte Status-Additionen von Items
       if (s.armor) finalStats.armor += Number(s.armor);
       if (s['energy-shield']) finalStats['energy-shield'] += Number(s['energy-shield']);
       if (s['magic-find']) finalStats['magic-find'] += Number(s['magic-find']);
@@ -149,44 +133,41 @@ export class SkillsService {
       if (s.chaosDamage) finalStats.chaosDamage += Number(s.chaosDamage);
       if (s.charisma) finalStats.charisma += Number(s.charisma);
 
-      // 2. Elementare Resistenzen aufsummieren
       if (s.resistances) {
         if (s.resistances.fire) finalStats.resistances.fire += Number(s.resistances.fire);
         if (s.resistances.cold) finalStats.resistances.cold += Number(s.resistances.cold);
-        if (s.resistances.lightning)
-          finalStats.resistances.lightning += Number(s.resistances.lightning);
+        if (s.resistances.lightning) finalStats.resistances.lightning += Number(s.resistances.lightning);
         if (s.resistances.chaos) finalStats.resistances.chaos += Number(s.resistances.chaos);
       }
 
-      // 3. Primärattribute aufaddieren und Folgewerte skalieren (RPG-Logik)
       if (s.strength) {
         const str = Number(s.strength);
         finalStats.strength += str;
-        finalStats.attack += str * 2; // 1 Stärke = +2 physischer Schaden
+        finalStats.attack += str * 2;
         finalStats.armor += Math.floor(str * 0.5);
       }
       if (s.intelligence) {
         const int = Number(s.intelligence);
         finalStats.intelligence += int;
-        finalStats.magicAttack += int * 2; // 1 Int = +2 magischer Schaden
-        finalStats.mana += int * 5; // 1 Int = +5 max Mana
+        finalStats.magicAttack += int * 2;
+        finalStats.mana += int * 5;
       }
       if (s.dexterity) {
         const dex = Number(s.dexterity);
         finalStats.dexterity += dex;
-        finalStats.evasion += Math.floor(dex * 0.5); // Mehr Ausweichen durch Dex
-        finalStats.initiative += dex; // Höhere Init durch Dex
+        finalStats.evasion += Math.floor(dex * 0.5);
+        finalStats.initiative += dex;
       }
       if (s.vitality) {
         const vit = Number(s.vitality);
         finalStats.vitality += vit;
-        finalStats.hp += vit * 12; // 1 Vitalität = +12 max HP
+        finalStats.hp += vit * 12;
       }
       if (s.luck) {
         const lck = Number(s.luck);
         finalStats.luck += lck;
-        finalStats.critChance += Math.floor(lck * 0.2); // Glück erhöht kritische Treffer
-        finalStats['magic-find'] += Math.floor(lck * 0.5); // Glück erhöht Magic Find
+        finalStats.critChance += Math.floor(lck * 0.2);
+        finalStats['magic-find'] += Math.floor(lck * 0.5);
       }
     });
 
@@ -194,33 +175,11 @@ export class SkillsService {
     return finalStats;
   });
 
-  /**
-   * Stellt die Standard-Startzauber für neue Charaktere bereit.
-   * Wird aufgerufen, wenn im geladenen Spielstand keine Zauber existieren.
-   * @private
-   * @returns {any} Ein Objekt mit spells-Array und equipped_spells-Slots.
-   */
   private getDefaultSpells(): any {
     return {
       spells: [
-        {
-          id: 'strike_01',
-          name: 'Präziser Stoß',
-          manaCost: 12,
-          effectType: 'PHYSICAL_DAMAGE',
-          effectValues: { value: 15 },
-          equipped: false,
-          requirement: 'weapon',
-        },
-        {
-          id: 'spell_fire_01',
-          name: 'Funke',
-          manaCost: 15,
-          effectType: 'ELEMENTAL_DAMAGE',
-          effectValues: { element: 'fire', value: 20 },
-          equipped: false,
-          requirement: 'magic',
-        },
+        { id: 'strike_01' },
+        { id: 'spell_fire_01' },
       ],
       equipped_spells: {
         spell_1: null,
@@ -231,11 +190,6 @@ export class SkillsService {
     };
   }
 
-  /**
-   * Verschmilzt die aktuell im Service hinterlegten Basis-Werte mit den neu
-   * reingeladenen Spieldaten und weißt die finalen Zauber zu.
-   * @private
-   */
   private mergeCharacterData(currentBase: any, incomingData: any, finalSpells: any[]): any {
     return {
       ...currentBase,
@@ -248,19 +202,10 @@ export class SkillsService {
     };
   }
 
-  /**
-   * Überprüft ein übergebenes Datenpaket darauf, ob ein gültiges und
-   * befülltes Zauber-Array darin existiert.
-   * @private
-   */
   private hasNoSpells(data: any): boolean {
     return !data.spells || data.spells.length === 0;
   }
 
-  /**
-   * Synchronisiert den LocalStorage des Browsers mit den zugewiesenen Startzaubern.
-   * @private
-   */
   private updateLocalStorageSpells(mergedBackupData: any): void {
     const storageKey = `${this.profileData()}_skills`;
     const rawSave = localStorage.getItem(storageKey);
@@ -269,6 +214,7 @@ export class SkillsService {
       try {
         const parsedSave = JSON.parse(rawSave);
         const defaults = this.getDefaultSpells();
+        // Nur IDs speichern – keine aufgeblähten Objekte im LocalStorage
         parsedSave.spells = defaults.spells;
         if (!parsedSave.equipped_spells) {
           parsedSave.equipped_spells = defaults.equipped_spells;
@@ -282,21 +228,6 @@ export class SkillsService {
     }
   }
 
-  /**
-   * Aktualisiert einen Spell im State (lernen, einsloten, aussloten),
-   * synchronisiert das equippedSpells-Signal und den LocalStorage automatisch.
-   *
-   * - 'learn'   → Fügt einen neuen Spell ins Zauberbuch ein (verhindert Duplikate).
-   * - 'equip'   → Setzt den Spell in den angegebenen Slot. Ein bereits belegter
-   *               Slot wird automatisch geleert (vorheriger Spell verliert equipped: true).
-   * - 'unequip' → Entfernt den Spell aus dem angegebenen Slot (equipped: false).
-   *
-   * @public
-   * @param {'equip' | 'unequip' | 'learn'} action - Die gewünschte Aktion.
-   * @param {any} spell - Das betroffene Spell-Objekt.
-   * @param {string} [slotKey] - Nur bei 'equip'/'unequip' nötig: z.B. 'spell_1' bis 'spell_4'.
-   * @returns {void}
-   */
   public updateSpells(action: 'equip' | 'unequip' | 'learn', spell: any, slotKey?: string): void {
     this.state.update((currentState) => {
       let updatedSpells = [...currentState.spells];
@@ -312,16 +243,14 @@ export class SkillsService {
       }
 
       if (action === 'equip' && slotKey) {
-        // Slot-Vorgänger aus dem equippedSpells-Signal lesen (nicht aus LocalStorage)
         const previousSpellId = this.equippedSpells()[slotKey as keyof EquippedSpells] ?? null;
 
         updatedSpells = updatedSpells.map((s) => {
-          if (s.id === previousSpellId) return { ...s, equipped: false }; // Slot-Vorgänger raus
-          if (s.id === spell.id) return { ...s, equipped: true }; // Neuer Spell rein
+          if (s.id === previousSpellId) return { ...s, equipped: false };
+          if (s.id === spell.id) return { ...s, equipped: true };
           return s;
         });
 
-        // equippedSpells-Signal aktualisieren
         this.equippedSpells.update((slots) => ({ ...slots, [slotKey]: spell.id }));
         console.log(`⚔️ Spell "${spell.name}" in Slot "${slotKey}" eingesetzt`);
       }
@@ -331,41 +260,25 @@ export class SkillsService {
           s.id === spell.id ? { ...s, equipped: false } : s,
         );
 
-        // equippedSpells-Signal leeren
         this.equippedSpells.update((slots) => ({ ...slots, [slotKey]: null }));
         console.log(`🔓 Spell "${spell.name}" aus Slot "${slotKey}" entfernt`);
       }
 
       const newState = { ...currentState, spells: updatedSpells };
-
-      // LocalStorage synchronisieren
       this.syncSpellsToLocalStorage(newState, action, spell, slotKey);
-
       return newState;
     });
   }
 
-  /**
-   * Schreibt den aktuellen Spell-Zustand (inkl. equipped_spells-Slots) in den LocalStorage.
-   * Wird ausschließlich von `updateSpells` aufgerufen.
-   * @private
-   */
-  private syncSpellsToLocalStorage(
-    newState: any,
-    action: string,
-    spell: any,
-    slotKey?: string,
-  ): void {
+  private syncSpellsToLocalStorage(newState: any, action: string, spell: any, slotKey?: string): void {
     const storageKey = `${this.profileData()}_skills`;
     const rawSave = localStorage.getItem(storageKey);
 
     try {
       const parsedSave = rawSave ? JSON.parse(rawSave) : { ...newState };
 
-      // Spells-Array immer überschreiben
-      parsedSave.spells = newState.spells;
-
-      // equipped_spells aus dem Signal übernehmen (Single Source of Truth)
+      // Nur IDs im LocalStorage speichern, keine aufgeblähten Objekte
+      parsedSave.spells = newState.spells.map((s: any) => ({ id: s.id, equipped: s.equipped }));
       parsedSave.equipped_spells = { ...this.equippedSpells() };
 
       localStorage.setItem(storageKey, JSON.stringify(parsedSave));
@@ -375,9 +288,6 @@ export class SkillsService {
     }
   }
 
-  /**
-   * Gibt den ersten freien Spell-Slot zurück, oder null wenn alle belegt sind.
-   */
   public getNextFreeSlot(): keyof EquippedSpells | null {
     const slots = this.equippedSpells();
     const keys: (keyof EquippedSpells)[] = ['spell_1', 'spell_2', 'spell_3', 'spell_4'];
@@ -385,11 +295,12 @@ export class SkillsService {
   }
 
   /**
-   * Initialisiert den `SkillsService` beim Spielstart mit den Charakterdaten.
-   * Lädt dabei auch die equipped_spells aus dem Savegame ins equippedSpells-Signal.
-   * @public
-   * @param {any} data - Das aus dem LocalStorage/Savegame geparste Charakter-Datenobjekt.
-   * @returns {void}
+   * Initialisiert den SkillsService mit Charakterdaten.
+   * Lädt Spell-IDs aus dem Savegame und reichert sie via SpellLoaderService
+   * mit den vollen JSON-Daten an, bevor sie in den State geschrieben werden.
+   *
+   * SYNCHRON – kein await mehr nötig, da SpellLoaderService.enrichSpells()
+   * die JSONs per Build-Time-Import bereits synchron im Speicher hält.
    */
   public init(data: any): void {
     if (!data || Object.keys(data).length === 0) {
@@ -408,11 +319,15 @@ export class SkillsService {
       console.log('🎯 equippedSpells geladen:', this.equippedSpells());
     }
 
-    this.state.update((currentBase) => {
-      const missingSpells = this.hasNoSpells(data);
-      const finalSpells = missingSpells ? this.getDefaultSpells().spells : data.spells;
+    const missingSpells = this.hasNoSpells(data);
+    const rawSpells = missingSpells ? this.getDefaultSpells().spells : data.spells;
 
-      const mergedState = this.mergeCharacterData(currentBase, data, finalSpells);
+    // ✨ IDs → vollständige Spell-Objekte (aus den JSON-Dateien angereichert)
+    const enrichedSpells = this.spellLoader.enrichSpells(rawSpells);
+    console.log('✅ Spells angereichert:', enrichedSpells);
+
+    this.state.update((currentBase) => {
+      const mergedState = this.mergeCharacterData(currentBase, data, enrichedSpells);
 
       if (missingSpells) {
         this.updateLocalStorageSpells(mergedState);

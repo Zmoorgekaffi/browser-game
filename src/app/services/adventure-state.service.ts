@@ -2,10 +2,9 @@ import { Injectable, signal, inject, effect, WritableSignal } from '@angular/cor
 import { DarkForest } from '../classes/adventure/areas/dark-forest.class';
 import { ProfileService } from './profile.service';
 import { Router } from '@angular/router';
+import { ShopService } from './shop.service';
+import { WalletService } from './wallet.service';
 
-/**
- * Definiert den persistierbaren Zustand eines Abenteuers.
- */
 export interface AdventureSaveState {
   adventureId: string;
   currentStepIndex: number;
@@ -19,65 +18,57 @@ export interface AdventureSaveState {
   } | null;
 }
 
-/**
- * Service zur Verwaltung des Abenteuer-Zustands, inklusive Speicherung,
- * Laden und Navigation innerhalb von Abenteuer-Szenen.
- */
 @Injectable({ providedIn: 'root' })
 export class AdventureStateService {
   private profileService = inject(ProfileService);
   private router = inject(Router);
+  private shopService = inject(ShopService);
+  private walletService = inject(WalletService);
 
-  /** Liste der einzelnen Events/Schritte im aktuellen Abenteuer */
   steps = signal<any[]>([]);
-
-  /** Index des aktuell aktiven Abenteuer-Schritts */
   currentStepIndex = signal<number>(0);
-
-  /** Eindeutige ID des aktuell geladenen Abenteuergebiets */
   adventureId = signal<string | null>(null);
-
-  /** Status eines laufenden Kampfes, falls vorhanden */
   activeFight = signal<any | null>(null);
-
-  /** Das aktuelle Level-Objekt */
   level: WritableSignal<any | null> = signal<any | null>(null);
 
-  /** Verhindert mehrfaches Laden, falls charId sich später noch einmal ändert */
-  private hasAttemptedInitialLoad = false;
+  /**
+   * Verhindert dass der effect() selbst navigiert –
+   * das übernimmt jetzt GameStateService nach skills.init().
+   */
+  private hasAttemptedInitialLoad = true; // ← auf true gesetzt, effect ist deaktiviert
 
   constructor() {
-    // WICHTIG: charId() ist im Moment der Service-Erstellung oft noch null,
-    // weil GameStateService.init() erst später (z.B. in ngOnInit) aufgerufen wird.
-    // Mit effect() warten wir reaktiv, bis charId einen echten Wert hat,
-    // statt im Constructor blind zu laden.
+    // Effect nur noch für Logging, Navigation läuft über GameStateService.loadCharacterData()
     effect(() => {
       const charId = this.profileService.charId();
-
       console.log('[AdventureStateService] effect läuft, charId:', charId);
-
-      if (!charId || this.hasAttemptedInitialLoad) {
-        return;
-      }
-
-      this.hasAttemptedInitialLoad = true;
-
-      const loaded = this.loadAdventure();
-      console.log('[AdventureStateService] loadAdventure() Ergebnis:', loaded);
-
-      if (loaded) {
-        console.log('[AdventureStateService] Savegame geladen, leite fort...');
-        this.continueAdventure();
-      } else {
-        console.log('[AdventureStateService] Kein Savegame gefunden, warte auf Start...');
-      }
+      // Absichtlich leer – Navigation erfolgt manuell via loadAdventureManually()
     });
   }
 
   /**
-   * Leitet den Spieler basierend auf dem aktuellen Step-Typ an die richtige Route weiter.
+   * Wird von GameStateService NACH skills.init() aufgerufen.
+   * Damit sind Spells garantiert angereichert bevor continueAdventure() navigiert.
    */
-  private continueAdventure(): void {
+  public loadAdventureManually(): boolean {
+    const loaded = this.loadAdventure();
+    console.log('[loadAdventureManually] Ergebnis:', loaded);
+    return loaded;
+  }
+
+  public clearAdventure(): void {
+    const key = this.getStorageKey();
+    localStorage.removeItem(key);
+    console.log('[clearAdventure] Savegame gelöscht für Key:', key);
+    this.adventureId.set(null);
+    this.currentStepIndex.set(0);
+    this.steps.set([]);
+    this.activeFight.set(null);
+    this.level.set(null);
+    this.shopService.rerollAllShopsAtEndOfRun();
+  }
+
+  public continueAdventure(): void {
     const currentIndex = this.currentStepIndex();
     const currentStep = this.steps()[currentIndex];
 
@@ -85,7 +76,6 @@ export class AdventureStateService {
     console.log('[continueAdventure] currentIndex:', currentIndex);
     console.log('[continueAdventure] currentStep:', currentStep);
 
-    // Falls wir kein aktives Abenteuer haben, machen wir nichts
     if (!this.adventureId()) {
       console.log('[continueAdventure] Kein adventureId gesetzt, breche ab.');
       return;
@@ -94,87 +84,57 @@ export class AdventureStateService {
     if (currentStep) {
       switch (currentStep.type) {
         case 'dialog':
-          console.log('[continueAdventure] Navigiere zu /adventure/dialog');
-          this.router.navigate(['/adventure/dialog']).then(success =>
-            console.log('[continueAdventure] navigate() success?', success)
-          );
+          this.router.navigate(['/adventure/dialog']).then(s =>
+            console.log('[continueAdventure] navigate() success?', s));
           break;
         case 'loot':
-          console.log('[continueAdventure] Navigiere zu /adventure/loot');
-          this.router.navigate(['/adventure/loot']).then(success =>
-            console.log('[continueAdventure] navigate() success?', success)
-          );
+          this.router.navigate(['/adventure/loot']).then(s =>
+            console.log('[continueAdventure] navigate() success?', s));
           break;
         case 'fight':
-          console.log('[continueAdventure] Navigiere zu /adventure/fight');
-          this.router.navigate(['/adventure/fight']).then(success =>
-            console.log('[continueAdventure] navigate() success?', success)
-          );
+          this.router.navigate(['/adventure/fight']).then(s =>
+            console.log('[continueAdventure] navigate() success?', s));
           break;
         case 'quiz':
-          console.log('[continueAdventure] Navigiere zu /adventure/quiz');
-          this.router.navigate(['/adventure/quiz']).then(success =>
-            console.log('[continueAdventure] navigate() success?', success)
-          );
+          this.router.navigate(['/adventure/quiz']).then(s =>
+            console.log('[continueAdventure] navigate() success?', s));
           break;
         default:
           console.warn('[continueAdventure] Unbekannter Step-Typ:', currentStep.type);
       }
     } else {
-      console.log('[continueAdventure] currentStep ist undefined/null — steps-Array leer oder Index ungültig.');
+      console.log('[continueAdventure] currentStep ist undefined/null.');
     }
+
+    this.walletService.addGold(10);
   }
 
-  /**
-   * Initialisiert das Level-Objekt basierend auf der Abenteuer-ID.
-   * @param adventureId ID des Gebiets
-   * @param level Spieler-Level für die Skalierung
-   * @param steps Die abzurufenden Event-Schritte
-   */
   private initializeLevel(adventureId: string, level: number, steps: any[]): void {
-    // 1. Nur neu instanziieren, wenn noch kein Level gesetzt ist
     if (!this.level()) {
       if (adventureId === 'duesterwald') {
         this.level.set(new DarkForest(level));
       }
     }
-
-    // 2. Jetzt die Schritte auf dem (jetzt definitiv existierenden) Level setzen
     const currentLevel = this.level();
     if (currentLevel) {
       currentLevel.eventSteps = steps;
-      // WICHTIG: Da wir das Objekt intern verändert haben,
-      // triggern wir das Signal hier kurz neu, falls Angular die Änderung
-      // durch das reine Zuweisen nicht erkennt:
       this.level.set({ ...currentLevel });
     }
   }
 
-  /**
-   * Generiert ein neues Level und setzt den Start-Zustand.
-   */
   generateLevel() {
     const newLevel = new DarkForest(this.profileService.level() || 1);
-
     this.adventureId.set('duesterwald');
     this.steps.set(newLevel.eventSteps);
     this.currentStepIndex.set(0);
-
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
     this.saveAdventure();
-    console.log('aktuellstes level', this.level());
   }
 
-  /**
-   * Gibt den Key für den LocalStorage basierend auf der Character-ID zurück.
-   */
   private getStorageKey(): string {
     return `${this.profileService.charId()}_adventure_save`;
   }
 
-  /**
-   * Speichert den aktuellen Abenteuer-Zustand im LocalStorage.
-   */
   saveAdventure(): void {
     const state: AdventureSaveState = {
       adventureId: this.adventureId()!,
@@ -187,54 +147,39 @@ export class AdventureStateService {
     console.log('[saveAdventure] gespeichert unter Key:', this.getStorageKey(), state);
   }
 
-  /**
-   * Lädt ein gespeichertes Abenteuer aus dem LocalStorage.
-   * @returns true, wenn ein Savegame gefunden wurde, sonst false.
-   */
   loadAdventure(): boolean {
     const key = this.getStorageKey();
     console.log('[loadAdventure] Suche Key:', key);
-
     const data = localStorage.getItem(key);
     if (!data) {
-      console.log('[loadAdventure] Kein Eintrag im localStorage gefunden.');
+      console.log('[loadAdventure] Kein Eintrag gefunden.');
       return false;
     }
-
     const state: AdventureSaveState = JSON.parse(data);
     console.log('[loadAdventure] Gefundener State:', state);
-
     this.adventureId.set(state.adventureId);
     this.currentStepIndex.set(state.currentStepIndex);
     this.steps.set(state.steps);
     this.activeFight.set(state.activeFight || null);
-
     this.initializeLevel(state.adventureId, state.playerLevel, state.steps);
     return true;
   }
 
-  /**
-   * Startet ein neues Abenteuer für ein bestimmtes Gebiet.
-   * @param areaId ID des zu startenden Gebiets
-   */
   startNewAdventure(areaId: string) {
     if (this.adventureId()) {
-      console.warn('Es läuft bereits ein Abenteuer. Bitte erst abschließen.');
+      console.warn('Es läuft bereits ein Abenteuer.');
       return;
     }
-
     if (areaId === 'duesterwald') {
       this.level.set(new DarkForest(this.profileService.level() || 1));
     } else {
       console.error('Unbekannte Area-ID');
       return;
     }
-
     this.adventureId.set(areaId);
     this.steps.set(this.level()!.eventSteps);
     this.currentStepIndex.set(0);
     this.activeFight.set(null);
-
     this.saveAdventure();
     this.router.navigate(['/adventure/intro']);
   }

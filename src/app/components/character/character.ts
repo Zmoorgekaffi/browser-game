@@ -22,21 +22,21 @@ export class Character {
   public baseStats = this.gameStateService.skills.state;
 
   characterLookAraoundAnimation = [
-    '/imgs/character/character-look-around/frame (1).png',
-    '/imgs/character/character-look-around/frame (2).png',
-    '/imgs/character/character-look-around/frame (3).png',
-    '/imgs/character/character-look-around/frame (4).png',
-    '/imgs/character/character-look-around/frame (5).png',
-    '/imgs/character/character-look-around/frame (6).png',
-    '/imgs/character/character-look-around/frame (7).png',
-    '/imgs/character/character-look-around/frame (8).png',
-    '/imgs/character/character-look-around/frame (9).png',
-    '/imgs/character/character-look-around/frame (10).png',
-    '/imgs/character/character-look-around/frame (11).png',
-    '/imgs/character/character-look-around/frame (12).png',
-    '/imgs/character/character-look-around/frame (13).png',
-    '/imgs/character/character-look-around/frame (14).png',
-    '/imgs/character/character-look-around/frame (1).png',
+    'imgs/character/character-look-around/frame (1).png',
+    'imgs/character/character-look-around/frame (2).png',
+    'imgs/character/character-look-around/frame (3).png',
+    'imgs/character/character-look-around/frame (4).png',
+    'imgs/character/character-look-around/frame (5).png',
+    'imgs/character/character-look-around/frame (6).png',
+    'imgs/character/character-look-around/frame (7).png',
+    'imgs/character/character-look-around/frame (8).png',
+    'imgs/character/character-look-around/frame (9).png',
+    'imgs/character/character-look-around/frame (10).png',
+    'imgs/character/character-look-around/frame (11).png',
+    'imgs/character/character-look-around/frame (12).png',
+    'imgs/character/character-look-around/frame (13).png',
+    'imgs/character/character-look-around/frame (14).png',
+    'imgs/character/character-look-around/frame (1).png',
   ];
 
   public displayStats = [

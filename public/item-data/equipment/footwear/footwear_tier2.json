@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Novizen-Schuhe",
+    "description": "Leichte Sandalen, die den Träger stets geerdet und empfänglich für Mana halten.",
+    "img-path": "imgs/items/boots/mage-shoes_2.webp",
+    "price": 18,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 4,
+      "dexterity": 0,
+      "strength": -1,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 16,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 1,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 6,
+        "cold": 6,
+        "lightning": 6,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Verstärkte Lederstiefel",
+    "description": "Mit dicker Gummi-Leder-Sohle und Stahlkappen an den Zehen ausgestattet.",
+    "img-path": "imgs/items/boots/leather-boots_2.webp",
+    "price": 21,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 3,
+      "strength": 0,
+      "vitality": -1,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 2,
+      "armor": 3,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 3,
+      "crit-chance": 1,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 4
+      }
+    }
+  },
+  {
+    "name": "Solide Kettenstiefel",
+    "description": "Schützen die Füße vor herabfallenden Trümmern oder tiefen Schnitten.",
+    "img-path": "imgs/items/boots/chain-boots_2.webp",
+    "price": 21,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -1,
+      "strength": 4,
+      "vitality": 4,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 8,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 4,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Pirscher-Stiefel",
+    "description": "Wasserabweisende Stiefel mit hervorragender Dämpfung für lange Gewaltmärsche.",
+    "img-path": "imgs/items/boots/hunter-boots_2.webp",
+    "price": 21,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 3,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 0,
+        "cold": 4,
+        "lightning": 4,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Runenbeschriebene Sandalen",
+    "description": "Zwingen die Füße zu einem unnatürlich schnellen Rhythmus, ermüden aber rasch.",
+    "img-path": "imgs/items/boots/cursed-sandals_2.webp",
+    "price": 29,
+    "armor-slot": "feet",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -3,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 3,
+      "magic-attack": 3,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 4,
+      "chaosDamage": 3,
+      "charisma": 0,
+      "resistances": {
+        "fire": -6,
+        "cold": -6,
+        "lightning": -6,
+        "chaos": 8
+      }
+    }
+  }
+]
