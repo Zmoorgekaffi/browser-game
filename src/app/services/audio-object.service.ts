@@ -17,7 +17,7 @@ export class AudioService {
 
   public isMuted = signal<boolean>(false);
 
-  private musicRoutes: Record<
+  private musicRoutes: Record <
     string,
     { music: string; musicVol?: number; ambient?: string; ambientVol?: number }
   > = {
@@ -95,14 +95,28 @@ export class AudioService {
       }
     });
 
+    // Robuster Autoplay-Unlock: bleibt aktiv bis Audio TATSÄCHLICH läuft.
+    // Reagiert auf pointerdown, click und touchstart — egal welches Event zuerst kommt.
+    // Wichtig: Listener entfernt sich erst, wenn bgmAudio existiert UND nicht paused ist.
+    // Sonst kann es passieren dass der erste Klick (z.B. auf Vollbild-Button) den
+    // User Gesture "verbraucht" ohne Audio zu starten — und nie wieder eine Chance kommt.
     const unlockAutoplay = () => {
       const currentScene = this.sceneService.currentScene();
       if (currentScene) {
         this.playAudioForRoute(currentScene);
       }
-      window.removeEventListener('click', unlockAutoplay);
+
+      // Nur entfernen wenn Audio wirklich läuft
+      if (this.bgmAudio && !this.bgmAudio.paused) {
+        window.removeEventListener('pointerdown', unlockAutoplay);
+        window.removeEventListener('click', unlockAutoplay);
+        window.removeEventListener('touchstart', unlockAutoplay);
+      }
     };
+
+    window.addEventListener('pointerdown', unlockAutoplay);
     window.addEventListener('click', unlockAutoplay);
+    window.addEventListener('touchstart', unlockAutoplay);
   }
 
   public toggleMute() {

@@ -1,6 +1,17 @@
 @if (currentCharId() != null) {
-  <header class="w-full h-[3rem] bg-[orange] rounded-[8px] flex justify-between items-center px-4">
-    <div>Rubine: {{ rubies() }} | Gold: {{ gold() }}</div>
+  <header class="w-full h-[3rem] bg-[orange] rounded-[8px] flex justify-between items-center px-4 relative">
+    <div class="flex items-center gap-3">
+      @if (screenSizingService.isFullscreen()) {
+        <button
+          (click)="screenSizingService.toggleHeader()"
+          class="px-4 py-1.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-bold rounded-md transition-all select-none cursor-pointer border-2 border-white shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          ✕ Schliessen
+        </button>
+      }
+      <span>Rubine: {{ rubies() }} | Gold: {{ gold() }}</span>
+
+    </div>
 
     <div>
       <span class="hover:underline cursor-pointer" routerLink="/character">Charakter</span>

@@ -1,5 +1,5 @@
 <section
-  class="min-h-screen w-full flex flex-col items-center justify-between gap-8 bg-gradient-to-b from-amber-100 to-amber-200 text-amber-950 px-6 pt-10 pb-6"
+  class="min-h-screen w-full flex flex-col items-center justify-between gap-8 bg-gradient-to-b from-amber-100 to-amber-200 text-amber-950 px-6 pt-10 pb-6 relative"
 >
   <h1 class="text-5xl sm:text-6xl font-black tracking-[0.25em] uppercase text-center">
     Pixel Quest
@@ -9,16 +9,81 @@
   </button>
 
   <section class="flex items-center justify-center flex-col gap-2 w-[1280px]">
-    @if (showHeader()) {
+    <!-- Header im NORMAL-Modus: im Flow oberhalb des Spielfelds -->
+    @if (showHeader() && !screenSizingService.isFullscreen()) {
       <app-header></app-header>
     }
 
-    <div #gameContainer class="w-full h-full">
-      <app-scene-container>
-        <router-outlet></router-outlet>
-      </app-scene-container>
+    <div
+      #gameContainer
+      class="w-full"
+      [class.fixed]="screenSizingService.isFullscreen()"
+      [class.inset-0]="screenSizingService.isFullscreen()"
+      [class.bg-black]="screenSizingService.isFullscreen()"
+      [class.flex]="screenSizingService.isFullscreen()"
+      [class.items-center]="screenSizingService.isFullscreen()"
+      [class.justify-center]="screenSizingService.isFullscreen()"
+    >
+      <div
+        [style.transform]="'scale(' + screenSizingService.scale() + ')'"
+        [style.transform-origin]="'center center'"
+        [style.transition]="'transform 0.15s ease-out'"
+      >
+        <div class="relative w-[1280px] h-[720px]">
+          <app-scene-container>
+            <router-outlet></router-outlet>
+          </app-scene-container>
+
+          <!-- Header im VOLLBILD: als absolute Overlay -->
+          @if (showHeader() && screenSizingService.isFullscreen()) {
+            <div class="absolute top-0 left-0 right-0 z-40">
+              <app-header></app-header>
+            </div>
+          }
+
+          @if (
+            screenSizingService.isFullscreen() &&
+            !screenSizingService.headerVisibleInFullscreen() &&
+            loginService.loggedInAs() !== null &&
+            sceneService.currentScene() !== '/login'
+          ) {
+            <button
+              (click)="screenSizingService.toggleHeader()"
+              class="absolute top-2 left-2 z-50 px-3 py-1.5 bg-black/70 hover:bg-black/90 text-white text-sm font-semibold rounded-md backdrop-blur-sm transition-colors select-none cursor-pointer border border-white/20"
+            >
+              ☰ Menu
+            </button>
+          }
+        </div>
+      </div>
     </div>
   </section>
 
   <div></div>
+
+  @if (screenSizingService.isScreenTooSmall() && !screenSizingService.isFullscreen()) {
+    <div
+      class="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-md flex items-center justify-center p-6"
+    >
+      <div
+        class="max-w-md w-full bg-gradient-to-br from-amber-900 to-amber-950 border-2 border-amber-400 rounded-2xl shadow-2xl p-8 text-center flex flex-col items-center gap-5"
+      >
+        <div class="text-6xl">📱</div>
+        <h2 class="text-2xl font-bold text-amber-100 tracking-wide">Bildschirm zu klein</h2>
+        <p class="text-amber-200/90 leading-relaxed">
+          Pixel Quest benötigt mindestens <span class="font-bold text-amber-300">1280px Breite</span>.
+          Aktiviere den Vollbildmodus, um trotzdem zu spielen — das Spiel wird dann passgenau auf deinen Bildschirm skaliert.
+        </p>
+        <button
+          (click)="screenSizingService.toggleFullscreen()"
+          class="mt-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-amber-950 font-black text-lg rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 border-2 border-amber-300 cursor-pointer select-none"
+        >
+          🖥️ Vollbild aktivieren
+        </button>
+        <p class="text-xs text-amber-300/60 italic mt-1">
+          Tipp: Drehe dein Gerät ins Querformat für die beste Erfahrung
+        </p>
+      </div>
+    </div>
+  }
 </section>

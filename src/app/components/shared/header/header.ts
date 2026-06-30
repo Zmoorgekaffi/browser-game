@@ -1,21 +1,22 @@
-import { Component, Signal, inject, computed, signal } from '@angular/core'; // Signal Typ großgeschrieben
+import { Component, Signal, inject, computed, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { GameStateService } from '../../../services/game-state.service';
+import { ScreenSizingService } from '../../../services/screen-sizing.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  standalone: true, // Falls du Angular 19+ nutzt, ist das oft Standard, schadet aber nicht
+  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
   private router = inject(Router);
+  public screenSizingService = inject(ScreenSizingService);
 
-  // 1. Deklaration der Typen
   gold: Signal<number>;
   rubies: Signal<number>;
   currentCharId: Signal<string | null>;
@@ -34,7 +35,6 @@ export class Header {
   });
 
   constructor(public gameStateService: GameStateService) {
-    // 2. SOFORT die Referenz auf das Signal übergeben (nicht erst nach 1 Sekunde!)
     this.currentCharId = this.gameStateService.currentCharId;
     this.gold = this.gameStateService.wallet.gold;
     this.rubies = this.gameStateService.wallet.rubies;
@@ -45,10 +45,5 @@ export class Header {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.currentUrl.set(this.router.url);
     });
-    // Wenn du hier loggst, siehst du den INITIALEN Wert des Signals (z.B. 0 oder null)
-    console.log('Initiales Gold im TS: HEADER WIRD AUSGEFèHRT', this.gold());
   }
 }
-
-// Wenn du unbedingt sehen willst, wann sich der Wert ändert, nutzt man ein "effect"
-// (Optional, nur zum Debuggen):

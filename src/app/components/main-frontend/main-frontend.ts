@@ -11,10 +11,9 @@ import { ScreenSizingService } from '../../services/screen-sizing.service';
   standalone: true,
   imports: [RouterOutlet, SceneContainerComponent, Header],
   templateUrl: './main-frontend.html',
-  styleUrls: ['./main-frontend.scss']
+  styleUrls: ['./main-frontend.scss'],
 })
 export class MainFrontendComponent {
-  // Services sind bereit
   loginService = inject(LoginService);
   sceneService = inject(SceneService);
   screenSizingService = inject(ScreenSizingService);
@@ -22,6 +21,14 @@ export class MainFrontendComponent {
   public showHeader = computed(() => {
     const charId = this.loginService.loggedInAs();
     const currentScene = this.sceneService.currentScene();
-    return charId !== null && currentScene !== '/login';
+    const baseVisible = charId !== null && currentScene !== '/login';
+
+    if (!baseVisible) return false;
+
+    if (this.screenSizingService.isFullscreen()) {
+      return this.screenSizingService.headerVisibleInFullscreen();
+    }
+
+    return true;
   });
 }
