@@ -1,15 +1,19 @@
+// src/app/services/adventure-state.service.ts
 import { Injectable, signal, inject, effect, WritableSignal } from '@angular/core';
 import { DarkForest } from '../classes/adventure/areas/dark-forest.class';
 import { ProfileService } from './profile.service';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
 import { WalletService } from './wallet.service';
+import { InventarService } from './inventar.service';
+import { SkillsService } from './skills.service';
 
 export interface AdventureSaveState {
   adventureId: string;
   currentStepIndex: number;
   steps: any[];
   playerLevel: number;
+  pendingRewards: any[]; // 🎁 NEU: gesammelte Belohnungen für diesen Run
   activeFight?: {
     monsterHp: number;
     playerHp: number;
@@ -24,6 +28,8 @@ export class AdventureStateService {
   private router = inject(Router);
   private shopService = inject(ShopService);
   private walletService = inject(WalletService);
+  private inventarService = inject(InventarService); // 🎁 NEU
+  private skillsService = inject(SkillsService);
 
   steps = signal<any[]>([]);
   currentStepIndex = signal<number>(0);
@@ -31,25 +37,20 @@ export class AdventureStateService {
   activeFight = signal<any | null>(null);
   level: WritableSignal<any | null> = signal<any | null>(null);
 
-  /**
-   * Verhindert dass der effect() selbst navigiert –
-   * das übernimmt jetzt GameStateService nach skills.init().
-   */
-  private hasAttemptedInitialLoad = true; // ← auf true gesetzt, effect ist deaktiviert
+  // 🎁 NEU: Sammlung aller Items, die in DIESEM Run gefunden wurden.
+  // Wandert erst beim erfolgreichen Abschluss (completeAdventure) ins
+  // Inventar. Bei Niederlage / clearAdventure wird's verworfen.
+  pendingRewards: WritableSignal<any[]> = signal<any[]>([]);
+
+  private hasAttemptedInitialLoad = true;
 
   constructor() {
-    // Effect nur noch für Logging, Navigation läuft über GameStateService.loadCharacterData()
     effect(() => {
       const charId = this.profileService.charId();
       console.log('[AdventureStateService] effect läuft, charId:', charId);
-      // Absichtlich leer – Navigation erfolgt manuell via loadAdventureManually()
     });
   }
 
-  /**
-   * Wird von GameStateService NACH skills.init() aufgerufen.
-   * Damit sind Spells garantiert angereichert bevor continueAdventure() navigiert.
-   */
   public loadAdventureManually(): boolean {
     const loaded = this.loadAdventure();
     console.log('[loadAdventureManually] Ergebnis:', loaded);
@@ -65,7 +66,42 @@ export class AdventureStateService {
     this.steps.set([]);
     this.activeFight.set(null);
     this.level.set(null);
+    this.pendingRewards.set([]); // 🎁 verworfen
     this.shopService.rerollAllShopsAtEndOfRun();
+  }
+
+  /**
+   * 🎁 NEU: Fügt ein Item dem pendingRewards-Array hinzu und persistiert
+   * den State sofort, damit ein Page-Reload die Belohnung nicht verschluckt.
+   *
+   * Wird typischerweise aus der LootScene aufgerufen, sobald gerollt wurde.
+   */
+  public addReward(item: any): void {
+    if (!item) return;
+    this.pendingRewards.update((rewards) => [...rewards, item]);
+    this.saveAdventure();
+    console.log('🎁 [addReward] Belohnung hinzugefügt:', item);
+    console.log('🎁 [addReward] pendingRewards aktuell:', this.pendingRewards());
+  }
+
+  /**
+   * 🎁 NEU: Abenteuer erfolgreich beendet — alle gesammelten Rewards
+   * werden ins Inventar überführt, danach State leeren und ins Dorf.
+   */
+  public completeAdventure(): void {
+    const rewards = this.pendingRewards();
+    console.log(
+      `🏆 [completeAdventure] ${rewards.length} Items werden ins Inventar gepackt:`,
+      rewards,
+    );
+
+    for (const item of rewards) {
+      this.inventarService.addItemToInventar(item);
+    }
+
+    // Aufräumen + Shops rerollen passiert in clearAdventure
+    this.clearAdventure();
+    this.router.navigate(['/village']);
   }
 
   public continueAdventure(): void {
@@ -81,52 +117,69 @@ export class AdventureStateService {
       return;
     }
 
-    if (currentStep) {
-      switch (currentStep.type) {
-        case 'dialog':
-          this.router.navigate(['/adventure/dialog']).then(s =>
-            console.log('[continueAdventure] navigate() success?', s));
-          break;
-        case 'loot':
-          this.router.navigate(['/adventure/loot']).then(s =>
-            console.log('[continueAdventure] navigate() success?', s));
-          break;
-        case 'fight':
-          this.router.navigate(['/adventure/fight']).then(s =>
-            console.log('[continueAdventure] navigate() success?', s));
-          break;
-        case 'quiz':
-          this.router.navigate(['/adventure/quiz']).then(s =>
-            console.log('[continueAdventure] navigate() success?', s));
-          break;
-        default:
-          console.warn('[continueAdventure] Unbekannter Step-Typ:', currentStep.type);
-      }
-    } else {
-      console.log('[continueAdventure] currentStep ist undefined/null.');
+    // 🎁 NEU: Kein Step mehr → Adventure ist durch → Loot vergeben
+    if (!currentStep) {
+      console.log('[continueAdventure] Keine weiteren Steps — Adventure abgeschlossen!');
+      this.completeAdventure();
+      return;
+    }
+
+    switch (currentStep.type) {
+      case 'dialog':
+        this.router
+          .navigate(['/adventure/dialog'])
+          .then((s) => console.log('[continueAdventure] navigate() success?', s));
+        break;
+      case 'loot':
+        this.router
+          .navigate(['/adventure/loot'])
+          .then((s) => console.log('[continueAdventure] navigate() success?', s));
+        break;
+      case 'fight':
+        this.router
+          .navigate(['/adventure/fight'])
+          .then((s) => console.log('[continueAdventure] navigate() success?', s));
+        break;
+      case 'quiz':
+        this.router
+          .navigate(['/adventure/quiz'])
+          .then((s) => console.log('[continueAdventure] navigate() success?', s));
+        break;
+      default:
+        console.warn('[continueAdventure] Unbekannter Step-Typ:', currentStep.type);
     }
 
     this.walletService.addGold(10);
   }
 
+  /**
+   * Erzeugt IMMER eine frische Class-Instanz der Area und füttert sie mit den
+   * gespeicherten eventSteps. Wichtig: KEIN { ...currentLevel } Spread mehr —
+   * das hat die Prototype-Kette zerstört und Methoden wie rollLoot() killed.
+   */
   private initializeLevel(adventureId: string, level: number, steps: any[]): void {
-    if (!this.level()) {
-      if (adventureId === 'duesterwald') {
-        this.level.set(new DarkForest(level));
-      }
+    let newArea: any = null;
+
+    if (adventureId === 'duesterwald') {
+      newArea = new DarkForest(level, this.skillsService.combatStats()['magic-find'] || 0);
+    } else {
+      console.warn('[initializeLevel] Unbekannte adventureId:', adventureId);
+      return;
     }
-    const currentLevel = this.level();
-    if (currentLevel) {
-      currentLevel.eventSteps = steps;
-      this.level.set({ ...currentLevel });
-    }
+
+    newArea.eventSteps = steps;
+    this.level.set(newArea);
   }
 
   generateLevel() {
-    const newLevel = new DarkForest(this.profileService.level() || 1);
+    const newLevel = new DarkForest(
+      this.profileService.level() || 1,
+      this.skillsService.combatStats()['magic-find'] || 0,
+    );
     this.adventureId.set('duesterwald');
     this.steps.set(newLevel.eventSteps);
     this.currentStepIndex.set(0);
+    this.pendingRewards.set([]);
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
     this.saveAdventure();
   }
@@ -141,6 +194,7 @@ export class AdventureStateService {
       currentStepIndex: this.currentStepIndex(),
       steps: this.steps(),
       playerLevel: this.profileService.level(),
+      pendingRewards: this.pendingRewards(), // 🎁 mit-persistieren
       activeFight: this.activeFight(),
     };
     localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
@@ -161,17 +215,19 @@ export class AdventureStateService {
     this.currentStepIndex.set(state.currentStepIndex);
     this.steps.set(state.steps);
     this.activeFight.set(state.activeFight || null);
+    this.pendingRewards.set(state.pendingRewards || []); // 🎁 restoren
     this.initializeLevel(state.adventureId, state.playerLevel, state.steps);
     return true;
   }
 
   startNewAdventure(areaId: string) {
-    if (this.adventureId()) {
-      console.warn('Es läuft bereits ein Abenteuer.');
-      return;
-    }
     if (areaId === 'duesterwald') {
-      this.level.set(new DarkForest(this.profileService.level() || 1));
+      this.level.set(
+        new DarkForest(
+          this.profileService.level() || 1,
+          this.skillsService.combatStats()['magic-find'] || 0,
+        ),
+      );
     } else {
       console.error('Unbekannte Area-ID');
       return;
@@ -180,7 +236,19 @@ export class AdventureStateService {
     this.steps.set(this.level()!.eventSteps);
     this.currentStepIndex.set(0);
     this.activeFight.set(null);
+    this.pendingRewards.set([]); // 🎁 frischer Run = leere Rewards
     this.saveAdventure();
     this.router.navigate(['/adventure/intro']);
+  }
+
+  /**
+   * 💀 Abenteuer gescheitert (z.B. Kampf verloren, User klickt "zurück ins Dorf"
+   * mitten im Run). pendingRewards werden VERWORFEN — analog zur alten
+   * clearAdventure-Logik, aber navigiert zusätzlich zurück ins Dorf.
+   */
+  public failAdventure(): void {
+    console.log('💀 [failAdventure] Abenteuer gescheitert — pendingRewards verworfen.');
+    this.clearAdventure(); // löscht Storage, resetet Signals, rerollt Shops
+    this.router.navigate(['/village']);
   }
 }

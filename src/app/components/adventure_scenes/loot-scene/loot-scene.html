@@ -1,1 +1,63 @@
-<p>loot-scene works!</p>
+<div class="loot-scene-container w-full h-full relative bg-black text-white">
+
+  <!-- 🖼️ Hintergrund: kommt jetzt aus der Area (lootScenePaths) -->
+  <div class="z-[-1] absolute inset-0 w-full h-full">
+    <app-animation-object
+      Name="loot-background"
+      [Duration]="lootSceneDuration()"
+      [spritePaths]="lootScenePaths()"
+      [Loop]="true"
+      [contain]="false"
+    ></app-animation-object>
+  </div>
+
+  @if (showLootIntro()) {
+    <!-- ===== LOOT-INTRO ===== -->
+    <div class="absolute inset-0 w-full h-full flex items-center justify-center">
+      <app-animation-object
+        Name="loot-intro"
+        [Duration]="lootIntroDuration()"
+        [spritePaths]="lootIntroPaths()"
+        [contain]="false"
+      ></app-animation-object>
+    </div>
+  } @else {
+    <!-- ===== LOOT-RESULT ===== -->
+    <div
+      class="absolute inset-0 w-full h-full flex flex-col items-center justify-center cursor-pointer select-none"
+      (click)="onContinue()"
+    >
+      @if (foundItem()) {
+        <div class="text-3xl font-bold text-yellow-300 mb-6 drop-shadow-lg">
+          Du hast etwas gefunden!
+        </div>
+
+        <div class="w-[256px] h-[256px] mb-6">
+          <app-animation-object
+            Name="loot-item"
+            [Duration]="1000"
+            [spritePaths]="[foundItem()['img-path']]"
+            [Loop]="false"
+            [contain]="true"
+          ></app-animation-object>
+        </div>
+
+        <div class="text-2xl font-semibold text-amber-300 mb-2">
+          {{ foundItem().name }}
+        </div>
+
+        <div class="text-base text-zinc-200 max-w-[480px] text-center px-4 mb-8">
+          {{ foundItem().description }}
+        </div>
+      } @else {
+        <div class="text-2xl text-zinc-300 mb-8">
+          Hier war leider nichts zu holen...
+        </div>
+      }
+
+      <div class="text-lg text-zinc-300 animate-pulse">
+        Tippen, um weiterzuziehen →
+      </div>
+    </div>
+  }
+</div>

@@ -1,22 +1,20 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FightService } from '../../../services/fight.service';
 import { SkillsService } from '../../../services/skills.service';
 import { ProfileService } from '../../../services/profile.service';
+import { AdventureStateService } from '../../../services/adventure-state.service';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
-
 
 /**
  * @component FightScene
  * @description Steuert die UI der Kampfszene. Delegiert die Berechnungen an den FightService.
  *
- * Beim ERSTEN Betreten dieses Kampfes (also wenn noch kein activeFight im Save liegt)
- * läuft zuerst das Monster-Intro aus dem Monster-JSON ab. Erst danach erscheint die
- * Kampf-UI. Bei einem Resume (Page-Reload mitten im Kampf) wird das Intro übersprungen.
- *
- * Zusätzlich werden die Idle-Animation-Daten des Monsters (idle-path / idle-duration)
- * aus dem JSON in Signals gespiegelt, damit sie sauber an ein <app-animation-object />
- * in der Kampf-UI gebunden werden können.
+ * WICHTIG: Wir nutzen effect() statt ngOnInit als "Init-Trigger". Grund:
+ * Bei fight→fight navigiert der Angular-Router auf dieselbe URL
+ * (/adventure/fight → /adventure/fight) und feuert kein ngOnInit neu.
+ * Der effect reagiert dagegen auf currentStepIndex und kann so den
+ * nächsten Kampf sauber neu aufsetzen.
  */
 @Component({
   selector: 'app-fight-scene',
@@ -25,11 +23,12 @@ import { AnimationObject } from '../../shared/animation-object/animation-object'
   templateUrl: './fight-scene.html',
   styleUrl: './fight-scene.scss',
 })
-export class FightScene implements OnInit {
+export class FightScene {
   // --- Services ---
   fightService = inject(FightService);
   skillsService = inject(SkillsService);
   profileService = inject(ProfileService);
+  private adventureStateService = inject(AdventureStateService);
 
   // --- UI Bindings direkt aus dem Service gelinkt ---
   monsterName = this.fightService.monsterName;
@@ -57,22 +56,39 @@ export class FightScene implements OnInit {
   public monsterIdlePaths = signal<string[]>([]);
   public monsterIdleDuration = signal<number>(2500);
 
-  ngOnInit(): void {
-    console.log('🔥 FightScene ngOnInit feuert!');
+  // Guard damit wir einen Step-Index nicht doppelt initialisieren
+  // (der erste effect-Trigger deckt sich mit dem Mount ab).
+  private lastInitializedStep: number = -1;
 
-    // Erkennt einen frischen Kampf-Start: BEVOR initializeFight() den activeFight setzt
-    // ist er noch null. Bei einem Resume ist er bereits aus dem Save befüllt.
+  constructor() {
+    effect(() => {
+      const idx = this.adventureStateService.currentStepIndex();
+      const step = this.adventureStateService.steps()[idx];
+
+      if (!step || step.type !== 'fight') return;
+      if (idx === this.lastInitializedStep) return;
+
+      console.log(`🔥 FightScene setup für Step-Index ${idx}`);
+      this.lastInitializedStep = idx;
+      this.setupFight();
+    });
+  }
+
+  /**
+   * Setzt den Kampf auf: initFight im Service + Intro-Animation abspielen.
+   * Wird sowohl beim initialen Mount als auch bei fight→fight Wechsel
+   * ausgelöst (siehe effect() im constructor).
+   */
+  private setupFight(): void {
+    // BEVOR initializeFight() den activeFight setzt ist er noch null.
+    // Bei einem Resume ist er bereits aus dem Save befüllt.
     const isNewFight = this.fightService.activeFight() === null;
 
     this.fightService.initializeFight();
 
-    // Monster-Animation-Daten aus dem angereicherten Monster-Objekt ziehen.
-    // JSON-Felder kommen in kebab-case ('intro-duration', 'intro-path',
-    // 'idle-duration', 'idle-path').
     const monster = this.fightService.getEnrichedMonster();
 
-    // Idle-Animation IMMER setzen (auch bei Resume), damit das <app-animation-object />
-    // in der Kampf-UI sofort gefüttert ist.
+    // Idle-Animation IMMER setzen (auch bei Resume)
     const idleDuration = monster?.['idle-duration'] ?? 2500;
     const idlePaths = monster?.['idle-path'] ?? [];
     if (Array.isArray(idlePaths) && idlePaths.length > 0) {
@@ -80,6 +96,7 @@ export class FightScene implements OnInit {
       this.monsterIdleDuration.set(idleDuration);
       console.log(`💤 Monster-Idle bereit (${idleDuration}ms, ${idlePaths.length} Frames)`);
     } else {
+      this.monsterIdlePaths.set([]);
       console.log('ℹ️ Monster hat keine Idle-Animation hinterlegt');
     }
 
@@ -100,8 +117,11 @@ export class FightScene implements OnInit {
           console.log('🐉 Monster-Intro beendet, Kampf-UI wird angezeigt');
         }, introDuration);
       } else {
+        this.showMonsterIntro.set(false);
         console.log('ℹ️ Monster hat kein Intro hinterlegt, springe direkt in die Kampf-UI');
       }
+    } else {
+      this.showMonsterIntro.set(false);
     }
 
     console.log('✅ Kampf bereit, enrichedMonster gesetzt');

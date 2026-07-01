@@ -143,7 +143,16 @@ export class FightService {
   }
 
   private endTurn(): void {
-    // Nur HP/Mana/Runde persistieren – Monster bleibt das Original mit IDs (kein Spell-Datenverlust)
+    // 🛡️ Guard: Wenn der Kampf durch applyDamageToMonster/Player bereits als
+    // Sieg oder Niederlage abgeschlossen wurde (activeFight = null), dann
+    // darf hier NICHTS mehr passieren. Sonst überschreibt der Spread-Set
+    // den null-State mit einem halben Fight-Snapshot und der nächste Step
+    // spawnt beim nächsten Load kaputt (Monster mit 0 HP etc.).
+    if (!this.adventureStateService.activeFight()) {
+      console.log('[endTurn] Kampf ist bereits vorbei, breche ab.');
+      return;
+    }
+
     this.adventureStateService.activeFight.set({
       ...this.activeFight()!,
       playerHp: this.playerHp(),
@@ -188,7 +197,10 @@ export class FightService {
       if (!resolvedSpell) {
         // Auflösung gescheitert (ID unbekannt) → Fallback auf normalen Angriff,
         // damit der Kampf-Turn nicht kommentarlos verloren geht.
-        console.warn('👹 Monster-Spell konnte nicht aufgelöst werden, weiche auf normalen Angriff aus:', rawSpell);
+        console.warn(
+          '👹 Monster-Spell konnte nicht aufgelöst werden, weiche auf normalen Angriff aus:',
+          rawSpell,
+        );
         const damage = monster.attack || 10;
         this.applyDamageToPlayer(damage);
         this.endTurn();
@@ -230,15 +242,15 @@ export class FightService {
   private handleFightEnd(playerWon: boolean): void {
     this.enrichedMonster.set(null); // aufräumen
     if (playerWon) {
-      console.log('Sieg!');
+      console.log('🏆 Sieg!');
       this.adventureStateService.activeFight.set(null);
       this.adventureStateService.currentStepIndex.update((idx) => idx + 1);
       this.adventureStateService.saveAdventure();
       this.adventureStateService.continueAdventure();
     } else {
-      console.log('Niederlage!');
-      this.adventureStateService.activeFight.set(null);
-      this.adventureStateService.saveAdventure();
+      console.log('💀 Niederlage! Adventure wird beendet.');
+      // activeFight nicht extra nullen — failAdventure → clearAdventure macht das.
+      this.adventureStateService.failAdventure();
     }
   }
 }

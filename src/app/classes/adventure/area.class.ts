@@ -1,57 +1,114 @@
-// src/app/services/adventure/area.base.ts
+// src/app/classes/adventure/area.class.ts
+
+export interface LootEntry {
+  item: any;
+  'drop-chance': number;
+}
+
+export interface LootTable {
+  '1-10': LootEntry[];
+  '11-20': LootEntry[];
+  '21-30': LootEntry[];
+  '31-40': LootEntry[];
+  '41-50': LootEntry[];
+}
+
 export abstract class Area {
   abstract name: string;
   abstract monsterPool: any[];
   abstract eventSteps: any[];
   abstract introPaths: any[];
   abstract introDuration: number;
+
+  abstract lootIntroPaths: any[];
+  abstract lootIntroDuration: number;
+
+  abstract lootScenePaths: any[];
+  abstract lootSceneDuration: number;
+
+  abstract lootTable: LootTable;
+
   playerLevel: number;
 
-  constructor(playerLevel: number) {
-    this.playerLevel = playerLevel
+  // ✨ NEU: Magic-Find beeinflusst die LootTable-Generierung (pro 20 MF
+  // wird der niedrigste noch upgradbare Tier-Slot um 1 hochgestuft).
+  magicFind: number;
+
+  constructor(playerLevel: number, magicFind: number = 0) {
+    this.playerLevel = playerLevel;
+    this.magicFind = magicFind;
   }
 
-  // Helfer-Funktion: Holt ein Monster passend zum Spieler-Level
   protected getRandomMonster(playerLevel: number): any {
     if (!this.monsterPool || this.monsterPool.length === 0) {
       return null;
     }
-
     const randomIndex = Math.floor(Math.random() * this.monsterPool.length);
     return this.monsterPool[randomIndex];
+  }
+
+  public rollLoot(): any | null {
+    const tier = this.getLootTier(this.playerLevel);
+    const entries = this.lootTable[tier];
+
+    if (!entries || entries.length === 0) {
+      console.warn(`[Area.rollLoot] Tier "${tier}" ist leer — kein Loot.`);
+      return null;
+    }
+
+    const totalWeight = entries.reduce(
+      (sum, e) => sum + (e['drop-chance'] || 0),
+      0
+    );
+
+    if (totalWeight <= 0) {
+      console.warn(`[Area.rollLoot] Tier "${tier}" hat totalWeight 0.`);
+      return null;
+    }
+
+    let roll = Math.random() * totalWeight;
+    for (const entry of entries) {
+      roll -= entry['drop-chance'] || 0;
+      if (roll <= 0) {
+        return JSON.parse(JSON.stringify(entry.item));
+      }
+    }
+
+    return JSON.parse(JSON.stringify(entries[entries.length - 1].item));
+  }
+
+  private getLootTier(level: number): keyof LootTable {
+    if (level <= 10) return '1-10';
+    if (level <= 20) return '11-20';
+    if (level <= 30) return '21-30';
+    if (level <= 40) return '31-40';
+    return '41-50';
   }
 
   generateSteps(min: number = 4, max: number = 8): any[] {
     const stepCount = Math.floor(Math.random() * (max - min + 1)) + min;
     const steps: any[] = [];
 
-    // 1. Berechne die Anzahl der Kämpfe (50% bis 75% des Gesamtwerts)
     const minFights = Math.ceil(stepCount * 0.5);
     const maxFights = Math.floor(stepCount * 0.75);
-    const fightCount = Math.floor(Math.random() * (maxFights - minFights + 1)) + minFights;
+    const fightCount =
+      Math.floor(Math.random() * (maxFights - minFights + 1)) + minFights;
 
-    // Der Rest steht für Spezial-Events zur Verfügung
     const specialEventCount = stepCount - fightCount;
 
-    // 2. Erstelle alle Schritte als Array
-    // Erst alle Kämpfe...
     for (let i = 0; i < fightCount; i++) {
       steps.push({ type: 'fight', monster: this.getRandomMonster(1) });
     }
 
-    // ...dann die Spezial-Events auffüllen
     const eventTypes = ['loot', 'quiz', 'dialog'];
     for (let i = 0; i < specialEventCount; i++) {
       const randomType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
       steps.push({ type: randomType, eventId: `${randomType}_01` });
     }
 
-    // 3. Schritte durchmischen (Fisher-Yates Shuffle), damit nicht alle Kämpfe am Anfang stehen
     return this.shuffleArray(steps);
   }
 
-  
-    // Hilfsfunktion zum Mischen
   public shuffleArray(array: any[]): any[] {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -60,20 +117,18 @@ export abstract class Area {
     return array;
   }
 
-  // Diese Funktion durchläuft die Steps und füllt Kämpfe mit Leben
   protected populateFights(monsterPool: any[]): void {
     if (!monsterPool || monsterPool.length === 0) return;
 
-    this.eventSteps = this.eventSteps.map(step => {
+    this.eventSteps = this.eventSteps.map((step) => {
       if (step.type === 'fight') {
-        // Monster zuweisen
         const randomIndex = Math.floor(Math.random() * monsterPool.length);
-        return { 
-          ...step, // Behält den Typ 'fight' bei
-          monster: monsterPool[randomIndex] 
+        return {
+          ...step,
+          monster: monsterPool[randomIndex],
         };
       }
-      return step; // Unverändert lassen (Loot, Quiz, etc.)
+      return step;
     });
   }
 }
