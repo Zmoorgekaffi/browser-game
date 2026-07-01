@@ -1,9 +1,8 @@
 {
-  "id": "elf_01",
-  "name": "Nyllara, die Waldelfe",
+  "id": "kobold-encounter",
+  "name": "Frecher Kobold",
 
   "scene-background": "imgs/areas/dark-forest/encounter/elf/background/frame_0000.webp",
-
   "intro": {
     "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -38,7 +37,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 2000
+    "duration": 2500
   },
   "idle": {
     "paths": [
@@ -74,7 +73,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 3000
+    "duration": 2000
   },
   "speak": {
     "paths": [
@@ -113,15 +112,15 @@
     "duration": 1500
   },
   "texts": [
-    "Halt, Fremder! Du wagst dich tief in den Düsterwald...",
-    "Ich bin Nyllara, Hüterin der uralten Bäume. Wenige kommen bis hierher — und noch weniger kehren zurück.",
-    "Bevor du weiterziehst, verrate mir: was suchst du in meinen Wäldern?"
+    "Aus dem Gebüsch springt eine kleine, grinsende Gestalt und versperrt dir kichernd den Weg.",
+    "\"Hihi, ein Wandersmann! Ich hab da ein Rätsel für dich - errätst du's, gibt's eine Belohnung. Errätst du's nicht... naja, Pech gehabt!\"",
+    "Der Kobold hüpft aufgeregt von einem Bein aufs andere und wartet auf deine Antwort."
   ],
   "answers": [
     {
-      "text": "Ich reise nur hindurch. Meine Absichten sind rein.",
-      "reactionType": "gold",
-      "responseText": "Deine Ehrlichkeit gefällt mir. Nimm etwas Gold aus dem Waldschatz mit.",
+      "text": "Ich spiele mit.",
+      "reactionType": "item",
+      "responseText": "\"Oh, gar nicht mal so dumm!\" Kichernd wirft er dir etwas zu und verschwindet im Gebüsch.",
       "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -160,10 +159,10 @@
       }
     },
     {
-      "text": "Das geht dich nichts an, Elfe!",
-      "reactionType": "nothing",
-      "responseText": "So spricht also ein Held? Zieh weiter — ohne meinen Segen.",
-            "reactionAnimation": {
+      "text": "Bestich ihn stattdessen.",
+      "reactionType": "gold",
+      "responseText": "\"Oh, glänzende Dinge mag ich noch lieber als Rätsel!\" Er wirft dir zufrieden etwas zurück.",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",
@@ -201,9 +200,10 @@
       }
     },
     {
-      "text": "Ich suche Rat und Weisheit für meinen Weg.",
-      "reactionType": "item",
-      "responseText": "Ein weiser Wanderer verdient ein weises Geschenk. Nimm dies mit.",      "reactionAnimation": {
+      "text": "Keine Zeit für Spielchen.",
+      "reactionType": "nothing",
+      "responseText": "\"Spielverderber!\" Beleidigt verschwindet er zwischen den Farnen.",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",

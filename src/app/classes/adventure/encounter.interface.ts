@@ -22,6 +22,10 @@ export interface EncounterAnswer {
    * Optional: eigene Animation die statt der default speak-Animation
    * abgespielt wird. Ideal wenn eine Antwort etwas Besonderes triggert
    * (Angriff, Zauber, Freudentanz, was auch immer).
+   *
+   * WICHTIG: Damit jede Antwort ihre EIGENE Reaktion abspielt, sollte
+   * hier praktisch immer eine eigene Animation hinterlegt werden statt
+   * sich auf den "speak"-Fallback zu verlassen.
    */
   reactionAnimation?: EncounterAnimation;
 }
@@ -29,6 +33,13 @@ export interface EncounterAnswer {
 export interface Encounter {
   id: string;
   name: string;
+  /**
+   * 🆕 Hintergrund der Dialog-Scene für diese Begegnung. Einzelner
+   * statischer Bild-Pfad (kein paths[]/duration-Objekt), wird 1:1 an
+   * app-animation-object als [spritePaths]="[enc['scene-background']]"
+   * übergeben.
+   */
+  'scene-background': string;
   intro: EncounterAnimation;
   idle: EncounterAnimation;
   speak: EncounterAnimation;

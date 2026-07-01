@@ -1,5 +1,15 @@
 <div class="dialog-scene-container w-full h-full relative bg-black text-white">
 
+  <!-- 🖼️ 🆕 Hintergrund: kommt aus enc['scene-background'], statisches Einzelbild -->
+  <div class="z-[-1] absolute inset-0 w-full h-full">
+    <app-animation-object
+      Name="dialog-background"
+      [spritePaths]="backgroundPaths()"
+      [Loop]="false"
+      [contain]="false"
+    ></app-animation-object>
+  </div>
+
   <!-- 🎭 Character-Animation (Vollflächig zentriert; per Container tunbar) -->
   <div class="absolute inset-0 w-full h-full flex items-center justify-center">
     <app-animation-object
@@ -20,22 +30,24 @@
       <h2 class="text-2xl font-bold text-amber-300">{{ encounter()?.name }}</h2>
     </div>
 
-    <!-- 💬 Text-Box -->
-    <div class="absolute bottom-32 left-8 right-8 bg-black/80 border border-white/20 rounded-lg p-6 min-h-[120px]">
-      <p class="text-lg text-zinc-100 leading-relaxed">
+    <!-- 💬 Text-Box (🆕 "Weiter" sitzt jetzt INNERHALB dieser Box) -->
+    <div class="absolute bottom-32 left-8 right-8 bg-black/80 border border-white/20 rounded-lg p-6 min-h-[120px] flex flex-col gap-4">
+      <p class="text-lg text-zinc-100 leading-relaxed flex-1">
         {{ encounter()?.texts[currentTextIndex()] }}
       </p>
+
+      @if (!isLastText()) {
+        <!-- ▶️ Weiter-Button (Multi-Text), jetzt Teil der Textbox -->
+        <div
+          (click)="nextText()"
+          class="self-end bg-amber-600 hover:bg-amber-500 cursor-pointer px-6 py-2 rounded-md font-semibold select-none"
+        >
+          Weiter →
+        </div>
+      }
     </div>
 
-    @if (!isLastText()) {
-      <!-- ▶️ Weiter-Button (Multi-Text) -->
-      <div
-        (click)="nextText()"
-        class="absolute bottom-8 right-8 bg-amber-600 hover:bg-amber-500 cursor-pointer px-6 py-2 rounded-md font-semibold select-none"
-      >
-        Weiter →
-      </div>
-    } @else {
+    @if (isLastText()) {
       <!-- 🎯 Antworten (3 Optionen) -->
       <div class="absolute bottom-8 left-8 right-8 flex flex-col gap-2">
         @for (answer of encounter()?.answers; track $index) {
@@ -56,26 +68,28 @@
       <h2 class="text-2xl font-bold text-amber-300">{{ encounter()?.name }}</h2>
     </div>
 
-    <!-- 💬 Response-Text + Reward-Message -->
-    <div class="absolute bottom-32 left-8 right-8 bg-black/80 border border-white/20 rounded-lg p-6 min-h-[120px]">
-      @if (selectedAnswer()?.responseText) {
-        <p class="text-lg text-zinc-100 leading-relaxed">
-          {{ selectedAnswer().responseText }}
-        </p>
-      }
-      @if (rewardMessage()) {
-        <p class="text-xl text-amber-300 mt-3 font-semibold">
-          {{ rewardMessage() }}
-        </p>
-      }
-    </div>
+    <!-- 💬 Response-Text + Reward-Message (🆕 "Weiterziehen" jetzt auch INNERHALB dieser Box) -->
+    <div class="absolute bottom-32 left-8 right-8 bg-black/80 border border-white/20 rounded-lg p-6 min-h-[120px] flex flex-col gap-4">
+      <div class="flex-1">
+        @if (selectedAnswer()?.responseText) {
+          <p class="text-lg text-zinc-100 leading-relaxed">
+            {{ selectedAnswer().responseText }}
+          </p>
+        }
+        @if (rewardMessage()) {
+          <p class="text-xl text-amber-300 mt-3 font-semibold">
+            {{ rewardMessage() }}
+          </p>
+        }
+      </div>
 
-    <!-- ▶️ Weiterziehen -->
-    <div
-      (click)="continueToNextStep()"
-      class="absolute bottom-8 right-8 bg-emerald-600 hover:bg-emerald-500 cursor-pointer px-6 py-2 rounded-md font-semibold select-none"
-    >
-      Weiterziehen →
+      <!-- ▶️ Weiterziehen -->
+      <div
+        (click)="continueToNextStep()"
+        class="self-end bg-emerald-600 hover:bg-emerald-500 cursor-pointer px-6 py-2 rounded-md font-semibold select-none"
+      >
+        Weiterziehen →
+      </div>
     </div>
   }
 </div>

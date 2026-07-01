@@ -1,9 +1,8 @@
 {
-  "id": "elf_01",
-  "name": "Nyllara, die Waldelfe",
+  "id": "merchant-encounter",
+  "name": "Fahrender Händler",
 
   "scene-background": "imgs/areas/dark-forest/encounter/elf/background/frame_0000.webp",
-
   "intro": {
     "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -38,7 +37,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 2000
+    "duration": 2500
   },
   "idle": {
     "paths": [
@@ -74,7 +73,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 3000
+    "duration": 2000
   },
   "speak": {
     "paths": [
@@ -113,15 +112,15 @@
     "duration": 1500
   },
   "texts": [
-    "Halt, Fremder! Du wagst dich tief in den Düsterwald...",
-    "Ich bin Nyllara, Hüterin der uralten Bäume. Wenige kommen bis hierher — und noch weniger kehren zurück.",
-    "Bevor du weiterziehst, verrate mir: was suchst du in meinen Wäldern?"
+    "Ein zerzauster Karren ächzt zwischen den Bäumen hervor. \"Halt, Reisender! Du siehst aus, als könntest du gute Ware gebrauchen.\"",
+    "\"Ich hab hier alles Mögliche zusammengesammelt - manches glänzt, manches ist verflucht. Willst du einen Blick riskieren?\"",
+    "Der Händler grinst breit und klopft auf seine Kiste. \"Na los, entscheide dich, bevor die Wölfe uns beide riechen.\""
   ],
   "answers": [
     {
-      "text": "Ich reise nur hindurch. Meine Absichten sind rein.",
-      "reactionType": "gold",
-      "responseText": "Deine Ehrlichkeit gefällt mir. Nimm etwas Gold aus dem Waldschatz mit.",
+      "text": "Zeig mir, was du hast.",
+      "reactionType": "item",
+      "responseText": "\"Kluge Wahl!\" Er wühlt in seiner Kiste und drückt dir etwas in die Hand.",
       "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -160,10 +159,10 @@
       }
     },
     {
-      "text": "Das geht dich nichts an, Elfe!",
-      "reactionType": "nothing",
-      "responseText": "So spricht also ein Held? Zieh weiter — ohne meinen Segen.",
-            "reactionAnimation": {
+      "text": "Verhandle über den Preis.",
+      "reactionType": "gold",
+      "responseText": "\"Du feilschst wie ein Zwerg! Na gut, hier - als Dreingabe.\"",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",
@@ -201,9 +200,10 @@
       }
     },
     {
-      "text": "Ich suche Rat und Weisheit für meinen Weg.",
-      "reactionType": "item",
-      "responseText": "Ein weiser Wanderer verdient ein weises Geschenk. Nimm dies mit.",      "reactionAnimation": {
+      "text": "Kein Interesse, ich ziehe weiter.",
+      "reactionType": "nothing",
+      "responseText": "\"Deine Verluste.\" Er zuckt mit den Schultern und lenkt seinen Karren weiter in den Wald.",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",

@@ -27,6 +27,11 @@ import glovesTier5 from '../../../../../public/item-data/equipment/gloves/gloves
 
 // 💬 ENCOUNTERS
 import elfEncounter from '../../../../../public/encounters/dark-forest/elf-encounter.json';
+import merchantEncounter from '../../../../../public/encounters/dark-forest/merchant-encounter.json';
+import lostChildEncounter from '../../../../../public/encounters/dark-forest/lost-child-encounter.json';
+import witchEncounter from '../../../../../public/encounters/dark-forest/witch-encounter.json';
+import woundedKnightEncounter from '../../../../../public/encounters/dark-forest/wounded-knight-encounter.json';
+import koboldEncounter from '../../../../../public/encounters/dark-forest/kobold-encounter.json';
 
 
 
@@ -164,11 +169,15 @@ export class DarkForest extends Area {
     '41-50': [],
   };
 
-  // 💬 NEU: Alle möglichen Dialog-Begegnungen für den Düsterwald
-override encounters: Encounter[] = [
-  elfEncounter as Encounter,
-  // weitere Begegnungen dazu ergänzen sobald erstellt
-];
+  // 💬 Alle möglichen Dialog-Begegnungen für den Düsterwald
+  override encounters: Encounter[] = [
+    elfEncounter as Encounter,
+    merchantEncounter as Encounter,
+    lostChildEncounter as Encounter,
+    witchEncounter as Encounter,
+    woundedKnightEncounter as Encounter,
+    koboldEncounter as Encounter,
+  ];
 
 
 

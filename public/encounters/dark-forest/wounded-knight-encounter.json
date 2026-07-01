@@ -1,9 +1,8 @@
 {
-  "id": "elf_01",
-  "name": "Nyllara, die Waldelfe",
+  "id": "wounded-knight-encounter",
+  "name": "Verwundeter Ritter",
 
   "scene-background": "imgs/areas/dark-forest/encounter/elf/background/frame_0000.webp",
-
   "intro": {
     "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -38,7 +37,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 2000
+    "duration": 2500
   },
   "idle": {
     "paths": [
@@ -74,7 +73,7 @@
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0029.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0030.webp"
     ],
-    "duration": 3000
+    "duration": 2000
   },
   "speak": {
     "paths": [
@@ -113,15 +112,15 @@
     "duration": 1500
   },
   "texts": [
-    "Halt, Fremder! Du wagst dich tief in den Düsterwald...",
-    "Ich bin Nyllara, Hüterin der uralten Bäume. Wenige kommen bis hierher — und noch weniger kehren zurück.",
-    "Bevor du weiterziehst, verrate mir: was suchst du in meinen Wäldern?"
+    "An einen Baumstamm gelehnt sitzt ein Ritter in zerschlagener Rüstung, eine Wunde notdürftig verbunden.",
+    "\"Ein Rudel hat mich überfallen... meine Kameraden sind tot. Ich fürchte, ich schaffe es nicht mehr allein.\"",
+    "Er sieht dich mit letzter Hoffnung an."
   ],
   "answers": [
     {
-      "text": "Ich reise nur hindurch. Meine Absichten sind rein.",
-      "reactionType": "gold",
-      "responseText": "Deine Ehrlichkeit gefällt mir. Nimm etwas Gold aus dem Waldschatz mit.",
+      "text": "Ich versorge deine Wunden.",
+      "reactionType": "item",
+      "responseText": "\"Ich schulde dir mein Leben.\" Er reicht dir mit zitternder Hand etwas aus seinem Gepäck.",
       "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
@@ -160,10 +159,10 @@
       }
     },
     {
-      "text": "Das geht dich nichts an, Elfe!",
-      "reactionType": "nothing",
-      "responseText": "So spricht also ein Held? Zieh weiter — ohne meinen Segen.",
-            "reactionAnimation": {
+      "text": "Nimm etwas Gold für die Reise.",
+      "reactionType": "gold",
+      "responseText": "Er nickt dankbar, doch sein Blick verrät, dass er noch mehr Hilfe bräuchte. Trotzdem drückt er dir zum Dank etwas zurück.",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",
@@ -201,9 +200,10 @@
       }
     },
     {
-      "text": "Ich suche Rat und Weisheit für meinen Weg.",
-      "reactionType": "item",
-      "responseText": "Ein weiser Wanderer verdient ein weises Geschenk. Nimm dies mit.",      "reactionAnimation": {
+      "text": "Das ist nicht mein Kampf.",
+      "reactionType": "nothing",
+      "responseText": "Er senkt den Kopf und sagt nichts mehr, während du weiterziehst.",
+      "reactionAnimation": {
         "paths": [
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
       "imgs/areas/dark-forest/encounter/elf/intro/frame_0001.webp",

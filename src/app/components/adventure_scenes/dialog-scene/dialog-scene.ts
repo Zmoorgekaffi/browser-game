@@ -15,6 +15,9 @@ type DialogPhase = 'intro' | 'dialog' | 'reaction';
  *   3. reaction — nach Antwort-Klick: (evtl. reaction-)Animation, Response-Text,
  *                 Belohnung wird verrechnet, „Weiterziehen" → nächster Step
  *
+ * 🆕 Zusätzlich läuft im Hintergrund ein eigenes app-animation-object mit
+ * dem `background` aus der Encounter (Loop=true), unabhängig vom Character.
+ *
  * Wie bei FightScene läuft der Setup NICHT über ngOnInit sondern über einen
  * effect() auf currentStepIndex, damit auch dialog→dialog Übergänge sauber
  * die neue Encounter laden (same-URL Navigation).
@@ -52,6 +55,9 @@ export class DialogScene {
   public currentAnimationDuration = signal<number>(2500);
   public animationLoop = signal<boolean>(false);
 
+  // --- 🆕 Background-Animation (statischer Pfad, läuft konstant durch) ---
+  public backgroundPaths = signal<string[]>([]);
+
   // Guard gegen doppelte Init für denselben Step-Index
   private lastInitializedStep: number = -1;
 
@@ -67,7 +73,10 @@ export class DialogScene {
       console.log(`💬 DialogScene setup für Step-Index ${idx}`);
       this.lastInitializedStep = idx;
       this.setupDialog(step);
+      console.log('dialog background path', this.backgroundPaths());
+      
     });
+
   }
 
   private setupDialog(step: any): void {
@@ -82,6 +91,9 @@ export class DialogScene {
     this.currentTextIndex.set(0);
     this.selectedAnswer.set(null);
     this.rewardMessage.set('');
+
+    // 🆕 Background setzen (läuft die ganze Begegnung über durch, egal welche Phase)
+    this.backgroundPaths.set(enc['scene-background'] ? [enc['scene-background']] : []);
 
     // Phase 1: Intro
     this.phase.set('intro');
@@ -116,7 +128,8 @@ export class DialogScene {
 
     const enc = this.encounter();
 
-    // Reaktions-Animation: entweder eigene der answer, sonst default speak.
+    // Reaktions-Animation: jede Antwort hat idealerweise ihre eigene
+    // (siehe encounter.interface.ts), sonst Fallback auf default speak.
     const reactionAnim = answer.reactionAnimation ?? enc.speak;
     this.setAnimation(reactionAnim, false);
 
