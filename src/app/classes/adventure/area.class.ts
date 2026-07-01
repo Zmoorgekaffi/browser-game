@@ -1,4 +1,5 @@
 // src/app/classes/adventure/area.class.ts
+import { Encounter } from './encounter.interface';
 
 export interface LootEntry {
   item: any;
@@ -12,6 +13,23 @@ export interface LootTable {
   '31-40': LootEntry[];
   '41-50': LootEntry[];
 }
+
+/**
+ * Gold-Reward Ranges pro Level-Tier (identisch zur LootTable-Struktur).
+ * Wird von rollGoldReward() genutzt.
+ */
+const GOLD_TIER_RANGES: Record<keyof LootTable, [number, number]> = {
+  '1-10':  [10, 50],
+  '11-20': [20, 100],
+  '21-30': [30, 120],
+  '31-40': [40, 130],
+  '41-50': [50, 150],
+};
+
+/** Pro 10 Magic-Find gibt's 1 Bonus-Roll von 3-6 Gold zusätzlich. */
+const GOLD_MF_STEP = 10;
+const GOLD_MF_BONUS_MIN = 3;
+const GOLD_MF_BONUS_MAX = 6;
 
 export abstract class Area {
   abstract name: string;
@@ -28,10 +46,11 @@ export abstract class Area {
 
   abstract lootTable: LootTable;
 
-  playerLevel: number;
+  // 💬 NEU: Pool möglicher Dialog-Begegnungen. Wird in populateDialogs()
+  // zufällig auf dialog-Steps verteilt.
+  abstract encounters: Encounter[];
 
-  // ✨ NEU: Magic-Find beeinflusst die LootTable-Generierung (pro 20 MF
-  // wird der niedrigste noch upgradbare Tier-Slot um 1 hochgestuft).
+  playerLevel: number;
   magicFind: number;
 
   constructor(playerLevel: number, magicFind: number = 0) {
@@ -40,9 +59,7 @@ export abstract class Area {
   }
 
   protected getRandomMonster(playerLevel: number): any {
-    if (!this.monsterPool || this.monsterPool.length === 0) {
-      return null;
-    }
+    if (!this.monsterPool || this.monsterPool.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * this.monsterPool.length);
     return this.monsterPool[randomIndex];
   }
@@ -52,29 +69,50 @@ export abstract class Area {
     const entries = this.lootTable[tier];
 
     if (!entries || entries.length === 0) {
-      console.warn(`[Area.rollLoot] Tier "${tier}" ist leer — kein Loot.`);
+      console.warn(`[Area.rollLoot] Tier "${tier}" ist leer.`);
       return null;
     }
 
-    const totalWeight = entries.reduce(
-      (sum, e) => sum + (e['drop-chance'] || 0),
-      0
-    );
-
-    if (totalWeight <= 0) {
-      console.warn(`[Area.rollLoot] Tier "${tier}" hat totalWeight 0.`);
-      return null;
-    }
+    const totalWeight = entries.reduce((sum, e) => sum + (e['drop-chance'] || 0), 0);
+    if (totalWeight <= 0) return null;
 
     let roll = Math.random() * totalWeight;
     for (const entry of entries) {
       roll -= entry['drop-chance'] || 0;
-      if (roll <= 0) {
-        return JSON.parse(JSON.stringify(entry.item));
-      }
+      if (roll <= 0) return JSON.parse(JSON.stringify(entry.item));
+    }
+    return JSON.parse(JSON.stringify(entries[entries.length - 1].item));
+  }
+
+  /**
+   * 💰 Rollt eine Gold-Belohnung basierend auf Level-Tier und Magic-Find.
+   *
+   * Basis: random zwischen tier-min und tier-max (siehe GOLD_TIER_RANGES).
+   * Bonus: pro 10 MF ein zusätzlicher Roll von 3-6 Gold, alle draufaddiert.
+   *
+   * Beispiel Tier 1-10, MF=30:
+   *   base = random(10..50)
+   *   3 MF-bonus rolls → +random(3..6) * 3 mal
+   *   final = base + bonusTotal
+   */
+  public rollGoldReward(): number {
+    const tier = this.getLootTier(this.playerLevel);
+    const [min, max] = GOLD_TIER_RANGES[tier];
+    const base = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const bonusSteps = Math.floor(Math.max(0, this.magicFind) / GOLD_MF_STEP);
+    let bonusTotal = 0;
+    for (let i = 0; i < bonusSteps; i++) {
+      bonusTotal +=
+        Math.floor(Math.random() * (GOLD_MF_BONUS_MAX - GOLD_MF_BONUS_MIN + 1)) +
+        GOLD_MF_BONUS_MIN;
     }
 
-    return JSON.parse(JSON.stringify(entries[entries.length - 1].item));
+    const final = base + bonusTotal;
+    console.log(
+      `💰 [rollGoldReward] tier=${tier}, base=${base}, MF=${this.magicFind} (${bonusSteps} bonus rolls, +${bonusTotal}) → total=${final}`
+    );
+    return final;
   }
 
   private getLootTier(level: number): keyof LootTable {
@@ -119,13 +157,29 @@ export abstract class Area {
 
   protected populateFights(monsterPool: any[]): void {
     if (!monsterPool || monsterPool.length === 0) return;
-
     this.eventSteps = this.eventSteps.map((step) => {
       if (step.type === 'fight') {
         const randomIndex = Math.floor(Math.random() * monsterPool.length);
+        return { ...step, monster: monsterPool[randomIndex] };
+      }
+      return step;
+    });
+  }
+
+  /**
+   * 💬 NEU: Weist jedem dialog-Step eine zufällige Encounter aus der
+   * encounters-Liste zu. Deep-Clone verhindert, dass verschiedene Steps
+   * dieselbe Referenz teilen (wichtig für spätere Save/Load Roundtrips).
+   */
+  protected populateDialogs(): void {
+    if (!this.encounters || this.encounters.length === 0) return;
+
+    this.eventSteps = this.eventSteps.map((step) => {
+      if (step.type === 'dialog') {
+        const randomIndex = Math.floor(Math.random() * this.encounters.length);
         return {
           ...step,
-          monster: monsterPool[randomIndex],
+          encounter: JSON.parse(JSON.stringify(this.encounters[randomIndex])),
         };
       }
       return step;

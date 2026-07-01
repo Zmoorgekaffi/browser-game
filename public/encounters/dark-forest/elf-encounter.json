@@ -1,0 +1,51 @@
+{
+  "id": "elf_01",
+  "name": "Nyllara, die Waldelfe",
+  "intro": {
+    "paths": [
+      "imgs/encounters/dark-forest/elf/intro/frame_0000.webp",
+      "imgs/encounters/dark-forest/elf/intro/frame_0001.webp",
+      "imgs/encounters/dark-forest/elf/intro/frame_0002.webp"
+    ],
+    "duration": 2000
+  },
+  "idle": {
+    "paths": [
+      "imgs/encounters/dark-forest/elf/idle/frame_0000.webp",
+      "imgs/encounters/dark-forest/elf/idle/frame_0001.webp",
+      "imgs/encounters/dark-forest/elf/idle/frame_0002.webp",
+      "imgs/encounters/dark-forest/elf/idle/frame_0003.webp"
+    ],
+    "duration": 3000
+  },
+  "speak": {
+    "paths": [
+      "imgs/encounters/dark-forest/elf/speak/frame_0000.webp",
+      "imgs/encounters/dark-forest/elf/speak/frame_0001.webp",
+      "imgs/encounters/dark-forest/elf/speak/frame_0002.webp"
+    ],
+    "duration": 1500
+  },
+  "texts": [
+    "Halt, Fremder! Du wagst dich tief in den Düsterwald...",
+    "Ich bin Nyllara, Hüterin der uralten Bäume. Wenige kommen bis hierher — und noch weniger kehren zurück.",
+    "Bevor du weiterziehst, verrate mir: was suchst du in meinen Wäldern?"
+  ],
+  "answers": [
+    {
+      "text": "Ich reise nur hindurch. Meine Absichten sind rein.",
+      "reactionType": "gold",
+      "responseText": "Deine Ehrlichkeit gefällt mir. Nimm etwas Gold aus dem Waldschatz mit."
+    },
+    {
+      "text": "Das geht dich nichts an, Elfe!",
+      "reactionType": "nothing",
+      "responseText": "So spricht also ein Held? Zieh weiter — ohne meinen Segen."
+    },
+    {
+      "text": "Ich suche Rat und Weisheit für meinen Weg.",
+      "reactionType": "item",
+      "responseText": "Ein weiser Wanderer verdient ein weises Geschenk. Nimm dies mit."
+    }
+  ]
+}

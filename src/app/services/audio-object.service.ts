@@ -17,43 +17,41 @@ export class AudioService {
 
   public isMuted = signal<boolean>(false);
 
-  private musicRoutes: Record <
-    string,
-    { music: string; musicVol?: number; ambient?: string; ambientVol?: number }
-  > = {
-    '/login': {
-      music: '/audio/login/login_0.mp3',
-      musicVol: 0.3,
-    },
-    '/village': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.18,
-      ambient: '/audio/village/village-background_0.mp3',
-      ambientVol: 0.5,
-    },
-    '/magic-shop': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.12,
-    },
-    '/smither': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.12,
-    },
-    '/general-supplies': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.12,
-    },
-    '/character': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.12,
-    },
-    '/skills': {
-      music: '/audio/village/village-music_0.mp3',
-      musicVol: 0.12,
-    },
-    // HINWEIS: Falls das Inventar irgendwann eigene Musik bekommen soll,
-    // kannst du es hier eintragen. Solange es fehlt, läuft die alte Musik weiter!
-  };
+private musicRoutes: Record<
+  string,
+  { music: string; musicVol?: number; ambient?: string; ambientVol?: number }
+> = {
+  '/login': {
+    music: 'audio/login/login_0.mp3',
+    musicVol: 0.3,
+  },
+  '/village': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.18,
+    ambient: 'audio/village/village-background_0.mp3',
+    ambientVol: 0.5,
+  },
+  '/magic-shop': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.12,
+  },
+  '/smither': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.12,
+  },
+  '/general-supplies': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.12,
+  },
+  '/character': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.12,
+  },
+  '/skills': {
+    music: 'audio/village/village-music_0.mp3',
+    musicVol: 0.12,
+  },
+};
 
   constructor() {
     effect(() => {

@@ -1,5 +1,6 @@
 // src/app/classes/adventure/areas/dark-forest.class.ts
 import { Area, LootTable } from '../area.class';
+import { Encounter } from '../encounter.interface'
 import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json';
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -21,6 +22,14 @@ import glovesTier5 from '../../../../../public/item-data/equipment/gloves/gloves
 // import headTier5 from '../../../../../public/item-data/equipment/head/head_tier5.json';
 
 // 🥋 CHEST / 🩳 LEG / 👢 FOOTWEAR / 🧣 NECKLACE / 💍 RING / 🎒 BACK / 🎗️ ACCESSOIRE / ⚔️ WEAPON — TODO
+
+
+
+// 💬 ENCOUNTERS
+import elfEncounter from '../../../../../public/encounters/dark-forest/elf-encounter.json';
+
+
+
 
 type TierNumber = 1 | 2 | 3 | 4 | 5;
 type SlotTierMap = Record<TierNumber, any[]>;
@@ -155,14 +164,23 @@ export class DarkForest extends Area {
     '41-50': [],
   };
 
-  constructor(playerLevel: number, magicFind: number = 0) {
-    super(playerLevel, magicFind);
-    this.eventSteps = this.generateSteps(4, 8);
-    this.populateFights(monsterData1o10);
-    this.lootTable = this.buildLootTable();
-    console.log('die generierten steps sind: ', this.eventSteps);
-    console.log(`🎲 LootTable generiert (playerLevel=${playerLevel}, magicFind=${magicFind}):`, this.lootTable);
-  }
+  // 💬 NEU: Alle möglichen Dialog-Begegnungen für den Düsterwald
+override encounters: Encounter[] = [
+  elfEncounter as Encounter,
+  // weitere Begegnungen dazu ergänzen sobald erstellt
+];
+
+
+
+constructor(playerLevel: number, magicFind: number = 0) {
+  super(playerLevel, magicFind);
+  this.eventSteps = this.generateSteps(4, 8);
+  this.populateFights(monsterData1o10);
+  this.populateDialogs(); // 💬 NEU
+  this.lootTable = this.buildLootTable();
+  console.log('die generierten steps sind: ', this.eventSteps);
+  console.log(`🎲 LootTable generiert (playerLevel=${playerLevel}, magicFind=${magicFind}):`, this.lootTable);
+}
 
   /**
    * Baut die LootTable dynamisch auf:
