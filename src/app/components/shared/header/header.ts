@@ -34,7 +34,6 @@ export class Header {
     const url = this.currentUrl();
     return (
       url.startsWith('/adventure/fight') ||
-      url.startsWith('/adventure/quiz') ||
       url.startsWith('/adventure/dialog') ||
       url.startsWith('/adventure/loot')
     );

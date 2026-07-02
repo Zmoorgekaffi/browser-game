@@ -140,7 +140,7 @@ export abstract class Area {
 
   /**
    * Generiert eine zufällige, gemischte Step-Liste für einen Run.
-   * 50-75% der Steps sind Kämpfe, der Rest loot/quiz/dialog.
+   * 50-75% der Steps sind Kämpfe, der Rest loot/dialog.
    *
    * @param min Minimale Step-Anzahl (Default 4).
    * @param max Maximale Step-Anzahl (Default 8).
@@ -160,7 +160,7 @@ export abstract class Area {
       steps.push({ type: 'fight', monster: this.getRandomMonster(1) });
     }
 
-    const eventTypes = ['loot', 'quiz', 'dialog'];
+    const eventTypes = ['loot', 'dialog'];
     for (let i = 0; i < specialEventCount; i++) {
       const randomType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
       steps.push({ type: randomType, eventId: `${randomType}_01` });

@@ -31,7 +31,7 @@ export class Shrine implements AfterViewInit {
    */
   pilgrimPrayPaths: string[] = [
     ...framePaths(15, (i) => `imgs/shrine/pilgrim/pray/frame_${pad(i, 3)}.png`, 1),
-    'mgs/shrine/pilgrim/pray/frame_016.png',
+    'imgs/shrine/pilgrim/pray/frame_016.png',
     'imgs/shrine/pilgrim/pray/frame_017.png',
     'imgs/shrine/pilgrim/pray/frame_018.png',
   ];

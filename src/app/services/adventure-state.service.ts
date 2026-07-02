@@ -31,7 +31,6 @@ export const ADVENTURE_STEP_ROUTES: Record<string, string> = {
   dialog: '/adventure/dialog',
   loot: '/adventure/loot',
   fight: '/adventure/fight',
-  quiz: '/adventure/quiz',
 };
 
 /**
@@ -49,7 +48,7 @@ export class AdventureStateService {
   private inventarService = inject(InventarService); // 🎁 für Reward-Übergabe
   private skillsService = inject(SkillsService);
 
-  /** Alle Steps des laufenden Runs (fight/loot/dialog/quiz). */
+  /** Alle Steps des laufenden Runs (fight/loot/dialog). */
   steps = signal<any[]>([]);
   /** Index des Steps, in dem sich der Spieler gerade befindet. */
   currentStepIndex = signal<number>(0);
