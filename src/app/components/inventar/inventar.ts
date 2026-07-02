@@ -4,6 +4,11 @@ import { InventarItem } from './inventar-item/inventar-item';
 import { CommonModule } from '@angular/common';
 import { ArmorSlot } from './armor-slot/armor-slot';
 
+/**
+ * @component Inventar
+ * @description Inventar-Bildschirm: Item-Liste plus Ausrüstungs-Slots
+ * (ArmorSlot). Das eigentliche An-/Ablegen läuft über InventarItem.
+ */
 @Component({
   selector: 'app-inventar',
   standalone: true,

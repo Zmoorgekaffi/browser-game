@@ -20,26 +20,43 @@ export interface EquippedSlots {
   [key: string]: any;
 }
 
+/** Erzeugt ein frisches, komplett leeres Slot-Objekt. */
+function createEmptySlots(): EquippedSlots {
+  return {
+    head: null, chest: null, leg: null, gloves: null, footwear: null,
+    'accessoire-left': null, 'accessoire-right': null,
+    necklace: null, 'ring-left': null, 'ring-right': null,
+    'weapon-1': null, 'weapon-2': null, back: null,
+  };
+}
+
+/**
+ * @service InventarService
+ * @description Verwaltet das Item-Inventar des Charakters inklusive
+ * An-/Ablegen von Ausrüstung, Doppel-Slot-Handling (Ringe/Accessoires)
+ * und Persistierung im LocalStorage.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class InventarService {
   private router = inject(Router);
 
+  /** Das komplette Inventar ({ items: [...] }). */
   public inventar: WritableSignal<any> = signal<any>({ items: [] });
-  
-  public equippedSlots: WritableSignal<EquippedSlots> = signal<EquippedSlots>({
-    head: null, chest: null, leg: null, gloves: null, footwear: null,
-    'accessoire-left': null, 'accessoire-right': null,
-    necklace: null, 'ring-left': null, 'ring-right': null,
-    'weapon-1': null, 'weapon-2': null, back: null
-  });
+
+  /** Aktuell ausgerüstete Items pro Slot (null = Slot leer). */
+  public equippedSlots: WritableSignal<EquippedSlots> = signal<EquippedSlots>(createEmptySlots());
 
   private activeCharId: string | null = null;
 
-  // CONSTRUCTOR IST JETZT LEER
-  constructor() {}
-
+  /**
+   * Initialisiert das Inventar mit Savegame-Daten.
+   * Fehlende Flags (equipped / assigned-slot) werden dabei nachgerüstet.
+   *
+   * @param data   Inventar-Block aus dem LocalStorage.
+   * @param charId ID des aktiven Charakters (für den Storage-Key).
+   */
   init(data: any, charId: string): void {
     if (data && data.items) {
       data.items = data.items.map((item: any) => ({
@@ -48,14 +65,17 @@ export class InventarService {
         'assigned-slot': item['assigned-slot'] !== undefined ? item['assigned-slot'] : null
       }));
     }
-    
+
     this.activeCharId = charId;
     this.inventar.set(data || { items: [] });
     this.updateEquippedSlotsSignal(this.inventar().items);
   }
 
-  // goBack() wurde entfernt, da nun gameStateService.scene.goBack() genutzt wird.
-
+  /**
+   * Fügt ein neues Item ans Ende des Inventars an und speichert sofort.
+   *
+   * @param newItem Das hinzuzufügende Item (Shop-Kauf, Loot, Reward ...).
+   */
   public addItemToInventar(newItem: any): void {
     this.inventar.update(currentInv => {
       const formattedItem = {
@@ -71,6 +91,15 @@ export class InventarService {
     });
   }
 
+  /**
+   * Rüstet ein Item an bzw. ab (Toggle).
+   *
+   * Beim Anlegen:
+   *  - Ringe/Accessoires wandern in den ersten freien Links/Rechts-Slot.
+   *  - Ein bereits im Ziel-Slot sitzendes Item wird automatisch abgelegt.
+   *
+   * @param itemIndex Index des Items im Inventar-Array.
+   */
   public toggleEquipItem(itemIndex: number): void {
     let latestItems: any[] = [];
 
@@ -80,28 +109,15 @@ export class InventarService {
       const updatedItems = JSON.parse(JSON.stringify(currentInv.items));
       const targetItem = updatedItems[itemIndex];
       const baseSlot = targetItem['armor-slot'];
-      let finalSlot: string = baseSlot;
 
       if (!baseSlot) return currentInv;
 
       const isEquipping = !targetItem.equipped;
 
       if (isEquipping) {
-        const slots = this.equippedSlots();
-        if (baseSlot === 'ring') {
-          finalSlot = !slots['ring-left'] ? 'ring-left' : 'ring-right';
-        } else if (baseSlot === 'accessoire') {
-          finalSlot = !slots['accessoire-left'] ? 'accessoire-left' : 'accessoire-right';
-        }
+        const finalSlot = this.resolveTargetSlot(baseSlot);
         targetItem['assigned-slot'] = finalSlot;
-
-        updatedItems.forEach((item: any, index: number) => {
-          const currentAssigned = item['assigned-slot'] || item['armor-slot'];
-          if (index !== itemIndex && currentAssigned === finalSlot && item.equipped) {
-            updatedItems[index].equipped = false;
-            updatedItems[index]['assigned-slot'] = null;
-          }
-        });
+        this.unequipConflictingItems(updatedItems, itemIndex, finalSlot);
       } else {
         targetItem['assigned-slot'] = null;
       }
@@ -118,14 +134,51 @@ export class InventarService {
     this.updateEquippedSlotsSignal(latestItems);
   }
 
+  /**
+   * Ermittelt den konkreten Ziel-Slot für ein Item.
+   * Ringe und Accessoires haben je zwei Slots: erst links versuchen,
+   * ist der belegt, rechts nehmen. Alle anderen Slots bleiben 1:1.
+   *
+   * @param baseSlot Der 'armor-slot' des Items (z.B. 'ring', 'head').
+   */
+  private resolveTargetSlot(baseSlot: string): string {
+    const slots = this.equippedSlots();
+
+    if (baseSlot === 'ring') {
+      return !slots['ring-left'] ? 'ring-left' : 'ring-right';
+    }
+    if (baseSlot === 'accessoire') {
+      return !slots['accessoire-left'] ? 'accessoire-left' : 'accessoire-right';
+    }
+    return baseSlot;
+  }
+
+  /**
+   * Legt alle Items ab, die bereits im Ziel-Slot sitzen
+   * (mutiert das übergebene Array direkt).
+   *
+   * @param items     Arbeits-Kopie der Inventar-Items.
+   * @param itemIndex Index des Items, das gerade angelegt wird.
+   * @param finalSlot Der Slot, der frei geräumt werden soll.
+   */
+  private unequipConflictingItems(items: any[], itemIndex: number, finalSlot: string): void {
+    items.forEach((item: any, index: number) => {
+      const currentAssigned = item['assigned-slot'] || item['armor-slot'];
+      if (index !== itemIndex && currentAssigned === finalSlot && item.equipped) {
+        items[index].equipped = false;
+        items[index]['assigned-slot'] = null;
+      }
+    });
+  }
+
+  /**
+   * Baut das equippedSlots-Signal aus dem Items-Array neu auf.
+   *
+   * @param itemsArray Optional: Items-Liste (Default: aktuelles Inventar).
+   */
   private updateEquippedSlotsSignal(itemsArray?: any[]): void {
     const items = itemsArray || this.inventar().items || [];
-    const newSlots: EquippedSlots = {
-      head: null, chest: null, leg: null, gloves: null, footwear: null,
-      'accessoire-left': null, 'accessoire-right': null,
-      necklace: null, 'ring-left': null, 'ring-right': null,
-      'weapon-1': null, 'weapon-2': null, back: null
-    };
+    const newSlots: EquippedSlots = createEmptySlots();
 
     items.forEach((item: any) => {
       if (item.equipped) {
@@ -139,6 +192,7 @@ export class InventarService {
     this.equippedSlots.set(newSlots);
   }
 
+  /** Persistiert das Inventar unter dem Key des aktiven Charakters. */
   private saveToLocalStorage(newInventar: any): void {
     if (this.activeCharId) {
       localStorage.setItem(`${this.activeCharId}_inventar`, JSON.stringify(newInventar));

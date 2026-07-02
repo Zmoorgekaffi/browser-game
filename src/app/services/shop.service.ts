@@ -17,6 +17,12 @@ interface AllShopsData {
 // Auf 3 feste Shop-Typen reduziert
 export type ShopType = 'magic' | 'smither' | 'general';
 
+/**
+ * @service ShopService
+ * @description Verwaltet die Angebote der drei Dorf-Shops (Magie, Schmied,
+ * Gemischtwaren), den Kaufprozess über die Item-Info-Card sowie das
+ * Neu-Auswürfeln der Angebote am Ende eines Adventure-Runs.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -45,6 +51,12 @@ export class ShopService {
   public activeShopType = signal<ShopType | null>(null);
   public activeItemIndex = signal<number | null>(null);
 
+  /**
+   * Lädt gespeicherte Shop-Angebote aus dem LocalStorage
+   * oder würfelt sie neu aus, wenn noch keine existieren.
+   *
+   * @param charId ID des aktiven Charakters (für den Storage-Key).
+   */
   public init(charId: string) {
     this.activeCharId = charId;
     console.log('activeCharIdIn Shop.service.ts:', charId);
@@ -81,7 +93,10 @@ export class ShopService {
   }
 
   /**
-   * ZENTRALE KAUF-LOGIK
+   * ZENTRALE KAUF-LOGIK: prüft Verfügbarkeit und Gold, überführt das Item
+   * ins Inventar, markiert den Shop-Platz als verkauft und schließt die Card.
+   *
+   * @returns true, wenn der Kauf erfolgreich war.
    */
   public buyCurrentlySelectedItem(): boolean {
     const shopType = this.activeShopType();
@@ -125,6 +140,7 @@ export class ShopService {
     return true;
   }
 
+  /** Liefert das passende Item-Signal zum Shop-Typ. */
   private getSignalByShopType(type: ShopType) {
     switch (type) {
       case 'magic': return this.magicShopItems;
@@ -133,6 +149,12 @@ export class ShopService {
     }
   }
 
+  /**
+   * Zieht `itemCount` zufällige Items aus dem Pool (Ziehen mit Zurücklegen).
+   *
+   * @param itemPool  Quell-Pool aus den JSON-Daten.
+   * @param itemCount Anzahl der Shop-Plätze.
+   */
   private generatePoolSelection(itemPool: any[], itemCount: number): any[] {
     const selectedItems: any[] = [];
     if (!itemPool || itemPool.length === 0) return selectedItems;
@@ -144,6 +166,7 @@ export class ShopService {
     return selectedItems;
   }
 
+  /** Persistiert alle drei Shop-Angebote gebündelt im LocalStorage. */
   private saveAllShopsToLocalStorage() {
     if (!this.activeCharId) return;
 

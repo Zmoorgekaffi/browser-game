@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
 import { RouterLink } from '@angular/router';
 import { AnimationObject } from '../shared/animation-object/animation-object';
+import { framePaths } from '../../utils/frame-paths.util';
 
+/**
+ * @component Character
+ * @description Charakter-Bildschirm: zeigt Profildaten, die animierte
+ * Spielfigur und alle Kampfwerte (Basis + Ausrüstung) als Liste.
+ */
 @Component({
   selector: 'app-character',
   standalone: true,
@@ -21,24 +27,16 @@ export class Character {
   public combatStats: Signal<any> = this.gameStateService.skills.combatStats;
   public baseStats = this.gameStateService.skills.state;
 
+  /**
+   * Look-Around-Animation: frame (1).png ... frame (14).png,
+   * danach nochmal frame (1).png für einen sauberen Loop-Übergang.
+   */
   characterLookAraoundAnimation = [
-    'imgs/character/character-look-around/frame (1).png',
-    'imgs/character/character-look-around/frame (2).png',
-    'imgs/character/character-look-around/frame (3).png',
-    'imgs/character/character-look-around/frame (4).png',
-    'imgs/character/character-look-around/frame (5).png',
-    'imgs/character/character-look-around/frame (6).png',
-    'imgs/character/character-look-around/frame (7).png',
-    'imgs/character/character-look-around/frame (8).png',
-    'imgs/character/character-look-around/frame (9).png',
-    'imgs/character/character-look-around/frame (10).png',
-    'imgs/character/character-look-around/frame (11).png',
-    'imgs/character/character-look-around/frame (12).png',
-    'imgs/character/character-look-around/frame (13).png',
-    'imgs/character/character-look-around/frame (14).png',
+    ...framePaths(14, (i) => `imgs/character/character-look-around/frame (${i}).png`, 1),
     'imgs/character/character-look-around/frame (1).png',
   ];
 
+  /** Anzeige-Reihenfolge + deutsche Labels für die Stats-Liste im Template. */
   public displayStats = [
     { key: 'strength', name: 'Stärke' },
     { key: 'intelligence', name: 'Intelligenz' },

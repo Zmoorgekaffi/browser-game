@@ -2,6 +2,11 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule, UpperCasePipe } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 
+/**
+ * @component SkillListItem
+ * @description Eine Zeile in der Spell-Liste. Klick auf das gesamte
+ * Element rüstet den Spell aus bzw. legt ihn ab (Toggle).
+ */
 @Component({
   selector: 'app-skill-list-item',
   standalone: true,
@@ -19,27 +24,34 @@ export class SkillListItem {
   @Input({ required: true }) spell!: any;
   @Input({ required: true }) index!: number;
 
+  /** Host-Klick: Spell an-/ablegen. */
   onSkillClick(): void {
     this.interact();
   }
 
-interact() {
-  if (this.spell.equipped) {
-    // Slot aus den equippedSpells ermitteln in dem dieser Spell sitzt
-    const slots = this.gameStateService.skills.equippedSpells();
-    const slotKey = (Object.keys(slots) as (keyof typeof slots)[])
-      .find(key => slots[key] === this.spell.id) ?? null;
+  /**
+   * Toggle-Logik:
+   *  - Spell ausgerüstet → aus seinem Slot entfernen.
+   *  - Spell nicht ausgerüstet → in den nächsten freien Slot legen
+   *    (Warnung, wenn alle vier Slots belegt sind).
+   */
+  interact() {
+    if (this.spell.equipped) {
+      // Slot aus den equippedSpells ermitteln in dem dieser Spell sitzt
+      const slots = this.gameStateService.skills.equippedSpells();
+      const slotKey = (Object.keys(slots) as (keyof typeof slots)[])
+        .find(key => slots[key] === this.spell.id) ?? null;
 
-    if (slotKey) {
-      this.gameStateService.skills.updateSpells('unequip', this.spell, slotKey);
-    }
-  } else {
-    const freeSlot = this.gameStateService.skills.getNextFreeSlot();
-    if (freeSlot) {
-      this.gameStateService.skills.updateSpells('equip', this.spell, freeSlot);
+      if (slotKey) {
+        this.gameStateService.skills.updateSpells('unequip', this.spell, slotKey);
+      }
     } else {
-      console.warn('⚠️ Alle Spell-Slots belegt!');
+      const freeSlot = this.gameStateService.skills.getNextFreeSlot();
+      if (freeSlot) {
+        this.gameStateService.skills.updateSpells('equip', this.spell, freeSlot);
+      } else {
+        console.warn('⚠️ Alle Spell-Slots belegt!');
+      }
     }
   }
-}
 }

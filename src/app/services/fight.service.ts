@@ -4,6 +4,12 @@ import { SkillsService } from './skills.service';
 import { SpellsEngineService } from './spells-engine.service';
 import { SpellLoaderService } from './spell-loader.service';
 
+/**
+ * @service FightService
+ * @description Komplette Kampf-Logik: Initialisierung, Spieler-/Monster-Züge,
+ * Schadens-Verrechnung, Mana-Regeneration und Kampf-Ende (Sieg/Niederlage).
+ * Die FightScene ist nur noch dünne UI-Schicht über diesem Service.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -106,6 +112,7 @@ export class FightService {
     console.log('Kampf initialisiert. Angereichertes Monster:', this.enrichedMonster());
   }
 
+  /** Führt den normalen Angriff des Spielers aus (nur im Spieler-Zug). */
   executePlayerAttack(): void {
     if (this.currentTurn() !== 'player') return;
     const damage = this.skillsService.combatStats().attack;
@@ -113,6 +120,11 @@ export class FightService {
     this.endTurn();
   }
 
+  /**
+   * Wirkt einen Spieler-Spell über die SpellsEngine (nur im Spieler-Zug).
+   *
+   * @param spellId ID des zu wirkenden Spells.
+   */
   executeCastSpell(spellId: string): void {
     if (this.currentTurn() !== 'player') return;
     const spell = this.skillsService.spells().find((s: any) => s.id === spellId);
@@ -121,22 +133,26 @@ export class FightService {
     if (success) this.endTurn();
   }
 
+  /** True, wenn der Spieler genug Mana für den angegebenen Spell hat. */
   hasEnoughMana(spellId: string): boolean {
     const spell = this.skillsService.spells().find((s: any) => s.id === spellId);
     const manaCost = spell?.manaCost || 0;
     return this.playerMana() >= manaCost;
   }
 
+  /** Liefert den Anzeigenamen eines Spells (Fallback: 'Unbekannter Zauber'). */
   getSpellName(spellId: string): string {
     const spell = this.skillsService.spells().find((s: any) => s.id === spellId);
     return spell ? spell.name : 'Unbekannter Zauber';
   }
 
+  /** Zieht dem Monster Schaden ab; bei 0 HP endet der Kampf mit Sieg. */
   public applyDamageToMonster(damage: number): void {
     this.monsterHp.update((hp) => Math.max(0, hp - damage));
     if (this.monsterHp() <= 0) this.handleFightEnd(true);
   }
 
+  /** Zieht dem Spieler Schaden ab; bei 0 HP endet der Kampf mit Niederlage. */
   public applyDamageToPlayer(damage: number): void {
     this.playerHp.update((hp) => Math.max(0, hp - damage));
     if (this.playerHp() <= 0) this.handleFightEnd(false);
@@ -239,14 +255,18 @@ export class FightService {
     return enriched.length > 0 ? enriched[0] : null;
   }
 
+  /**
+   * Beendet den Kampf: Bei Sieg geht's zum nächsten Step, bei Niederlage
+   * wird das komplette Abenteuer abgebrochen (failAdventure).
+   *
+   * @param playerWon true = Spieler hat gewonnen.
+   */
   private handleFightEnd(playerWon: boolean): void {
     this.enrichedMonster.set(null); // aufräumen
     if (playerWon) {
       console.log('🏆 Sieg!');
       this.adventureStateService.activeFight.set(null);
-      this.adventureStateService.currentStepIndex.update((idx) => idx + 1);
-      this.adventureStateService.saveAdventure();
-      this.adventureStateService.continueAdventure();
+      this.adventureStateService.advanceToNextStep();
     } else {
       console.log('💀 Niederlage! Adventure wird beendet.');
       // activeFight nicht extra nullen — failAdventure → clearAdventure macht das.

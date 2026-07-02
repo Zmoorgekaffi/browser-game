@@ -2,6 +2,12 @@ import { inject, Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
+/**
+ * @service SceneService
+ * @description Beobachtet die Router-Navigation und stellt die aktuelle
+ * Szene als Signal bereit. Merkt sich außerdem die letzte "echte"
+ * Spiel-Szene (kein Menü), damit goBack() dorthin zurückkehren kann.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +18,9 @@ export class SceneService {
   // Wir setzen das initial auf die aktuelle URL, falls wir schon im Spiel sind
   private _previousScene = signal<string>(this.router.url || '/village');
   
+  /** Aktuelle Route als Read-Only-Signal. */
   public currentScene = this._currentScene.asReadonly();
+  /** Timestamp des letzten Szenenwechsels (für effect()-Trigger). */
   public onSceneChange = signal<number>(0);
 
   constructor() {
@@ -34,6 +42,7 @@ export class SceneService {
       });
   }
 
+  /** Navigiert zurück zur letzten Nicht-Menü-Szene. */
   public goBack(): void {
     const target = this._previousScene();
     console.log('Navigiere zurück zu:', target);

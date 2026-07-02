@@ -105,13 +105,10 @@ export class LootScene implements OnInit {
 
   /**
    * Wird gefeuert wenn der Spieler nach dem Loot weiterklickt.
-   * Step inkrementieren → saven → continueAdventure ruft entweder die
-   * nächste Szene oder completeAdventure (wenn keine Steps mehr).
+   * advanceToNextStep() ruft entweder die nächste Szene oder
+   * completeAdventure (wenn keine Steps mehr übrig sind).
    */
   public onContinue(): void {
-    const adventure = this.gameStateService.adventureStateService;
-    adventure.currentStepIndex.update((idx) => idx + 1);
-    adventure.saveAdventure();
-    adventure.continueAdventure();
+    this.gameStateService.adventureStateService.advanceToNextStep();
   }
 }

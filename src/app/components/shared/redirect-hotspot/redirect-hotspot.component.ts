@@ -1,6 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * @component RedirectHotspotComponent
+ * @description Unsichtbare (oder im devMode sichtbare) Klickfläche,
+ * die auf eine interne Route oder externe URL weiterleitet.
+ * Per Enter/Leertaste auch über die Tastatur bedienbar.
+ */
 @Component({
   selector: 'app-redirect-hotspot',
   standalone: true,
@@ -17,6 +23,7 @@ export class RedirectHotspotComponent {
 
   constructor(private router: Router) {}
 
+  /** Navigiert zum Ziel: http(s)-URLs extern, alles andere per Router. */
   onClick(): void {
     if (!this.redirect) {
       return;
@@ -32,6 +39,7 @@ export class RedirectHotspotComponent {
     this.router.navigateByUrl(target);
   }
 
+  /** Tastatur-Bedienung: Enter/Leertaste lösen den Klick aus. */
   onKeydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();

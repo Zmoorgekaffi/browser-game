@@ -2,6 +2,14 @@ import { Injectable, inject, Injector } from '@angular/core';
 import { SkillsService } from './skills.service';
 import { FightService } from './fight.service';
 
+/**
+ * @service SpellsEngineService
+ * @description Führt Spell-Effekte aus (Schaden, Heilung) — für Spieler UND
+ * Monster. Kümmert sich um Mana-Check/-Abzug und die Boni aus den Stats.
+ *
+ * Der FightService wird über den Injector lazy geholt, um eine zirkuläre
+ * DI-Abhängigkeit (FightService ↔ SpellsEngineService) zu vermeiden.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -9,6 +17,16 @@ export class SpellsEngineService {
   private skillsService = inject(SkillsService);
   private injector = inject(Injector);
 
+  /**
+   * Wirkt einen Spell.
+   *
+   * Ablauf: 1. Mana prüfen/abziehen (nur Spieler) → 2. Schadens-Boni aus
+   * den Stats ermitteln → 3. Effekt anhand von effectType verarbeiten.
+   *
+   * @param spell      Vollständiges Spell-Objekt (mit effectType!).
+   * @param casterType Wer wirkt: 'player' (Default) oder 'monster'.
+   * @returns true, wenn der Spell erfolgreich gewirkt wurde.
+   */
   public castSpell(spell: any, casterType: 'player' | 'monster' = 'player'): boolean {
     console.log(`🔍 [SpellsEngine] castSpell aufgerufen von [${casterType}]. Inhalt von spell:`, spell);
 

@@ -202,11 +202,9 @@ export class DialogScene {
   // Weiterziehen zum nächsten Step
   // -----------------------------------------------------------------------
 
+  /** Schließt die Begegnung ab und wechselt zum nächsten Adventure-Step. */
   public continueToNextStep(): void {
-    const adventure = this.gameStateService.adventureStateService;
-    adventure.currentStepIndex.update((idx) => idx + 1);
-    adventure.saveAdventure();
-    adventure.continueAdventure();
+    this.gameStateService.adventureStateService.advanceToNextStep();
   }
 
   // -----------------------------------------------------------------------

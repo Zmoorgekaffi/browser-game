@@ -11,6 +11,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+/**
+ * @component AnimationObject
+ * @description Universelle Sprite-Animation: spielt ein Array von
+ * Bild-Pfaden (spritePaths) über die angegebene Duration ab — einmalig
+ * oder als Loop. Optional absolut positionierbar über Top/Left.
+ * Wird überall im Spiel eingesetzt (Händler, Monster, Intros, Hintergründe).
+ */
 @Component({
   selector: 'app-animation-object',
   standalone: true,

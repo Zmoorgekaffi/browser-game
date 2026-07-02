@@ -6,6 +6,11 @@ import { LoginService } from '../../services/login.service';
 import { SceneService } from '../../services/scene.service';
 import { ScreenSizingService } from '../../services/screen-sizing.service';
 
+/**
+ * @component MainFrontendComponent
+ * @description Rahmen-Layout der App: Header + Szenen-Container.
+ * Entscheidet reaktiv, ob der Header sichtbar ist (Login/Vollbild).
+ */
 @Component({
   selector: 'app-main-frontend',
   standalone: true,
@@ -18,6 +23,10 @@ export class MainFrontendComponent {
   sceneService = inject(SceneService);
   screenSizingService = inject(ScreenSizingService);
 
+  /**
+   * Header nur zeigen, wenn eingeloggt und nicht auf /login.
+   * Im Vollbild entscheidet zusätzlich headerVisibleInFullscreen.
+   */
   public showHeader = computed(() => {
     const charId = this.loginService.loggedInAs();
     const currentScene = this.sceneService.currentScene();

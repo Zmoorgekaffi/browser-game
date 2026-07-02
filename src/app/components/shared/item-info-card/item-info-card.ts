@@ -3,6 +3,12 @@ import { GameStateService } from '../../../services/game-state.service';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap'; // <-- GSAP Import
 
+/**
+ * @component ItemInfoCard
+ * @description Detail-Karte eines Shop-Items mit Kauf-Button.
+ * Ein-/Ausblenden läuft über GSAP-Animationen, der Zustand
+ * (sichtbar + angezeigtes Item) lebt im ShopService.
+ */
 @Component({
   selector: 'app-item-info-card',
   standalone: true,
@@ -83,8 +89,8 @@ export class ItemInfoCard {
     }
   }
 
+  /** Triggert den Kauf über die im Service gemerkten Variablen. */
   buyItem() {
-    // Triggert den Kauf über die im Service gemerkten Variablen
     this.gameStateService.shop.buyCurrentlySelectedItem();
   }
 }

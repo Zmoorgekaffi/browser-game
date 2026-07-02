@@ -1,6 +1,11 @@
 import { Injectable, signal, computed, WritableSignal } from '@angular/core';
 import { ProfileData } from '../models/game-state.interface';
 
+/**
+ * @service ProfileService
+ * @description Hält die Profildaten des Charakters (Name, Level, EXP).
+ * Die Persistierung übernimmt der GameStateService.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +17,16 @@ export class ProfileService {
   exp = computed(() => this.state().exp);
   charId: WritableSignal<any | null> = signal(null);
 
+  /**
+   * Initialisiert das Profil mit Savegame-Daten.
+   *
+   * @param data Profil-Block aus dem LocalStorage.
+   */
   init(data: ProfileData): void {
     this.state.set(data);
   }
 
+  /** Ändert den Anzeigenamen des Charakters. */
   updateName(name: string): void {
     this.state.update(state => {
       const newState = { ...state, name };
@@ -24,6 +35,11 @@ export class ProfileService {
     });
   }
 
+  /**
+   * Fügt Erfahrungspunkte hinzu.
+   *
+   * @param amount Betrag > 0, sonst passiert nichts.
+   */
   addExp(amount: number): void {
     if (amount <= 0) return;
     
@@ -34,6 +50,7 @@ export class ProfileService {
     });
   }
 
+  /** Erhöht das Level um 1 und setzt die EXP auf 0 zurück. */
   levelUp(): void {
     this.state.update(state => {
       const newState = { ...state, level: state.level + 1, exp: 0 };

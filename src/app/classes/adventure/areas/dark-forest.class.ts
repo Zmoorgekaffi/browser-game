@@ -1,6 +1,7 @@
 // src/app/classes/adventure/areas/dark-forest.class.ts
 import { Area, LootTable } from '../area.class';
 import { Encounter } from '../encounter.interface'
+import { framePaths, pad } from '../../../utils/frame-paths.util';
 import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json';
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -23,8 +24,6 @@ import glovesTier5 from '../../../../../public/item-data/equipment/gloves/gloves
 
 // 🥋 CHEST / 🩳 LEG / 👢 FOOTWEAR / 🧣 NECKLACE / 💍 RING / 🎒 BACK / 🎗️ ACCESSOIRE / ⚔️ WEAPON — TODO
 
-
-
 // 💬 ENCOUNTERS
 import elfEncounter from '../../../../../public/encounters/dark-forest/elf-encounter.json';
 import merchantEncounter from '../../../../../public/encounters/dark-forest/merchant-encounter.json';
@@ -32,9 +31,6 @@ import lostChildEncounter from '../../../../../public/encounters/dark-forest/los
 import witchEncounter from '../../../../../public/encounters/dark-forest/witch-encounter.json';
 import woundedKnightEncounter from '../../../../../public/encounters/dark-forest/wounded-knight-encounter.json';
 import koboldEncounter from '../../../../../public/encounters/dark-forest/kobold-encounter.json';
-
-
-
 
 type TierNumber = 1 | 2 | 3 | 4 | 5;
 type SlotTierMap = Record<TierNumber, any[]>;
@@ -70,96 +66,35 @@ const TIER_DISTRIBUTION: Record<keyof LootTable, TierCounts> = {
  */
 const MF_STEP_SIZE = 20;
 
+/**
+ * Die 25 Intro-Frames des Düsterwalds (frame_0000.webp ... frame_0024.webp).
+ * Wird aktuell für Intro, Loot-Intro UND Loot-Hintergrund verwendet —
+ * vorher standen hier drei identische, handgepflegte 25-Zeilen-Arrays.
+ */
+const DARK_FOREST_INTRO_FRAMES = framePaths(
+  25,
+  (i) => `imgs/areas/dark-forest/intro/frame_${pad(i, 4)}.webp`,
+);
+
+/**
+ * @class DarkForest
+ * @description Konkrete Adventure-Area "Düsterwald": generiert die
+ * eventSteps, befüllt Kämpfe/Dialoge und baut die Level- und
+ * Magic-Find-abhängige LootTable auf.
+ */
 export class DarkForest extends Area {
   override name = 'Düsterwald';
   override monsterPool: any[] = [];
   override eventSteps: any[] = [];
+
   override introDuration: number = 2500;
-  override introPaths = [
-    'imgs/areas/dark-forest/intro/frame_0000.webp',
-    'imgs/areas/dark-forest/intro/frame_0001.webp',
-    'imgs/areas/dark-forest/intro/frame_0002.webp',
-    'imgs/areas/dark-forest/intro/frame_0003.webp',
-    'imgs/areas/dark-forest/intro/frame_0004.webp',
-    'imgs/areas/dark-forest/intro/frame_0005.webp',
-    'imgs/areas/dark-forest/intro/frame_0006.webp',
-    'imgs/areas/dark-forest/intro/frame_0007.webp',
-    'imgs/areas/dark-forest/intro/frame_0008.webp',
-    'imgs/areas/dark-forest/intro/frame_0009.webp',
-    'imgs/areas/dark-forest/intro/frame_0010.webp',
-    'imgs/areas/dark-forest/intro/frame_0011.webp',
-    'imgs/areas/dark-forest/intro/frame_0012.webp',
-    'imgs/areas/dark-forest/intro/frame_0013.webp',
-    'imgs/areas/dark-forest/intro/frame_0014.webp',
-    'imgs/areas/dark-forest/intro/frame_0015.webp',
-    'imgs/areas/dark-forest/intro/frame_0016.webp',
-    'imgs/areas/dark-forest/intro/frame_0017.webp',
-    'imgs/areas/dark-forest/intro/frame_0018.webp',
-    'imgs/areas/dark-forest/intro/frame_0019.webp',
-    'imgs/areas/dark-forest/intro/frame_0020.webp',
-    'imgs/areas/dark-forest/intro/frame_0021.webp',
-    'imgs/areas/dark-forest/intro/frame_0022.webp',
-    'imgs/areas/dark-forest/intro/frame_0023.webp',
-    'imgs/areas/dark-forest/intro/frame_0024.webp',
-  ];
+  override introPaths = [...DARK_FOREST_INTRO_FRAMES];
 
   override lootIntroDuration: number = 2000;
-  override lootIntroPaths: any[] = [
-    'imgs/areas/dark-forest/intro/frame_0000.webp',
-    'imgs/areas/dark-forest/intro/frame_0001.webp',
-    'imgs/areas/dark-forest/intro/frame_0002.webp',
-    'imgs/areas/dark-forest/intro/frame_0003.webp',
-    'imgs/areas/dark-forest/intro/frame_0004.webp',
-    'imgs/areas/dark-forest/intro/frame_0005.webp',
-    'imgs/areas/dark-forest/intro/frame_0006.webp',
-    'imgs/areas/dark-forest/intro/frame_0007.webp',
-    'imgs/areas/dark-forest/intro/frame_0008.webp',
-    'imgs/areas/dark-forest/intro/frame_0009.webp',
-    'imgs/areas/dark-forest/intro/frame_0010.webp',
-    'imgs/areas/dark-forest/intro/frame_0011.webp',
-    'imgs/areas/dark-forest/intro/frame_0012.webp',
-    'imgs/areas/dark-forest/intro/frame_0013.webp',
-    'imgs/areas/dark-forest/intro/frame_0014.webp',
-    'imgs/areas/dark-forest/intro/frame_0015.webp',
-    'imgs/areas/dark-forest/intro/frame_0016.webp',
-    'imgs/areas/dark-forest/intro/frame_0017.webp',
-    'imgs/areas/dark-forest/intro/frame_0018.webp',
-    'imgs/areas/dark-forest/intro/frame_0019.webp',
-    'imgs/areas/dark-forest/intro/frame_0020.webp',
-    'imgs/areas/dark-forest/intro/frame_0021.webp',
-    'imgs/areas/dark-forest/intro/frame_0022.webp',
-    'imgs/areas/dark-forest/intro/frame_0023.webp',
-    'imgs/areas/dark-forest/intro/frame_0024.webp',
-  ];
+  override lootIntroPaths: any[] = [...DARK_FOREST_INTRO_FRAMES];
 
   override lootSceneDuration: number = 4000;
-  override lootScenePaths: any[] = [
-    'imgs/areas/dark-forest/intro/frame_0000.webp',
-    'imgs/areas/dark-forest/intro/frame_0001.webp',
-    'imgs/areas/dark-forest/intro/frame_0002.webp',
-    'imgs/areas/dark-forest/intro/frame_0003.webp',
-    'imgs/areas/dark-forest/intro/frame_0004.webp',
-    'imgs/areas/dark-forest/intro/frame_0005.webp',
-    'imgs/areas/dark-forest/intro/frame_0006.webp',
-    'imgs/areas/dark-forest/intro/frame_0007.webp',
-    'imgs/areas/dark-forest/intro/frame_0008.webp',
-    'imgs/areas/dark-forest/intro/frame_0009.webp',
-    'imgs/areas/dark-forest/intro/frame_0010.webp',
-    'imgs/areas/dark-forest/intro/frame_0011.webp',
-    'imgs/areas/dark-forest/intro/frame_0012.webp',
-    'imgs/areas/dark-forest/intro/frame_0013.webp',
-    'imgs/areas/dark-forest/intro/frame_0014.webp',
-    'imgs/areas/dark-forest/intro/frame_0015.webp',
-    'imgs/areas/dark-forest/intro/frame_0016.webp',
-    'imgs/areas/dark-forest/intro/frame_0017.webp',
-    'imgs/areas/dark-forest/intro/frame_0018.webp',
-    'imgs/areas/dark-forest/intro/frame_0019.webp',
-    'imgs/areas/dark-forest/intro/frame_0020.webp',
-    'imgs/areas/dark-forest/intro/frame_0021.webp',
-    'imgs/areas/dark-forest/intro/frame_0022.webp',
-    'imgs/areas/dark-forest/intro/frame_0023.webp',
-    'imgs/areas/dark-forest/intro/frame_0024.webp',
-  ];
+  override lootScenePaths: any[] = [...DARK_FOREST_INTRO_FRAMES];
 
   override lootTable: LootTable = {
     '1-10': [],
@@ -179,17 +114,19 @@ export class DarkForest extends Area {
     koboldEncounter as Encounter,
   ];
 
-
-
-constructor(playerLevel: number, magicFind: number = 0) {
-  super(playerLevel, magicFind);
-  this.eventSteps = this.generateSteps(4, 8);
-  this.populateFights(monsterData1o10);
-  this.populateDialogs(); // 💬 NEU
-  this.lootTable = this.buildLootTable();
-  console.log('die generierten steps sind: ', this.eventSteps);
-  console.log(`🎲 LootTable generiert (playerLevel=${playerLevel}, magicFind=${magicFind}):`, this.lootTable);
-}
+  /**
+   * @param playerLevel Level des Spielers (bestimmt das Loot-Tier).
+   * @param magicFind   Magic-Find-Wert (verbessert die Tier-Verteilung).
+   */
+  constructor(playerLevel: number, magicFind: number = 0) {
+    super(playerLevel, magicFind);
+    this.eventSteps = this.generateSteps(4, 8);
+    this.populateFights(monsterData1o10);
+    this.populateDialogs(); // 💬 Encounters auf dialog-Steps verteilen
+    this.lootTable = this.buildLootTable();
+    console.log('die generierten steps sind: ', this.eventSteps);
+    console.log(`🎲 LootTable generiert (playerLevel=${playerLevel}, magicFind=${magicFind}):`, this.lootTable);
+  }
 
   /**
    * Baut die LootTable dynamisch auf:

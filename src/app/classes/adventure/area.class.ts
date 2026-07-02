@@ -31,6 +31,13 @@ const GOLD_MF_STEP = 10;
 const GOLD_MF_BONUS_MIN = 3;
 const GOLD_MF_BONUS_MAX = 6;
 
+/**
+ * @class Area
+ * @description Abstrakte Basisklasse für alle Adventure-Gebiete.
+ * Liefert die gemeinsame Logik: Step-Generierung, Monster-/Dialog-Befüllung,
+ * Loot- und Gold-Rolls. Konkrete Areas (z.B. DarkForest) definieren nur
+ * noch ihre Daten (Pools, Animationen, LootTable).
+ */
 export abstract class Area {
   abstract name: string;
   abstract monsterPool: any[];
@@ -58,12 +65,19 @@ export abstract class Area {
     this.magicFind = magicFind;
   }
 
+  /** Zieht ein zufälliges Monster aus dem monsterPool (oder null). */
   protected getRandomMonster(playerLevel: number): any {
     if (!this.monsterPool || this.monsterPool.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * this.monsterPool.length);
     return this.monsterPool[randomIndex];
   }
 
+  /**
+   * Würfelt ein Item aus der LootTable des aktuellen Level-Tiers.
+   * Gewichtung über 'drop-chance'; das Ergebnis ist ein Deep-Clone.
+   *
+   * @returns Das gerollte Item oder null (leeres Tier / kein Gewicht).
+   */
   public rollLoot(): any | null {
     const tier = this.getLootTier(this.playerLevel);
     const entries = this.lootTable[tier];
@@ -115,6 +129,7 @@ export abstract class Area {
     return final;
   }
 
+  /** Ordnet ein Spieler-Level dem passenden LootTable-Tier zu. */
   private getLootTier(level: number): keyof LootTable {
     if (level <= 10) return '1-10';
     if (level <= 20) return '11-20';
@@ -123,6 +138,13 @@ export abstract class Area {
     return '41-50';
   }
 
+  /**
+   * Generiert eine zufällige, gemischte Step-Liste für einen Run.
+   * 50-75% der Steps sind Kämpfe, der Rest loot/quiz/dialog.
+   *
+   * @param min Minimale Step-Anzahl (Default 4).
+   * @param max Maximale Step-Anzahl (Default 8).
+   */
   generateSteps(min: number = 4, max: number = 8): any[] {
     const stepCount = Math.floor(Math.random() * (max - min + 1)) + min;
     const steps: any[] = [];
@@ -147,6 +169,7 @@ export abstract class Area {
     return this.shuffleArray(steps);
   }
 
+  /** Fisher-Yates-Shuffle (mischt das Array in-place und gibt es zurück). */
   public shuffleArray(array: any[]): any[] {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -155,6 +178,7 @@ export abstract class Area {
     return array;
   }
 
+  /** Weist jedem fight-Step ein zufälliges Monster aus dem Pool zu. */
   protected populateFights(monsterPool: any[]): void {
     if (!monsterPool || monsterPool.length === 0) return;
     this.eventSteps = this.eventSteps.map((step) => {

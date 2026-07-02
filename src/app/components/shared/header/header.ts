@@ -6,6 +6,12 @@ import { ScreenSizingService } from '../../../services/screen-sizing.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+/**
+ * @component Header
+ * @description Kopfleiste mit Charakter-Infos (Name, Level, EXP),
+ * Währungen und Menü-Links. Blendet die Navigation in
+ * Adventure-Action-Szenen aus (isInAdventureAction).
+ */
 @Component({
   selector: 'app-header',
   standalone: true,

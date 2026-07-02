@@ -1,10 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MainFrontendComponent } from './components/main-frontend/main-frontend';
 
+/**
+ * @component App
+ * @description Root-Komponente — rendert nur das MainFrontend-Layout.
+ * Das <router-outlet> selbst sitzt im MainFrontendComponent.
+ */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MainFrontendComponent],
+  imports: [MainFrontendComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })

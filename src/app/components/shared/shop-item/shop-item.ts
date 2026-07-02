@@ -3,6 +3,11 @@ import { Component, Input } from '@angular/core';
 import { GameStateService } from '../../../services/game-state.service';
 
 
+/**
+ * @component ShopItem
+ * @description Einzelnes Item im Shop-Regal (absolut positioniert über
+ * x/y). Klick öffnet die Item-Info-Card mit den Details.
+ */
 @Component({
   selector: 'app-shop-item',
   imports: [CommonModule],
@@ -17,8 +22,8 @@ export class ShopItem {
 
   constructor(public gameStateService: GameStateService) {}
 
+  /** Zeigt die Info-Card für das angeklickte Item an. */
   showInfoCard(item:any) {
-    // .update() liest den aktuellen Wert und setzt das Gegenteil (!) ein
     this.gameStateService.shop.currentDisplayedItem.set(item);
     this.gameStateService.shop.itemInfoCardShow.set(true);
   }

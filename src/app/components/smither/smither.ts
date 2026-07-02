@@ -3,9 +3,15 @@ import { GameStateService } from '../../services/game-state.service';
 import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
+import { framePaths, pad } from '../../utils/frame-paths.util';
 
 import weaponsData from '../../../../public/item-data/head.json';
 
+/**
+ * @component Smither
+ * @description Schmiede: begrüßender Schmied (Sprite-Animation) und
+ * das aktuelle Angebot aus dem ShopService.
+ */
 @Component({
   selector: 'app-smither',
   standalone: true,
@@ -22,23 +28,12 @@ export class Smither implements OnInit {
   // Bindet sich live an das Waffen-Signal aus dem Service!
   currentShopItems = this.gameStateService.shop.currentSmitherItems;
 
-  //Animation paths:
+  /**
+   * Greet-Animation: sprite_01 ... sprite_15, danach sprite_17 und
+   * sprite_18 — sprite_16 existiert nicht und wird bewusst übersprungen.
+   */
   greetAnimationPaths: any[] = [
-    'imgs/smither/merchant/greet/sprite_01.webp',
-    'imgs/smither/merchant/greet/sprite_02.webp',
-    'imgs/smither/merchant/greet/sprite_03.webp',
-    'imgs/smither/merchant/greet/sprite_04.webp',
-    'imgs/smither/merchant/greet/sprite_05.webp',
-    'imgs/smither/merchant/greet/sprite_06.webp',
-    'imgs/smither/merchant/greet/sprite_07.webp',
-    'imgs/smither/merchant/greet/sprite_08.webp',
-    'imgs/smither/merchant/greet/sprite_09.webp',
-    'imgs/smither/merchant/greet/sprite_10.webp',
-    'imgs/smither/merchant/greet/sprite_11.webp',
-    'imgs/smither/merchant/greet/sprite_12.webp',
-    'imgs/smither/merchant/greet/sprite_13.webp',
-    'imgs/smither/merchant/greet/sprite_14.webp',
-    'imgs/smither/merchant/greet/sprite_15.webp',
+    ...framePaths(15, (i) => `imgs/smither/merchant/greet/sprite_${pad(i, 2)}.webp`, 1),
     'imgs/smither/merchant/greet/sprite_17.webp',
     'imgs/smither/merchant/greet/sprite_18.webp',
   ];

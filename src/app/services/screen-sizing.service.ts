@@ -1,5 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 
+/**
+ * @service ScreenSizingService
+ * @description Verwaltet Vollbild-Modus und Skalierung der festen
+ * 1280×720-Spielfläche auf die aktuelle Fenster-/Bildschirmgröße.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -39,6 +44,11 @@ export class ScreenSizingService {
     });
   }
 
+  /**
+   * Schaltet den Vollbild-Modus um.
+   *
+   * @param element Ziel-Element (Default: gesamtes Dokument).
+   */
   public toggleFullscreen(element?: HTMLElement): void {
     if (!document.fullscreenElement) {
       const target = element || document.documentElement;
@@ -50,10 +60,12 @@ export class ScreenSizingService {
     }
   }
 
+  /** Blendet den Header im Vollbild-Modus ein/aus. */
   public toggleHeader(): void {
     this.headerVisibleInFullscreen.update((v) => !v);
   }
 
+  /** Berechnet den Skalierungsfaktor (nur im Vollbild ≠ 1). */
   private recalculateScale(): void {
     if (!document.fullscreenElement) {
       this.scale.set(1);

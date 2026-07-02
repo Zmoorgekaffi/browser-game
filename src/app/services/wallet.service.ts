@@ -1,6 +1,11 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { WalletData } from '../models/game-state.interface';
 
+/**
+ * @service WalletService
+ * @description Verwaltet Gold und Rubine des Charakters inklusive
+ * Persistierung im LocalStorage.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +16,12 @@ export class WalletService {
   gold = computed(() => this.state().gold);
   rubies = computed(() => this.state().rubies);
 
+  /**
+   * Initialisiert die Wallet mit Savegame-Daten.
+   *
+   * @param data   Wallet-Block aus dem LocalStorage.
+   * @param charId ID des aktiven Charakters (für den Storage-Key).
+   */
   init(data: WalletData, charId: string): void {
     this.state.set(data || { gold: 0, rubies: 0 });
     this.activeCharId = charId;
@@ -23,6 +34,11 @@ export class WalletService {
     }
   }
 
+  /**
+   * Fügt Gold hinzu und speichert sofort.
+   *
+   * @param amount Betrag > 0, sonst passiert nichts.
+   */
   addGold(amount: number): void {
     if (amount <= 0) return;
     
@@ -33,6 +49,12 @@ export class WalletService {
     });
   }
 
+  /**
+   * Versucht, Gold auszugeben.
+   *
+   * @param amount Betrag > 0.
+   * @returns true, wenn genug Gold vorhanden war und abgebucht wurde.
+   */
   spendGold(amount: number): boolean {
     if (amount <= 0) return false;
     

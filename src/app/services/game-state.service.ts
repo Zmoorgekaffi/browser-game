@@ -9,7 +9,24 @@ import { ShopService } from './shop.service';
 import { LoginService } from './login.service';
 import { SceneService } from './scene.service';
 import { AdventureStateService } from './adventure-state.service';
+import {
+  createDefaultProfile,
+  DEFAULT_SKILLS,
+  DEFAULT_WALLET,
+  DEFAULT_INVENTAR,
+} from '../models/default-character.data';
 
+/**
+ * @service GameStateService
+ * @description Zentraler Einstiegspunkt für den gesamten Spielzustand.
+ *
+ * Bündelt alle Teil-Services (Wallet, Skills, Inventar, Profil, Shop,
+ * Adventure ...) unter einem Dach, sodass Komponenten nur diesen einen
+ * Service injizieren müssen. Kümmert sich außerdem um:
+ *  - das Laden/Erstellen der Charakterdaten aus dem LocalStorage
+ *  - das Fortsetzen eines gespeicherten Abenteuers
+ *  - das Schließen der Item-Info-Card bei jedem Szenenwechsel
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -25,10 +42,14 @@ export class GameStateService {
   public sceneService = inject(SceneService);
   private router = inject(Router);
 
+  /** ID des aktuell eingeloggten Charakters (null = niemand eingeloggt). */
   public currentCharId = signal<string | null>(null);
+
+  /** Durchgereichte Kampfwerte (Basis + Ausrüstung) aus dem SkillsService. */
   public combatStats = this.skills.combatStats;
 
   constructor() {
+    // Bei jedem Szenenwechsel die Item-Info-Card schließen.
     effect(() => {
       const timestamp = this.sceneService.onSceneChange();
       if (timestamp > 0) {
@@ -37,6 +58,13 @@ export class GameStateService {
     });
   }
 
+  /**
+   * Initialisiert den Spielzustand anhand der Session.
+   *
+   * Liest die Charakter-ID aus dem SessionStorage, synchronisiert sie mit
+   * dem LoginService und lädt anschließend die Charakterdaten — oder leitet
+   * zurück zum Login, wenn keine gültige Session existiert.
+   */
   init() {
     console.log('GAMESTATESERVICE wird ausgeführt');
 
@@ -63,6 +91,8 @@ export class GameStateService {
    * SYNCHRON – kein await mehr nötig, da skills.init() und enrichSpells()
    * komplett synchron arbeiten (JSONs per Build-Time-Import, kein fetch()).
    * Dadurch ist hier auch kein try/catch um async-Fehler mehr nötig.
+   *
+   * @param charId ID des Charakters, dessen Daten geladen werden sollen.
    */
   public loadCharacterData(charId: string): void {
     const profileKey = `${charId}_profile`;
@@ -103,36 +133,18 @@ export class GameStateService {
     }
   }
 
+  /**
+   * Legt einen komplett neuen Charakter im LocalStorage an.
+   *
+   * Die Startwerte (Profil, Skills, Wallet, Inventar) kommen aus
+   * default-character.data.ts und werden hier nur noch persistiert.
+   *
+   * @param charId ID, unter der der neue Charakter gespeichert wird.
+   */
   private createNewCharacter(charId: string) {
-    const defaultProfile = { id: charId, name: 'Hero', level: 1, exp: 0 };
-    const defaultSkills = {
-      intelligence: 5, dexterity: 5, strength: 5, vitality: 5, luck: 5,
-      'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, mana: 20,
-      attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
-      critChance: 5, critDamage: 150, chaosDamage: 0, charisma: 1,
-      resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
-      spells: [],
-    };
-    const defaultWallet = { gold: 1000, rubies: 0 };
-    const defaultInventar = {
-      items: [{
-        name: 'Verrostetes Kurzschwert',
-        description: 'Eine abgenutzte Klinge mit schartigem Rand.',
-        'img-path': 'imgs/items/weapon/shortsword_rusty.webp',
-        price: 8,
-        'armor-slot': 'weapon-1',
-        stats: {
-          intelligence: 0, dexterity: 0, strength: 0, vitality: 0, luck: 0,
-          'energy-shield': 0, 'magic-find': 0, armor: 0, attack: 12,
-          'magic-attack': 0, initiative: 0, evasion: 0,
-          'crit-chance': 0, 'crit-damage': 0, chaosDamage: 0, charisma: 0,
-          resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
-        },
-      }],
-    };
-    localStorage.setItem(`${charId}_profile`, JSON.stringify(defaultProfile));
-    localStorage.setItem(`${charId}_skills`, JSON.stringify(defaultSkills));
-    localStorage.setItem(`${charId}_wallet`, JSON.stringify(defaultWallet));
-    localStorage.setItem(`${charId}_inventar`, JSON.stringify(defaultInventar));
+    localStorage.setItem(`${charId}_profile`, JSON.stringify(createDefaultProfile(charId)));
+    localStorage.setItem(`${charId}_skills`, JSON.stringify(DEFAULT_SKILLS));
+    localStorage.setItem(`${charId}_wallet`, JSON.stringify(DEFAULT_WALLET));
+    localStorage.setItem(`${charId}_inventar`, JSON.stringify(DEFAULT_INVENTAR));
   }
 }

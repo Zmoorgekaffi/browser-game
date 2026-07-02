@@ -8,6 +8,12 @@ import { GameStateService } from '../../../services/game-state.service';
 import { AudioService } from '../../../services/audio-object.service';
 
 
+/**
+ * @component SceneContainerComponent
+ * @description Wrapper um den Router-Outlet-Inhalt. Initialisiert bei
+ * jedem gültigen Szenenwechsel den GameStateService und blendet den
+ * "Zurück ins Dorf"-Button ein, wenn sinnvoll.
+ */
 @Component({
   selector: 'app-scene-container',
   imports: [RedirectHotspotComponent, CommonModule],

@@ -2,13 +2,52 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { InventarService } from './inventar.service';
 import { SpellLoaderService } from './spell-loader.service';
 
-type EquippedSpells = {
+/**
+ * Die vier ausrüstbaren Spell-Slots des Charakters.
+ * Wert = Spell-ID oder null (Slot frei).
+ */
+export type EquippedSpells = {
   spell_1: string | null;
   spell_2: string | null;
   spell_3: string | null;
   spell_4: string | null;
 };
 
+/** Alle Ausrüstungs-Slots, deren Item-Stats in die combatStats einfließen. */
+const EQUIPMENT_SLOTS = [
+  'head', 'chest', 'leg', 'gloves', 'footwear',
+  'accessoire-left', 'accessoire-right', 'necklace',
+  'ring-left', 'ring-right', 'weapon-1', 'weapon-2', 'back',
+] as const;
+
+/**
+ * Mapping: Stat-Key auf dem Item → Stat-Key in den finalen combatStats.
+ * Diese Werte werden 1:1 additiv übernommen (ohne Attributs-Skalierung).
+ */
+const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
+  ['armor', 'armor'],
+  ['energy-shield', 'energy-shield'],
+  ['magic-find', 'magic-find'],
+  ['attack', 'attack'],
+  ['magic-attack', 'magicAttack'],
+  ['initiative', 'initiative'],
+  ['evasion', 'evasion'],
+  ['crit-chance', 'critChance'],
+  ['crit-damage', 'critDamage'],
+  ['chaosDamage', 'chaosDamage'],
+  ['charisma', 'charisma'],
+];
+
+/** Die vier Elementar-Resistenzen, die Items mitbringen können. */
+const RESISTANCE_KEYS = ['fire', 'cold', 'lightning', 'chaos'] as const;
+
+/**
+ * @service SkillsService
+ * @description Verwaltet Basis-Attribute, Kampfwerte und Spells des Charakters.
+ *
+ * Kernstück ist das computed Signal `combatStats`, das Basis-Werte und
+ * Ausrüstungs-Boni reaktiv zu einem finalen Kampfpaket verrechnet.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -16,10 +55,10 @@ export class SkillsService {
   private inventarService = inject(InventarService);
   private spellLoader = inject(SpellLoaderService);
 
-  //test
+  /** Charakter-ID-Signal, wird vom GameStateService gesetzt (für Storage-Keys). */
   public profileData = signal<any>('');
 
-  // Der nackte Basis-State des Charakters (Level-1 Startwerte)
+  /** Der nackte Basis-State des Charakters (Level-1 Startwerte). */
   public state = signal<any>({
     intelligence: 5,
     dexterity: 5,
@@ -48,9 +87,7 @@ export class SkillsService {
     spells: [],
   });
 
-  /**
-   * Reaktives Signal für die belegten Spell-Slots.
-   */
+  /** Reaktives Signal für die belegten Spell-Slots. */
   public equippedSpells = signal<EquippedSpells>({
     spell_1: null,
     spell_2: null,
@@ -82,13 +119,38 @@ export class SkillsService {
 
   /**
    * REAKTIVES COMPUTED SIGNAL
-   * Berechnet das finale Kampfpaket: Basis-Werte + Ausrüstungsteile
+   * Berechnet das finale Kampfpaket: Basis-Werte + Ausrüstungsteile.
+   *
+   * Rechnet pro ausgerüstetem Item drei Schritte:
+   *  1. Flat-Stats additiv übernehmen (siehe FLAT_STAT_MAP)
+   *  2. Resistenzen additiv übernehmen
+   *  3. Attribute skalieren (z.B. Stärke → Angriff/Rüstung)
    */
   public combatStats = computed(() => {
     const base = this.state();
     const slots = this.inventarService.equippedSlots();
 
-    const finalStats = {
+    const finalStats = this.createBaseCombatStats(base);
+
+    EQUIPMENT_SLOTS.forEach((slotName) => {
+      const item = slots[slotName];
+      if (!item || !item.stats) return;
+
+      this.addFlatItemStats(finalStats, item.stats);
+      this.addItemResistances(finalStats, item.stats);
+      this.addAttributeScaling(finalStats, item.stats);
+    });
+
+    console.log('⚔️ Reaktiv berechnete combatStats:', finalStats);
+    return finalStats;
+  });
+
+  /**
+   * Kopiert die Basis-Werte des Charakters in ein frisches Stats-Objekt
+   * (bewusst OHNE das spells-Array — combatStats enthält nur Zahlenwerte).
+   */
+  private createBaseCombatStats(base: any) {
+    return {
       intelligence: base.intelligence,
       dexterity: base.dexterity,
       strength: base.strength,
@@ -109,72 +171,77 @@ export class SkillsService {
       charisma: base.charisma,
       resistances: { ...base.resistances },
     };
+  }
 
-    const validSlots = [
-      'head', 'chest', 'leg', 'gloves', 'footwear',
-      'accessoire-left', 'accessoire-right', 'necklace',
-      'ring-left', 'ring-right', 'weapon-1', 'weapon-2', 'back',
-    ];
+  /**
+   * Übernimmt alle 1:1-Stats eines Items additiv in die finalen Stats.
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert).
+   * @param s          stats-Block des Items.
+   */
+  private addFlatItemStats(finalStats: any, s: any): void {
+    for (const [itemKey, statsKey] of FLAT_STAT_MAP) {
+      if (s[itemKey]) finalStats[statsKey] += Number(s[itemKey]);
+    }
+  }
 
-    validSlots.forEach((slotName) => {
-      const item = slots[slotName];
-      if (!item || !item.stats) return;
-      const s = item.stats;
+  /**
+   * Übernimmt die Elementar-Resistenzen eines Items additiv.
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert).
+   * @param s          stats-Block des Items.
+   */
+  private addItemResistances(finalStats: any, s: any): void {
+    if (!s.resistances) return;
+    for (const key of RESISTANCE_KEYS) {
+      if (s.resistances[key]) finalStats.resistances[key] += Number(s.resistances[key]);
+    }
+  }
 
-      if (s.armor) finalStats.armor += Number(s.armor);
-      if (s['energy-shield']) finalStats['energy-shield'] += Number(s['energy-shield']);
-      if (s['magic-find']) finalStats['magic-find'] += Number(s['magic-find']);
-      if (s.attack) finalStats.attack += Number(s.attack);
-      if (s['magic-attack']) finalStats.magicAttack += Number(s['magic-attack']);
-      if (s.initiative) finalStats.initiative += Number(s.initiative);
-      if (s.evasion) finalStats.evasion += Number(s.evasion);
-      if (s['crit-chance']) finalStats.critChance += Number(s['crit-chance']);
-      if (s['crit-damage']) finalStats.critDamage += Number(s['crit-damage']);
-      if (s.chaosDamage) finalStats.chaosDamage += Number(s.chaosDamage);
-      if (s.charisma) finalStats.charisma += Number(s.charisma);
+  /**
+   * Wendet die Attributs-Skalierung eines Items an:
+   *  - Stärke:       +Attribut, Angriff +2/Punkt, Rüstung +0.5/Punkt (abgerundet)
+   *  - Intelligenz:  +Attribut, Magie-Angriff +2/Punkt, Mana +5/Punkt
+   *  - Geschick:     +Attribut, Ausweichen +0.5/Punkt (abgerundet), Initiative +1/Punkt
+   *  - Vitalität:    +Attribut, HP +12/Punkt
+   *  - Glück:        +Attribut, Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert).
+   * @param s          stats-Block des Items.
+   */
+  private addAttributeScaling(finalStats: any, s: any): void {
+    if (s.strength) {
+      const str = Number(s.strength);
+      finalStats.strength += str;
+      finalStats.attack += str * 2;
+      finalStats.armor += Math.floor(str * 0.5);
+    }
+    if (s.intelligence) {
+      const int = Number(s.intelligence);
+      finalStats.intelligence += int;
+      finalStats.magicAttack += int * 2;
+      finalStats.mana += int * 5;
+    }
+    if (s.dexterity) {
+      const dex = Number(s.dexterity);
+      finalStats.dexterity += dex;
+      finalStats.evasion += Math.floor(dex * 0.5);
+      finalStats.initiative += dex;
+    }
+    if (s.vitality) {
+      const vit = Number(s.vitality);
+      finalStats.vitality += vit;
+      finalStats.hp += vit * 12;
+    }
+    if (s.luck) {
+      const lck = Number(s.luck);
+      finalStats.luck += lck;
+      finalStats.critChance += Math.floor(lck * 0.2);
+      finalStats['magic-find'] += Math.floor(lck * 0.5);
+    }
+  }
 
-      if (s.resistances) {
-        if (s.resistances.fire) finalStats.resistances.fire += Number(s.resistances.fire);
-        if (s.resistances.cold) finalStats.resistances.cold += Number(s.resistances.cold);
-        if (s.resistances.lightning) finalStats.resistances.lightning += Number(s.resistances.lightning);
-        if (s.resistances.chaos) finalStats.resistances.chaos += Number(s.resistances.chaos);
-      }
-
-      if (s.strength) {
-        const str = Number(s.strength);
-        finalStats.strength += str;
-        finalStats.attack += str * 2;
-        finalStats.armor += Math.floor(str * 0.5);
-      }
-      if (s.intelligence) {
-        const int = Number(s.intelligence);
-        finalStats.intelligence += int;
-        finalStats.magicAttack += int * 2;
-        finalStats.mana += int * 5;
-      }
-      if (s.dexterity) {
-        const dex = Number(s.dexterity);
-        finalStats.dexterity += dex;
-        finalStats.evasion += Math.floor(dex * 0.5);
-        finalStats.initiative += dex;
-      }
-      if (s.vitality) {
-        const vit = Number(s.vitality);
-        finalStats.vitality += vit;
-        finalStats.hp += vit * 12;
-      }
-      if (s.luck) {
-        const lck = Number(s.luck);
-        finalStats.luck += lck;
-        finalStats.critChance += Math.floor(lck * 0.2);
-        finalStats['magic-find'] += Math.floor(lck * 0.5);
-      }
-    });
-
-    console.log('⚔️ Reaktiv berechnete combatStats:', finalStats);
-    return finalStats;
-  });
-
+  /** Liefert die Default-Spells (Start-Loadout) für neue/leere Savegames. */
   private getDefaultSpells(): any {
     return {
       spells: [
@@ -190,6 +257,13 @@ export class SkillsService {
     };
   }
 
+  /**
+   * Mergt eingehende Savegame-Daten über die aktuellen Basis-Werte.
+   *
+   * @param currentBase  Aktueller Basis-State.
+   * @param incomingData Daten aus dem Savegame.
+   * @param finalSpells  Bereits angereicherte Spell-Objekte.
+   */
   private mergeCharacterData(currentBase: any, incomingData: any, finalSpells: any[]): any {
     return {
       ...currentBase,
@@ -202,10 +276,18 @@ export class SkillsService {
     };
   }
 
+  /** True, wenn im Savegame keine Spells hinterlegt sind. */
   private hasNoSpells(data: any): boolean {
     return !data.spells || data.spells.length === 0;
   }
 
+  /**
+   * Schreibt die Default-Spells in den LocalStorage-Eintrag des Charakters
+   * (Fallback, wenn ein Savegame ohne Spells geladen wurde).
+   *
+   * @param mergedBackupData Kompletter State als Backup, falls noch gar kein
+   *                         LocalStorage-Eintrag existiert.
+   */
   private updateLocalStorageSpells(mergedBackupData: any): void {
     const storageKey = `${this.profileData()}_skills`;
     const rawSave = localStorage.getItem(storageKey);
@@ -228,6 +310,13 @@ export class SkillsService {
     }
   }
 
+  /**
+   * Zentrale Spell-Verwaltung: lernen, ausrüsten oder ablegen.
+   *
+   * @param action  'learn' | 'equip' | 'unequip'
+   * @param spell   Das betroffene Spell-Objekt.
+   * @param slotKey Ziel-Slot (nur für equip/unequip relevant).
+   */
   public updateSpells(action: 'equip' | 'unequip' | 'learn', spell: any, slotKey?: string): void {
     this.state.update((currentState) => {
       let updatedSpells = [...currentState.spells];
@@ -270,6 +359,10 @@ export class SkillsService {
     });
   }
 
+  /**
+   * Persistiert den aktuellen Spell-Zustand (nur IDs + equipped-Flags)
+   * in den LocalStorage.
+   */
   private syncSpellsToLocalStorage(newState: any, action: string, spell: any, slotKey?: string): void {
     const storageKey = `${this.profileData()}_skills`;
     const rawSave = localStorage.getItem(storageKey);
@@ -288,6 +381,11 @@ export class SkillsService {
     }
   }
 
+  /**
+   * Sucht den ersten freien Spell-Slot.
+   *
+   * @returns Slot-Key ('spell_1' ... 'spell_4') oder null, wenn alle belegt.
+   */
   public getNextFreeSlot(): keyof EquippedSpells | null {
     const slots = this.equippedSpells();
     const keys: (keyof EquippedSpells)[] = ['spell_1', 'spell_2', 'spell_3', 'spell_4'];
@@ -301,6 +399,8 @@ export class SkillsService {
    *
    * SYNCHRON – kein await mehr nötig, da SpellLoaderService.enrichSpells()
    * die JSONs per Build-Time-Import bereits synchron im Speicher hält.
+   *
+   * @param data Skills-Block aus dem Savegame (LocalStorage).
    */
   public init(data: any): void {
     if (!data || Object.keys(data).length === 0) {

@@ -3,9 +3,15 @@ import { GameStateService } from '../../services/game-state.service';
 import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
+import { framePaths, pad } from '../../utils/frame-paths.util';
 
 import necklace from '../../../../public/item-data/necklace.json';
 
+/**
+ * @component MagicShop
+ * @description Magie-Laden: begrüßender Händler (Sprite-Animation) und
+ * das aktuelle Amulett-Angebot aus dem ShopService.
+ */
 @Component({
   selector: 'app-magic-shop',
   standalone: true,
@@ -19,23 +25,12 @@ export class MagicShop implements OnInit {
   amuletsArray: any[] = [];
   amuletsMap: Record<string, any> = {};
 
-  //Animation paths:
+  /**
+   * Greet-Animation: frame-001 ... frame-015, danach nochmal frame-001
+   * für einen sauberen Loop-Übergang.
+   */
   greetAnimationPaths: any[] = [
-    'imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-002-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-003-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-004-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-005-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-006-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-007-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-008-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-009-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-010-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-011-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-012-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-013-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-014-Photoroom.webp',
-    'imgs/magic-shop/merchant/greet/frame-015-Photoroom.webp',
+    ...framePaths(15, (i) => `imgs/magic-shop/merchant/greet/frame-${pad(i, 3)}-Photoroom.webp`, 1),
     'imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
   ];
 

@@ -2,6 +2,11 @@ import { Component, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventarService } from '../../../services/inventar.service';
 
+/**
+ * @component ArmorSlot
+ * @description Einzelner Ausrüstungs-Slot in der Inventar-Ansicht.
+ * Zeigt das ausgerüstete Item aus dem equippedSlots-Signal an.
+ */
 @Component({
   selector: 'app-armor-slot',
   imports: [CommonModule],

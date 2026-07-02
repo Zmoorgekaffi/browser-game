@@ -5,6 +5,11 @@ import { InventarService } from '../../../services/inventar.service';
 
 
 
+/**
+ * @component InventarItem
+ * @description Eine Zeile im Inventar. Klick auf das gesamte Element
+ * rüstet das Item an bzw. ab (Toggle über den InventarService).
+ */
 @Component({
   selector: 'app-inventar-item',
   standalone: true,
@@ -54,6 +59,7 @@ export class InventarItem implements OnChanges {
     }
   }
 
+  /** Host-Klick: Item an-/ablegen. */
   onEquipClick(): void {
     console.log(`🎯 Klick im Host registriert! Index: ${this.index}`);
     if (this.index !== undefined) {
