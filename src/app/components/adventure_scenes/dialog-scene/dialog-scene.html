@@ -1,5 +1,12 @@
 <div class="dialog-scene-container w-full h-full relative bg-black text-white">
 
+  <!-- ⏳ 🆕 Ladebildschirm: bleibt sichtbar, bis der Preloader ALLE Bilder
+       der Begegnung gefetcht hat. Erst danach wird die Szene aufgebaut,
+       sodass die Animationen ohne Nachlade-Ruckler abspielen. -->
+  @if (isLoading()) {
+    <app-loading-screen label="Begegnung wird geladen..." />
+  } @else {
+
   <!-- 🖼️ 🆕 Hintergrund: kommt aus enc['scene-background'], statisches Einzelbild -->
   <div class="absolute inset-0 w-full h-full">
     <app-animation-object
@@ -117,4 +124,6 @@
       </div>
     </div>
   }
+
+  } <!-- Ende @else (isLoading) -->
 </div>

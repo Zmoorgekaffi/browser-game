@@ -1,11 +1,17 @@
 <div
   class="fight-scene-container w-full h-full p-4 relative flex flex-col items-center justify-between text-white"
 >
+  <!-- ⏳ 🆕 Ladebildschirm: bleibt sichtbar, bis Hintergrund + Monster-Frames
+       vollständig vorgeladen sind (verhindert Nachlade-Ruckler auf dem Webserver) -->
+  @if (isLoading()) {
+    <app-loading-screen label="Kampf wird geladen..." />
+  } @else {
+
   <!-- Hintergrund: läuft IMMER (auch während Intro) -->
   <div class="z-[-1] absolute inset-0 w-full h-full">
     <app-animation-object
       [contain]="false"
-      [spritePaths]="['imgs/areas/dark-forest/fight/background/dark-forest-fight-background.png']"
+      [spritePaths]="[fightBackgroundPath]"
     ></app-animation-object>
   </div>
 
@@ -134,4 +140,6 @@
       </div>
     </div>
   }
+
+  } <!-- Ende @else (isLoading) -->
 </div>

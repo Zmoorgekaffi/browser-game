@@ -1,4 +1,9 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
+  <!-- ⏳ 🆕 Ladebildschirm bis Hintergrund + Händler-Frames + Item-Bilder da sind -->
+  @if (isLoading()) {
+    <app-loading-screen label="Gemischtwaren werden geladen..." />
+  } @else {
+
   <img
     src="imgs/general-supplies/general-supplies_0.webp"
     class="w-full h-full object-cover"
@@ -71,4 +76,6 @@
       Lade magische Waren...
     </div>
   }
+
+  } <!-- Ende @else (isLoading) -->
 </div>

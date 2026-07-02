@@ -5,6 +5,8 @@ import { SkillsService } from '../../../services/skills.service';
 import { ProfileService } from '../../../services/profile.service';
 import { AdventureStateService } from '../../../services/adventure-state.service';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
+import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
+import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 
 /**
@@ -20,7 +22,7 @@ import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 @Component({
   selector: 'app-fight-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject],
+  imports: [CommonModule, AnimationObject, LoadingScreen],
   templateUrl: './fight-scene.html',
   styleUrl: './fight-scene.scss',
 })
@@ -30,6 +32,15 @@ export class FightScene {
   skillsService = inject(SkillsService);
   profileService = inject(ProfileService);
   private adventureStateService = inject(AdventureStateService);
+  private preloader = inject(AssetPreloaderService);
+
+  // 🆕 Hintergrund-Pfad als Property, damit Template UND Preloader
+  // denselben String verwenden (vorher stand er nur hart im Template).
+  public readonly fightBackgroundPath =
+    'imgs/areas/dark-forest/fight/background/dark-forest-fight-background.png';
+
+  // --- 🆕 Preloading: solange true zeigt das Template nur den Ladebildschirm ---
+  public isLoading = signal<boolean>(true);
 
   // --- UI Bindings direkt aus dem Service gelinkt ---
   monsterName = this.fightService.monsterName;
@@ -89,7 +100,7 @@ export class FightScene {
    * Wird sowohl beim initialen Mount als auch bei fight→fight Wechsel
    * ausgelöst (siehe effect() im constructor).
    */
-  private setupFight(): void {
+  private async setupFight(): Promise<void> {
     // BEVOR initializeFight() den activeFight setzt ist er noch null.
     // Bei einem Resume ist er bereits aus dem Save befüllt.
     const isNewFight = this.fightService.activeFight() === null;
@@ -97,6 +108,18 @@ export class FightScene {
     this.fightService.initializeFight();
 
     const monster = this.fightService.getEnrichedMonster();
+
+    // 🆕 ALLE Kampf-Bilder (Hintergrund, Monster-Intro, Monster-Idle)
+    // VOR dem Szenenstart laden — solange läuft der Ladebildschirm.
+    // Erst danach starten Intro-Timer und Animationen, damit auf dem
+    // Webserver kein Frame mehr mitten in der Animation nachgeladen wird.
+    this.isLoading.set(true);
+    await this.preloader.preloadImages([
+      this.fightBackgroundPath,
+      ...(monster?.['intro-path'] ?? []),
+      ...(monster?.['idle-path'] ?? []),
+    ]);
+    this.isLoading.set(false);
 
     // Idle-Animation IMMER setzen (auch bei Resume)
     const idleDuration = monster?.['idle-duration'] ?? 2500;

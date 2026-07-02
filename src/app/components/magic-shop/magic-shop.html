@@ -1,4 +1,9 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
+  <!-- ⏳ 🆕 Ladebildschirm bis Hintergrund + Händler-Frames + Item-Bilder da sind -->
+  @if (isLoading()) {
+    <app-loading-screen label="Magieladen wird geladen..." />
+  } @else {
+
   <img src="imgs/magic-shop/magic-shop_1.webp" class="w-full h-full object-cover" alt="" />
 
   <app-item-info-card></app-item-info-card>
@@ -81,4 +86,6 @@
       [spritePaths]="greetAnimationPaths"
     ></app-animation-object>
   </div>
+
+  } <!-- Ende @else (isLoading) -->
 </div>

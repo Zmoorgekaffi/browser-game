@@ -1,8 +1,13 @@
-<div class="w-full h-full">
-        <app-animation-object
+<div class="w-full h-full relative">
+  <!-- ⏳ 🆕 Ladebildschirm bis alle Intro-Frames vorgeladen sind -->
+  @if (isLoading()) {
+    <app-loading-screen label="Abenteuer wird geladen..." />
+  } @else {
+    <app-animation-object
       Name="dark-forest-intro"
       [Duration]="gameStateService.adventureStateService.level().introDuration"
       [spritePaths]="gameStateService.adventureStateService.level().introPaths"
       [contain]="false"
     ></app-animation-object>
+  }
 </div>

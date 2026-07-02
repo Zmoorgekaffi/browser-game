@@ -1,0 +1,20 @@
+<div class="loading-screen absolute inset-0 w-full h-full bg-black flex flex-col items-center justify-center gap-6 text-white z-50">
+
+  <!-- ✨ Pulsierender Titel -->
+  <div class="text-2xl font-bold text-amber-300 animate-pulse select-none">
+    {{ label }}
+  </div>
+
+  <!-- 📊 Fortschrittsbalken -->
+  <div class="w-64 h-3 bg-zinc-800 rounded-full overflow-hidden border border-white/20">
+    <div
+      class="h-full bg-amber-500 rounded-full transition-all duration-200"
+      [style.width.%]="preloader.progress()"
+    ></div>
+  </div>
+
+  <!-- 🔢 Prozent-Anzeige -->
+  <div class="text-sm text-zinc-400 select-none">
+    {{ preloader.loadedCount() }} / {{ preloader.totalCount() }} ({{ preloader.progress() }}%)
+  </div>
+</div>

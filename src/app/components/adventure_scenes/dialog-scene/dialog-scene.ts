@@ -1,7 +1,9 @@
 import { Component, inject, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
+import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
+import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 
 type DialogPhase = 'intro' | 'dialog' | 'reaction';
@@ -26,12 +28,18 @@ type DialogPhase = 'intro' | 'dialog' | 'reaction';
 @Component({
   selector: 'app-dialog-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject],
+  imports: [CommonModule, AnimationObject, LoadingScreen],
   templateUrl: './dialog-scene.html',
   styleUrl: './dialog-scene.scss',
 })
 export class DialogScene {
   private gameStateService = inject(GameStateService);
+  private preloader = inject(AssetPreloaderService);
+
+  // --- 🆕 Preloading: solange true zeigt das Template nur den Ladebildschirm.
+  // Auf dem Webserver (anders als localhost) würden die Frames sonst erst
+  // während der laufenden Animation nachgeladen → Ruckeln.
+  public isLoading = signal<boolean>(true);
 
   // --- Encounter-Daten ---
   public encounter = signal<any | null>(null);
@@ -89,12 +97,19 @@ export class DialogScene {
     });
   }
 
-  private setupDialog(step: any): void {
+  private async setupDialog(step: any): Promise<void> {
     const enc = step.encounter;
     if (!enc) {
       console.error('💬 DialogScene: Step hat keine encounter!', step);
       return;
     }
+
+    // 🆕 ALLE Bilder der Begegnung VOR dem Start der Szene laden —
+    // solange läuft der Ladebildschirm. Erst danach starten Intro-Timer
+    // und Animationen, sodass kein Frame mehr nachgeladen werden muss.
+    this.isLoading.set(true);
+    await this.preloader.preloadImages(this.collectEncounterImagePaths(enc));
+    this.isLoading.set(false);
 
     // Fresh state
     this.encounter.set(enc);
@@ -210,6 +225,28 @@ export class DialogScene {
   // -----------------------------------------------------------------------
   // Helpers
   // -----------------------------------------------------------------------
+
+  /**
+   * 🆕 Sammelt ALLE Bild-Pfade einer Encounter ein (Background, Intro,
+   * Idle, Speak sowie die Reaction-Animationen aller Antworten), damit
+   * der Preloader sie in einem Rutsch vorladen kann.
+   */
+  private collectEncounterImagePaths(enc: any): string[] {
+    const paths: string[] = [];
+
+    if (enc['scene-background']) paths.push(enc['scene-background']);
+    if (enc.intro?.paths) paths.push(...enc.intro.paths);
+    if (enc.idle?.paths) paths.push(...enc.idle.paths);
+    if (enc.speak?.paths) paths.push(...enc.speak.paths);
+
+    for (const answer of enc.answers ?? []) {
+      if (answer.reactionAnimation?.paths) {
+        paths.push(...answer.reactionAnimation.paths);
+      }
+    }
+
+    return paths;
+  }
 
   private setAnimation(anim: { paths: string[]; duration: number }, loop: boolean): void {
     this.currentAnimationPaths.set(anim.paths ?? []);

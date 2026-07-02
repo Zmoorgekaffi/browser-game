@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 📱 Globales Nicht-Markieren: verhindert das störende Text-/Bild-
+   Markieren beim Tippen und Wischen (v.a. auf dem Handy).
+   -webkit-touch-callout unterdrückt zusätzlich das iOS-Langdruck-Popup,
+   -webkit-user-drag das Ziehen von Bildern. */
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+/* Eingabefelder brauchen die Auswahl natürlich weiterhin (Login etc.) */
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 app-village-scene {
   width: 100%;
   height: 100%;

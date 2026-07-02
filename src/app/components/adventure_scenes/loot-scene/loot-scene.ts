@@ -1,7 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
+import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
+import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 
 /**
  * @component LootScene
@@ -20,12 +22,16 @@ import { GameStateService } from '../../../services/game-state.service';
 @Component({
   selector: 'app-loot-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject],
+  imports: [CommonModule, AnimationObject, LoadingScreen],
   templateUrl: './loot-scene.html',
   styleUrl: './loot-scene.scss',
 })
 export class LootScene implements OnInit {
   gameStateService = inject(GameStateService);
+  private preloader = inject(AssetPreloaderService);
+
+  // --- 🆕 Preloading: solange true zeigt das Template nur den Ladebildschirm ---
+  public isLoading = signal<boolean>(true);
 
   // --- UI-State: Intro ---
   public showLootIntro = signal<boolean>(false);
@@ -39,7 +45,7 @@ export class LootScene implements OnInit {
   // --- UI-State: gerolltes Item ---
   public foundItem = signal<any | null>(null);
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     console.log('🎁 LootScene ngOnInit feuert!');
 
     const adventure = this.gameStateService.adventureStateService;
@@ -84,6 +90,17 @@ export class LootScene implements OnInit {
     // 2️⃣ Intro nur beim ersten Betreten zeigen — beim Resume direkt das Item
     const introPaths = area.lootIntroPaths ?? [];
     const introDuration = area.lootIntroDuration ?? 2000;
+
+    // 🆕 ALLE Bilder der Loot-Scene (Hintergrund, Intro-Frames, Item-Bild)
+    // VOR dem Start laden — solange läuft der Ladebildschirm. Erst danach
+    // startet der Intro-Timer, damit auf dem Webserver nichts mehr ruckelt.
+    this.isLoading.set(true);
+    await this.preloader.preloadImages([
+      ...(area.lootScenePaths ?? []),
+      ...introPaths,
+      lootItem?.['img-path'],
+    ]);
+    this.isLoading.set(false);
 
     if (isFirstVisit && Array.isArray(introPaths) && introPaths.length > 0) {
       this.lootIntroPaths.set(introPaths);

@@ -1,3 +1,8 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
-  <img src="imgs/tavern/tavern_0.webp" class="w-full h-full object-cover" alt="" />
+  <!-- ⏳ 🆕 Ladebildschirm bis das Taverne-Bild vorgeladen ist -->
+  @if (isLoading()) {
+    <app-loading-screen label="Taverne wird geladen..." />
+  } @else {
+    <img src="imgs/tavern/tavern_0.webp" class="w-full h-full object-cover" alt="" />
+  }
 </div>

@@ -1,4 +1,9 @@
 <div class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative">
+  <!-- ⏳ 🆕 Ladebildschirm bis Hintergrund + Schmied-Frames + Item-Bilder da sind -->
+  @if (isLoading()) {
+    <app-loading-screen label="Schmiede wird geladen..." />
+  } @else {
+
   <img src="imgs/smither/smither_0.webp" class="w-full h-full object-cover" alt="" />
 
   <app-item-info-card></app-item-info-card>
@@ -68,4 +73,6 @@
       Lade Schmiedewaren...
     </div>
   }
+
+  } <!-- Ende @else (isLoading) -->
 </div>
