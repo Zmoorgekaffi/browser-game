@@ -13,6 +13,18 @@ export interface EncounterAnimation {
   duration: number;
 }
 
+/**
+ * 🆕 Positionierung + Größe der Character-Animation im Dialog.
+ * Wird 1:1 als [Top]/[Left]/[width]/[height] an app-animation-object
+ * durchgereicht. Alle Werte als CSS-Strings, z.B. '20%', '340px'.
+ */
+export interface CharacterFrame {
+  top: string;
+  left: string;
+  width: string;
+  height: string;
+}
+
 export interface EncounterAnswer {
   text: string;
   reactionType: ReactionType;
@@ -40,6 +52,11 @@ export interface Encounter {
    * übergeben.
    */
   'scene-background': string;
+  /**
+   * 🆕 Größe & Position der Character-Animation für DIESE Begegnung.
+   * Jeder NPC hat andere Sprite-Maße → pro Encounter individuell.
+   */
+  characterFrame: CharacterFrame;
   intro: EncounterAnimation;
   idle: EncounterAnimation;
   speak: EncounterAnimation;

@@ -1,6 +1,7 @@
 import {
   Component,
   Input,
+  HostBinding,
   OnInit,
   OnChanges,
   OnDestroy,
@@ -24,6 +25,44 @@ export class AnimationObject implements OnInit, OnChanges, OnDestroy {
   @Input() Loop: boolean = false;
   @Input() width: string = '100%';
   @Input() height: string = '100%';
+
+  /**
+   * 🆕 Optionale absolute Positionierung. Werden diese NICHT gesetzt
+   * (undefined, Standardfall), verhält sich die Komponente exakt wie
+   * vorher — kein position:absolute, keine Regression für bestehende
+   * Verwendungen (Shrine, Fight-Scene, Loot-Scene etc.), die ihre
+   * Positionierung über einen umgebenden Wrapper-Div lösen.
+   *
+   * Werden sie gesetzt (z.B. im Dialog, wo jede Begegnung ihre eigene
+   * Character-Box mitbringt), positioniert sich die Komponente selbst
+   * absolut relativ zum nächsten position:relative-Elternelement.
+   */
+  @Input() Top?: string;
+  @Input() Left?: string;
+
+  @HostBinding('style.position')
+  get hostPosition(): string | null {
+    return this.Top !== undefined || this.Left !== undefined ? 'absolute' : null;
+  }
+  @HostBinding('style.top')
+  get hostTop(): string | null {
+    return this.Top ?? null;
+  }
+  @HostBinding('style.left')
+  get hostLeft(): string | null {
+    return this.Left ?? null;
+  }
+  // Spiegelt width/height zusätzlich auf den Host, damit die absolute
+  // Box bei gesetztem Top/Left auch die richtige Größe hat (statt sich
+  // auf 100% des Elternelements zu verlassen).
+  @HostBinding('style.width')
+  get hostWidth(): string {
+    return this.width;
+  }
+  @HostBinding('style.height')
+  get hostHeight(): string {
+    return this.height;
+  }
 
   // 🔥 Steuert das Object-Fit Verhalten: true = contain, false = cover
   @Input() contain: boolean = true;

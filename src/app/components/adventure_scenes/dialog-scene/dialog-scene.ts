@@ -2,6 +2,7 @@ import { Component, inject, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
 import { GameStateService } from '../../../services/game-state.service';
+import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 
 type DialogPhase = 'intro' | 'dialog' | 'reaction';
 
@@ -58,6 +59,18 @@ export class DialogScene {
   // --- 🆕 Background-Animation (statischer Pfad, läuft konstant durch) ---
   public backgroundPaths = signal<string[]>([]);
 
+  // --- 🆕 Intro-Animation (eigenes app-animation-object, nur während phase()==='intro' sichtbar) ---
+  public introPaths = signal<string[]>([]);
+  public introDuration = signal<number>(2500);
+
+  // --- 🆕 Größe & Position der Character-Animation (pro Encounter) ---
+  public characterFrame = signal<CharacterFrame>({
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+  });
+
   // Guard gegen doppelte Init für denselben Step-Index
   private lastInitializedStep: number = -1;
 
@@ -73,10 +86,7 @@ export class DialogScene {
       console.log(`💬 DialogScene setup für Step-Index ${idx}`);
       this.lastInitializedStep = idx;
       this.setupDialog(step);
-      console.log('dialog background path', this.backgroundPaths());
-      
     });
-
   }
 
   private setupDialog(step: any): void {
@@ -95,14 +105,28 @@ export class DialogScene {
     // 🆕 Background setzen (läuft die ganze Begegnung über durch, egal welche Phase)
     this.backgroundPaths.set(enc['scene-background'] ? [enc['scene-background']] : []);
 
-    // Phase 1: Intro
+    // 🆕 Character-Box-Größe/-Position setzen (Fallback = alte Vollflächen-Optik)
+    this.characterFrame.set(
+      enc.characterFrame ?? { top: '0', left: '0', width: '100%', height: '100%' }
+    );
+
+    // 🆕 Intro-Animation-Signals setzen. Das eigenständige Intro-
+    // app-animation-object im Template ist NUR während phase()==='intro'
+    // sichtbar (vollflächig) — danach übernimmt das reguläre Character-
+    // Object (idle/reaction) in der characterFrame-Box.
+    this.introPaths.set(enc.intro?.paths ?? []);
+    this.introDuration.set(enc.intro?.duration ?? 2500);
+
+    // Phase 1: Intro läuft (eigenes Intro-Object rendert die Animation).
+    // Das Character-Object ist während dieser Phase im Template ausgeblendet,
+    // deshalb setzen wir seinen Zustand hier direkt schon auf idle — sobald
+    // die Intro-Phase endet, ist der Character sofort im richtigen Loop.
     this.phase.set('intro');
-    this.setAnimation(enc.intro, false);
+    this.setAnimation(enc.idle, true);
 
     setTimeout(() => {
-      // Phase 2: Dialog mit idle-Loop
+      // Phase 2: Intro-Object ausblenden, Character-Object übernimmt (bereits im idle-Loop)
       this.phase.set('dialog');
-      this.setAnimation(enc.idle, true);
     }, enc.intro.duration);
   }
 

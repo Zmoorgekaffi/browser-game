@@ -5,6 +5,7 @@ import { SkillsService } from '../../../services/skills.service';
 import { ProfileService } from '../../../services/profile.service';
 import { AdventureStateService } from '../../../services/adventure-state.service';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
+import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 
 /**
  * @component FightScene
@@ -56,8 +57,17 @@ export class FightScene {
   public monsterIdlePaths = signal<string[]>([]);
   public monsterIdleDuration = signal<number>(2500);
 
+  // 🆕 Größe & Position der Monster-Idle-Animation (pro Monster über
+  // "monster-frame" in der Monster-JSON steuerbar). Intro bleibt weiterhin
+  // vollflächig, nur die Idle-Box wird individuell platziert.
+  public monsterFrame = signal<CharacterFrame>({
+    top: '280px',
+    left: '540px',
+    width: '180px',
+    height: '260px',
+  });
+
   // Guard damit wir einen Step-Index nicht doppelt initialisieren
-  // (der erste effect-Trigger deckt sich mit dem Mount ab).
   private lastInitializedStep: number = -1;
 
   constructor() {
@@ -99,6 +109,15 @@ export class FightScene {
       this.monsterIdlePaths.set([]);
       console.log('ℹ️ Monster hat keine Idle-Animation hinterlegt');
     }
+
+    // 🆕 Monster-Frame (Position/Größe der Idle-Animation) aus der Monster-JSON
+    // übernehmen. Fällt zurück auf den alten Hardcoded-Wert, wenn das Feld
+    // (noch) nicht in der JSON steht — so bleiben bestehende Monster-Definitionen
+    // vollständig funktionsfähig.
+    const mFrame = monster?.['monster-frame'] as CharacterFrame | undefined;
+    this.monsterFrame.set(
+      mFrame ?? { top: '280px', left: '540px', width: '180px', height: '260px' }
+    );
 
     // Intro NUR bei einem frischen Kampfstart abspielen.
     if (isNewFight) {

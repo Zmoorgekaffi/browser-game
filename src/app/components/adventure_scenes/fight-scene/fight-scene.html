@@ -9,19 +9,21 @@
     ></app-animation-object>
   </div>
 
-  <div class="w-[180px] h-[260px] absolute top-[280px] left-[540px]">
-    <app-animation-object
-      Name="monster-idle"
-      [Duration]="monsterIdleDuration()"
-      [spritePaths]="monsterIdlePaths()"
-      [Loop]="true"
-      [contain]="true"
-    >
-    </app-animation-object>
-  </div>
+  <!-- 🆕 Monster-Idle: Position/Größe kommt jetzt pro Monster aus monsterFrame() (JSON-Feld "monster-frame") -->
+  <app-animation-object
+    Name="monster-idle"
+    [Duration]="monsterIdleDuration()"
+    [spritePaths]="monsterIdlePaths()"
+    [Loop]="true"
+    [contain]="true"
+    [Top]="monsterFrame().top"
+    [Left]="monsterFrame().left"
+    [width]="monsterFrame().width"
+    [height]="monsterFrame().height"
+  ></app-animation-object>
 
   @if (showMonsterIntro()) {
-    <!-- ===== MONSTER-INTRO ===== -->
+    <!-- ===== MONSTER-INTRO (bleibt vollflächig) ===== -->
     <div class="absolute inset-0 w-full h-full flex items-center justify-center">
       <app-animation-object
         Name="monster-intro"
