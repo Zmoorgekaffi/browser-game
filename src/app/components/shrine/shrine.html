@@ -13,7 +13,8 @@
 
     <div
       #crystalContainer
-      class="absolute w-[480px] h-[410px] left-[428px] top-[132px]"
+      class="absolute w-[480px] h-[410px] left-[428px] top-[132px] cursor-pointer"
+      (click)="gameStateService.levelUpPanel.open()"
     >
       <app-animation-object
         [Name]="'crystal-spin'"
@@ -28,5 +29,7 @@
       class="w-full h-full object-cover"
       alt=""
     />
+
+    <app-level-up-panel></app-level-up-panel>
   }
 </div>

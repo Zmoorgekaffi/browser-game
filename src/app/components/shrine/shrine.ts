@@ -9,7 +9,9 @@ import {
 import { gsap } from 'gsap';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
+import { LevelUpPanel } from '../shared/level-up-panel/level-up-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
+import { GameStateService } from '../../services/game-state.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
 /**
@@ -25,12 +27,13 @@ import { framePaths, pad } from '../../utils/frame-paths.util';
  */
 @Component({
   selector: 'app-shrine',
-  imports: [AnimationObject, LoadingScreen],
+  imports: [AnimationObject, LoadingScreen, LevelUpPanel],
   templateUrl: './shrine.html',
   styleUrl: './shrine.scss',
 })
 export class Shrine implements OnInit {
   private preloader = inject(AssetPreloaderService);
+  public gameStateService = inject(GameStateService);
 
   /** Solange true zeigt das Template nur den Ladebildschirm. */
   public isLoading = signal<boolean>(true);

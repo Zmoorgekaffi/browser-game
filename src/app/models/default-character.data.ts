@@ -26,6 +26,11 @@ export const DEFAULT_SKILLS = {
   critChance: 5, critDamage: 150, chaosDamage: 0, charisma: 1,
   resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
   spells: [],
+  // Shrine-Levelup-System: noch unverteilte Punkte, Investitions-Fortschritt
+  // je Grundstat (0-100) und bereits freigeschaltete Passive-IDs.
+  statPoints: 0,
+  investedPoints: { strength: 0, dexterity: 0, intelligence: 0, vitality: 0 },
+  unlockedPassives: [],
 };
 
 /** Start-Guthaben eines neuen Charakters. */

@@ -1,0 +1,99 @@
+@if (show()) {
+  <div
+    class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+    (mousemove)="onMouseMove($event)"
+  >
+    <div
+      class="panel-container relative w-[720px] max-h-[85vh] overflow-y-auto p-6 bg-black/80 border border-white/10 rounded-lg backdrop-blur-sm text-white select-none"
+    >
+      <div
+        class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-full flex items-center justify-center border border-white/20 hover:bg-white/10"
+        (click)="close()"
+      >
+        ✕
+      </div>
+
+      <h2 class="text-2xl font-bold tracking-wide mb-1">Charakter-Aufwertung</h2>
+      <p class="text-sm text-gray-300 mb-6">
+        Verfügbare Attributspunkte:
+        <span class="font-bold text-green-400">{{ statPoints() }}</span>
+      </p>
+
+      @for (stat of statList; track stat.key) {
+        <div class="mb-6 relative">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-semibold text-lg">{{ stat.name }}</span>
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+              <span>
+                Basis:
+                <span class="text-white font-mono">{{ baseStats()[stat.key] }}</span>
+              </span>
+
+              <span>
+                Investiert:
+                <span class="text-white font-mono">
+                  {{ investedPoints()[stat.key] }}/100
+                </span>
+              </span>
+
+              <button
+                type="button"
+                class="rounded-md border border-white/20 px-3 py-1 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent cursor-pointer"
+                [disabled]="!canInvest(stat.key)"
+                (click)="invest(stat.key)"
+              >
+                +1
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-[3px] w-full h-4">
+            @for (threshold of thresholds; track threshold) {
+              <div
+                class="flex-1 h-full bg-white/10 rounded-sm relative overflow-hidden cursor-default border border-white/5"
+                (mouseenter)="setHovered(stat.key, threshold)"
+                (mouseleave)="clearHovered()"
+              >
+                <div
+                  class="absolute left-0 top-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
+                  [style.width.%]="segmentFill(stat.key, threshold)"
+                ></div>
+              </div>
+            }
+          </div>
+
+          @if (hoveredPassive(); as passive) {
+            @if (passive.stat === stat.key) {
+              <div
+                class="panel-container absolute pointer-events-none z-[10000] p-3 bg-black border border-white/10 rounded-md text-sm"
+                [style.left.px]="mouseX"
+                [style.top.px]="mouseY"
+              >
+                <div class="flex justify-between gap-2 items-center font-bold">
+                  <span [class.text-emerald-400]="isUnlocked(passive.id)">
+                    {{ passive.name }}
+                  </span>
+                  <span class="text-xs text-gray-400 font-normal">
+                    {{ passive.threshold }} Punkte
+                  </span>
+                </div>
+
+                <p class="text-gray-300 mt-1">
+                  {{ passive.description }}
+                </p>
+
+                <p
+                  class="mt-1 text-xs"
+                  [class.text-emerald-400]="isUnlocked(passive.id)"
+                  [class.text-gray-500]="!isUnlocked(passive.id)"
+                >
+                  {{ isUnlocked(passive.id) ? '✓ freigeschaltet' : '🔒 noch nicht freigeschaltet' }}
+                </p>
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

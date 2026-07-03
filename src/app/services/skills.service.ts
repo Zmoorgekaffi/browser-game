@@ -1,6 +1,8 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { InventarService } from './inventar.service';
 import { SpellLoaderService } from './spell-loader.service';
+import { PassiveLoaderService } from './passive-loader.service';
+import { InvestableStat, PassiveData } from '../models/passive.interface';
 
 /**
  * Die vier ausrüstbaren Spell-Slots des Charakters.
@@ -41,6 +43,15 @@ const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
 /** Die vier Elementar-Resistenzen, die Items mitbringen können. */
 const RESISTANCE_KEYS = ['fire', 'cold', 'lightning', 'chaos'] as const;
 
+/** Die vier Grundattribute, in die am Schrein investiert werden kann. */
+const INVESTABLE_STATS = ['strength', 'dexterity', 'intelligence', 'vitality'] as const;
+
+/** Investitions-Schwellen, an denen jeweils ein Passive freigeschaltet wird. */
+const PASSIVE_THRESHOLDS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] as const;
+
+/** Startwert für `investedPoints`, wenn ein Savegame das Feld noch nicht kennt. */
+const DEFAULT_INVESTED_POINTS = { strength: 0, dexterity: 0, intelligence: 0, vitality: 0 };
+
 /**
  * @service SkillsService
  * @description Verwaltet Basis-Attribute, Kampfwerte und Spells des Charakters.
@@ -54,6 +65,7 @@ const RESISTANCE_KEYS = ['fire', 'cold', 'lightning', 'chaos'] as const;
 export class SkillsService {
   private inventarService = inject(InventarService);
   private spellLoader = inject(SpellLoaderService);
+  private passiveLoader = inject(PassiveLoaderService);
 
   /** Charakter-ID-Signal, wird vom GameStateService gesetzt (für Storage-Keys). */
   public profileData = signal<any>('');
@@ -85,6 +97,12 @@ export class SkillsService {
       chaos: 0,
     },
     spells: [],
+    /** Noch nicht verteilte Attributspunkte (kommen z.B. durch Level-ups). */
+    statPoints: 0,
+    /** Am Schrein investierte Punkte pro Grundstat (0–100, löst alle 10 ein Passive aus). */
+    investedPoints: { ...DEFAULT_INVESTED_POINTS },
+    /** IDs aller bereits freigeschalteten Shrine-Passives. */
+    unlockedPassives: [] as string[],
   });
 
   /** Reaktives Signal für die belegten Spell-Slots. */
@@ -116,6 +134,9 @@ export class SkillsService {
   charisma = computed(() => this.state().charisma);
   resistances = computed(() => this.state().resistances);
   spells = computed(() => this.state().spells);
+  statPoints = computed(() => this.state().statPoints ?? 0);
+  investedPoints = computed(() => this.state().investedPoints ?? DEFAULT_INVESTED_POINTS);
+  unlockedPassives = computed(() => this.state().unlockedPassives ?? []);
 
   /**
    * REAKTIVES COMPUTED SIGNAL
@@ -140,6 +161,8 @@ export class SkillsService {
       this.addItemResistances(finalStats, item.stats);
       this.addAttributeScaling(finalStats, item.stats);
     });
+
+    this.addPassiveEffects(finalStats, base.unlockedPassives ?? []);
 
     console.log('⚔️ Reaktiv berechnete combatStats:', finalStats);
     return finalStats;
@@ -241,6 +264,46 @@ export class SkillsService {
     }
   }
 
+  /**
+   * Wendet alle freigeschalteten Shrine-Passives auf die finalen Stats an.
+   *
+   * Reihenfolge bewusst zweistufig: zuerst alle Flat-Boni und Resistenzen,
+   * danach erst die Prozent-Boni — damit Prozent-Effekte auf dem bereits
+   * inkl. Flat-Boni aufsummierten Zwischenstand rechnen (üblicher ARPG-Ansatz).
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert).
+   * @param unlockedIds IDs aller freigeschalteten Passives.
+   */
+  private addPassiveEffects(finalStats: any, unlockedIds: string[]): void {
+    if (!unlockedIds || unlockedIds.length === 0) return;
+
+    const passives = unlockedIds
+      .map((id) => this.passiveLoader.getPassiveById(id))
+      .filter((p): p is NonNullable<typeof p> => !!p);
+
+    for (const passive of passives) {
+      for (const effect of passive.effects) {
+        if (effect.type === 'stat-flat') {
+          finalStats[effect.stat] = (finalStats[effect.stat] ?? 0) + effect.value;
+        }
+        if (effect.type === 'resistance') {
+          for (const element of effect.elements) {
+            finalStats.resistances[element] = (finalStats.resistances[element] ?? 0) + effect.value;
+          }
+        }
+      }
+    }
+
+    for (const passive of passives) {
+      for (const effect of passive.effects) {
+        if (effect.type === 'stat-percent') {
+          const current = finalStats[effect.stat] ?? 0;
+          finalStats[effect.stat] = Math.round(current + current * (effect.value / 100));
+        }
+      }
+    }
+  }
+
   /** Liefert die Default-Spells (Start-Loadout) für neue/leere Savegames. */
   private getDefaultSpells(): any {
     return {
@@ -272,6 +335,13 @@ export class SkillsService {
         ...currentBase.resistances,
         ...(incomingData.resistances || {}),
       },
+      // Ältere Savegames kennen diese Felder evtl. noch nicht → auf Default zurückfallen.
+      statPoints: incomingData.statPoints ?? currentBase.statPoints ?? 0,
+      investedPoints: {
+        ...DEFAULT_INVESTED_POINTS,
+        ...(incomingData.investedPoints || {}),
+      },
+      unlockedPassives: incomingData.unlockedPassives ?? currentBase.unlockedPassives ?? [],
       spells: finalSpells,
     };
   }
@@ -390,6 +460,124 @@ export class SkillsService {
     const slots = this.equippedSpells();
     const keys: (keyof EquippedSpells)[] = ['spell_1', 'spell_2', 'spell_3', 'spell_4'];
     return keys.find((key) => slots[key] === null) ?? null;
+  }
+
+  /**
+   * Fügt unverteilte Attributspunkte hinzu (z.B. durch einen Level-up).
+   *
+   * @param amount Betrag > 0, sonst passiert nichts.
+   */
+  public addStatPoints(amount: number): void {
+    if (amount <= 0) return;
+
+    this.state.update((currentState) => {
+      const newState = { ...currentState, statPoints: (currentState.statPoints ?? 0) + amount };
+      this.persistProgressToLocalStorage(newState);
+      return newState;
+    });
+  }
+
+  /**
+   * Investiert 1 unverteilten Attributspunkt in einen der vier Grundstats
+   * (Schrein-UI). Erhöht sowohl den rohen Basiswert als auch die
+   * Investitions-Leiste — und schaltet bei jeder 10er-Schwelle automatisch
+   * das zugehörige Passive frei (inkl. etwaiger Skill-Unlocks).
+   *
+   * @param stat Ziel-Attribut ('strength' | 'dexterity' | 'intelligence' | 'vitality').
+   * @returns Das neu freigeschaltete Passive, oder null wenn keins ausgelöst wurde
+   *          (auch wenn schlicht kein Punkt verfügbar war).
+   */
+  public investStatPoint(stat: InvestableStat): PassiveData | null {
+    let unlockedPassive: PassiveData | null = null;
+
+    this.state.update((currentState) => {
+      const investedPoints = currentState.investedPoints ?? DEFAULT_INVESTED_POINTS;
+      const availablePoints = currentState.statPoints ?? 0;
+
+      if (availablePoints <= 0 || investedPoints[stat] >= 100) {
+        return currentState;
+      }
+
+      const newInvestedValue = investedPoints[stat] + 1;
+      let updatedSpells = currentState.spells;
+
+      const newState: any = {
+        ...currentState,
+        [stat]: currentState[stat] + 1,
+        statPoints: availablePoints - 1,
+        investedPoints: { ...investedPoints, [stat]: newInvestedValue },
+      };
+
+      if ((PASSIVE_THRESHOLDS as readonly number[]).includes(newInvestedValue)) {
+        const passive = this.passiveLoader.getPassiveByStatAndThreshold(stat, newInvestedValue);
+        const alreadyUnlocked = passive ? (currentState.unlockedPassives ?? []).includes(passive.id) : true;
+
+        if (passive && !alreadyUnlocked) {
+          unlockedPassive = passive;
+          newState.unlockedPassives = [...(currentState.unlockedPassives ?? []), passive.id];
+          updatedSpells = this.applySkillUnlockEffects(passive, updatedSpells);
+          newState.spells = updatedSpells;
+        }
+      }
+
+      this.persistProgressToLocalStorage(newState);
+      return newState;
+    });
+
+    return unlockedPassive;
+  }
+
+  /** Lernt automatisch alle Skills, die ein neu freigeschaltetes Passive gewährt. */
+  private applySkillUnlockEffects(passive: PassiveData, currentSpells: any[]): any[] {
+    let updatedSpells = currentSpells;
+
+    for (const effect of passive.effects) {
+      if (effect.type !== 'skill-unlock') continue;
+
+      const alreadyKnown = updatedSpells.some((s) => s.id === effect.skillId);
+      if (alreadyKnown) continue;
+
+      const spell = this.spellLoader.getSpellById(effect.skillId);
+      if (spell) {
+        updatedSpells = [...updatedSpells, { ...spell, equipped: false }];
+        console.log(`📖 Passive-Skill gelernt: ${spell.name}`);
+      } else {
+        console.warn(`⚠️ Passive "${passive.id}" referenziert unbekannte Skill-ID "${effect.skillId}".`);
+      }
+    }
+
+    return updatedSpells;
+  }
+
+  /**
+   * Persistiert Basis-Attribute, Statpunkte und Passive-Fortschritt im
+   * LocalStorage (Spells bleiben dabei nur als ID + equipped-Flag erhalten,
+   * analog zu syncSpellsToLocalStorage).
+   */
+  private persistProgressToLocalStorage(newState: any): void {
+    const storageKey = `${this.profileData()}_skills`;
+    const rawSave = localStorage.getItem(storageKey);
+
+    try {
+      const parsedSave = rawSave ? JSON.parse(rawSave) : { ...newState };
+
+      for (const stat of INVESTABLE_STATS) {
+        parsedSave[stat] = newState[stat];
+      }
+      parsedSave.statPoints = newState.statPoints;
+      parsedSave.investedPoints = { ...newState.investedPoints };
+      parsedSave.unlockedPassives = [...newState.unlockedPassives];
+      parsedSave.spells = newState.spells.map((s: any) => ({ id: s.id, equipped: s.equipped }));
+      parsedSave.equipped_spells = { ...this.equippedSpells() };
+
+      localStorage.setItem(storageKey, JSON.stringify(parsedSave));
+      console.log('💾 LocalStorage aktualisiert [shrine-progress]:', {
+        statPoints: parsedSave.statPoints,
+        investedPoints: parsedSave.investedPoints,
+      });
+    } catch (e) {
+      console.error('❌ Fehler beim Synchronisieren des Shrine-Fortschritts in den LocalStorage:', e);
+    }
   }
 
   /**

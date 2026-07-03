@@ -1,0 +1,343 @@
+[
+  {
+    "id": "strength_10",
+    "stat": "strength",
+    "threshold": 10,
+    "name": "Kräftige Arme",
+    "description": "+8 Angriff.",
+    "effects": [{ "type": "stat-flat", "stat": "attack", "value": 8 }]
+  },
+  {
+    "id": "strength_20",
+    "stat": "strength",
+    "threshold": 20,
+    "name": "Gestählte Haut",
+    "description": "+6 Rüstung.",
+    "effects": [{ "type": "stat-flat", "stat": "armor", "value": 6 }]
+  },
+  {
+    "id": "strength_30",
+    "stat": "strength",
+    "threshold": 30,
+    "name": "Feuerfeste Haut",
+    "description": "+8 Feuerresistenz.",
+    "effects": [{ "type": "resistance", "elements": ["fire"], "value": 8 }]
+  },
+  {
+    "id": "strength_40",
+    "stat": "strength",
+    "threshold": 40,
+    "name": "Wuchtschlag",
+    "description": "+6% Angriff.",
+    "effects": [{ "type": "stat-percent", "stat": "attack", "value": 6 }]
+  },
+  {
+    "id": "strength_50",
+    "stat": "strength",
+    "threshold": 50,
+    "name": "Kampfmedizin",
+    "description": "Schaltet den Skill 'Minderwertige Heilung' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "heal_01" }]
+  },
+  {
+    "id": "strength_60",
+    "stat": "strength",
+    "threshold": 60,
+    "name": "Zähes Fleisch",
+    "description": "+30 Lebenspunkte.",
+    "effects": [{ "type": "stat-flat", "stat": "hp", "value": 30 }]
+  },
+  {
+    "id": "strength_70",
+    "stat": "strength",
+    "threshold": 70,
+    "name": "Unerschütterlich",
+    "description": "+10 Feuer- und Chaos-Resistenz.",
+    "effects": [{ "type": "resistance", "elements": ["fire", "chaos"], "value": 10 }]
+  },
+  {
+    "id": "strength_80",
+    "stat": "strength",
+    "threshold": 80,
+    "name": "Bollwerk",
+    "description": "+12% Rüstung.",
+    "effects": [{ "type": "stat-percent", "stat": "armor", "value": 12 }]
+  },
+  {
+    "id": "strength_90",
+    "stat": "strength",
+    "threshold": 90,
+    "name": "Verheerender Schlag",
+    "description": "+15 Angriff, +10 Rüstung.",
+    "effects": [
+      { "type": "stat-flat", "stat": "attack", "value": 15 },
+      { "type": "stat-flat", "stat": "armor", "value": 10 }
+    ]
+  },
+  {
+    "id": "strength_100",
+    "stat": "strength",
+    "threshold": 100,
+    "name": "Titanenkraft",
+    "description": "+10% Lebenspunkte und schaltet 'Lichtwelle' frei.",
+    "effects": [
+      { "type": "stat-percent", "stat": "hp", "value": 10 },
+      { "type": "skill-unlock", "skillId": "heal_03" }
+    ]
+  },
+
+  {
+    "id": "dexterity_10",
+    "stat": "dexterity",
+    "threshold": 10,
+    "name": "Flinke Schritte",
+    "description": "+6 Ausweichen.",
+    "effects": [{ "type": "stat-flat", "stat": "evasion", "value": 6 }]
+  },
+  {
+    "id": "dexterity_20",
+    "stat": "dexterity",
+    "threshold": 20,
+    "name": "Schnelle Reflexe",
+    "description": "+6 Initiative.",
+    "effects": [{ "type": "stat-flat", "stat": "initiative", "value": 6 }]
+  },
+  {
+    "id": "dexterity_30",
+    "stat": "dexterity",
+    "threshold": 30,
+    "name": "Frostwandler",
+    "description": "+8 Kälteresistenz.",
+    "effects": [{ "type": "resistance", "elements": ["cold"], "value": 8 }]
+  },
+  {
+    "id": "dexterity_40",
+    "stat": "dexterity",
+    "threshold": 40,
+    "name": "Geschmeidigkeit",
+    "description": "+8% Ausweichen.",
+    "effects": [{ "type": "stat-percent", "stat": "evasion", "value": 8 }]
+  },
+  {
+    "id": "dexterity_50",
+    "stat": "dexterity",
+    "threshold": 50,
+    "name": "Sturmschritt",
+    "description": "Schaltet den Skill 'Kettenblitz' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "spell_lightning_01" }]
+  },
+  {
+    "id": "dexterity_60",
+    "stat": "dexterity",
+    "threshold": 60,
+    "name": "Tödliche Präzision",
+    "description": "+5 Kritische Chance.",
+    "effects": [{ "type": "stat-flat", "stat": "critChance", "value": 5 }]
+  },
+  {
+    "id": "dexterity_70",
+    "stat": "dexterity",
+    "threshold": 70,
+    "name": "Eisiger Blitz",
+    "description": "+10 Kälte- und Blitz-Resistenz.",
+    "effects": [{ "type": "resistance", "elements": ["cold", "lightning"], "value": 10 }]
+  },
+  {
+    "id": "dexterity_80",
+    "stat": "dexterity",
+    "threshold": 80,
+    "name": "Meisterhafter Treffer",
+    "description": "+10% Kritischer Schaden.",
+    "effects": [{ "type": "stat-percent", "stat": "critDamage", "value": 10 }]
+  },
+  {
+    "id": "dexterity_90",
+    "stat": "dexterity",
+    "threshold": 90,
+    "name": "Schattentänzer",
+    "description": "+12 Ausweichen, +8 Initiative.",
+    "effects": [
+      { "type": "stat-flat", "stat": "evasion", "value": 12 },
+      { "type": "stat-flat", "stat": "initiative", "value": 8 }
+    ]
+  },
+  {
+    "id": "dexterity_100",
+    "stat": "dexterity",
+    "threshold": 100,
+    "name": "Geist des Sturms",
+    "description": "+15% Ausweichen und schaltet 'Eislanze' frei.",
+    "effects": [
+      { "type": "stat-percent", "stat": "evasion", "value": 15 },
+      { "type": "skill-unlock", "skillId": "spell_cold_01" }
+    ]
+  },
+
+  {
+    "id": "intelligence_10",
+    "stat": "intelligence",
+    "threshold": 10,
+    "name": "Klarer Geist",
+    "description": "+20 Mana.",
+    "effects": [{ "type": "stat-flat", "stat": "mana", "value": 20 }]
+  },
+  {
+    "id": "intelligence_20",
+    "stat": "intelligence",
+    "threshold": 20,
+    "name": "Arkane Studien",
+    "description": "+10 Magischer Angriff.",
+    "effects": [{ "type": "stat-flat", "stat": "magicAttack", "value": 10 }]
+  },
+  {
+    "id": "intelligence_30",
+    "stat": "intelligence",
+    "threshold": 30,
+    "name": "Isolierter Geist",
+    "description": "+8 Blitzresistenz.",
+    "effects": [{ "type": "resistance", "elements": ["lightning"], "value": 8 }]
+  },
+  {
+    "id": "intelligence_40",
+    "stat": "intelligence",
+    "threshold": 40,
+    "name": "Mentale Schärfe",
+    "description": "+8% Magischer Angriff.",
+    "effects": [{ "type": "stat-percent", "stat": "magicAttack", "value": 8 }]
+  },
+  {
+    "id": "intelligence_50",
+    "stat": "intelligence",
+    "threshold": 50,
+    "name": "Feuerbeherrschung",
+    "description": "Schaltet den Skill 'Meteor' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "spell_fire_02" }]
+  },
+  {
+    "id": "intelligence_60",
+    "stat": "intelligence",
+    "threshold": 60,
+    "name": "Manabrunnen",
+    "description": "+30 Mana.",
+    "effects": [{ "type": "stat-flat", "stat": "mana", "value": 30 }]
+  },
+  {
+    "id": "intelligence_70",
+    "stat": "intelligence",
+    "threshold": 70,
+    "name": "Elementarpakt",
+    "description": "+10 Feuer- und Blitz-Resistenz.",
+    "effects": [{ "type": "resistance", "elements": ["fire", "lightning"], "value": 10 }]
+  },
+  {
+    "id": "intelligence_80",
+    "stat": "intelligence",
+    "threshold": 80,
+    "name": "Manafluss",
+    "description": "+15% Mana.",
+    "effects": [{ "type": "stat-percent", "stat": "mana", "value": 15 }]
+  },
+  {
+    "id": "intelligence_90",
+    "stat": "intelligence",
+    "threshold": 90,
+    "name": "Erzmagie",
+    "description": "+20 Magischer Angriff.",
+    "effects": [{ "type": "stat-flat", "stat": "magicAttack", "value": 20 }]
+  },
+  {
+    "id": "intelligence_100",
+    "stat": "intelligence",
+    "threshold": 100,
+    "name": "Archmagier",
+    "description": "+15% Magischer Angriff und schaltet 'Chaos-Kollaps' frei.",
+    "effects": [
+      { "type": "stat-percent", "stat": "magicAttack", "value": 15 },
+      { "type": "skill-unlock", "skillId": "spell_chaos_01" }
+    ]
+  },
+
+  {
+    "id": "vitality_10",
+    "stat": "vitality",
+    "threshold": 10,
+    "name": "Robuster Körper",
+    "description": "+25 Lebenspunkte.",
+    "effects": [{ "type": "stat-flat", "stat": "hp", "value": 25 }]
+  },
+  {
+    "id": "vitality_20",
+    "stat": "vitality",
+    "threshold": 20,
+    "name": "Energetische Aura",
+    "description": "+10 Energieschild.",
+    "effects": [{ "type": "stat-flat", "stat": "energy-shield", "value": 10 }]
+  },
+  {
+    "id": "vitality_30",
+    "stat": "vitality",
+    "threshold": 30,
+    "name": "Chaosresistenter Körper",
+    "description": "+8 Chaos-Resistenz.",
+    "effects": [{ "type": "resistance", "elements": ["chaos"], "value": 8 }]
+  },
+  {
+    "id": "vitality_40",
+    "stat": "vitality",
+    "threshold": 40,
+    "name": "Zähes Herz",
+    "description": "+8% Lebenspunkte.",
+    "effects": [{ "type": "stat-percent", "stat": "hp", "value": 8 }]
+  },
+  {
+    "id": "vitality_50",
+    "stat": "vitality",
+    "threshold": 50,
+    "name": "Lebensspender",
+    "description": "Schaltet den Skill 'Verband anlegen' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "heal_02" }]
+  },
+  {
+    "id": "vitality_60",
+    "stat": "vitality",
+    "threshold": 60,
+    "name": "Zweites Leben",
+    "description": "+40 Lebenspunkte.",
+    "effects": [{ "type": "stat-flat", "stat": "hp", "value": 40 }]
+  },
+  {
+    "id": "vitality_70",
+    "stat": "vitality",
+    "threshold": 70,
+    "name": "Eisiger Wille",
+    "description": "+10 Kälte- und Chaos-Resistenz.",
+    "effects": [{ "type": "resistance", "elements": ["cold", "chaos"], "value": 10 }]
+  },
+  {
+    "id": "vitality_80",
+    "stat": "vitality",
+    "threshold": 80,
+    "name": "Schildmeister",
+    "description": "+15% Energieschild.",
+    "effects": [{ "type": "stat-percent", "stat": "energy-shield", "value": 15 }]
+  },
+  {
+    "id": "vitality_90",
+    "stat": "vitality",
+    "threshold": 90,
+    "name": "Unbeugsam",
+    "description": "+50 Lebenspunkte.",
+    "effects": [{ "type": "stat-flat", "stat": "hp", "value": 50 }]
+  },
+  {
+    "id": "vitality_100",
+    "stat": "vitality",
+    "threshold": 100,
+    "name": "Unsterblicher Wille",
+    "description": "+20% Lebenspunkte und schaltet 'Große Genesung' frei.",
+    "effects": [
+      { "type": "stat-percent", "stat": "hp", "value": 20 },
+      { "type": "skill-unlock", "skillId": "heal_04" }
+    ]
+  }
+]

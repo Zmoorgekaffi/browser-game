@@ -9,6 +9,7 @@ import { ShopService } from './shop.service';
 import { LoginService } from './login.service';
 import { SceneService } from './scene.service';
 import { AdventureStateService } from './adventure-state.service';
+import { LevelUpService } from './level-up.service';
 import {
   createDefaultProfile,
   DEFAULT_SKILLS,
@@ -40,6 +41,7 @@ export class GameStateService {
   public adventureStateService = inject(AdventureStateService);
   private login = inject(LoginService);
   public sceneService = inject(SceneService);
+  public levelUpPanel = inject(LevelUpService);
   private router = inject(Router);
 
   /** ID des aktuell eingeloggten Charakters (null = niemand eingeloggt). */
@@ -49,11 +51,12 @@ export class GameStateService {
   public combatStats = this.skills.combatStats;
 
   constructor() {
-    // Bei jedem Szenenwechsel die Item-Info-Card schließen.
+    // Bei jedem Szenenwechsel die Item-Info-Card und das Levelup-Panel schließen.
     effect(() => {
       const timestamp = this.sceneService.onSceneChange();
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
+        this.levelUpPanel.close();
       }
     });
   }

@@ -1,15 +1,20 @@
-import { Injectable, signal, computed, WritableSignal } from '@angular/core';
+import { Injectable, signal, computed, inject, WritableSignal } from '@angular/core';
 import { ProfileData } from '../models/game-state.interface';
+import { SkillsService } from './skills.service';
+
+/** Anzahl der Attributspunkte, die pro Level-up am Schrein verteilt werden können. */
+const STAT_POINTS_PER_LEVEL = 5;
 
 /**
  * @service ProfileService
  * @description Hält die Profildaten des Charakters (Name, Level, EXP).
- * Die Persistierung übernimmt der GameStateService.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
+  private skillsService = inject(SkillsService);
+
   private state = signal<ProfileData>({ name: 'Hero', level: 1, exp: 0 });
 
   name = computed(() => this.state().name);
@@ -30,7 +35,7 @@ export class ProfileService {
   updateName(name: string): void {
     this.state.update(state => {
       const newState = { ...state, name };
-      // Speicherung wird im GameStateService gehandhabt
+      this.persist(newState);
       return newState;
     });
   }
@@ -42,20 +47,32 @@ export class ProfileService {
    */
   addExp(amount: number): void {
     if (amount <= 0) return;
-    
+
     this.state.update(state => {
       const newState = { ...state, exp: state.exp + amount };
-      // Speicherung wird im GameStateService gehandhabt
+      this.persist(newState);
       return newState;
     });
   }
 
-  /** Erhöht das Level um 1 und setzt die EXP auf 0 zurück. */
+  /**
+   * Erhöht das Level um 1, setzt die EXP zurück und gewährt Attributspunkte
+   * für die Schrein-UI (siehe SkillsService.investStatPoint).
+   */
   levelUp(): void {
     this.state.update(state => {
       const newState = { ...state, level: state.level + 1, exp: 0 };
-      // Speicherung wird im GameStateService gehandhabt
+      this.persist(newState);
       return newState;
     });
+
+    this.skillsService.addStatPoints(STAT_POINTS_PER_LEVEL);
+  }
+
+  /** Persistiert die Profildaten im LocalStorage des aktiven Charakters. */
+  private persist(newState: ProfileData): void {
+    const id = this.charId();
+    if (!id) return;
+    localStorage.setItem(`${id}_profile`, JSON.stringify(newState));
   }
 }
