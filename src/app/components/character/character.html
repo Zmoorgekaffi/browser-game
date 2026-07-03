@@ -11,7 +11,7 @@
 
   <div
     #statList
-    class="absolute top-[112px] left-[652px] w-[556px] h-[589px] p-5 flex flex-col justify-start gap-1 items-center overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
+    class="absolute top-[112px] left-[652px] w-[556px] h-[589px] p-5 flex flex-col justify-between gap-1 items-center overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
   >
     <div
       class="w-full flex justify-between items-center text-white text-xs uppercase border-b pb-2 font-semibold"
@@ -23,7 +23,7 @@
 
     @for (stat of displayStats; track stat.key) {
       <div
-        class="w-full flex justify-between items-center py-1.5 text-[16px] border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
+        class="w-full flex justify-between items-center text-[16px] border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
       >
         <span class="w-[45%] text-left text-gray-200 font-medium">
           {{ stat.name }}

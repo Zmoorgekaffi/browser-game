@@ -1,0 +1,18 @@
+[
+  {
+    "id": "shrine_heal_01",
+    "name": "Segen der Vitalität",
+    "manaCost": 30,
+    "effectType": "HEAL",
+    "effectValues": { "value": 80 },
+    "shrineSkill": true
+  },
+  {
+    "id": "shrine_heal_02",
+    "name": "Unsterblicher Segen",
+    "manaCost": 65,
+    "effectType": "HEAL",
+    "effectValues": { "value": 180 },
+    "shrineSkill": true
+  }
+]

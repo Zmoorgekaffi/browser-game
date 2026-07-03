@@ -36,8 +36,8 @@
     "stat": "strength",
     "threshold": 50,
     "name": "Kampfmedizin",
-    "description": "Schaltet den Skill 'Minderwertige Heilung' frei.",
-    "effects": [{ "type": "skill-unlock", "skillId": "heal_01" }]
+    "description": "Schaltet den Skill 'Zerschmetternder Hieb' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "shrine_physical_01" }]
   },
   {
     "id": "strength_60",
@@ -79,10 +79,10 @@
     "stat": "strength",
     "threshold": 100,
     "name": "Titanenkraft",
-    "description": "+10% Lebenspunkte und schaltet 'Lichtwelle' frei.",
+    "description": "+10% Lebenspunkte und schaltet 'Titanenschlag' frei.",
     "effects": [
       { "type": "stat-percent", "stat": "hp", "value": 10 },
-      { "type": "skill-unlock", "skillId": "heal_03" }
+      { "type": "skill-unlock", "skillId": "shrine_physical_02" }
     ]
   },
 
@@ -123,8 +123,8 @@
     "stat": "dexterity",
     "threshold": 50,
     "name": "Sturmschritt",
-    "description": "Schaltet den Skill 'Kettenblitz' frei.",
-    "effects": [{ "type": "skill-unlock", "skillId": "spell_lightning_01" }]
+    "description": "Schaltet den Skill 'Sturmschritt-Blitz' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "shrine_lightning_01" }]
   },
   {
     "id": "dexterity_60",
@@ -166,10 +166,10 @@
     "stat": "dexterity",
     "threshold": 100,
     "name": "Geist des Sturms",
-    "description": "+15% Ausweichen und schaltet 'Eislanze' frei.",
+    "description": "+15% Ausweichen und schaltet 'Frostgeist' frei.",
     "effects": [
       { "type": "stat-percent", "stat": "evasion", "value": 15 },
-      { "type": "skill-unlock", "skillId": "spell_cold_01" }
+      { "type": "skill-unlock", "skillId": "shrine_cold_01" }
     ]
   },
 
@@ -210,8 +210,8 @@
     "stat": "intelligence",
     "threshold": 50,
     "name": "Feuerbeherrschung",
-    "description": "Schaltet den Skill 'Meteor' frei.",
-    "effects": [{ "type": "skill-unlock", "skillId": "spell_fire_02" }]
+    "description": "Schaltet den Skill 'Feuersturm' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "shrine_fire_01" }]
   },
   {
     "id": "intelligence_60",
@@ -250,10 +250,10 @@
     "stat": "intelligence",
     "threshold": 100,
     "name": "Archmagier",
-    "description": "+15% Magischer Angriff und schaltet 'Chaos-Kollaps' frei.",
+    "description": "+15% Magischer Angriff und schaltet 'Archmagischer Kollaps' frei.",
     "effects": [
       { "type": "stat-percent", "stat": "magicAttack", "value": 15 },
-      { "type": "skill-unlock", "skillId": "spell_chaos_01" }
+      { "type": "skill-unlock", "skillId": "shrine_chaos_01" }
     ]
   },
 
@@ -294,8 +294,8 @@
     "stat": "vitality",
     "threshold": 50,
     "name": "Lebensspender",
-    "description": "Schaltet den Skill 'Verband anlegen' frei.",
-    "effects": [{ "type": "skill-unlock", "skillId": "heal_02" }]
+    "description": "Schaltet den Skill 'Segen der Vitalität' frei.",
+    "effects": [{ "type": "skill-unlock", "skillId": "shrine_heal_01" }]
   },
   {
     "id": "vitality_60",
@@ -334,10 +334,10 @@
     "stat": "vitality",
     "threshold": 100,
     "name": "Unsterblicher Wille",
-    "description": "+20% Lebenspunkte und schaltet 'Große Genesung' frei.",
+    "description": "+20% Lebenspunkte und schaltet 'Unsterblicher Segen' frei.",
     "effects": [
       { "type": "stat-percent", "stat": "hp", "value": 20 },
-      { "type": "skill-unlock", "skillId": "heal_04" }
+      { "type": "skill-unlock", "skillId": "shrine_heal_02" }
     ]
   }
 ]

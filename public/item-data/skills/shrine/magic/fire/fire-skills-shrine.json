@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shrine_fire_01",
+    "name": "Feuersturm",
+    "manaCost": 85,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "fire", "value": 130 },
+    "shrineSkill": true
+  }
+]

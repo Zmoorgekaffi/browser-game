@@ -1,0 +1,18 @@
+[
+  {
+    "id": "shrine_physical_01",
+    "name": "Zerschmetternder Hieb",
+    "manaCost": 40,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": { "value": 70 },
+    "shrineSkill": true
+  },
+  {
+    "id": "shrine_physical_02",
+    "name": "Titanenschlag",
+    "manaCost": 90,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": { "value": 150 },
+    "shrineSkill": true
+  }
+]

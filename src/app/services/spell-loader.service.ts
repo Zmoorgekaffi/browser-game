@@ -18,6 +18,19 @@ import fireSkills from '../../../public/item-data/skills/magic/fire/fire-skills.
 import lightningSkills from '../../../public/item-data/skills/magic/lightning/lightning-skills.json';
 import physicalSkills from '../../../public/item-data/skills/physical/physical_skills.json';
 
+// Shrine-exklusive Skills (nur über Levelup-Passives freischaltbar, siehe
+// passives.json / SkillsService.applySkillUnlockEffects). Bewusst in einem
+// eigenen skills/shrine/-Zweig statt in den regulären Pools oben, damit sie
+// niemals versehentlich in eine Loot-/Shop-Tabelle geraten, die z.B. einfach
+// "alle Skills aus skills/magic/fire/*.json" zieht. Gleiche Struktur wie die
+// regulären Pools, zusätzlich mit `shrineSkill: true` markiert.
+import healSkillsShrine from '../../../public/item-data/skills/shrine/heal/heal-skills-shrine.json';
+import chaosSkillsShrine from '../../../public/item-data/skills/shrine/magic/chaos/chaos-skills-shrine.json';
+import coldSkillsShrine from '../../../public/item-data/skills/shrine/magic/cold/cold-skills-shrine.json';
+import fireSkillsShrine from '../../../public/item-data/skills/shrine/magic/fire/fire-skills-shrine.json';
+import lightningSkillsShrine from '../../../public/item-data/skills/shrine/magic/lightning/lightning-skills-shrine.json';
+import physicalSkillsShrine from '../../../public/item-data/skills/shrine/physical/physical_skills_shrine.json';
+
 /**
  * Vollständiges Spell-Objekt nach dem Laden aus den JSONs.
  */
@@ -31,6 +44,8 @@ export interface SpellData {
   manaCost?: number;
   description?: string;
   equipped?: boolean;
+  /** true = nur über ein Shrine-Levelup-Passive erlernbar (siehe passives.json). */
+  shrineSkill?: boolean;
   [key: string]: any; // Für beliebige weitere Felder aus den JSONs
 }
 
@@ -46,6 +61,12 @@ const SPELL_JSON_MODULES: any[] = [
   fireSkills,
   lightningSkills,
   physicalSkills,
+  healSkillsShrine,
+  chaosSkillsShrine,
+  coldSkillsShrine,
+  fireSkillsShrine,
+  lightningSkillsShrine,
+  physicalSkillsShrine,
 ];
 
 /**

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shrine_cold_01",
+    "name": "Frostgeist",
+    "manaCost": 95,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "cold", "value": 160 },
+    "shrineSkill": true
+  }
+]

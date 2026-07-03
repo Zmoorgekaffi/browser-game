@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shrine_lightning_01",
+    "name": "Sturmschritt-Blitz",
+    "manaCost": 50,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "lightning", "value": 75 },
+    "shrineSkill": true
+  }
+]

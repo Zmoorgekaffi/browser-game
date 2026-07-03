@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shrine_chaos_01",
+    "name": "Archmagischer Kollaps",
+    "manaCost": 120,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": { "element": "chaos", "value": 200 },
+    "shrineSkill": true
+  }
+]
