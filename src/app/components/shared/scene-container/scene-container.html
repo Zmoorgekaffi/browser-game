@@ -18,9 +18,10 @@
     <ng-content></ng-content>
   </div>
 
-  @if (showBackToVillageButton()) {
+
+  @if (showBackToVillageButton() && gameStateService.adventureStateService.level() === null) {
     <app-redirect-hotspot [x]="1135" [y]="580" [width]="128" [height]="128" redirect="/village">
-      <div (click)="gameStateService.adventureStateService.clearAdventure()"
+      <div
         class="absolute inset-0 p-4 bg-[radial-gradient(circle,_rgba(255,255,255,0.5)_0%,_rgba(0,0,0,0.2)_100%)] rounded-[50%] flex items-center justify-center"
       >
         <img

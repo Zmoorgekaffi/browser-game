@@ -29,6 +29,9 @@ export class Header {
   name: Signal<string>;
   exp: Signal<number>;
   lvl: Signal<number>;
+  expRequiredForNextLevel: Signal<number>;
+  expProgress: Signal<number>;
+  isMaxLevel: Signal<boolean>;
   currentUrl = signal<string>(this.router.url);
   isInAdventureAction = computed(() => {
     const url = this.currentUrl();
@@ -46,6 +49,9 @@ export class Header {
     this.name = this.gameStateService.profile.name;
     this.exp = this.gameStateService.profile.exp;
     this.lvl = this.gameStateService.profile.level;
+    this.expRequiredForNextLevel = this.gameStateService.profile.expRequiredForNextLevel;
+    this.expProgress = this.gameStateService.profile.expProgress;
+    this.isMaxLevel = this.gameStateService.profile.isMaxLevel;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.currentUrl.set(this.router.url);

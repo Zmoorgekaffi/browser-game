@@ -3,6 +3,10 @@ import { AdventureStateService } from './adventure-state.service';
 import { SkillsService } from './skills.service';
 import { SpellsEngineService } from './spells-engine.service';
 import { SpellLoaderService } from './spell-loader.service';
+import { ProfileService } from './profile.service';
+
+/** XP-Vergütung, wenn ein Monster keine eigene `expReward` mitbringt. */
+const DEFAULT_MONSTER_EXP_REWARD = 30;
 
 /**
  * @service FightService
@@ -18,6 +22,7 @@ export class FightService {
   private skillsService = inject(SkillsService);
   private spellsEngineService = inject(SpellsEngineService);
   private spellLoader = inject(SpellLoaderService);
+  private profileService = inject(ProfileService);
 
   activeFight = this.adventureStateService.activeFight;
 
@@ -259,12 +264,19 @@ export class FightService {
    * Beendet den Kampf: Bei Sieg geht's zum nächsten Step, bei Niederlage
    * wird das komplette Abenteuer abgebrochen (failAdventure).
    *
+   * XP werden sofort bei Sieg vergeben (nicht erst am Ende des Abenteuers,
+   * anders als Loot/Items) — daher hier und nicht im LootScene-Flow.
+   *
    * @param playerWon true = Spieler hat gewonnen.
    */
   private handleFightEnd(playerWon: boolean): void {
+    const defeatedMonster = this.enrichedMonster();
     this.enrichedMonster.set(null); // aufräumen
+
     if (playerWon) {
       console.log('🏆 Sieg!');
+      const expReward = defeatedMonster?.expReward ?? DEFAULT_MONSTER_EXP_REWARD;
+      this.profileService.addExp(expReward);
       this.adventureStateService.activeFight.set(null);
       this.adventureStateService.advanceToNextStep();
     } else {

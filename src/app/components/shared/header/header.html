@@ -1,5 +1,7 @@
 @if (currentCharId() != null) {
-  <header class="w-full h-[3rem] bg-[orange] rounded-[8px] flex justify-between items-center px-4 relative">
+  <header
+    class="w-full h-[3rem] bg-[orange] rounded-[8px] flex justify-between items-center px-4 relative"
+  >
     <div class="flex items-center gap-3">
       @if (screenSizingService.isFullscreen()) {
         <button
@@ -10,17 +12,37 @@
         </button>
       }
       <span>Rubine: {{ rubies() }} | Gold: {{ gold() }}</span>
-
     </div>
 
     <div>
-      <span class="hover:underline cursor-pointer" routerLink="/character">Charakter</span>
+      @if (gameStateService.adventureStateService.level() != null) {
+        <span class="hover:underline cursor-pointer" routerLink="/inventar">Reset Adventure</span>
+      }
+
       @if (gameStateService.adventureStateService.level() === null) {
+        <span class="hover:underline cursor-pointer" routerLink="/character">Charakter</span>
         <span> | </span>
         <span class="hover:underline cursor-pointer" routerLink="/inventar">Inventar</span>
       }
     </div>
 
-    <div>Name: {{ name() }} | Level: {{ lvl() }}</div>
+    <div class="flex flex-col items-end gap-1 py-1">
+      <span>Name: {{ name() }} | Level: {{ lvl() }}</span>
+      <div
+        class="w-32 h-2 bg-black/30 rounded-full overflow-hidden border border-white/30"
+        [attr.title]="
+          isMaxLevel() ? 'Max. Level erreicht' : exp() + ' / ' + expRequiredForNextLevel() + ' XP'
+        "
+      >
+        @if (isMaxLevel()) {
+          <div class="h-full w-full bg-amber-400"></div>
+        } @else {
+          <div
+            class="h-full bg-emerald-500 transition-[width] duration-300"
+            [style.width.%]="expProgress() * 100"
+          ></div>
+        }
+      </div>
+    </div>
   </header>
 }

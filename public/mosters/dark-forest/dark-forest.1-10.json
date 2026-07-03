@@ -97,6 +97,7 @@
     ],
 
     "hp": 400,
+    "expReward": 50,
     "mana": 200,
     "spells": [{ "id": "spell_fire_01" }],
     "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 },
@@ -218,6 +219,7 @@
     ],
 
     "hp": 800,
+    "expReward": 120,
     "mana": 200,
     "spells": [{ "id": "spell_fire_01" }],
     "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 },
