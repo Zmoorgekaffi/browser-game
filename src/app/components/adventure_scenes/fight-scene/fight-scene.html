@@ -42,21 +42,34 @@
     <!-- ===== KAMPF-UI ===== -->
     <div class="enemy-area flex flex-col items-center gap-2">
       <h2 class="text-2xl font-bold text-red-400">{{ monsterName() }}</h2>
-      <div class="hp-bar bg-gray-700 w-64 h-4 rounded-full">
+      <div class="hp-bar bg-gray-700 w-64 h-4 rounded-full relative overflow-hidden">
         <div
           class="hp-fill bg-red-500 h-full rounded-full transition-all duration-300"
           [style.width.%]="(monsterHp() / monsterMaxHp()) * 100"
         ></div>
+        @if (monsterMaxEnergyShield() > 0) {
+          <div
+            class="absolute inset-0 bg-blue-500 opacity-70 rounded-full transition-all duration-300"
+            [style.width.%]="(monsterEnergyShield() / monsterMaxEnergyShield()) * 100"
+          ></div>
+        }
       </div>
       <p>{{ monsterHp() }} / {{ monsterMaxHp() }} HP</p>
+      @if (monsterMaxEnergyShield() > 0) {
+        <p class="text-blue-400 text-sm">{{ monsterEnergyShield() }} / {{ monsterMaxEnergyShield() }} ES</p>
+      }
     </div>
 
-    <div class="battle-log text-center absolute top-[24px] left-[76px] bg-[rgba(0,0,0,0.6)] p-4 rounded-md">
+    <div class="battle-log text-center absolute top-[24px] left-[76px] bg-[rgba(0,0,0,0.6)] p-4 rounded-md w-[420px]">
       <p class="text-lg">Runde: {{ round() }}</p>
       <p class="text-xl font-semibold text-yellow-300">
         {{ currentTurn() === 'player' ? 'Dein Zug!' : 'Gegner am Zug...' }}
       </p>
-      <p>Hier kommen später Kampf-Nachrichten hin...</p>
+      <div class="text-left text-sm mt-2 max-h-32 overflow-y-auto flex flex-col-reverse gap-1">
+        @for (message of battleLog().slice().reverse(); track $index) {
+          <p>{{ message }}</p>
+        }
+      </div>
     </div>
 
     <div class="player-area w-full flex flex-col items-center gap-4">
@@ -67,13 +80,22 @@
 
         <div class="flex gap-4">
           <div class="w-64">
-            <div class="hp-bar bg-gray-700 w-full h-4 rounded-full mx-auto mb-1">
+            <div class="hp-bar bg-gray-700 w-full h-4 rounded-full mx-auto mb-1 relative overflow-hidden">
               <div
                 class="hp-fill bg-green-600 h-full rounded-full transition-all duration-300"
                 [style.width.%]="(playerHp() / playerMaxHp()) * 100"
               ></div>
+              @if (playerMaxEnergyShield() > 0) {
+                <div
+                  class="absolute inset-0 bg-blue-500 opacity-70 rounded-full transition-all duration-300"
+                  [style.width.%]="(playerEnergyShield() / playerMaxEnergyShield()) * 100"
+                ></div>
+              }
             </div>
             <p class="text-sm text-green-600">{{ playerHp() }} / {{ playerMaxHp() }} HP</p>
+            @if (playerMaxEnergyShield() > 0) {
+              <p class="text-sm text-blue-400">{{ playerEnergyShield() }} / {{ playerMaxEnergyShield() }} ES</p>
+            }
           </div>
 
           <div class="w-64 mt-1">

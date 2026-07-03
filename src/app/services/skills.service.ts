@@ -140,39 +140,64 @@ export class SkillsService {
 
   /**
    * REAKTIVES COMPUTED SIGNAL
-   * Berechnet das finale Kampfpaket: Basis-Werte + Ausrüstungsteile.
+   * Berechnet das finale Kampfpaket UND die Herkunft jedes Bonus (für die
+   * Tooltip-Aufschlüsselung in der Charakter-Ansicht: Basis / Hauptstats /
+   * Ausrüstung / Passives). Vier Schichten, in dieser Reihenfolge:
    *
-   * Rechnet pro ausgerüstetem Item drei Schritte:
-   *  1. Flat-Stats additiv übernehmen (siehe FLAT_STAT_MAP)
-   *  2. Resistenzen additiv übernehmen
-   *  3. Attribute skalieren (z.B. Stärke → Angriff/Rüstung)
+   *  1. base       – reine Basiswerte aus dem State (Level-Startwerte).
+   *  2. equipment  – Flat-Stats, Resistenzen und Attribut-Rohwerte aus
+   *                  ausgerüsteten Items (additiv, siehe FLAT_STAT_MAP).
+   *  3. mainStats  – Skalierung der GESAMT-Attribute (Basis + Schrein +
+   *                  Ausrüstung) auf abgeleitete Kampfwerte, z.B.
+   *                  Stärke → Angriff. Läuft bewusst NACH der Ausrüstungs-
+   *                  schicht, damit auch von Items mitgebrachte Attribute
+   *                  mitskalieren (vorher wurde nur der Item-eigene
+   *                  Attributwert isoliert verrechnet — Schrein-Punkte
+   *                  hatten dadurch gar keinen Effekt auf z.B. Angriff).
+   *  4. passives   – Shrine-Passives (erst Flat/Resistenz, dann Prozent).
    */
-  public combatStats = computed(() => {
+  public statBreakdown = computed(() => {
     const base = this.state();
     const slots = this.inventarService.equippedSlots();
 
-    const finalStats = this.createBaseCombatStats(base);
+    const baseLayer = this.createBaseCombatStats(base);
 
+    const afterEquipment = this.cloneStats(baseLayer);
     EQUIPMENT_SLOTS.forEach((slotName) => {
       const item = slots[slotName];
       if (!item || !item.stats) return;
 
-      this.addFlatItemStats(finalStats, item.stats);
-      this.addItemResistances(finalStats, item.stats);
-      this.addAttributeScaling(finalStats, item.stats);
+      this.addFlatItemStats(afterEquipment, item.stats);
+      this.addItemResistances(afterEquipment, item.stats);
+      this.addItemAttributes(afterEquipment, item.stats);
     });
 
-    this.addPassiveEffects(finalStats, base.unlockedPassives ?? []);
+    const afterMainStats = this.cloneStats(afterEquipment);
+    this.applyAttributeScaling(afterMainStats);
 
-    console.log('⚔️ Reaktiv berechnete combatStats:', finalStats);
-    return finalStats;
+    const afterPassives = this.cloneStats(afterMainStats);
+    this.addPassiveEffects(afterPassives, base.unlockedPassives ?? []);
+
+    const breakdown = {
+      base: baseLayer,
+      equipment: this.diffStats(afterEquipment, baseLayer),
+      mainStats: this.diffStats(afterMainStats, afterEquipment),
+      passives: this.diffStats(afterPassives, afterMainStats),
+      total: afterPassives,
+    };
+
+    console.log('⚔️ Reaktiv berechnete combatStats:', breakdown.total);
+    return breakdown;
   });
+
+  /** Nur das finale Kampfpaket (ohne Herkunfts-Aufschlüsselung). */
+  public combatStats = computed(() => this.statBreakdown().total);
 
   /**
    * Kopiert die Basis-Werte des Charakters in ein frisches Stats-Objekt
    * (bewusst OHNE das spells-Array — combatStats enthält nur Zahlenwerte).
    */
-  private createBaseCombatStats(base: any) {
+  private createBaseCombatStats(base: any): any {
     return {
       intelligence: base.intelligence,
       dexterity: base.dexterity,
@@ -222,46 +247,64 @@ export class SkillsService {
   }
 
   /**
-   * Wendet die Attributs-Skalierung eines Items an:
-   *  - Stärke:       +Attribut, Angriff +2/Punkt, Rüstung +0.5/Punkt (abgerundet)
-   *  - Intelligenz:  +Attribut, Magie-Angriff +2/Punkt, Mana +5/Punkt
-   *  - Geschick:     +Attribut, Ausweichen +0.5/Punkt (abgerundet), Initiative +1/Punkt
-   *  - Vitalität:    +Attribut, HP +12/Punkt
-   *  - Glück:        +Attribut, Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
+   * Übernimmt NUR die rohen Attributwerte eines Items additiv (Stärke,
+   * Geschick, Intelligenz, Vitalität, Glück) — ohne Skalierung auf
+   * abgeleitete Kampfwerte. Die eigentliche Skalierung passiert danach
+   * einmalig in `applyAttributeScaling()` auf Basis des GESAMT-Attributs
+   * (Basis + Schrein-Investition + Ausrüstung), nicht mehr pro Item isoliert.
    *
    * @param finalStats Ziel-Objekt (wird mutiert).
    * @param s          stats-Block des Items.
    */
-  private addAttributeScaling(finalStats: any, s: any): void {
-    if (s.strength) {
-      const str = Number(s.strength);
-      finalStats.strength += str;
-      finalStats.attack += str * 2;
-      finalStats.armor += Math.floor(str * 0.5);
+  private addItemAttributes(finalStats: any, s: any): void {
+    if (s.strength) finalStats.strength += Number(s.strength);
+    if (s.intelligence) finalStats.intelligence += Number(s.intelligence);
+    if (s.dexterity) finalStats.dexterity += Number(s.dexterity);
+    if (s.vitality) finalStats.vitality += Number(s.vitality);
+    if (s.luck) finalStats.luck += Number(s.luck);
+  }
+
+  /**
+   * Skaliert die GESAMT-Attribute (Basis + Schrein + Ausrüstung) einmalig auf
+   * abgeleitete Kampfwerte:
+   *  - Stärke:      Physischer Schaden (Angriff) +2/Punkt
+   *  - Geschick:    Initiative +2/Punkt
+   *  - Intelligenz: Magie-Angriff +2/Punkt, Mana +5/Punkt, Energieschild +2/Punkt
+   *  - Vitalität:   HP +3/Punkt
+   *  - Glück:       Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert). Muss bereits die
+   *                   Gesamt-Attributwerte (inkl. Ausrüstung) enthalten.
+   */
+  private applyAttributeScaling(finalStats: any): void {
+    finalStats.attack += finalStats.strength * 2;
+    finalStats.initiative += finalStats.dexterity * 2;
+    finalStats.magicAttack += finalStats.intelligence * 2;
+    finalStats.mana += finalStats.intelligence * 5;
+    finalStats['energy-shield'] += finalStats.intelligence * 2;
+    finalStats.hp += finalStats.vitality * 3;
+    finalStats.critChance += Math.floor(finalStats.luck * 0.2);
+    finalStats['magic-find'] += Math.floor(finalStats.luck * 0.5);
+  }
+
+  /** Tiefe Kopie eines Kampfwerte-Objekts (inkl. verschachteltem `resistances`). */
+  private cloneStats(stats: any): any {
+    return { ...stats, resistances: { ...stats.resistances } };
+  }
+
+  /**
+   * Differenz zweier Kampfwerte-Objekte, Feld für Feld (für die
+   * Tooltip-Aufschlüsselung "wie viel kam von welcher Schicht").
+   * `resistances` und `spells` werden bewusst ausgeklammert (nicht Teil der
+   * Stat-Liste in der Charakter-Ansicht).
+   */
+  private diffStats(after: any, before: any): any {
+    const result: any = {};
+    for (const key of Object.keys(after)) {
+      if (key === 'resistances' || key === 'spells') continue;
+      result[key] = (after[key] ?? 0) - (before[key] ?? 0);
     }
-    if (s.intelligence) {
-      const int = Number(s.intelligence);
-      finalStats.intelligence += int;
-      finalStats.magicAttack += int * 2;
-      finalStats.mana += int * 5;
-    }
-    if (s.dexterity) {
-      const dex = Number(s.dexterity);
-      finalStats.dexterity += dex;
-      finalStats.evasion += Math.floor(dex * 0.5);
-      finalStats.initiative += dex;
-    }
-    if (s.vitality) {
-      const vit = Number(s.vitality);
-      finalStats.vitality += vit;
-      finalStats.hp += vit * 12;
-    }
-    if (s.luck) {
-      const lck = Number(s.luck);
-      finalStats.luck += lck;
-      finalStats.critChance += Math.floor(lck * 0.2);
-      finalStats['magic-find'] += Math.floor(lck * 0.5);
-    }
+    return result;
   }
 
   /**

@@ -4,7 +4,7 @@
     (mousemove)="onMouseMove($event)"
   >
     <div
-      class="panel-container relative w-[720px] max-h-[85vh] overflow-y-auto p-6 bg-black/80 border border-white/10 rounded-lg backdrop-blur-sm text-white select-none"
+      class="overflow-hidden relative w-[720px] max-h-[85vh] overflow-y-auto p-6 bg-black/80 border border-white/10 rounded-lg backdrop-blur-sm text-white select-none"
     >
       <div
         class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-full flex items-center justify-center border border-white/20 hover:bg-white/10"
@@ -50,12 +50,12 @@
           <div class="flex gap-[3px] w-full h-4">
             @for (threshold of thresholds; track threshold) {
               <div
-                class="flex-1 h-full bg-white/10 rounded-sm relative overflow-hidden cursor-default border border-white/5"
+                class="panel-container flex-1 h-full bg-white/10 rounded-sm relative overflow-hidden cursor-default border border-white/5"
                 (mouseenter)="setHovered(stat.key, threshold)"
                 (mouseleave)="clearHovered()"
               >
                 <div
-                  class="absolute left-0 top-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
+                  class="bsolute left-0 top-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
                   [style.width.%]="segmentFill(stat.key, threshold)"
                 ></div>
               </div>
@@ -65,7 +65,7 @@
           @if (hoveredPassive(); as passive) {
             @if (passive.stat === stat.key) {
               <div
-                class="panel-container absolute pointer-events-none z-[10000] p-3 bg-black border border-white/10 rounded-md text-sm"
+                class="absolute pointer-events-none z-[10000] p-3 bg-black border border-white/10 rounded-md text-sm"
                 [style.left.px]="mouseX"
                 [style.top.px]="mouseY"
               >

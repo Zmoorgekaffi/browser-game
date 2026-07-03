@@ -46,14 +46,19 @@ export class FightScene {
   monsterName = this.fightService.monsterName;
   monsterHp = this.fightService.monsterHp;
   monsterMaxHp = this.fightService.monsterMaxHp;
+  monsterEnergyShield = this.fightService.monsterEnergyShield;
+  monsterMaxEnergyShield = this.fightService.monsterMaxEnergyShield;
 
   round = this.fightService.round;
   currentTurn = this.fightService.currentTurn;
+  battleLog = this.fightService.battleLog;
 
   playerName = this.profileService.name;
   playerLevel = this.profileService.level;
   playerHp = this.fightService.playerHp;
   playerMaxHp = this.fightService.playerMaxHp;
+  playerEnergyShield = this.fightService.playerEnergyShield;
+  playerMaxEnergyShield = this.fightService.playerMaxEnergyShield;
   playerMana = this.fightService.playerMana;
   playerMaxMana = this.fightService.playerMaxMana;
 

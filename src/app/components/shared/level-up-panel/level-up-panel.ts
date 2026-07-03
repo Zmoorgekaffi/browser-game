@@ -129,8 +129,6 @@ public onMouseMove(event: MouseEvent): void {
     .getBoundingClientRect();
 
   this.mouseX = event.clientX - rect.left;
-  this.mouseY = -50
-  console.log(this.mouseX, this.mouseY);
-  
+  this.mouseY = -60
 }
 }

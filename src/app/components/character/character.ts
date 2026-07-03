@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, ElementRef, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
 import { RouterLink } from '@angular/router';
@@ -19,6 +19,7 @@ import { framePaths } from '../../utils/frame-paths.util';
 })
 export class Character {
   public gameStateService = inject(GameStateService);
+  private el = inject(ElementRef);
 
   public name = this.gameStateService.profile.name;
   public level = this.gameStateService.profile.level;
@@ -26,6 +27,26 @@ export class Character {
 
   public combatStats: Signal<any> = this.gameStateService.skills.combatStats;
   public baseStats = this.gameStateService.skills.state;
+  /** Herkunfts-Aufschlüsselung (Basis/Ausrüstung/Hauptstats/Passives) für den Hover-Tooltip. */
+  public statBreakdown = this.gameStateService.skills.statBreakdown;
+
+  /** Stat-Key der aktuell gehoverten Zeile, oder null (kein Tooltip). */
+  public hoveredStat = signal<string | null>(null);
+  public tooltipX = 0;
+  public tooltipY = 0;
+
+  /** Position des Tooltips relativ zur Stat-Liste, folgt der Maus. */
+  public onMouseMove(event: MouseEvent): void {
+    const rect = this.el.nativeElement.querySelector('#statList')?.getBoundingClientRect();
+    if (!rect) return;
+    this.tooltipX = event.clientX - rect.left + 16;
+    this.tooltipY = event.clientY - rect.top + 16;
+  }
+
+  /** Deutsches Label zu einem Stat-Key (für den Tooltip-Titel). */
+  public getStatName(key: string): string {
+    return this.displayStats.find((stat) => stat.key === key)?.name ?? key;
+  }
 
   /**
    * Look-Around-Animation: frame (1).png ... frame (14).png,

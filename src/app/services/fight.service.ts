@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, WritableSignal } from '@angular/core';
 import { AdventureStateService } from './adventure-state.service';
 import { SkillsService } from './skills.service';
 import { SpellsEngineService } from './spells-engine.service';
@@ -30,11 +30,18 @@ export class FightService {
   playerMaxHp = signal<number>(0);
   playerMana = signal<number>(0);
   playerMaxMana = computed(() => this.skillsService.combatStats().mana);
+  playerEnergyShield = signal<number>(0);
+  playerMaxEnergyShield = signal<number>(0);
 
   monsterHp = signal<number>(0);
   monsterMaxHp = signal<number>(0);
+  monsterEnergyShield = signal<number>(0);
+  monsterMaxEnergyShield = signal<number>(0);
   currentTurn = signal<'player' | 'monster'>('player');
   round = signal<number>(1);
+
+  /** Kampf-Nachrichten (Würfelwürfe, Treffer, Ausweichen, Krits ...) für das Textfeld in der FightScene. */
+  public battleLog = signal<string[]>([]);
 
   /**
    * Hält das vollständige Monster-Objekt mit angereicherten Spell-Objekten.
@@ -88,16 +95,28 @@ export class FightService {
     const playerCombatStats = this.skillsService.combatStats();
     const initialPlayerHp = playerCombatStats.hp;
     const initialPlayerMana = playerCombatStats.mana;
+    const initialPlayerEnergyShield = playerCombatStats['energy-shield'] ?? 0;
+    const initialMonsterEnergyShield = fightMonster['energy-shield'] ?? 0;
 
     let fightState = this.activeFight();
+    const isNewFight = !fightState;
 
     if (!fightState) {
+      this.battleLog.set([]);
+      const startingTurn = this.rollInitiative(
+        playerCombatStats.initiative ?? 0,
+        fightMonster.initiative ?? 0,
+        fightMonster.name,
+      );
+
       fightState = {
         monsterHp: fightMonster.hp,
+        monsterEnergyShield: initialMonsterEnergyShield,
         playerHp: initialPlayerHp,
         playerMana: initialPlayerMana,
+        playerEnergyShield: initialPlayerEnergyShield,
         round: 1,
-        turn: 'player',
+        turn: startingTurn,
         // Bewusst die Original-Referenz (mit reinen spellIds) speichern,
         // damit saveAdventure() weiterhin die schlanke Struktur persistiert.
         monster: originalMonster,
@@ -109,12 +128,53 @@ export class FightService {
     this.playerHp.set(fightState.playerHp);
     this.playerMaxHp.set(initialPlayerHp);
     this.playerMana.set(fightState.playerMana ?? initialPlayerMana);
+    this.playerEnergyShield.set(fightState.playerEnergyShield ?? initialPlayerEnergyShield);
+    this.playerMaxEnergyShield.set(initialPlayerEnergyShield);
     this.monsterHp.set(fightState.monsterHp);
     this.monsterMaxHp.set(fightMonster.hp);
+    this.monsterEnergyShield.set(fightState.monsterEnergyShield ?? initialMonsterEnergyShield);
+    this.monsterMaxEnergyShield.set(initialMonsterEnergyShield);
     this.currentTurn.set(fightState.turn);
     this.round.set(fightState.round);
 
+    // Wenn der Initiative-Wurf das Monster zuerst ziehen lässt, muss dessen
+    // Zug hier manuell angestoßen werden — sonst wartet die UI (Button
+    // deaktiviert, da currentTurn() !== 'player') auf ein Ereignis, das nie
+    // kommt (normalerweise triggert nur endTurn() den nächsten Monsterzug).
+    if (isNewFight && fightState.turn === 'monster') {
+      setTimeout(() => this.monsterTurn(), 1000);
+    }
+
     console.log('Kampf initialisiert. Angereichertes Monster:', this.enrichedMonster());
+  }
+
+  /**
+   * Initiative-Wurf zu Kampfbeginn: 1w20 + Differenz der Initiative-Werte.
+   * Ergebnis > 10 → Spieler beginnt, sonst das Monster. Wer die höhere
+   * Initiative hat, hat dadurch einen spürbaren Vorteil bei diesem Wurf.
+   */
+  private rollInitiative(playerInitiative: number, monsterInitiative: number, monsterName: string): 'player' | 'monster' {
+    const diff = playerInitiative - monsterInitiative;
+    const roll = this.rollDie(20);
+    const result = roll + diff;
+    const playerStarts = result > 10;
+
+    const diffText = diff >= 0 ? `+${diff}` : `${diff}`;
+    this.addLogMessage(
+      `🎲 Initiative-Wurf: ${roll} (Differenz ${diffText}) = ${result} → ${playerStarts ? 'Du beginnst!' : `${monsterName} beginnt!`}`,
+    );
+
+    return playerStarts ? 'player' : 'monster';
+  }
+
+  /** Würfelt einen W-seitigen Würfel (1 bis sides, inklusiv). */
+  private rollDie(sides: number): number {
+    return 1 + Math.floor(Math.random() * sides);
+  }
+
+  /** Hängt eine Nachricht ans Kampf-Log an (für das Textfeld in der FightScene). */
+  private addLogMessage(message: string): void {
+    this.battleLog.update((log) => [...log, message].slice(-30));
   }
 
   /** Führt den normalen Angriff des Spielers aus (nur im Spieler-Zug). */
@@ -151,16 +211,116 @@ export class FightService {
     return spell ? spell.name : 'Unbekannter Zauber';
   }
 
-  /** Zieht dem Monster Schaden ab; bei 0 HP endet der Kampf mit Sieg. */
+  /**
+   * Zieht dem Monster Schaden ab (nach Ausweich-/Krit-Wurf, siehe
+   * `resolveAttack()`); bei 0 HP endet der Kampf mit Sieg.
+   */
   public applyDamageToMonster(damage: number): void {
-    this.monsterHp.update((hp) => Math.max(0, hp - damage));
+    const monster = this.enrichedMonster();
+    const playerStats = this.skillsService.combatStats();
+
+    const { finalDamage, dodged } = this.resolveAttack(damage, {
+      attackerLuck: playerStats.luck ?? 0,
+      attackerCritChance: playerStats.critChance ?? 0,
+      attackerCritDamage: playerStats.critDamage ?? 0,
+      defenderEvasion: monster?.evasion ?? 0,
+      attackerLabel: 'Du',
+      defenderLabel: monster?.name ?? 'Gegner',
+    });
+    if (dodged) return;
+
+    const remaining = this.drainEnergyShield(this.monsterEnergyShield, finalDamage);
+    this.monsterHp.update((hp) => Math.max(0, hp - remaining));
     if (this.monsterHp() <= 0) this.handleFightEnd(true);
   }
 
-  /** Zieht dem Spieler Schaden ab; bei 0 HP endet der Kampf mit Niederlage. */
+  /**
+   * Zieht dem Spieler Schaden ab (nach Ausweich-/Krit-Wurf, siehe
+   * `resolveAttack()`); bei 0 HP endet der Kampf mit Niederlage.
+   */
   public applyDamageToPlayer(damage: number): void {
-    this.playerHp.update((hp) => Math.max(0, hp - damage));
+    const monster = this.enrichedMonster();
+    const playerStats = this.skillsService.combatStats();
+
+    const { finalDamage, dodged } = this.resolveAttack(damage, {
+      attackerLuck: monster?.luck ?? 0,
+      attackerCritChance: monster?.critChance ?? 0,
+      attackerCritDamage: monster?.critDamage ?? 0,
+      defenderEvasion: playerStats.evasion ?? 0,
+      attackerLabel: monster?.name ?? 'Gegner',
+      defenderLabel: 'Du',
+    });
+    if (dodged) return;
+
+    const remaining = this.drainEnergyShield(this.playerEnergyShield, finalDamage);
+    this.playerHp.update((hp) => Math.max(0, hp - remaining));
     if (this.playerHp() <= 0) this.handleFightEnd(false);
+  }
+
+  /**
+   * Ausweich- und Krit-Würfe für einen einzelnen Angriff (egal ob normaler
+   * Schlag oder Spell — beide laufen über applyDamageToMonster/Player).
+   *
+   * Ausweichen: Verteidiger würfelt 1w20 + Ausweichen, Angreifer 1w20 + Glück.
+   * Gewinnt der Verteidiger (>=), wird komplett ausgewichen (0 Schaden).
+   *
+   * Kritischer Treffer: 1w10 + Krit-Chance - 5 = Krit-Chance in Prozent für
+   * diesen Angriff. Bei einem Krit wird der Schaden mit
+   * (1 + Krit-Schaden/2/100) multipliziert (z.B. 150 Krit-Schaden → +75%).
+   */
+  private resolveAttack(
+    rawDamage: number,
+    params: {
+      attackerLuck: number;
+      attackerCritChance: number;
+      attackerCritDamage: number;
+      defenderEvasion: number;
+      attackerLabel: string;
+      defenderLabel: string;
+    },
+  ): { finalDamage: number; dodged: boolean } {
+    const defenseRoll = this.rollDie(20);
+    const defenseTotal = defenseRoll + params.defenderEvasion;
+    const attackRoll = this.rollDie(20);
+    const attackTotal = attackRoll + params.attackerLuck;
+
+    if (defenseTotal >= attackTotal) {
+      this.addLogMessage(
+        `🛡️ ${params.defenderLabel} weicht aus! (Ausweichen ${defenseRoll}+${params.defenderEvasion}=${defenseTotal} vs. Glück ${attackRoll}+${params.attackerLuck}=${attackTotal})`,
+      );
+      return { finalDamage: 0, dodged: true };
+    }
+
+    const critRoll = this.rollDie(10);
+    const critChancePercent = critRoll + params.attackerCritChance - 5;
+
+    if (Math.random() * 100 < critChancePercent) {
+      const critMultiplierPercent = params.attackerCritDamage / 2;
+      const finalDamage = Math.round(rawDamage * (1 + critMultiplierPercent / 100));
+      this.addLogMessage(
+        `💥 Kritischer Treffer von ${params.attackerLabel}! (Krit-Wurf ${critRoll}+${params.attackerCritChance}-5=${critChancePercent}%) ${rawDamage} → ${finalDamage} Schaden`,
+      );
+      return { finalDamage, dodged: false };
+    }
+
+    this.addLogMessage(`⚔️ ${params.attackerLabel} trifft ${params.defenderLabel} für ${rawDamage} Schaden.`);
+    return { finalDamage: rawDamage, dodged: false };
+  }
+
+  /**
+   * Zieht Schaden zuerst vom Energieschild ab, der Rest geht auf die HP.
+   *
+   * @param energyShieldSignal Signal von Spieler oder Monster (wird mutiert).
+   * @param damage             Eingehender Schaden nach Ausweichen/Krit.
+   * @returns Verbleibender Schaden, der die HP treffen soll.
+   */
+  private drainEnergyShield(energyShieldSignal: WritableSignal<number>, damage: number): number {
+    const currentShield = energyShieldSignal();
+    if (currentShield <= 0) return damage;
+
+    const absorbed = Math.min(currentShield, damage);
+    energyShieldSignal.set(currentShield - absorbed);
+    return damage - absorbed;
   }
 
   private endTurn(): void {
@@ -179,6 +339,8 @@ export class FightService {
       playerHp: this.playerHp(),
       monsterHp: this.monsterHp(),
       playerMana: this.playerMana(),
+      playerEnergyShield: this.playerEnergyShield(),
+      monsterEnergyShield: this.monsterEnergyShield(),
       turn: this.currentTurn() === 'player' ? 'monster' : 'player',
     });
     this.adventureStateService.saveAdventure();
