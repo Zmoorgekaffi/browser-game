@@ -5,6 +5,7 @@
     "img-path": "imgs/items/chests/mage-coat_3.webp",
     "price": 86,
     "armor-slot": "chest",
+    "tier": "3",
     "stats": {
       "intelligence": 15,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/chests/snake-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 13,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/chests/guard-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -6,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/chests/hawk-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
+    "tier": "3",
     "stats": {
       "intelligence": 6,
       "dexterity": 9,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/chests/torment-chest_3.webp",
     "price": 134,
     "armor-slot": "chest",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

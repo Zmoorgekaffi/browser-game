@@ -6,8 +6,12 @@
        'height': height()
      }"
      [class.border-2]="devmode()"
-     [class.border-blue-500]="devmode()">
-  
+     [class.border-blue-500]="devmode()"
+     [class.cursor-pointer]="inventarService.equippedSlots()[slotName()]"
+     (mouseenter)="onEnter()"
+     (mouseleave)="onLeave()"
+     (click)="onClick()">
+
   @if (inventarService.equippedSlots()[slotName()]) {
     <img [src]="inventarService.equippedSlots()[slotName()]['img-path']" 
          [alt]="inventarService.equippedSlots()[slotName()].name" 

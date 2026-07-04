@@ -5,6 +5,7 @@
     "img-path": "imgs/items/legs/mage-leg_3.webp",
     "price": 64,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 12,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/legs/snake-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 10,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/legs/guard-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -4,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/legs/hawk-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 4,
       "dexterity": 7,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/legs/torment-leg_3.webp",
     "price": 100,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

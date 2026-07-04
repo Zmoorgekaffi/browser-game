@@ -5,6 +5,7 @@
     "img-path": "imgs/items/boots/mage-shoes_2.webp",
     "price": 18,
     "armor-slot": "footwear",
+    "tier": "2",
     "stats": {
       "intelligence": 4,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/boots/leather-boots_2.webp",
     "price": 21,
     "armor-slot": "footwear",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/boots/chain-boots_2.webp",
     "price": 21,
     "armor-slot": "footwear",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/boots/hunter-boots_2.webp",
     "price": 21,
     "armor-slot": "footwear",
+    "tier": "2",
     "stats": {
       "intelligence": 1,
       "dexterity": 2,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/boots/cursed-sandals_2.webp",
     "price": 29,
     "armor-slot": "footwear",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

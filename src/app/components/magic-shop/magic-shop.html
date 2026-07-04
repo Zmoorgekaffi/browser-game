@@ -7,8 +7,14 @@
   <img src="imgs/magic-shop/magic-shop_1.webp" class="w-full h-full object-cover" alt="" />
 
   <app-item-info-card></app-item-info-card>
+  <app-sell-panel></app-sell-panel>
 
-
+  <div
+    (click)="gameStateService.shop.openSellList()"
+    class="absolute top-4 left-4 cursor-pointer bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
+  >
+    Verkaufen
+  </div>
 
   @if (currentShopItems() && currentShopItems().length >= 6) {
     @if (!currentShopItems()[0].isSold) {

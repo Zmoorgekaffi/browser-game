@@ -5,6 +5,7 @@
     "img-path": "imgs/items/rings/copper-ring_1.webp",
     "price": 15,
     "armor-slot": "ring",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/rings/iron-ring_2.webp",
     "price": 25,
     "armor-slot": "ring",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/rings/silver-ring_3.webp",
     "price": 35,
     "armor-slot": "ring",
+    "tier": "2",
     "stats": {
       "intelligence": 6,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/rings/amber-ring_4.webp",
     "price": 30,
     "armor-slot": "ring",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/rings/prismatic-ring_5.webp",
     "price": 50,
     "armor-slot": "ring",
+    "tier": "3",
     "stats": {
       "intelligence": 3,
       "dexterity": 3,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/rings/cateye-ring_6.webp",
     "price": 45,
     "armor-slot": "ring",
+    "tier": "3",
     "stats": {
       "intelligence": 1,
       "dexterity": 8,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/rings/gold-ring_7.webp",
     "price": 80,
     "armor-slot": "ring",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/rings/bone-ring_8.webp",
     "price": 95,
     "armor-slot": "ring",
+    "tier": "4",
     "stats": {
       "intelligence": 7,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/rings/crystal-ring_9.webp",
     "price": 120,
     "armor-slot": "ring",
+    "tier": "5",
     "stats": {
       "intelligence": 9,
       "dexterity": 4,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/rings/destiny-ring_10.webp",
     "price": 250,
     "armor-slot": "ring",
+    "tier": "5",
     "stats": {
       "intelligence": 6,
       "dexterity": 6,

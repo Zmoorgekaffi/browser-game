@@ -4,6 +4,7 @@ import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
+import { SellPanel } from '../shared/sell-panel/sell-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths } from '../../utils/frame-paths.util';
 
@@ -17,7 +18,7 @@ import supplies from '../../../../public/item-data/head.json';
 @Component({
   selector: 'app-general-supplies',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel],
   templateUrl: './general-supplies.html',
   styleUrl: './general-supplies.scss',
 })

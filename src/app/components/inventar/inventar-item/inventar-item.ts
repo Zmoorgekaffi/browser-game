@@ -1,30 +1,25 @@
-import { Component, Input, effect, signal, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, signal, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
-import { InventarService } from '../../../services/inventar.service';
-
-
+import { getSellPrice, getItemTier } from '../../../utils/item-display.util';
 
 /**
  * @component InventarItem
- * @description Eine Zeile im Inventar. Klick auf das gesamte Element
- * rüstet das Item an bzw. ab (Toggle über den InventarService).
+ * @description Eine Zeile in der Inventarliste. An-/Ausziehen läuft über
+ * einen expliziten Button, nicht mehr über einen Klick auf die ganze Karte.
  */
 @Component({
   selector: 'app-inventar-item',
   standalone: true,
-  imports: [CommonModule, ],
+  imports: [CommonModule],
   templateUrl: './inventar-item.html',
   styleUrl: './inventar-item.scss',
-  // HIER DIE MAGIE: Macht das gesamte Custom-Element im Browser klickbar und breit!
   host: {
-    '(click)': 'onEquipClick()',
-    'class': 'w-full block pointer-events-auto'
-  }
+    class: 'w-full block',
+  },
 })
 export class InventarItem implements OnChanges {
   private gameStateService = inject(GameStateService);
-  private inventarService = inject(InventarService);
 
   @Input() item: any = {
     name: '',
@@ -37,31 +32,21 @@ export class InventarItem implements OnChanges {
   @Input() index!: number;
   public itemSignal = signal<any>(null);
 
-  constructor() {
-    effect(() => {
-      const slots = this.inventarService.equippedSlots();
-      console.log('====== 🛡️ TEST-LOG: ALLE AUSGERÜSTETEN ITEMS ======');
-      let hatAusruestung = false;
-      Object.entries(slots).forEach(([slotName, itemObj]) => {
-        if (itemObj) {
-          hatAusruestung = true;
-          console.log(`🔹 [Slot: ${slotName}] -> ${itemObj.name}`);
-        }
-      });
-      if (!hatAusruestung) console.log('❌ Aktuell sind keine Gegenstände ausgerüstet.');
-      console.log('==================================================');
-    });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['item']) {
       this.itemSignal.set(this.item);
     }
   }
 
-  /** Host-Klick: Item an-/ablegen. */
-  onEquipClick(): void {
-    console.log(`🎯 Klick im Host registriert! Index: ${this.index}`);
+  public get tier(): number | null {
+    return getItemTier(this.item);
+  }
+
+  public get sellValue(): number {
+    return getSellPrice(this.item?.price);
+  }
+
+  toggleEquip(): void {
     if (this.index !== undefined) {
       this.gameStateService.inventar.toggleEquipItem(this.index);
     }

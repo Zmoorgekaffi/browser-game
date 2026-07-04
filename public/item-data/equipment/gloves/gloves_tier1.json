@@ -5,6 +5,7 @@
     "img-path": "imgs/items/gloves/cloth-gloves_1.webp",
     "price": 9,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 2,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/gloves/leather-gloves_1.webp",
     "price": 10,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/gloves/iron-gloves_1.webp",
     "price": 10,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/gloves/thief-gloves_1.webp",
     "price": 10,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 1,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/gloves/cursed-gloves_1.webp",
     "price": 14,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

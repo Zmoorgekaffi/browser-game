@@ -5,6 +5,7 @@
     "img-path": "imgs/items/gloves/mage-gloves_3.webp",
     "price": 37,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 8,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/gloves/snake-gloves_3.webp",
     "price": 42,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 7,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/gloves/guard-gloves_3.webp",
     "price": 42,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -3,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/gloves/hawk-gloves_3.webp",
     "price": 42,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 3,
       "dexterity": 4,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/gloves/torment-gloves_3.webp",
     "price": 58,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

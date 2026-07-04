@@ -5,6 +5,7 @@
     "img-path": "imgs/items/legs/arcane-leg_4.webp",
     "price": 113,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 21,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/legs/shadow-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 18,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/legs/obsidian-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": -8,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/legs/storm-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 8,
       "dexterity": 12,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/legs/demon-leg_4.webp",
     "price": 176,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

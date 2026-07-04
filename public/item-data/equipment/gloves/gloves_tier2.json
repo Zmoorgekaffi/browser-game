@@ -5,6 +5,7 @@
     "img-path": "imgs/items/gloves/mage-gloves_2.webp",
     "price": 18,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 4,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/gloves/leather-gloves_2.webp",
     "price": 21,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/gloves/chain-gloves_2.webp",
     "price": 21,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/gloves/hunter-gloves_2.webp",
     "price": 21,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 1,
       "dexterity": 2,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/gloves/cursed-mitts_2.webp",
     "price": 29,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

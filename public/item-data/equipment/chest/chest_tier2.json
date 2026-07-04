@@ -5,6 +5,7 @@
     "img-path": "imgs/items/chests/mage-robe_2.webp",
     "price": 43,
     "armor-slot": "chest",
+    "tier": "2",
     "stats": {
       "intelligence": 7,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/chests/leather-chest_2.webp",
     "price": 48,
     "armor-slot": "chest",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 6,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/chests/chain-mail_2.webp",
     "price": 48,
     "armor-slot": "chest",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -3,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/chests/hunter-chest_2.webp",
     "price": 48,
     "armor-slot": "chest",
+    "tier": "2",
     "stats": {
       "intelligence": 3,
       "dexterity": 4,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/chests/cursed-robe_2.webp",
     "price": 67,
     "armor-slot": "chest",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

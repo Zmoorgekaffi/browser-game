@@ -5,6 +5,7 @@
     "img-path": "imgs/items/legs/linen-trousers_1.webp",
     "price": 10,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/legs/leather-pants_2.webp",
     "price": 20,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 5,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/legs/mage-skirt_3.webp",
     "price": 30,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 5,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/legs/chain-greaves_4.webp",
     "price": 42,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/legs/thief-pants_5.webp",
     "price": 55,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 1,
       "dexterity": 7,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/legs/plate-greaves_6.webp",
     "price": 80,
     "armor-slot": "leg",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/legs/arcane-pants_7.webp",
     "price": 95,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 7,
       "dexterity": 3,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/legs/malachite-greaves_8.webp",
     "price": 145,
     "armor-slot": "leg",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/legs/crystal-legs_9.webp",
     "price": 190,
     "armor-slot": "leg",
+    "tier": "5",
     "stats": {
       "intelligence": 11,
       "dexterity": 5,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/legs/destiny-legs_10.webp",
     "price": 290,
     "armor-slot": "leg",
+    "tier": "5",
     "stats": {
       "intelligence": 8,
       "dexterity": 8,

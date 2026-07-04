@@ -5,6 +5,7 @@
     "img-path": "imgs/items/boots/mage-boots_3.webp",
     "price": 37,
     "armor-slot": "footwear",
+    "tier": "3",
     "stats": {
       "intelligence": 8,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/boots/snake-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 7,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/boots/guard-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -3,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/boots/hawk-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
+    "tier": "3",
     "stats": {
       "intelligence": 3,
       "dexterity": 4,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/boots/torment-boots_3.webp",
     "price": 58,
     "armor-slot": "footwear",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

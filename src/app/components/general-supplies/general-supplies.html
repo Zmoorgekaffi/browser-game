@@ -11,6 +11,14 @@
   />
 
   <app-item-info-card></app-item-info-card>
+  <app-sell-panel></app-sell-panel>
+
+  <div
+    (click)="gameStateService.shop.openSellList()"
+    class="absolute top-4 left-4 cursor-pointer bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
+  >
+    Verkaufen
+  </div>
 
   <div class="absolute w-[15rem] h-[15rem] top-[172px] right-[520px]">
     <app-animation-object

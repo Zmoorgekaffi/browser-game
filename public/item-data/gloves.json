@@ -5,6 +5,7 @@
     "img-path": "imgs/items/gloves/cloth-wraps_1.webp",
     "price": 8,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/gloves/leather-gloves_2.webp",
     "price": 18,
     "armor-slot": "gloves",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 4,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/gloves/mage-gloves_3.webp",
     "price": 28,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 6,
       "dexterity": 1,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/gloves/chain-gloves_4.webp",
     "price": 38,
     "armor-slot": "gloves",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/gloves/thief-gloves_5.webp",
     "price": 50,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 8,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/gloves/plate-gloves_6.webp",
     "price": 75,
     "armor-slot": "gloves",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/gloves/arcane-gloves_7.webp",
     "price": 90,
     "armor-slot": "gloves",
+    "tier": "4",
     "stats": {
       "intelligence": 8,
       "dexterity": 3,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/gloves/malachite-gloves_8.webp",
     "price": 135,
     "armor-slot": "gloves",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/gloves/crystal-gloves_9.webp",
     "price": 175,
     "armor-slot": "gloves",
+    "tier": "5",
     "stats": {
       "intelligence": 12,
       "dexterity": 4,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/gloves/destiny-gloves_10.webp",
     "price": 275,
     "armor-slot": "gloves",
+    "tier": "5",
     "stats": {
       "intelligence": 7,
       "dexterity": 7,

@@ -48,6 +48,12 @@ export class InventarService {
   /** Aktuell ausgerüstete Items pro Slot (null = Slot leer). */
   public equippedSlots: WritableSignal<EquippedSlots> = signal<EquippedSlots>(createEmptySlots());
 
+  /** Item, das gerade in einem ArmorSlot gehovert wird (für den Tooltip). */
+  public hoveredEquippedItem: WritableSignal<any | null> = signal<any | null>(null);
+
+  /** Slot-Name, für den gerade der "Ausziehen?"-Bestätigungsdialog offen ist. */
+  public unequipConfirmSlot: WritableSignal<string | null> = signal<string | null>(null);
+
   private activeCharId: string | null = null;
 
   /**
@@ -126,6 +132,58 @@ export class InventarService {
       updatedItems[itemIndex] = targetItem;
 
       const newInventar = { ...currentInv, items: updatedItems };
+      this.saveToLocalStorage(newInventar);
+      latestItems = updatedItems;
+      return newInventar;
+    });
+
+    this.updateEquippedSlotsSignal(latestItems);
+  }
+
+  /**
+   * Legt das Item ab, das aktuell in `slotName` steckt (explizites Ausziehen
+   * über einen Klick auf den ArmorSlot, kein Toggle wie bei toggleEquipItem).
+   *
+   * @param slotName Der Slot, dessen Item ausgezogen werden soll.
+   */
+  public unequipSlot(slotName: string): void {
+    let latestItems: any[] = [];
+
+    this.inventar.update(currentInv => {
+      if (!currentInv?.items) return currentInv;
+
+      const updatedItems = JSON.parse(JSON.stringify(currentInv.items));
+      const idx = updatedItems.findIndex(
+        (item: any) => item.equipped && (item['assigned-slot'] || item['armor-slot']) === slotName
+      );
+      if (idx === -1) return currentInv;
+
+      updatedItems[idx].equipped = false;
+      updatedItems[idx]['assigned-slot'] = null;
+
+      const newInventar = { ...currentInv, items: updatedItems };
+      this.saveToLocalStorage(newInventar);
+      latestItems = updatedItems;
+      return newInventar;
+    });
+
+    this.updateEquippedSlotsSignal(latestItems);
+  }
+
+  /**
+   * Entfernt ein Item endgültig aus dem Inventar (z.B. beim Verkauf im Shop).
+   *
+   * @param itemIndex Index des Items im Inventar-Array.
+   */
+  public removeItemFromInventar(itemIndex: number): void {
+    let latestItems: any[] = [];
+
+    this.inventar.update(currentInv => {
+      if (!currentInv?.items || !currentInv.items[itemIndex]) return currentInv;
+
+      const updatedItems = currentInv.items.filter((_: any, i: number) => i !== itemIndex);
+      const newInventar = { ...currentInv, items: updatedItems };
+
       this.saveToLocalStorage(newInventar);
       latestItems = updatedItems;
       return newInventar;

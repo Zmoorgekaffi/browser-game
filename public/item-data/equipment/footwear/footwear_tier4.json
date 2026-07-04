@@ -5,6 +5,7 @@
     "img-path": "imgs/items/boots/arcane-boots_4.webp",
     "price": 66,
     "armor-slot": "footwear",
+    "tier": "4",
     "stats": {
       "intelligence": 14,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/boots/shadow-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 12,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/boots/obsidian-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": -5,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/boots/storm-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
+    "tier": "4",
     "stats": {
       "intelligence": 5,
       "dexterity": 8,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/boots/demon-boots_4.webp",
     "price": 102,
     "armor-slot": "footwear",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

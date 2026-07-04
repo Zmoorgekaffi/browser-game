@@ -5,6 +5,7 @@
     "img-path": "imgs/items/boots/crystal-boots_5.webp",
     "price": 113,
     "armor-slot": "footwear",
+    "tier": "5",
     "stats": {
       "intelligence": 24,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/boots/night-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 21,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/boots/dragon-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": -9,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/boots/cosmic-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
+    "tier": "5",
     "stats": {
       "intelligence": 9,
       "dexterity": 14,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/boots/destiny-boots_5.webp",
     "price": 176,
     "armor-slot": "footwear",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

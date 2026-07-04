@@ -4,6 +4,7 @@ import { ShopItem } from '../shared/shop-item/shop-item';
 import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
+import { SellPanel } from '../shared/sell-panel/sell-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
@@ -17,7 +18,7 @@ import necklace from '../../../../public/item-data/necklace.json';
 @Component({
   selector: 'app-magic-shop',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel],
   templateUrl: './magic-shop.html',
   styleUrl: './magic-shop.scss',
 })

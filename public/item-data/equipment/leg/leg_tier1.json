@@ -5,6 +5,7 @@
     "img-path": "imgs/items/legs/cloth-pants_1.webp",
     "price": 16,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 3,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/legs/leather-pants_1.webp",
     "price": 18,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/legs/iron-leg_1.webp",
     "price": 18,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/legs/thief-leg_1.webp",
     "price": 18,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 1,
       "dexterity": 1,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/legs/cursed-leg_1.webp",
     "price": 25,
     "armor-slot": "leg",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

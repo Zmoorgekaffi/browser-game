@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { UtilityService } from './utility.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
+import { getSellPrice } from '../utils/item-display.util';
 
 // Import der korrekten JSON-Pools für deine 3 Shops
 import magicData from '../../../public/item-data/necklace.json';
@@ -50,6 +51,10 @@ export class ShopService {
   // Aktive Auswahl für den Kaufprozess
   public activeShopType = signal<ShopType | null>(null);
   public activeItemIndex = signal<number | null>(null);
+
+  // Globaler Zustand für den Verkaufs-Dialog
+  public sellListShow = signal<boolean>(false);
+  public sellConfirmIndex = signal<number | null>(null);
 
   /**
    * Lädt gespeicherte Shop-Angebote aus dem LocalStorage
@@ -137,6 +142,40 @@ export class ShopService {
     this.currentDisplayedItem.set(null);
 
     console.log(`🛍 *Erfolgreich gekauft!*`);
+    return true;
+  }
+
+  /** Öffnet die Verkaufsliste (alle unausgerüsteten Items). */
+  public openSellList(): void {
+    this.sellListShow.set(true);
+  }
+
+  /** Schließt die Verkaufsliste inkl. eines evtl. offenen Bestätigungsdialogs. */
+  public closeSellList(): void {
+    this.sellListShow.set(false);
+    this.sellConfirmIndex.set(null);
+  }
+
+  /**
+   * Verkauft ein Item aus dem Inventar für 50% seines Preises.
+   *
+   * @param itemIndex Index des Items im Inventar-Array.
+   * @returns true, wenn der Verkauf erfolgreich war.
+   */
+  public sellItem(itemIndex: number): boolean {
+    const items = this.inventarService.inventar()?.items;
+    const item = items?.[itemIndex];
+
+    if (!item || item.equipped) {
+      console.warn('❌ Dieses Item kann nicht verkauft werden (ausgerüstet oder nicht vorhanden)!');
+      return false;
+    }
+
+    this.walletService.addGold(getSellPrice(item.price));
+    this.inventarService.removeItemFromInventar(itemIndex);
+    this.sellConfirmIndex.set(null);
+
+    console.log(`💰 Item verkauft für ${getSellPrice(item.price)} Gold!`);
     return true;
   }
 

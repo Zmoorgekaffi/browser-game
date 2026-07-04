@@ -5,6 +5,7 @@
     "img-path": "imgs/items/chests/cloth-robe_1.webp",
     "price": 21,
     "armor-slot": "chest",
+    "tier": "1",
     "stats": {
       "intelligence": 3,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/chests/leather-vest_1.webp",
     "price": 24,
     "armor-slot": "chest",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/chests/iron-chest_1.webp",
     "price": 24,
     "armor-slot": "chest",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/chests/thief-chest_1.webp",
     "price": 24,
     "armor-slot": "chest",
+    "tier": "1",
     "stats": {
       "intelligence": 1,
       "dexterity": 2,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/chests/cursed-chest_1.webp",
     "price": 33,
     "armor-slot": "chest",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

@@ -5,6 +5,7 @@
     "img-path": "imgs/items/helmets/cloth-hood_1.webp",
     "price": 12,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 1,
       "dexterity": 1,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/helmets/leather-cap_2.webp",
     "price": 22,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 4,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/helmets/mage-hood_3.webp",
     "price": 32,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 5,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/helmets/iron-helm_4.webp",
     "price": 40,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/helmets/thief-mask_5.webp",
     "price": 55,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 6,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/helmets/guard-helm_6.webp",
     "price": 75,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/helmets/arcane-circlet_7.webp",
     "price": 90,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 8,
       "dexterity": 2,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/helmets/malachite-crown_8.webp",
     "price": 140,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/helmets/crystal-helm_9.webp",
     "price": 180,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 12,
       "dexterity": 4,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/helmets/destiny-helm_10.webp",
     "price": 280,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 7,
       "dexterity": 7,

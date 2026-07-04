@@ -5,6 +5,7 @@
     "img-path": "imgs/items/legs/mage-pants_2.webp",
     "price": 32,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 6,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/legs/leather-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 5,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/legs/chain-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/legs/hunter-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 2,
       "dexterity": 3,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/legs/cursed-pants_2.webp",
     "price": 50,
     "armor-slot": "leg",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

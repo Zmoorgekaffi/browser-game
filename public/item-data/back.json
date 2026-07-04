@@ -5,6 +5,7 @@
     "img-path": "imgs/items/back/cloth-cape_1.webp",
     "price": 12,
     "armor-slot": "back",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/back/leather-backpack_2.webp",
     "price": 24,
     "armor-slot": "back",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 5,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/back/mage-mantle_3.webp",
     "price": 35,
     "armor-slot": "back",
+    "tier": "2",
     "stats": {
       "intelligence": 6,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/back/bear-pelt_4.webp",
     "price": 50,
     "armor-slot": "back",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/back/shadow-cloak_5.webp",
     "price": 60,
     "armor-slot": "back",
+    "tier": "3",
     "stats": {
       "intelligence": 1,
       "dexterity": 8,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/back/guard-banner_6.webp",
     "price": 85,
     "armor-slot": "back",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/back/starlight-cloak_7.webp",
     "price": 110,
     "armor-slot": "back",
+    "tier": "4",
     "stats": {
       "intelligence": 9,
       "dexterity": 3,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/back/malachite-spikes_8.webp",
     "price": 160,
     "armor-slot": "back",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/back/crystal-wings_9.webp",
     "price": 210,
     "armor-slot": "back",
+    "tier": "5",
     "stats": {
       "intelligence": 12,
       "dexterity": 5,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/back/destiny-aura_10.webp",
     "price": 320,
     "armor-slot": "back",
+    "tier": "5",
     "stats": {
       "intelligence": 8,
       "dexterity": 8,

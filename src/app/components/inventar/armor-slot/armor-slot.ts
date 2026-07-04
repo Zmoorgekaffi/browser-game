@@ -24,4 +24,19 @@ export class ArmorSlot {
   public height = input.required<string>();
   public width = input.required<string>();
   public devmode = input<boolean>(false);
+
+  onEnter(): void {
+    const item = this.inventarService.equippedSlots()[this.slotName()];
+    if (item) this.inventarService.hoveredEquippedItem.set(item);
+  }
+
+  onLeave(): void {
+    this.inventarService.hoveredEquippedItem.set(null);
+  }
+
+  onClick(): void {
+    if (this.inventarService.equippedSlots()[this.slotName()]) {
+      this.inventarService.unequipConfirmSlot.set(this.slotName());
+    }
+  }
 }

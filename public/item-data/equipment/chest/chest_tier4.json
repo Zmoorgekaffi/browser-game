@@ -5,6 +5,7 @@
     "img-path": "imgs/items/chests/arcane-robe_4.webp",
     "price": 151,
     "armor-slot": "chest",
+    "tier": "4",
     "stats": {
       "intelligence": 26,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/chests/shadow-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 23,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/chests/obsidian-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": -10,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/chests/storm-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
+    "tier": "4",
     "stats": {
       "intelligence": 10,
       "dexterity": 15,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/chests/demon-chest_4.webp",
     "price": 235,
     "armor-slot": "chest",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

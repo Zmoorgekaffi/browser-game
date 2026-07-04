@@ -5,6 +5,7 @@
     "img-path": "imgs/items/chests/crystal-chest_5.webp",
     "price": 259,
     "armor-slot": "chest",
+    "tier": "5",
     "stats": {
       "intelligence": 45,
       "dexterity": 0,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/chests/night-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 39,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/chests/dragon-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": -18,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/chests/cosmic-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
+    "tier": "5",
     "stats": {
       "intelligence": 18,
       "dexterity": 27,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/chests/destiny-chest_5.webp",
     "price": 403,
     "armor-slot": "chest",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

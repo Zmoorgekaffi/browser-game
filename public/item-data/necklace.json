@@ -5,6 +5,7 @@
     "img-path": "imgs/items/amulets/amethyst-amulet_0.webp",
     "price": 50,
     "armor-slot": "necklace",
+    "tier": "1",
     "stats": {
       "intelligence": 5,
       "dexterity": 2,
@@ -36,6 +37,7 @@
     "img-path": "imgs/items/amulets/ruby-amulet_1.webp",
     "price": 45,
     "armor-slot": "necklace",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -67,6 +69,7 @@
     "img-path": "imgs/items/amulets/sapphire-amulet_2.webp",
     "price": 60,
     "armor-slot": "necklace",
+    "tier": "1",
     "stats": {
       "intelligence": 8,
       "dexterity": 0,
@@ -98,6 +101,7 @@
     "img-path": "imgs/items/amulets/topaz-amulet_3.webp",
     "price": 55,
     "armor-slot": "necklace",
+    "tier": "2",
     "stats": {
       "intelligence": 2,
       "dexterity": 7,
@@ -129,6 +133,7 @@
     "img-path": "imgs/items/amulets/emerald-amulet_4.webp",
     "price": 75,
     "armor-slot": "necklace",
+    "tier": "2",
     "stats": {
       "intelligence": 3,
       "dexterity": 4,
@@ -160,6 +165,7 @@
     "img-path": "imgs/items/amulets/jade-amulet_5.webp",
     "price": 40,
     "armor-slot": "necklace",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -191,6 +197,7 @@
     "img-path": "imgs/items/amulets/malachite-amulet_6.webp",
     "price": 90,
     "armor-slot": "necklace",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
@@ -222,6 +229,7 @@
     "img-path": "imgs/items/amulets/obsidian-amulet_7.webp",
     "price": 110,
     "armor-slot": "necklace",
+    "tier": "4",
     "stats": {
       "intelligence": 5,
       "dexterity": 0,
@@ -253,6 +261,7 @@
     "img-path": "imgs/items/amulets/onyx-amulet_8.webp",
     "price": 85,
     "armor-slot": "necklace",
+    "tier": "4",
     "stats": {
       "intelligence": 4,
       "dexterity": 8,
@@ -284,6 +293,7 @@
     "img-path": "imgs/items/amulets/clover-amulet_9.webp",
     "price": 130,
     "armor-slot": "necklace",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 3,
@@ -315,6 +325,7 @@
     "img-path": "imgs/items/amulets/starlight-amulet_10.webp",
     "price": 200,
     "armor-slot": "necklace",
+    "tier": "5",
     "stats": {
       "intelligence": 10,
       "dexterity": 10,

@@ -5,12 +5,30 @@
     "img-path": "imgs/items/weapon/shortsword_rusty.webp",
     "price": 8,
     "armor-slot": "weapon-1",
+    "tier": "1",
     "stats": {
-      "intelligence": 0, "dexterity": 0, "strength": 0, "vitality": 0, "luck": 0,
-      "energy-shield": 0, "magic-find": 0, "armor": 0,
-      "attack": 12, "magic-attack": 0, "initiative": 0, "evasion": 0,
-      "crit-chance": 0, "crit-damage": 0, "chaosDamage": 0, "charisma": 0,
-      "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 }
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 12,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -19,12 +37,30 @@
     "img-path": "imgs/items/weapon/sword_soldier.webp",
     "price": 45,
     "armor-slot": "weapon-1",
+    "tier": "2",
     "stats": {
-      "intelligence": 0, "dexterity": 0, "strength": 2, "vitality": 1, "luck": 0,
-      "energy-shield": 0, "magic-find": 0, "armor": 2,
-      "attack": 22, "magic-attack": 0, "initiative": 0, "evasion": 0,
-      "crit-chance": 2, "crit-damage": 10, "chaosDamage": 0, "charisma": 0,
-      "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 }
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 2,
+      "vitality": 1,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 22,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 2,
+      "crit-damage": 10,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -33,12 +69,30 @@
     "img-path": "imgs/items/weapon/sword_raider.webp",
     "price": 70,
     "armor-slot": "weapon-1",
+    "tier": "3",
     "stats": {
-      "intelligence": 0, "dexterity": 3, "strength": 1, "vitality": 0, "luck": 1,
-      "energy-shield": 0, "magic-find": 0, "armor": 0,
-      "attack": 18, "magic-attack": 0, "initiative": 6, "evasion": 3,
-      "crit-chance": 4, "crit-damage": 25, "chaosDamage": 0, "charisma": 0,
-      "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 }
+      "intelligence": 0,
+      "dexterity": 3,
+      "strength": 1,
+      "vitality": 0,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 18,
+      "magic-attack": 0,
+      "initiative": 6,
+      "evasion": 3,
+      "crit-chance": 4,
+      "crit-damage": 25,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -47,12 +101,30 @@
     "img-path": "imgs/items/weapon/sword_rune.webp",
     "price": 120,
     "armor-slot": "weapon-1",
+    "tier": "4",
     "stats": {
-      "intelligence": 2, "dexterity": 0, "strength": 2, "vitality": 0, "luck": 0,
-      "energy-shield": 0, "magic-find": 0, "armor": 0,
-      "attack": 20, "magic-attack": 15, "initiative": 0, "evasion": 0,
-      "crit-chance": 3, "crit-damage": 15, "chaosDamage": 0, "charisma": 0,
-      "resistances": { "fire": 5, "cold": 5, "lightning": 0, "chaos": 0 }
+      "intelligence": 2,
+      "dexterity": 0,
+      "strength": 2,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 20,
+      "magic-attack": 15,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 3,
+      "crit-damage": 15,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 5,
+        "cold": 5,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   },
   {
@@ -61,12 +133,30 @@
     "img-path": "imgs/items/weapon/sword_bloodblade.webp",
     "price": 200,
     "armor-slot": "weapon-1",
+    "tier": "5",
     "stats": {
-      "intelligence": 0, "dexterity": 0, "strength": 5, "vitality": 2, "luck": 0,
-      "energy-shield": 0, "magic-find": 0, "armor": 0,
-      "attack": 42, "magic-attack": 0, "initiative": -1, "evasion": 0,
-      "crit-chance": 5, "crit-damage": 40, "chaosDamage": 0, "charisma": 0,
-      "resistances": { "fire": 0, "cold": 0, "lightning": 0, "chaos": 0 }
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 5,
+      "vitality": 2,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 42,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 5,
+      "crit-damage": 40,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
     }
   }
 ]

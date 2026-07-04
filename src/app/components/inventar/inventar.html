@@ -1,4 +1,4 @@
-<section class="w-full h-full relative bg-black">
+<section id="inventarRoot" class="w-full h-full relative bg-black" (mousemove)="onMouseMove($event)">
   <div class="absolute inset-0 z-0">
     <img src="imgs/inventar/inventar.webp" alt="" class="w-full h-full object-cover" />
   </div>
@@ -13,7 +13,7 @@
   ></app-armor-slot>
 
   <app-armor-slot
-    [slotName]="'accessoires-left'"
+    [slotName]="'accessoire-left'"
     [x]="200"
     [y]="109"
     [width]="'63px'"
@@ -22,7 +22,7 @@
   ></app-armor-slot>
 
   <app-armor-slot
-    [slotName]="'accessoires-right'"
+    [slotName]="'accessoire-right'"
     [x]="424"
     [y]="109"
     [width]="'63px'"
@@ -136,4 +136,55 @@
       <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
     }
   </div>
+
+  <!-- Tooltip für angelegte Items: nur Name, Tier und Stats (keine Beschreibung).
+       position:absolute relativ zu #inventarRoot statt :fixed, siehe character.ts. -->
+  @if (hoveredEquippedItem(); as item) {
+    <div
+      class="absolute z-[10000] pointer-events-none p-3 bg-black border border-white/10 rounded-md text-sm min-w-[220px]"
+      [style.left.px]="tooltipX"
+      [style.top.px]="tooltipY"
+    >
+      <div class="flex justify-between items-baseline gap-3 mb-1">
+        <span class="font-bold text-amber-400">{{ item.name }}</span>
+        @if (getTier(item); as tier) {
+          <span class="text-zinc-300 text-xs font-mono">Tier {{ tier }}</span>
+        }
+      </div>
+      <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-emerald-400 font-mono text-xs">
+        @if (item.stats?.strength > 0) { <span>+{{ item.stats.strength }} STR</span> }
+        @if (item.stats?.attack > 0) { <span>+{{ item.stats.attack }} ATK</span> }
+        @if (item.stats?.vitality > 0) { <span>+{{ item.stats.vitality }} VIT</span> }
+        @if (item.stats?.intelligence > 0) { <span>+{{ item.stats.intelligence }} INT</span> }
+        @if (item.stats?.dexterity > 0) { <span>+{{ item.stats.dexterity }} DEX</span> }
+        @if (item.stats?.luck > 0) { <span>+{{ item.stats.luck }} LCK</span> }
+        @if (item.stats?.armor > 0) { <span>+{{ item.stats.armor }} ARM</span> }
+        @if (item.stats?.['energy-shield'] > 0) { <span>+{{ item.stats['energy-shield'] }} ESD</span> }
+        @if (item.stats?.['magic-find'] > 0) { <span>+{{ item.stats['magic-find'] }} MF</span> }
+      </div>
+    </div>
+  }
+
+  <!-- Bestätigungsdialog: auf ein angelegtes Item geklickt -> ausziehen? -->
+  @if (unequipConfirmSlot()) {
+    <div class="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60">
+      <div class="bg-black/90 border border-white/10 rounded-lg p-6 w-[320px] flex flex-col gap-4 items-center">
+        <p class="text-white text-center">Item ausziehen?</p>
+        <div class="flex gap-3 w-full">
+          <button
+            (click)="confirmUnequip()"
+            class="flex-1 rounded-md border border-red-500 bg-red-600/30 px-3 py-2 text-sm cursor-pointer hover:bg-red-600/50 transition-colors text-white"
+          >
+            Ausziehen
+          </button>
+          <button
+            (click)="cancelUnequip()"
+            class="flex-1 rounded-md border border-white/20 px-3 py-2 text-sm cursor-pointer hover:bg-white/10 transition-colors text-white"
+          >
+            Anbehalten
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>
