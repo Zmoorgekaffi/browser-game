@@ -23,6 +23,7 @@ export class SellPanel {
 
   public show = this.gameStateService.shop.sellListShow;
   public confirmIndex = this.gameStateService.shop.sellConfirmIndex;
+  public confirmSource = this.gameStateService.shop.sellConfirmSource;
 
   constructor() {
     effect(() => {
@@ -44,11 +45,19 @@ export class SellPanel {
     );
   }
 
-  public get sellableItems(): { item: any; index: number }[] {
-    const items = this.gameStateService.inventar.inventar()?.items ?? [];
-    return items
-      .map((item: any, index: number) => ({ item, index }))
-      .filter((entry: { item: any; index: number }) => !entry.item.equipped);
+  public get sellableItems(): { item: any; index: number; source: 'inventar' | 'personal' }[] {
+    const inventarItems = this.gameStateService.inventar.inventar()?.items ?? [];
+    const personalItems = this.gameStateService.personalItems.personalItems()?.items ?? [];
+
+    const fromInventar = inventarItems
+      .map((item: any, index: number) => ({ item, index, source: 'inventar' as const }))
+      .filter((entry: { item: any }) => !entry.item.equipped);
+
+    const fromPersonal = personalItems
+      .map((item: any, index: number) => ({ item, index, source: 'personal' as const }))
+      .filter((entry: { item: any }) => !entry.item.equipped);
+
+    return [...fromInventar, ...fromPersonal];
   }
 
   public getTier(item: any): number | null {
@@ -77,8 +86,9 @@ export class SellPanel {
     }
   }
 
-  public selectForSell(index: number): void {
+  public selectForSell(index: number, source: 'inventar' | 'personal'): void {
     this.gameStateService.shop.sellConfirmIndex.set(index);
+    this.gameStateService.shop.sellConfirmSource.set(source);
   }
 
   public cancelSell(): void {
@@ -88,7 +98,17 @@ export class SellPanel {
   public confirmSell(): void {
     const index = this.confirmIndex();
     if (index !== null) {
-      this.gameStateService.shop.sellItem(index);
+      this.gameStateService.shop.sellItem(index, this.confirmSource());
     }
+  }
+
+  public getConfirmItem(): any {
+    const index = this.confirmIndex();
+    if (index === null) return null;
+    const source = this.confirmSource();
+    const list = source === 'personal'
+      ? this.gameStateService.personalItems.personalItems()?.items
+      : this.gameStateService.inventar.inventar()?.items;
+    return list?.[index] ?? null;
   }
 }

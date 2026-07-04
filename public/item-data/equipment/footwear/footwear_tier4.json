@@ -2,7 +2,7 @@
   {
     "name": "Schuhe der arkanen Erleuchtung",
     "description": "Hinterlassen beim Gehen leuchtende Mana-Spuren, die kurz darauf verblassen.",
-    "img-path": "imgs/items/boots/arcane-boots_4.webp",
+    "img-path": "imgs/items/footwear/arcane-boots_4.webp",
     "price": 66,
     "armor-slot": "footwear",
     "tier": "4",
@@ -34,7 +34,7 @@
   {
     "name": "Schattenmeister-Stiefel",
     "description": "Absorbieren jeglichen Trittschall, selbst auf knackendem Holz oder sprödem Glas.",
-    "img-path": "imgs/items/boots/shadow-boots_4.webp",
+    "img-path": "imgs/items/footwear/shadow-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
     "tier": "4",
@@ -66,7 +66,7 @@
   {
     "name": "Prunkvolle Obsidianstiefel",
     "description": "Wie Ambosse an den Füßen. Schützen vor Erdbeben und Magma-Böden.",
-    "img-path": "imgs/items/boots/obsidian-boots_4.webp",
+    "img-path": "imgs/items/footwear/obsidian-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
     "tier": "4",
@@ -98,7 +98,7 @@
   {
     "name": "Sturmbringer-Stiefel",
     "description": "Erlauben es, kurzzeitig wie vom Blitz getroffen nach vorne zu preschen.",
-    "img-path": "imgs/items/boots/storm-boots_4.webp",
+    "img-path": "imgs/items/footwear/storm-boots_4.webp",
     "price": 73,
     "armor-slot": "footwear",
     "tier": "4",
@@ -130,7 +130,7 @@
   {
     "name": "Dämonen-Schreiter",
     "description": "Aus den Hufen einer Albtraum-Kreatur geformt. Verbrennen den Boden unter dir.",
-    "img-path": "imgs/items/boots/demon-boots_4.webp",
+    "img-path": "imgs/items/footwear/demon-boots_4.webp",
     "price": 102,
     "armor-slot": "footwear",
     "tier": "4",

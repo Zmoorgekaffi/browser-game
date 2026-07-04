@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { WalletService } from './wallet.service';
 import { SkillsService } from './skills.service';
 import { InventarService } from './inventar.service';
+import { PersonalItemsService } from './personal-items.service';
+import { CraftingService } from './crafting.service';
 import { ProfileService } from './profile.service';
 import { UtilityService } from './utility.service';
 import { ShopService } from './shop.service';
@@ -35,6 +37,8 @@ export class GameStateService {
   public wallet = inject(WalletService);
   public skills = inject(SkillsService);
   public inventar = inject(InventarService);
+  public personalItems = inject(PersonalItemsService);
+  public crafting = inject(CraftingService);
   public profile = inject(ProfileService);
   public utility = inject(UtilityService);
   public shop = inject(ShopService);
@@ -57,6 +61,7 @@ export class GameStateService {
       if (timestamp > 0) {
         this.shop.itemInfoCardShow.set(false);
         this.levelUpPanel.close();
+        // this.crafting.closeCraftingPanel();
       }
     });
   }
@@ -107,6 +112,12 @@ export class GameStateService {
 
     const inventarRaw = localStorage.getItem(`${charId}_inventar`) || '{"items": []}';
     this.inventar.init(JSON.parse(inventarRaw), charId);
+
+    const personalItemsRaw = localStorage.getItem(`${charId}_personal-items`) || '{"items": []}';
+    this.personalItems.init(JSON.parse(personalItemsRaw), charId);
+    // Persönliche Items können bereits ausgerüstet sein -> Slots neu berechnen.
+    this.inventar.refreshEquippedSlots();
+
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
     this.skills.profileData = this.currentCharId;
 

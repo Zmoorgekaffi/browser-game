@@ -5,6 +5,7 @@ import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
 import { SellPanel } from '../shared/sell-panel/sell-panel';
+import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
@@ -18,7 +19,7 @@ import weaponsData from '../../../../public/item-data/head.json';
 @Component({
   selector: 'app-smither',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel],
   templateUrl: './smither.html',
   styleUrl: './smither.scss',
 })

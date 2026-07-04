@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { UtilityService } from './utility.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
+import { PersonalItemsService } from './personal-items.service';
 import { getSellPrice } from '../utils/item-display.util';
 
 // Import der korrekten JSON-Pools für deine 3 Shops
@@ -31,6 +32,7 @@ export class ShopService {
   private utilityService = inject(UtilityService);
   private walletService = inject(WalletService);
   private inventarService = inject(InventarService);
+  private personalItemsService = inject(PersonalItemsService);
 
   // Die 3 reaktiven Shop-Signals
   private magicShopItems = signal<any[]>([]);
@@ -55,6 +57,7 @@ export class ShopService {
   // Globaler Zustand für den Verkaufs-Dialog
   public sellListShow = signal<boolean>(false);
   public sellConfirmIndex = signal<number | null>(null);
+  public sellConfirmSource = signal<'inventar' | 'personal'>('inventar');
 
   /**
    * Lädt gespeicherte Shop-Angebote aus dem LocalStorage
@@ -154,16 +157,21 @@ export class ShopService {
   public closeSellList(): void {
     this.sellListShow.set(false);
     this.sellConfirmIndex.set(null);
+    this.sellConfirmSource.set('inventar');
   }
 
   /**
-   * Verkauft ein Item aus dem Inventar für 50% seines Preises.
+   * Verkauft ein Item für 50% seines Preises — aus dem normalen Inventar
+   * oder aus den persönlichen (soulbound) Items.
    *
-   * @param itemIndex Index des Items im Inventar-Array.
+   * @param itemIndex Index des Items in der jeweiligen Quell-Liste.
+   * @param source    'inventar' (Default) oder 'personal'.
    * @returns true, wenn der Verkauf erfolgreich war.
    */
-  public sellItem(itemIndex: number): boolean {
-    const items = this.inventarService.inventar()?.items;
+  public sellItem(itemIndex: number, source: 'inventar' | 'personal' = 'inventar'): boolean {
+    const items = source === 'personal'
+      ? this.personalItemsService.personalItems()?.items
+      : this.inventarService.inventar()?.items;
     const item = items?.[itemIndex];
 
     if (!item || item.equipped) {
@@ -172,7 +180,13 @@ export class ShopService {
     }
 
     this.walletService.addGold(getSellPrice(item.price));
-    this.inventarService.removeItemFromInventar(itemIndex);
+
+    if (source === 'personal') {
+      this.personalItemsService.removeItemAt(itemIndex);
+    } else {
+      this.inventarService.removeItemFromInventar(itemIndex);
+    }
+
     this.sellConfirmIndex.set(null);
 
     console.log(`💰 Item verkauft für ${getSellPrice(item.price)} Gold!`);

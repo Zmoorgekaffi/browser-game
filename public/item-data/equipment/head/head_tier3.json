@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Magister-Hut",
+    "description": "Ein breitkrempiger Hut, der mit arkanem Staub imprägniert wurde. Schützt vor Regen und geistiger Verwirrung.",
+    "img-path": "imgs/items/helmets/mage-hat_3.webp",
+    "price": 54,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 10,
+      "dexterity": 0,
+      "strength": -4,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 40,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 4,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 12,
+        "cold": 12,
+        "lightning": 12,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Schlangenhaut-Maske",
+    "description": "Aus der Schuppe einer Riesennatter gefertigt. Passt sich den Gesichtszügen geschmeidig an.",
+    "img-path": "imgs/items/helmets/snake-mask_3.webp",
+    "price": 60,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 8,
+      "strength": 0,
+      "vitality": -4,
+      "luck": 4,
+      "energy-shield": 0,
+      "magic-find": 6,
+      "armor": 12,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 8,
+      "crit-chance": 4,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 8
+      }
+    }
+  },
+  {
+    "name": "Visierhelm des Wächters",
+    "description": "Ein polierter Stahlhelm mit klappbarem Visier. Standardausrüstung der dörflichen Elite-Stadtwache.",
+    "img-path": "imgs/items/helmets/guard-helm_3.webp",
+    "price": 60,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -4,
+      "strength": 10,
+      "vitality": 12,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 28,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -4,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 8,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Falkenaugen-Helm",
+    "description": "Mit echten Raubvogelfedern verziert. Das Visier ist so geschliffen, dass es Bewegungen im Augenwinkel hervorhebt.",
+    "img-path": "imgs/items/helmets/hawk-helm_3.webp",
+    "price": 60,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 4,
+      "dexterity": 6,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 16,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 8,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -4,
+      "resistances": {
+        "fire": 0,
+        "cold": 8,
+        "lightning": 8,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Gequältes Antlitz",
+    "description": "Eine Maske, die ein schreiendes Gesicht zeigt. Sie entzieht der Umgebung Lebenskraft, fordert aber geistigen Tribut.",
+    "img-path": "imgs/items/helmets/torment-mask_3.webp",
+    "price": 84,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -8,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 8,
+      "attack": 8,
+      "magic-attack": 8,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 12,
+      "chaosDamage": 8,
+      "charisma": 0,
+      "resistances": {
+        "fire": -12,
+        "cold": -12,
+        "lightning": -12,
+        "chaos": 16
+      }
+    }
+  }
+]

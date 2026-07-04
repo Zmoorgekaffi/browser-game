@@ -2,7 +2,7 @@
   {
     "name": "Flicken-Stoffschuhe",
     "description": "Dünne Sohlen, durch die man jeden spitzen Kieselstein schmerzhaft spürt.",
-    "img-path": "imgs/items/boots/cloth-shoes_1.webp",
+    "img-path": "imgs/items/footwear/cloth-shoes_1.webp",
     "price": 9,
     "armor-slot": "footwear",
     "tier": "1",
@@ -34,7 +34,7 @@
   {
     "name": "Abgewetzte Lederstiefel",
     "description": "Etwas feucht im Inneren, bieten aber soliden Halt auf schlammigem Boden.",
-    "img-path": "imgs/items/boots/leather-boots_1.webp",
+    "img-path": "imgs/items/footwear/leather-boots_1.webp",
     "price": 10,
     "armor-slot": "footwear",
     "tier": "1",
@@ -66,7 +66,7 @@
   {
     "name": "Rostige Eisenstiefel",
     "description": "Sehr schwer. Jeder Schritt hinterlässt tiefe Abdrücke und kostet Kraft.",
-    "img-path": "imgs/items/boots/iron-boots_1.webp",
+    "img-path": "imgs/items/footwear/iron-boots_1.webp",
     "price": 10,
     "armor-slot": "footwear",
     "tier": "1",
@@ -98,7 +98,7 @@
   {
     "name": "Wilderer-Schuhe",
     "description": "Weiche Sohlen aus Wildleder, die Schritte im Wald fast lautlos machen.",
-    "img-path": "imgs/items/boots/thief-boots_1.webp",
+    "img-path": "imgs/items/footwear/thief-boots_1.webp",
     "price": 10,
     "armor-slot": "footwear",
     "tier": "1",
@@ -130,7 +130,7 @@
   {
     "name": "Splitternde Knochenschreiter",
     "description": "Spitze Knochenkrallen bohren sich bei jedem Schritt krallend in den Untergrund.",
-    "img-path": "imgs/items/boots/cursed-boots_1.webp",
+    "img-path": "imgs/items/footwear/cursed-boots_1.webp",
     "price": 14,
     "armor-slot": "footwear",
     "tier": "1",

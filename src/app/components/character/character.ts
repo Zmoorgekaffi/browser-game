@@ -71,6 +71,20 @@ export class Character {
   }
 
   /**
+   * Liest einen Stat-Wert aus einem Kampfwerte-Objekt. Unterstützt neben
+   * flachen Keys ('strength') auch einen verschachtelten Punkt-Pfad
+   * ('resistances.fire'), da die Resistenzen als eigenes Objekt gespeichert
+   * sind statt als flache Top-Level-Keys.
+   */
+  public getStatValue(source: any, key: string): number {
+    if (!source) return 0;
+    const value = key.includes('.')
+      ? key.split('.').reduce((acc, part) => acc?.[part], source)
+      : source[key];
+    return value ?? 0;
+  }
+
+  /**
    * Look-Around-Animation: frame (1).png ... frame (14).png,
    * danach nochmal frame (1).png für einen sauberen Loop-Übergang.
    */
@@ -97,5 +111,9 @@ export class Character {
     { key: 'critChance', name: 'Krit. Chance' },
     { key: 'critDamage', name: 'Krit. Schaden' },
     { key: 'magic-find', name: 'Magic Find' },
+    { key: 'resistances.fire', name: 'Feuerresistenz' },
+    { key: 'resistances.cold', name: 'Kälteresistenz' },
+    { key: 'resistances.lightning', name: 'Blitzresistenz' },
+    { key: 'resistances.chaos', name: 'Chaosresistenz' },
   ];
 }

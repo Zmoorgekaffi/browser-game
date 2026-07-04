@@ -130,8 +130,8 @@
   <div
     class="absolute overflow-y-auto z-10 min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2"
   >
-    @for (item of inventar()?.items; track $index) {
-      <app-inventar-item [item]="item" [index]="$index"></app-inventar-item>
+    @for (entry of displayedItems; track entry.source + '-' + entry.index) {
+      <app-inventar-item [item]="entry.item" [index]="entry.index" [source]="entry.source"></app-inventar-item>
     } @empty {
       <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
     }
@@ -147,7 +147,9 @@
     >
       <div class="flex justify-between items-baseline gap-3 mb-1">
         <span class="font-bold text-amber-400">{{ item.name }}</span>
-        @if (getTier(item); as tier) {
+        @if (item.soulbound) {
+          <span class="text-purple-300 text-xs font-mono">Soulbound</span>
+        } @else if (getTier(item); as tier) {
           <span class="text-zinc-300 text-xs font-mono">Tier {{ tier }}</span>
         }
       </div>
@@ -161,6 +163,10 @@
         @if (item.stats?.armor > 0) { <span>+{{ item.stats.armor }} ARM</span> }
         @if (item.stats?.['energy-shield'] > 0) { <span>+{{ item.stats['energy-shield'] }} ESD</span> }
         @if (item.stats?.['magic-find'] > 0) { <span>+{{ item.stats['magic-find'] }} MF</span> }
+        @if (item.stats?.resistances?.fire > 0) { <span>+{{ item.stats.resistances.fire }} Feuerres.</span> }
+        @if (item.stats?.resistances?.cold > 0) { <span>+{{ item.stats.resistances.cold }} Kälteres.</span> }
+        @if (item.stats?.resistances?.lightning > 0) { <span>+{{ item.stats.resistances.lightning }} Blitzres.</span> }
+        @if (item.stats?.resistances?.chaos > 0) { <span>+{{ item.stats.resistances.chaos }} Chaosres.</span> }
       </div>
     </div>
   }

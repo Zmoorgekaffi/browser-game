@@ -12,9 +12,9 @@
       </div>
 
       <div class="overflow-y-auto flex flex-col gap-2 pr-1">
-        @for (entry of sellableItems; track entry.index) {
+        @for (entry of sellableItems; track entry.source + '-' + entry.index) {
           <div
-            (click)="selectForSell(entry.index)"
+            (click)="selectForSell(entry.index, entry.source)"
             class="border border-zinc-700 hover:border-white rounded-md p-3 flex gap-3 cursor-pointer hover:bg-[rgba(0,0,0,1)] transition-colors bg-[rgba(0,0,0,0.8)]"
           >
             <div class="w-14 h-14 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
@@ -24,7 +24,9 @@
             <div class="flex flex-col flex-grow min-w-0">
               <div class="flex justify-between items-baseline gap-2">
                 <h4 class="text-amber-400 font-semibold text-sm">{{ entry.item.name }}</h4>
-                @if (getTier(entry.item); as tier) {
+                @if (entry.item.soulbound) {
+                  <span class="text-[11px] text-purple-300 font-mono shrink-0">Soulbound</span>
+                } @else if (getTier(entry.item); as tier) {
                   <span class="text-[11px] text-zinc-300 font-mono shrink-0">Tier {{ tier }}</span>
                 }
               </div>
@@ -39,6 +41,10 @@
                 @if (entry.item.stats?.armor > 0) { <span>+{{ entry.item.stats.armor }} ARM</span> }
                 @if (entry.item.stats?.['energy-shield'] > 0) { <span>+{{ entry.item.stats['energy-shield'] }} ESD</span> }
                 @if (entry.item.stats?.['magic-find'] > 0) { <span>+{{ entry.item.stats['magic-find'] }} MF</span> }
+                @if (entry.item.stats?.resistances?.fire > 0) { <span>+{{ entry.item.stats.resistances.fire }} Feuerres.</span> }
+                @if (entry.item.stats?.resistances?.cold > 0) { <span>+{{ entry.item.stats.resistances.cold }} Kälteres.</span> }
+                @if (entry.item.stats?.resistances?.lightning > 0) { <span>+{{ entry.item.stats.resistances.lightning }} Blitzres.</span> }
+                @if (entry.item.stats?.resistances?.chaos > 0) { <span>+{{ entry.item.stats.resistances.chaos }} Chaosres.</span> }
               </div>
             </div>
 
@@ -54,7 +60,7 @@
       <div class="fixed inset-0 z-[10000] flex items-center justify-center bg-black/70">
         <div class="bg-black/90 border border-white/10 rounded-lg p-6 w-[360px] flex flex-col gap-4 items-center">
           <p class="text-white text-center">
-            Wirklich verkaufen für {{ getSellValue(gameStateService.inventar.inventar().items[idx]) }} Gold?
+            Wirklich verkaufen für {{ getSellValue(getConfirmItem()) }} Gold?
           </p>
           <div class="flex gap-3 w-full">
             <button

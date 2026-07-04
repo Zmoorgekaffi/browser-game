@@ -1,5 +1,6 @@
 import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
+import { PersonalItemsService } from './personal-items.service';
 
 // Definition der verfügbaren Slots zur Typsicherheit (ear-right entfernt)
 export interface EquippedSlots {
@@ -41,6 +42,7 @@ function createEmptySlots(): EquippedSlots {
 })
 export class InventarService {
   private router = inject(Router);
+  private personalItemsService = inject(PersonalItemsService);
 
   /** Das komplette Inventar ({ items: [...] }). */
   public inventar: WritableSignal<any> = signal<any>({ items: [] });
@@ -98,15 +100,24 @@ export class InventarService {
   }
 
   /**
-   * Rüstet ein Item an bzw. ab (Toggle).
+   * Rüstet ein Item an bzw. ab (Toggle). Funktioniert sowohl für normale
+   * Inventar-Items als auch für persönliche (soulbound) Crafting-Items —
+   * beide Quellen teilen sich dieselben Ausrüstungs-Slots.
    *
    * Beim Anlegen:
    *  - Ringe/Accessoires wandern in den ersten freien Links/Rechts-Slot.
-   *  - Ein bereits im Ziel-Slot sitzendes Item wird automatisch abgelegt.
+   *  - Ein bereits im Ziel-Slot sitzendes Item (aus Inventar ODER
+   *    persönlichen Items) wird automatisch abgelegt.
    *
-   * @param itemIndex Index des Items im Inventar-Array.
+   * @param itemIndex Index des Items in der jeweiligen Quell-Liste.
+   * @param source    'inventar' (Default) oder 'personal'.
    */
-  public toggleEquipItem(itemIndex: number): void {
+  public toggleEquipItem(itemIndex: number, source: 'inventar' | 'personal' = 'inventar'): void {
+    if (source === 'personal') {
+      this.togglePersonalEquipItem(itemIndex);
+      return;
+    }
+
     let latestItems: any[] = [];
 
     this.inventar.update(currentInv => {
@@ -123,7 +134,7 @@ export class InventarService {
       if (isEquipping) {
         const finalSlot = this.resolveTargetSlot(baseSlot);
         targetItem['assigned-slot'] = finalSlot;
-        this.unequipConflictingItems(updatedItems, itemIndex, finalSlot);
+        this.clearSlotEverywhere(finalSlot, 'inventar', itemIndex, updatedItems);
       } else {
         targetItem['assigned-slot'] = null;
       }
@@ -140,6 +151,67 @@ export class InventarService {
     this.updateEquippedSlotsSignal(latestItems);
   }
 
+  /** Wie toggleEquipItem, nur für ein Item aus den persönlichen (soulbound) Items. */
+  private togglePersonalEquipItem(itemIndex: number): void {
+    const items = this.personalItemsService.personalItems()?.items ?? [];
+    const targetItem = items[itemIndex];
+    const baseSlot = targetItem?.['armor-slot'];
+    if (!targetItem || !baseSlot) return;
+
+    const isEquipping = !targetItem.equipped;
+
+    if (isEquipping) {
+      const finalSlot = this.resolveTargetSlot(baseSlot);
+
+      // Etwaige Konflikte im Inventar auflösen (mutiert eine Arbeits-Kopie).
+      const workingInventarItems = JSON.parse(JSON.stringify(this.inventar()?.items ?? []));
+      this.clearSlotEverywhere(finalSlot, 'personal', itemIndex, workingInventarItems);
+      const newInventar = { ...this.inventar(), items: workingInventarItems };
+      this.inventar.set(newInventar);
+      this.saveToLocalStorage(newInventar);
+
+      this.personalItemsService.setEquippedAt(itemIndex, true, finalSlot);
+    } else {
+      this.personalItemsService.setEquippedAt(itemIndex, false, null);
+    }
+
+    this.updateEquippedSlotsSignal();
+  }
+
+  /**
+   * Legt jedes Item ab, das aktuell im Ziel-Slot sitzt — egal ob es aus dem
+   * normalen Inventar oder aus den persönlichen (soulbound) Items kommt.
+   *
+   * @param finalSlot            Der Slot, der frei geräumt werden soll.
+   * @param exceptSource         Quelle des Items, das gerade angelegt wird (wird übersprungen).
+   * @param exceptIndex          Index dieses Items (wird übersprungen).
+   * @param workingInventarItems Arbeits-Kopie der Inventar-Items (wird mutiert).
+   */
+  private clearSlotEverywhere(
+    finalSlot: string,
+    exceptSource: 'inventar' | 'personal',
+    exceptIndex: number,
+    workingInventarItems: any[],
+  ): void {
+    workingInventarItems.forEach((item: any, index: number) => {
+      if (exceptSource === 'inventar' && index === exceptIndex) return;
+      const assigned = item['assigned-slot'] || item['armor-slot'];
+      if (item.equipped && assigned === finalSlot) {
+        item.equipped = false;
+        item['assigned-slot'] = null;
+      }
+    });
+
+    const personalItems = this.personalItemsService.personalItems()?.items ?? [];
+    personalItems.forEach((item: any, index: number) => {
+      if (exceptSource === 'personal' && index === exceptIndex) return;
+      const assigned = item['assigned-slot'] || item['armor-slot'];
+      if (item.equipped && assigned === finalSlot) {
+        this.personalItemsService.setEquippedAt(index, false, null);
+      }
+    });
+  }
+
   /**
    * Legt das Item ab, das aktuell in `slotName` steckt (explizites Ausziehen
    * über einen Klick auf den ArmorSlot, kein Toggle wie bei toggleEquipItem).
@@ -147,7 +219,7 @@ export class InventarService {
    * @param slotName Der Slot, dessen Item ausgezogen werden soll.
    */
   public unequipSlot(slotName: string): void {
-    let latestItems: any[] = [];
+    let latestItems: any[] = this.inventar()?.items ?? [];
 
     this.inventar.update(currentInv => {
       if (!currentInv?.items) return currentInv;
@@ -166,6 +238,16 @@ export class InventarService {
       latestItems = updatedItems;
       return newInventar;
     });
+
+    // Der Slot könnte statt von einem Inventar-Item auch von einem
+    // persönlichen (soulbound) Item belegt sein.
+    const personalItems = this.personalItemsService.personalItems()?.items ?? [];
+    const personalIdx = personalItems.findIndex(
+      (item: any) => item.equipped && (item['assigned-slot'] || item['armor-slot']) === slotName
+    );
+    if (personalIdx !== -1) {
+      this.personalItemsService.setEquippedAt(personalIdx, false, null);
+    }
 
     this.updateEquippedSlotsSignal(latestItems);
   }
@@ -212,33 +294,16 @@ export class InventarService {
   }
 
   /**
-   * Legt alle Items ab, die bereits im Ziel-Slot sitzen
-   * (mutiert das übergebene Array direkt).
-   *
-   * @param items     Arbeits-Kopie der Inventar-Items.
-   * @param itemIndex Index des Items, das gerade angelegt wird.
-   * @param finalSlot Der Slot, der frei geräumt werden soll.
-   */
-  private unequipConflictingItems(items: any[], itemIndex: number, finalSlot: string): void {
-    items.forEach((item: any, index: number) => {
-      const currentAssigned = item['assigned-slot'] || item['armor-slot'];
-      if (index !== itemIndex && currentAssigned === finalSlot && item.equipped) {
-        items[index].equipped = false;
-        items[index]['assigned-slot'] = null;
-      }
-    });
-  }
-
-  /**
    * Baut das equippedSlots-Signal aus dem Items-Array neu auf.
    *
    * @param itemsArray Optional: Items-Liste (Default: aktuelles Inventar).
    */
   private updateEquippedSlotsSignal(itemsArray?: any[]): void {
     const items = itemsArray || this.inventar().items || [];
+    const personalItems = this.personalItemsService.personalItems()?.items || [];
     const newSlots: EquippedSlots = createEmptySlots();
 
-    items.forEach((item: any) => {
+    [...items, ...personalItems].forEach((item: any) => {
       if (item.equipped) {
         const slot = (item['assigned-slot'] || item['armor-slot']) as keyof EquippedSlots;
         if (slot && slot in newSlots) {
@@ -248,6 +313,15 @@ export class InventarService {
     });
 
     this.equippedSlots.set(newSlots);
+  }
+
+  /**
+   * Baut das equippedSlots-Signal neu auf. Öffentlich, damit der
+   * GameStateService es nach dem Laden der persönlichen Items erneut
+   * anstoßen kann (die Reihenfolge beim Char-Load ist: Inventar → Personal Items).
+   */
+  public refreshEquippedSlots(): void {
+    this.updateEquippedSlotsSignal();
   }
 
   /** Persistiert das Inventar unter dem Key des aktiven Charakters. */

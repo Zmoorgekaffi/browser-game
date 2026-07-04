@@ -5,6 +5,7 @@ import { ItemInfoCard } from '../shared/item-info-card/item-info-card';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
 import { SellPanel } from '../shared/sell-panel/sell-panel';
+import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths } from '../../utils/frame-paths.util';
 
@@ -18,7 +19,7 @@ import supplies from '../../../../public/item-data/head.json';
 @Component({
   selector: 'app-general-supplies',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel],
   templateUrl: './general-supplies.html',
   styleUrl: './general-supplies.scss',
 })

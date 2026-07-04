@@ -2,7 +2,7 @@
   {
     "name": "Glimmende Kristall-Stiefel",
     "description": "Ermöglichen es dem Magier, sich in Notsituationen instinktiv kurz zu teleportieren.",
-    "img-path": "imgs/items/boots/crystal-boots_5.webp",
+    "img-path": "imgs/items/footwear/crystal-boots_5.webp",
     "price": 113,
     "armor-slot": "footwear",
     "tier": "5",
@@ -34,7 +34,7 @@
   {
     "name": "Nachtwandler-Stiefel",
     "description": "Wer sie trägt, kann über Wasser wandeln und hinterlässt keinerlei Spuren.",
-    "img-path": "imgs/items/boots/night-boots_5.webp",
+    "img-path": "imgs/items/footwear/night-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
     "tier": "5",
@@ -66,7 +66,7 @@
   {
     "name": "Unvergängliche Drachenstiefel",
     "description": "Aus feuerfester Drachenhaut. Widerstehen selbst direkten Lava-Strömen schadlos.",
-    "img-path": "imgs/items/boots/dragon-boots_5.webp",
+    "img-path": "imgs/items/footwear/dragon-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
     "tier": "5",
@@ -98,7 +98,7 @@
   {
     "name": "Kosmische Stiefel",
     "description": "Hebeln die Schwerkraft fast aus, sodass der Träger scheinbar durch die Luft wandelt.",
-    "img-path": "imgs/items/boots/cosmic-boots_5.webp",
+    "img-path": "imgs/items/footwear/cosmic-boots_5.webp",
     "price": 125,
     "armor-slot": "footwear",
     "tier": "5",
@@ -130,7 +130,7 @@
   {
     "name": "Antike Schicksals-Stiefel",
     "description": "Legendäre Stiefel, die dich instinktiv vor jedem herannahenden Projektil ausweichen lassen.",
-    "img-path": "imgs/items/boots/destiny-boots_5.webp",
+    "img-path": "imgs/items/footwear/destiny-boots_5.webp",
     "price": 176,
     "armor-slot": "footwear",
     "tier": "5",

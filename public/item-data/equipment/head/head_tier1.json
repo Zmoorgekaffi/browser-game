@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Flicken-Stoffhaube",
+    "description": "Eine einfache, aus Stoffresten zusammengenähte Haube. Bietet minimalen Schutz, wärmt aber den Kopf.",
+    "img-path": "imgs/items/helmets/cloth-hood_1.webp",
+    "price": 13,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 2,
+      "dexterity": 0,
+      "strength": -1,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 10,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 1,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 3,
+        "cold": 3,
+        "lightning": 3,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Abgewetzte Lederkappe",
+    "description": "Ein altes Stück Leder, das notdürftig an die Kopfform angepasst wurde. Riecht nach billigem Tran.",
+    "img-path": "imgs/items/helmets/leather-cap_1.webp",
+    "price": 15,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": -1,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 1,
+      "armor": 3,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 2,
+      "crit-chance": 1,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 2
+      }
+    }
+  },
+  {
+    "name": "Rostiger Eisenhut",
+    "description": "Schwer, unhandlich und voller Flecken. Schützt vor Schlägen, trübt aber das Gehör gewaltig.",
+    "img-path": "imgs/items/helmets/iron-helm_1.webp",
+    "price": 15,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -1,
+      "strength": 2,
+      "vitality": 3,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 2,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Wilderer-Maske",
+    "description": "Eine einfache Stoffmaske mit Augenschlitzen. Ideal, um im Unterholz unentdeckt zu bleiben.",
+    "img-path": "imgs/items/helmets/thief-mask_1.webp",
+    "price": 15,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 1,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 2,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 0,
+        "cold": 2,
+        "lightning": 2,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Splitterndes Knochenband",
+    "description": "Ein unheimliches Stirnband aus Tierknochen. Es flüstert leise, wenn Blut vergossen wird.",
+    "img-path": "imgs/items/helmets/cursed-band_1.webp",
+    "price": 21,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -2,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 2,
+      "magic-attack": 2,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 3,
+      "chaosDamage": 2,
+      "charisma": 0,
+      "resistances": {
+        "fire": -3,
+        "cold": -3,
+        "lightning": -3,
+        "chaos": 4
+      }
+    }
+  }
+]

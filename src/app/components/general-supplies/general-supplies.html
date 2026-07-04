@@ -12,12 +12,21 @@
 
   <app-item-info-card></app-item-info-card>
   <app-sell-panel></app-sell-panel>
+  <app-crafting-panel></app-crafting-panel>
 
-  <div
-    (click)="gameStateService.shop.openSellList()"
-    class="absolute top-4 left-4 cursor-pointer bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
-  >
-    Verkaufen
+  <div class="absolute top-4 left-4 flex gap-2 z-50">
+    <div
+      (click)="gameStateService.shop.openSellList()"
+      class="cursor-pointer bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-md select-none"
+    >
+      Verkaufen
+    </div>
+    <div
+      (click)="gameStateService.crafting.openCraftingPanel()"
+      class="cursor-pointer bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-4 py-2 rounded-md select-none"
+    >
+      Crafting
+    </div>
   </div>
 
   <div class="absolute w-[15rem] h-[15rem] top-[172px] right-[520px]">

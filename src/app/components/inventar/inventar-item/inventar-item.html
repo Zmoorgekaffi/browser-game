@@ -13,7 +13,9 @@
     <div class="flex flex-col flex-grow min-w-0">
       <div class="flex justify-between items-baseline gap-2">
         <h4 class="text-amber-400 font-semibold text-sm">{{ itemSignal()?.name }}</h4>
-        @if (tier !== null) {
+        @if (itemSignal()?.soulbound) {
+          <span class="text-[11px] text-purple-300 font-mono shrink-0">Soulbound</span>
+        } @else if (tier !== null) {
           <span class="text-[11px] text-zinc-300 font-mono shrink-0">Tier {{ tier }}</span>
         }
       </div>
@@ -33,6 +35,10 @@
     @if (itemSignal()?.stats?.armor > 0) { <span>+{{ itemSignal().stats.armor }} ARM</span> }
     @if (itemSignal()?.stats?.['energy-shield'] > 0) { <span>+{{ itemSignal().stats['energy-shield'] }} ESD</span> }
     @if (itemSignal()?.stats?.['magic-find'] > 0) { <span>+{{ itemSignal().stats['magic-find'] }} MF</span> }
+    @if (itemSignal()?.stats?.resistances?.fire > 0) { <span>+{{ itemSignal().stats.resistances.fire }} Feuerres.</span> }
+    @if (itemSignal()?.stats?.resistances?.cold > 0) { <span>+{{ itemSignal().stats.resistances.cold }} Kälteres.</span> }
+    @if (itemSignal()?.stats?.resistances?.lightning > 0) { <span>+{{ itemSignal().stats.resistances.lightning }} Blitzres.</span> }
+    @if (itemSignal()?.stats?.resistances?.chaos > 0) { <span>+{{ itemSignal().stats.resistances.chaos }} Chaosres.</span> }
   </div>
 
   <div class="flex justify-between items-center pt-2 border-t border-white/10">

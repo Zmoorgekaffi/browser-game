@@ -295,13 +295,20 @@ export class SkillsService {
   /**
    * Differenz zweier Kampfwerte-Objekte, Feld für Feld (für die
    * Tooltip-Aufschlüsselung "wie viel kam von welcher Schicht").
-   * `resistances` und `spells` werden bewusst ausgeklammert (nicht Teil der
-   * Stat-Liste in der Charakter-Ansicht).
+   * `resistances` wird dabei Element für Element verglichen (verschachtelt),
+   * `spells` bewusst ausgeklammert (nicht Teil der Stat-Liste).
    */
   private diffStats(after: any, before: any): any {
     const result: any = {};
     for (const key of Object.keys(after)) {
-      if (key === 'resistances' || key === 'spells') continue;
+      if (key === 'spells') continue;
+      if (key === 'resistances') {
+        result.resistances = {};
+        for (const element of RESISTANCE_KEYS) {
+          result.resistances[element] = (after.resistances?.[element] ?? 0) - (before.resistances?.[element] ?? 0);
+        }
+        continue;
+      }
       result[key] = (after[key] ?? 0) - (before[key] ?? 0);
     }
     return result;

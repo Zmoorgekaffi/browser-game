@@ -34,11 +34,11 @@
         </span>
 
         <span class="w-[25%] text-center text-green-400 font-bold">
-          {{ combatStats()[stat.key] !== undefined ? combatStats()[stat.key] : 0 }}
+          {{ getStatValue(combatStats(), stat.key) }}
         </span>
 
         <span class="w-[30%] text-right text-[rgba(255,255,255,0.8)] text-sm font-mono">
-          {{ baseStats()[stat.key] !== undefined ? baseStats()[stat.key] : 0 }}
+          {{ getStatValue(baseStats(), stat.key) }}
         </span>
       </div>
     }
@@ -60,23 +60,23 @@
       </div>
       <div class="flex justify-between gap-4 text-gray-300">
         <span>Basis</span>
-        <span class="font-mono">{{ statBreakdown().base[statKey] ?? 0 }}</span>
+        <span class="font-mono">{{ getStatValue(statBreakdown().base, statKey) }}</span>
       </div>
       <div class="flex justify-between gap-4 text-amber-300">
         <span>Von Hauptstats</span>
-        <span class="font-mono">{{ statBreakdown().mainStats[statKey] ?? 0 }}</span>
+        <span class="font-mono">{{ getStatValue(statBreakdown().mainStats, statKey) }}</span>
       </div>
       <div class="flex justify-between gap-4 text-sky-300">
         <span>Von Ausrüstung</span>
-        <span class="font-mono">{{ statBreakdown().equipment[statKey] ?? 0 }}</span>
+        <span class="font-mono">{{ getStatValue(statBreakdown().equipment, statKey) }}</span>
       </div>
       <div class="flex justify-between gap-4 text-emerald-300">
         <span>Von Passives</span>
-        <span class="font-mono">{{ statBreakdown().passives[statKey] ?? 0 }}</span>
+        <span class="font-mono">{{ getStatValue(statBreakdown().passives, statKey) }}</span>
       </div>
       <div class="flex justify-between gap-4 text-white font-bold border-t border-white/20 mt-1 pt-1">
         <span>Gesamt</span>
-        <span class="font-mono">{{ statBreakdown().total[statKey] ?? 0 }}</span>
+        <span class="font-mono">{{ getStatValue(statBreakdown().total, statKey) }}</span>
       </div>
     </div>
   }

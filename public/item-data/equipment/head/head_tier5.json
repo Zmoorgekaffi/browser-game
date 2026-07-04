@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Glimmende Kristall-Kappe",
+    "description": "Eine seltene Kopfbedeckung aus den Tiefen der Kristallhöhle. Jede Faser ist mit purer magischer Energie geladen.",
+    "img-path": "imgs/items/helmets/crystal-helm_5.webp",
+    "price": 162,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 30,
+      "dexterity": 0,
+      "strength": -12,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 120,
+      "magic-find": 0,
+      "armor": 12,
+      "attack": 0,
+      "magic-attack": 12,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 36,
+        "cold": 36,
+        "lightning": 36,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Nachtwandler-Kapuze",
+    "description": "Ein legendäres Artefakt der lautlosen Assassinen. Wer sie trägt, hinterlässt nicht einmal einen Schatten.",
+    "img-path": "imgs/items/helmets/night-hood_5.webp",
+    "price": 180,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 26,
+      "strength": 0,
+      "vitality": -12,
+      "luck": 12,
+      "energy-shield": 0,
+      "magic-find": 18,
+      "armor": 36,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 24,
+      "crit-chance": 12,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 24
+      }
+    }
+  },
+  {
+    "name": "Unvergänglicher Drachenhelm",
+    "description": "Aus einer echten Urdrachen-Schuppe geformt. Die Hitze der Schmiede glimmt noch immer im Inneren des Materials.",
+    "img-path": "imgs/items/helmets/dragon-helm_5.webp",
+    "price": 180,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -12,
+      "strength": 30,
+      "vitality": 36,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 84,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -12,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 24,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Kosmische Krone",
+    "description": "Ein schwebendes Gebilde aus Sternenmetall. Dem Träger offenbart sich die Geometrie des gesamten Schlachtfeldes.",
+    "img-path": "imgs/items/helmets/cosmic-crown_5.webp",
+    "price": 180,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 12,
+      "dexterity": 18,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 48,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 24,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -12,
+      "resistances": {
+        "fire": 0,
+        "cold": 24,
+        "lightning": 24,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Antikes Schicksals-Visier",
+    "description": "Ein legendärer Helm aus vergessener Zeit. Seine Runen glühen auf, sobald Gefahr droht, und lenken das Schicksal.",
+    "img-path": "imgs/items/helmets/destiny-helm_5.webp",
+    "price": 251,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -24,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 24,
+      "attack": 24,
+      "magic-attack": 24,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 36,
+      "chaosDamage": 24,
+      "charisma": 0,
+      "resistances": {
+        "fire": -36,
+        "cold": -36,
+        "lightning": -36,
+        "chaos": 48
+      }
+    }
+  }
+]

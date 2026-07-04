@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Reif der arkanen Erleuchtung",
+    "description": "Ein graziler Stirnreif, in den ein pulsierender Fokus-Kristall eingelassen ist. Stärkt die magische Barriere.",
+    "img-path": "imgs/items/helmets/arcane-circlet_4.webp",
+    "price": 94,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 17,
+      "dexterity": 0,
+      "strength": -7,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 70,
+      "magic-find": 0,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 7,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 21,
+        "cold": 21,
+        "lightning": 21,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Schattenmeister-Kapuze",
+    "description": "Aus schattenverstärktem Zwirn gewebt. Verschmilzt in der Dunkelheit fast vollständig mit der Umgebung.",
+    "img-path": "imgs/items/helmets/shadow-hood_4.webp",
+    "price": 105,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 15,
+      "strength": 0,
+      "vitality": -7,
+      "luck": 7,
+      "energy-shield": 0,
+      "magic-find": 10,
+      "armor": 21,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 14,
+      "crit-chance": 7,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 14
+      }
+    }
+  },
+  {
+    "name": "Prunkvoller Obsidianhelm",
+    "description": "Geschmiedet aus vulkanischem Glas und Stahl. Schwer wie die Erde selbst, aber nahezu undurchdringlich.",
+    "img-path": "imgs/items/helmets/obsidian-helm_4.webp",
+    "price": 105,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -7,
+      "strength": 17,
+      "vitality": 21,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 49,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -7,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 14,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Sturmbringer-Krone",
+    "description": "Ein Reif aus elektrisiertem Kupfer. Lässt die Haare des Trägers permanent leicht zu Berge stehen.",
+    "img-path": "imgs/items/helmets/storm-crown_4.webp",
+    "price": 105,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 7,
+      "dexterity": 10,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 28,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 14,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -7,
+      "resistances": {
+        "fire": 0,
+        "cold": 14,
+        "lightning": 14,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Dämonen-Visier",
+    "description": "Aus den verknöcherten Überresten eines niederen Dämonen geschnitzt. Erfüllt Feinde mit purer Urangst.",
+    "img-path": "imgs/items/helmets/demon-helm_4.webp",
+    "price": 147,
+    "armor-slot": "head",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -14,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 14,
+      "attack": 14,
+      "magic-attack": 14,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 21,
+      "chaosDamage": 14,
+      "charisma": 0,
+      "resistances": {
+        "fire": -21,
+        "cold": -21,
+        "lightning": -21,
+        "chaos": 28
+      }
+    }
+  }
+]

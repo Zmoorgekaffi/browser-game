@@ -2,7 +2,7 @@
   {
     "name": "Magister-Stiefel",
     "description": "Ermöglichen ein elegantes Gleiten über unwegsames Gelände ohne Tempoverlust.",
-    "img-path": "imgs/items/boots/mage-boots_3.webp",
+    "img-path": "imgs/items/footwear/mage-boots_3.webp",
     "price": 37,
     "armor-slot": "footwear",
     "tier": "3",
@@ -34,7 +34,7 @@
   {
     "name": "Schlangenhaut-Stiefel",
     "description": "Sorgen für blitzschnelle Richtungswechsel ohne die Gefahr des Umknickens.",
-    "img-path": "imgs/items/boots/snake-boots_3.webp",
+    "img-path": "imgs/items/footwear/snake-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
     "tier": "3",
@@ -66,7 +66,7 @@
   {
     "name": "Eisenstiefel des Wächters",
     "description": "Schwere Stiefel mit eisernen Sporen. Verleihen festen Stand gegen Zurückstoßen.",
-    "img-path": "imgs/items/boots/guard-boots_3.webp",
+    "img-path": "imgs/items/footwear/guard-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
     "tier": "3",
@@ -98,7 +98,7 @@
   {
     "name": "Falkenaugen-Stiefel",
     "description": "Sehr leichte Stiefel, die die Sprungkraft und Antrittsgeschwindigkeit optimieren.",
-    "img-path": "imgs/items/boots/hawk-boots_3.webp",
+    "img-path": "imgs/items/footwear/hawk-boots_3.webp",
     "price": 42,
     "armor-slot": "footwear",
     "tier": "3",
@@ -130,7 +130,7 @@
   {
     "name": "Gequälte Treter",
     "description": "Hinterlassen versengte Fußabdrücke. Erhöhen die Brutalität deiner Offensivaktionen.",
-    "img-path": "imgs/items/boots/torment-boots_3.webp",
+    "img-path": "imgs/items/footwear/torment-boots_3.webp",
     "price": 58,
     "armor-slot": "footwear",
     "tier": "3",

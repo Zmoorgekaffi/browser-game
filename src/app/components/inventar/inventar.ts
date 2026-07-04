@@ -25,8 +25,24 @@ export class Inventar {
   private el = inject(ElementRef);
 
   inventar: Signal<any> = this.gameStateService.inventar.inventar;
+  personalItems: Signal<any> = this.gameStateService.personalItems.personalItems;
   public hoveredEquippedItem = this.gameStateService.inventar.hoveredEquippedItem;
   public unequipConfirmSlot = this.gameStateService.inventar.unequipConfirmSlot;
+
+  /** Normale Inventar-Items und persönliche (soulbound) Items in einer gemeinsamen Liste. */
+  public get displayedItems(): { item: any; index: number; source: 'inventar' | 'personal' }[] {
+    const fromInventar = (this.inventar()?.items ?? []).map((item: any, index: number) => ({
+      item,
+      index,
+      source: 'inventar' as const,
+    }));
+    const fromPersonal = (this.personalItems()?.items ?? []).map((item: any, index: number) => ({
+      item,
+      index,
+      source: 'personal' as const,
+    }));
+    return [...fromInventar, ...fromPersonal];
+  }
 
   public tooltipX = 0;
   public tooltipY = 0;

@@ -30,6 +30,7 @@ export class InventarItem implements OnChanges {
   };
 
   @Input() index!: number;
+  @Input() source: 'inventar' | 'personal' = 'inventar';
   public itemSignal = signal<any>(null);
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,7 +49,7 @@ export class InventarItem implements OnChanges {
 
   toggleEquip(): void {
     if (this.index !== undefined) {
-      this.gameStateService.inventar.toggleEquipItem(this.index);
+      this.gameStateService.inventar.toggleEquipItem(this.index, this.source);
     }
   }
 }
