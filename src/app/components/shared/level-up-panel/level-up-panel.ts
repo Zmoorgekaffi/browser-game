@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { GameStateService } from '../../../services/game-state.service';
 import { PassiveLoaderService } from '../../../services/passive-loader.service';
+import { ScreenSizingService } from '../../../services/screen-sizing.service';
 import { InvestableStat, PassiveData } from '../../../models/passive.interface';
 
 /** Investitions-Schwellen, an denen jeweils ein Segment der Leiste endet. */
@@ -28,6 +29,7 @@ const THRESHOLDS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] as const;
 export class LevelUpPanel {
   public gameStateService = inject(GameStateService);
   private passiveLoader = inject(PassiveLoaderService);
+  private screenSizingService = inject(ScreenSizingService);
   private el = inject(ElementRef);
 
   //für hover tooltip wichtig
@@ -123,12 +125,31 @@ export class LevelUpPanel {
     this.hovered.set(null);
   }
 
-public onMouseMove(event: MouseEvent): void {
-  const rect = this.el.nativeElement
-    .querySelector('.panel-container')
-    .getBoundingClientRect();
-
-  this.mouseX = event.clientX - rect.left;
-  this.mouseY = -60
-}
+  /**
+   * Tooltip-Position folgt der Maus, ~100 echte Bildschirm-Pixel oberhalb
+   * des Cursors.
+   *
+   * WICHTIG, zwei Effekte überlagern sich hier:
+   *  1. `position: fixed` träfe hier NICHT den echten Browser-Viewport — die
+   *     App legt ihre Szenen in einen Wrapper mit `transform: scale(...)`
+   *     (siehe main-frontend.html), und jeder transformierte Vorfahre
+   *     definiert für `fixed`-Nachfahren einen neuen Containing Block.
+   *     Lösung: `position: absolute` relativ zu #overlayRoot, Offset via
+   *     dessen eigenem getBoundingClientRect() (liefert immer die
+   *     tatsächliche Bildschirmposition, unabhängig von der Transform-Kette).
+   *  2. Dieser Wrapper wird im Vollbild-Modus zusätzlich per
+   *     ScreenSizingService.scale() NICHT-1 skaliert (Desktop: scale(1),
+   *     Vollbild: an Fenstergröße angepasst). Ein Offset in echten
+   *     Bildschirm-Pixeln muss deshalb durch den Skalierungsfaktor geteilt
+   *     werden, um im LOKALEN (vor-Skalierung) CSS-Pixel-Raum von
+   *     #overlayRoot korrekt anzukommen — sonst stimmt die Position nur im
+   *     Desktop-Modus (scale=1), im Vollbild aber nicht mehr.
+   */
+  public onMouseMove(event: MouseEvent): void {
+    const rect = this.el.nativeElement.querySelector('#overlayRoot')?.getBoundingClientRect();
+    if (!rect) return;
+    const scale = this.screenSizingService.scale() || 1;
+    this.mouseX = (event.clientX - rect.left) / scale;
+    this.mouseY = (event.clientY - rect.top - 100) / scale;
+  }
 }

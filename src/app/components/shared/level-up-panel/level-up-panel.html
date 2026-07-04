@@ -1,10 +1,11 @@
 @if (show()) {
   <div
+    id="overlayRoot"
     class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
     (mousemove)="onMouseMove($event)"
   >
     <div
-      class="overflow-hidden relative w-[720px] max-h-[85vh] overflow-y-auto p-6 bg-black/80 border border-white/10 rounded-lg backdrop-blur-sm text-white select-none"
+      class="panel-container overflow-hidden relative w-[720px] max-h-[85vh] overflow-y-auto p-6 bg-black/80 border border-white/10 rounded-lg backdrop-blur-sm text-white select-none"
     >
       <div
         class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-full flex items-center justify-center border border-white/20 hover:bg-white/10"
@@ -50,50 +51,53 @@
           <div class="flex gap-[3px] w-full h-4">
             @for (threshold of thresholds; track threshold) {
               <div
-                class="panel-container flex-1 h-full bg-white/10 rounded-sm relative overflow-hidden cursor-default border border-white/5"
+                class="segment-bar flex-1 h-full bg-white/10 rounded-sm relative overflow-hidden cursor-default border border-white/5"
                 (mouseenter)="setHovered(stat.key, threshold)"
                 (mouseleave)="clearHovered()"
               >
                 <div
-                  class="bsolute left-0 top-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
+                  class="absolute left-0 top-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
                   [style.width.%]="segmentFill(stat.key, threshold)"
                 ></div>
               </div>
             }
           </div>
-
-          @if (hoveredPassive(); as passive) {
-            @if (passive.stat === stat.key) {
-              <div
-                class="absolute pointer-events-none z-[10000] p-3 bg-black border border-white/10 rounded-md text-sm"
-                [style.left.px]="mouseX"
-                [style.top.px]="mouseY"
-              >
-                <div class="flex justify-between gap-2 items-center font-bold">
-                  <span [class.text-emerald-400]="isUnlocked(passive.id)">
-                    {{ passive.name }}
-                  </span>
-                  <span class="text-xs text-gray-400 font-normal">
-                    {{ passive.threshold }} Punkte
-                  </span>
-                </div>
-
-                <p class="text-gray-300 mt-1">
-                  {{ passive.description }}
-                </p>
-
-                <p
-                  class="mt-1 text-xs"
-                  [class.text-emerald-400]="isUnlocked(passive.id)"
-                  [class.text-gray-500]="!isUnlocked(passive.id)"
-                >
-                  {{ isUnlocked(passive.id) ? '✓ freigeschaltet' : '🔒 noch nicht freigeschaltet' }}
-                </p>
-              </div>
-            }
-          }
         </div>
       }
     </div>
+
+    <!-- Tooltip lebt bewusst AUSSERHALB von .panel-container: position:absolute
+         relativ zu #overlayRoot (nicht :fixed — die App skaliert die Szenen
+         über einen transformierten Wrapper, wodurch :fixed NICHT den echten
+         Viewport träfe). Kann so über den Rand hinausragen, ohne die
+         Scroll-Fläche der Liste zu vergrößern (overlayRoot hat kein overflow). -->
+    @if (hoveredPassive(); as passive) {
+      <div
+        class="absolute pointer-events-none z-[10000] p-3 bg-black border border-white/10 rounded-md text-sm max-w-[280px]"
+        [style.left.px]="mouseX"
+        [style.top.px]="mouseY"
+      >
+        <div class="flex justify-between gap-2 items-center font-bold">
+          <span [class.text-emerald-400]="isUnlocked(passive.id)">
+            {{ passive.name }}
+          </span>
+          <span class="text-xs text-gray-400 font-normal">
+            {{ passive.threshold }} Punkte
+          </span>
+        </div>
+
+        <p class="text-gray-300 mt-1">
+          {{ passive.description }}
+        </p>
+
+        <p
+          class="mt-1 text-xs"
+          [class.text-emerald-400]="isUnlocked(passive.id)"
+          [class.text-gray-500]="!isUnlocked(passive.id)"
+        >
+          {{ isUnlocked(passive.id) ? '✓ freigeschaltet' : '🔒 noch nicht freigeschaltet' }}
+        </p>
+      </div>
+    }
   </div>
 }

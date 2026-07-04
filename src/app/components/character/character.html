@@ -1,5 +1,7 @@
 <div
+  id="characterRoot"
   class="w-full h-full flex flex-col bg-cover bg-center bg-black bg-no-repeat relative select-none"
+  (mousemove)="onMouseMove($event)"
 >
   <div class="absolute top-[19px] left-[735px] w-[395px] h-[52px]">
     <span
@@ -11,8 +13,6 @@
 
   <div
     id="statList"
-    #statList
-    (mousemove)="onMouseMove($event)"
     class="absolute top-[112px] left-[652px] w-[556px] h-[589px] p-5 flex flex-col justify-between gap-1 items-center overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
   >
     <div
@@ -42,39 +42,44 @@
         </span>
       </div>
     }
-
-    @if (hoveredStat(); as statKey) {
-      <div
-        class="absolute z-[10000] pointer-events-none p-3 bg-black border border-white/10 rounded-md text-sm min-w-[220px]"
-        [style.left.px]="tooltipX"
-        [style.top.px]="tooltipY"
-      >
-        <div class="font-bold text-white mb-1">
-          {{ getStatName(statKey) }}
-        </div>
-        <div class="flex justify-between gap-4 text-gray-300">
-          <span>Basis</span>
-          <span class="font-mono">{{ statBreakdown().base[statKey] ?? 0 }}</span>
-        </div>
-        <div class="flex justify-between gap-4 text-amber-300">
-          <span>Von Hauptstats</span>
-          <span class="font-mono">{{ statBreakdown().mainStats[statKey] ?? 0 }}</span>
-        </div>
-        <div class="flex justify-between gap-4 text-sky-300">
-          <span>Von Ausrüstung</span>
-          <span class="font-mono">{{ statBreakdown().equipment[statKey] ?? 0 }}</span>
-        </div>
-        <div class="flex justify-between gap-4 text-emerald-300">
-          <span>Von Passives</span>
-          <span class="font-mono">{{ statBreakdown().passives[statKey] ?? 0 }}</span>
-        </div>
-        <div class="flex justify-between gap-4 text-white font-bold border-t border-white/20 mt-1 pt-1">
-          <span>Gesamt</span>
-          <span class="font-mono">{{ statBreakdown().total[statKey] ?? 0 }}</span>
-        </div>
-      </div>
-    }
   </div>
+
+  <!-- Tooltip lebt bewusst AUSSERHALB von #statList: position:absolute
+       relativ zu #characterRoot (nicht :fixed — die App skaliert ihre Szenen
+       über einen transformierten Wrapper, wodurch :fixed NICHT den echten
+       Viewport träfe). Kann so über den Rand hinausragen, ohne die
+       Scroll-Fläche der Liste zu vergrößern (characterRoot hat kein overflow). -->
+  @if (hoveredStat(); as statKey) {
+    <div
+      class="absolute z-[10000] pointer-events-none p-3 bg-black border border-white/10 rounded-md text-sm min-w-[220px]"
+      [style.left.px]="tooltipX"
+      [style.top.px]="tooltipY"
+    >
+      <div class="font-bold text-white mb-1">
+        {{ getStatName(statKey) }}
+      </div>
+      <div class="flex justify-between gap-4 text-gray-300">
+        <span>Basis</span>
+        <span class="font-mono">{{ statBreakdown().base[statKey] ?? 0 }}</span>
+      </div>
+      <div class="flex justify-between gap-4 text-amber-300">
+        <span>Von Hauptstats</span>
+        <span class="font-mono">{{ statBreakdown().mainStats[statKey] ?? 0 }}</span>
+      </div>
+      <div class="flex justify-between gap-4 text-sky-300">
+        <span>Von Ausrüstung</span>
+        <span class="font-mono">{{ statBreakdown().equipment[statKey] ?? 0 }}</span>
+      </div>
+      <div class="flex justify-between gap-4 text-emerald-300">
+        <span>Von Passives</span>
+        <span class="font-mono">{{ statBreakdown().passives[statKey] ?? 0 }}</span>
+      </div>
+      <div class="flex justify-between gap-4 text-white font-bold border-t border-white/20 mt-1 pt-1">
+        <span>Gesamt</span>
+        <span class="font-mono">{{ statBreakdown().total[statKey] ?? 0 }}</span>
+      </div>
+    </div>
+  }
 
   <img
     src="imgs/character/character_0.webp"
