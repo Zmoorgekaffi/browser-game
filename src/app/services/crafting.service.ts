@@ -95,13 +95,23 @@ export class CraftingService {
   }
 
   /**
-   * Führt das Crafting aus: Alle Stat-Werte der 3 eingesetzten Items landen
-   * in einem gemeinsamen Pool. Davon wird zuerst pro Stat-Typ genau ein
-   * (zufälliger) Eintrag behalten (dedupeStatsByPath), danach werden aus den
-   * verbliebenen eindeutigen Stat-Typen bis zu 6 zufällig gezogen
-   * (pickRandom) und bilden die Stats des neuen Items. Name, Beschreibung,
-   * Bild, Preis, Tier und Slot entsprechen dem Basis-Item (mittleres
-   * Kästchen). Alle 3 eingesetzten Items werden dabei verbraucht.
+   * Führt das Crafting aus. Positive und negative Stats laufen getrennt:
+   *
+   * POSITIVE: Alle Bonus-Stats der 3 Items landen in einem Pool, pro Stat-Typ
+   * bleibt genau ein zufälliger Eintrag übrig (dedupeStatsByPath), davon
+   * werden bis zu 6 zufällig gezogen (pickRandom) — wie bisher.
+   *
+   * NEGATIV: Zuerst wird pro Item gezählt, wie viele Malus-Stats es hat; das
+   * Maximum der 3 Items bestimmt, wie viele Malus-Stats das neue Item
+   * bekommt. Alle Maluse landen in einem eigenen Pool und werden pro Stat-Typ
+   * zusammengeführt (mergeNegativeStatsByPath): Kommt ein Malus nur auf einem
+   * Item vor, bleibt er unverändert; kommt er auf mehreren vor, wird zwischen
+   * der Hälfte der Summe (aufgerundet) und dem höchsten Einzelwert gerollt
+   * und aufgerundet. Aus den so zusammengeführten Malus-Typen wird die zuvor
+   * ermittelte Anzahl zufällig gezogen.
+   *
+   * Name, Beschreibung, Bild, Preis, Tier und Slot entsprechen dem Basis-Item
+   * (mittleres Kästchen). Alle 3 eingesetzten Items werden dabei verbraucht.
    */
   public craftItem(): void {
     const [left, base, right] = this.slots();
@@ -113,10 +123,22 @@ export class CraftingService {
       ...this.flattenStats(right.stats),
     ];
 
-    // 1) Pro Stat-Typ genau einen (zufälligen) Eintrag behalten.
-    const uniqueStats = this.dedupeStatsByPath(pool);
-    // 2) Aus den übrig gebliebenen, bereits eindeutigen Stat-Typen 6 zufällige ziehen.
-    const chosen = this.pickRandom(uniqueStats, 6);
+    // --- Positive Stats: unverändert (dedupe + 6 zufällige) ---
+    const positivePool = pool.filter((entry) => entry.value > 0);
+    const uniquePositive = this.dedupeStatsByPath(positivePool);
+    const chosenPositive = this.pickRandom(uniquePositive, 6);
+
+    // --- Negative Stats: eigene Mechanik ---
+    const negativeCount = Math.max(
+      this.countNegativeStats(left.stats),
+      this.countNegativeStats(base.stats),
+      this.countNegativeStats(right.stats),
+    );
+    const negativePool = pool.filter((entry) => entry.value < 0);
+    const mergedNegative = this.mergeNegativeStatsByPath(negativePool);
+    const chosenNegative = this.pickRandom(mergedNegative, negativeCount);
+
+    const chosen = [...chosenPositive, ...chosenNegative];
 
     const newStats = this.zeroStatsLike(base.stats);
     chosen.forEach((entry) => this.setAtPath(newStats, entry.path, entry.value));
@@ -203,6 +225,42 @@ export class CraftingService {
   /** Schritt 2: Zieht bis zu `count` zufällige Einträge aus einer bereits eindeutigen Liste. */
   private pickRandom(entries: StatPoolEntry[], count: number): StatPoolEntry[] {
     return this.shuffle(entries).slice(0, count);
+  }
+
+  /** Zählt, wie viele Malus-Stats (< 0) ein einzelnes Item hat. */
+  private countNegativeStats(stats: any): number {
+    return this.flattenStats(stats).filter((entry) => entry.value < 0).length;
+  }
+
+  /**
+   * Führt Malus-Einträge pro Stat-Typ zusammen. Kommt ein Malus nur auf einem
+   * der 3 Items vor, bleibt sein Wert unverändert. Kommt er auf mehreren vor,
+   * wird zwischen der Hälfte der Summe aller Beträge (aufgerundet) und dem
+   * höchsten Einzelbetrag gerollt, das Ergebnis wird aufgerundet. Die untere
+   * Grenze wird dabei nie über die obere hinaus geklammert (kann bei 3+
+   * gleich hohen Duplikaten sonst passieren), damit der Rollbereich gültig bleibt.
+   */
+  private mergeNegativeStatsByPath(pool: StatPoolEntry[]): StatPoolEntry[] {
+    const groups = new Map<string, StatPoolEntry[]>();
+
+    for (const entry of pool) {
+      const key = entry.path.join('.');
+      const group = groups.get(key);
+      if (group) group.push(entry);
+      else groups.set(key, [entry]);
+    }
+
+    return Array.from(groups.values()).map((group) => {
+      if (group.length === 1) return group[0];
+
+      const magnitudes = group.map((entry) => Math.abs(entry.value));
+      const sum = magnitudes.reduce((a, b) => a + b, 0);
+      const upper = Math.max(...magnitudes);
+      const lower = Math.min(Math.ceil(sum / 2), upper);
+      const rolled = lower + Math.random() * (upper - lower);
+
+      return { path: group[0].path, value: -Math.ceil(rolled) };
+    });
   }
 
   /** Fisher-Yates-Shuffle (mutiert nicht das übergebene Array). */
