@@ -69,6 +69,10 @@ export class AudioService {
       music: 'audio/village/village-music_0.mp3',
       musicVol: 0.12,
     },
+    '/adventure': {
+      music: 'audio/village/village-music_0.mp3',
+      musicVol: 0.12,
+    },
     '/adventure/fight': {
       music: 'audio/fight/dark-forest/fight-track-1.mp3',
       ambientVol: 0.5,
