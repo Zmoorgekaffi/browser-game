@@ -2,9 +2,10 @@
   {
     "name": "Magister-Hut",
     "description": "Ein breitkrempiger Hut, der mit arkanem Staub imprägniert wurde. Schützt vor Regen und geistiger Verwirrung.",
-    "img-path": "imgs/items/helmets/mage-hat_3.webp",
+    "img-path": "imgs/items/head/mage-hat_3.webp",
     "price": 54,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 10,
       "dexterity": 0,
@@ -33,9 +34,10 @@
   {
     "name": "Schlangenhaut-Maske",
     "description": "Aus der Schuppe einer Riesennatter gefertigt. Passt sich den Gesichtszügen geschmeidig an.",
-    "img-path": "imgs/items/helmets/snake-mask_3.webp",
+    "img-path": "imgs/items/head/snake-mask_3.webp",
     "price": 60,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 8,
@@ -64,9 +66,10 @@
   {
     "name": "Visierhelm des Wächters",
     "description": "Ein polierter Stahlhelm mit klappbarem Visier. Standardausrüstung der dörflichen Elite-Stadtwache.",
-    "img-path": "imgs/items/helmets/guard-helm_3.webp",
+    "img-path": "imgs/items/head/guard-helm_3.webp",
     "price": 60,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": -4,
@@ -95,9 +98,10 @@
   {
     "name": "Falkenaugen-Helm",
     "description": "Mit echten Raubvogelfedern verziert. Das Visier ist so geschliffen, dass es Bewegungen im Augenwinkel hervorhebt.",
-    "img-path": "imgs/items/helmets/hawk-helm_3.webp",
+    "img-path": "imgs/items/head/hawk-helm_3.webp",
     "price": 60,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 4,
       "dexterity": 6,
@@ -126,9 +130,10 @@
   {
     "name": "Gequältes Antlitz",
     "description": "Eine Maske, die ein schreiendes Gesicht zeigt. Sie entzieht der Umgebung Lebenskraft, fordert aber geistigen Tribut.",
-    "img-path": "imgs/items/helmets/torment-mask_3.webp",
+    "img-path": "imgs/items/head/torment-mask_3.webp",
     "price": 84,
     "armor-slot": "head",
+    "tier": "3",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

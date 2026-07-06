@@ -2,9 +2,10 @@
   {
     "name": "Reif der arkanen Erleuchtung",
     "description": "Ein graziler Stirnreif, in den ein pulsierender Fokus-Kristall eingelassen ist. Stärkt die magische Barriere.",
-    "img-path": "imgs/items/helmets/arcane-circlet_4.webp",
+    "img-path": "imgs/items/head/arcane-circlet_4.webp",
     "price": 94,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 17,
       "dexterity": 0,
@@ -33,9 +34,10 @@
   {
     "name": "Schattenmeister-Kapuze",
     "description": "Aus schattenverstärktem Zwirn gewebt. Verschmilzt in der Dunkelheit fast vollständig mit der Umgebung.",
-    "img-path": "imgs/items/helmets/shadow-hood_4.webp",
+    "img-path": "imgs/items/head/shadow-hood_4.webp",
     "price": 105,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 15,
@@ -64,9 +66,10 @@
   {
     "name": "Prunkvoller Obsidianhelm",
     "description": "Geschmiedet aus vulkanischem Glas und Stahl. Schwer wie die Erde selbst, aber nahezu undurchdringlich.",
-    "img-path": "imgs/items/helmets/obsidian-helm_4.webp",
+    "img-path": "imgs/items/head/obsidian-helm_4.webp",
     "price": 105,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": -7,
@@ -95,9 +98,10 @@
   {
     "name": "Sturmbringer-Krone",
     "description": "Ein Reif aus elektrisiertem Kupfer. Lässt die Haare des Trägers permanent leicht zu Berge stehen.",
-    "img-path": "imgs/items/helmets/storm-crown_4.webp",
+    "img-path": "imgs/items/head/storm-crown_4.webp",
     "price": 105,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 7,
       "dexterity": 10,
@@ -126,9 +130,10 @@
   {
     "name": "Dämonen-Visier",
     "description": "Aus den verknöcherten Überresten eines niederen Dämonen geschnitzt. Erfüllt Feinde mit purer Urangst.",
-    "img-path": "imgs/items/helmets/demon-helm_4.webp",
+    "img-path": "imgs/items/head/demon-helm_4.webp",
     "price": 147,
     "armor-slot": "head",
+    "tier": "4",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

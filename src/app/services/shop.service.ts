@@ -7,8 +7,50 @@ import { getSellPrice } from '../utils/item-display.util';
 
 // Import der korrekten JSON-Pools für deine 3 Shops
 import magicData from '../../../public/item-data/necklace.json';
-import smitherData from '../../../public/item-data/chest.json'; 
-import generalSuppliesData from '../../../public/item-data/head.json'; 
+
+// 🛠️ Schmiede: Chest + Leg (Tier 1-5)
+import chestTier1 from '../../../public/item-data/equipment/chest/chest_tier1.json';
+import chestTier2 from '../../../public/item-data/equipment/chest/chest_tier2.json';
+import chestTier3 from '../../../public/item-data/equipment/chest/chest_tier3.json';
+import chestTier4 from '../../../public/item-data/equipment/chest/chest_tier4.json';
+import chestTier5 from '../../../public/item-data/equipment/chest/chest_tier5.json';
+import legTier1 from '../../../public/item-data/equipment/leg/leg_tier1.json';
+import legTier2 from '../../../public/item-data/equipment/leg/leg_tier2.json';
+import legTier3 from '../../../public/item-data/equipment/leg/leg_tier3.json';
+import legTier4 from '../../../public/item-data/equipment/leg/leg_tier4.json';
+import legTier5 from '../../../public/item-data/equipment/leg/leg_tier5.json';
+import footwearTier1 from '../../../public/item-data/equipment/footwear/footwear_tier1.json';
+import footwearTier2 from '../../../public/item-data/equipment/footwear/footwear_tier2.json';
+import footwearTier3 from '../../../public/item-data/equipment/footwear/footwear_tier3.json';
+import footwearTier4 from '../../../public/item-data/equipment/footwear/footwear_tier4.json';
+import footwearTier5 from '../../../public/item-data/equipment/footwear/footwear_tier5.json';
+
+// 🎒 Gemischtwaren: Head + Gloves (Tier 1-5)
+import headTier1 from '../../../public/item-data/equipment/head/head_tier1.json';
+import headTier2 from '../../../public/item-data/equipment/head/head_tier2.json';
+import headTier3 from '../../../public/item-data/equipment/head/head_tier3.json';
+import headTier4 from '../../../public/item-data/equipment/head/head_tier4.json';
+import headTier5 from '../../../public/item-data/equipment/head/head_tier5.json';
+import glovesTier1 from '../../../public/item-data/equipment/gloves/gloves_tier1.json';
+import glovesTier2 from '../../../public/item-data/equipment/gloves/gloves_tier2.json';
+import glovesTier3 from '../../../public/item-data/equipment/gloves/gloves_tier3.json';
+import glovesTier4 from '../../../public/item-data/equipment/gloves/gloves_tier4.json';
+import glovesTier5 from '../../../public/item-data/equipment/gloves/gloves_tier5.json';
+
+// Tier-1-Pool und Tier-2+-Pool je Shop — 2 Items im Angebot sind garantiert
+// Tier 2 oder höher, der Rest ist Tier 1 (siehe generateShopSelection()).
+const smitherTier1Pool: any[] = [...chestTier1, ...legTier1, ...footwearTier1];
+const smitherHigherTierPool: any[] = [
+  ...chestTier2, ...chestTier3, ...chestTier4, ...chestTier5,
+  ...legTier2, ...legTier3, ...legTier4, ...legTier5,
+    ...footwearTier2, ...footwearTier3, ...footwearTier4, ...footwearTier5,
+];
+
+const generalTier1Pool: any[] = [...headTier1, ...glovesTier1];
+const generalHigherTierPool: any[] = [
+  ...headTier2, ...headTier3, ...headTier4, ...headTier5,
+  ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
+];
 
 interface AllShopsData {
   magic: any[];
@@ -219,6 +261,42 @@ export class ShopService {
     return selectedItems;
   }
 
+  /**
+   * Würfelt das Angebot für einen Ausrüstungs-Shop: `guaranteedHigherTierCount`
+   * Items kommen garantiert aus `higherTierPool` (Tier 2+), der Rest aus
+   * `tier1Pool` (Ziehen jeweils mit Zurücklegen). Die Reihenfolge der
+   * Shop-Plätze wird danach gemischt.
+   *
+   * @param tier1Pool               Pool mit reinen Tier-1-Items.
+   * @param higherTierPool          Pool mit Tier-2-bis-5-Items.
+   * @param itemCount               Anzahl der Shop-Plätze.
+   * @param guaranteedHigherTierCount Anzahl garantierter Tier-2+-Items.
+   */
+  private generateShopSelection(
+    tier1Pool: any[],
+    higherTierPool: any[],
+    itemCount: number,
+    guaranteedHigherTierCount: number,
+  ): any[] {
+    const higherTierCount = higherTierPool.length > 0
+      ? Math.min(guaranteedHigherTierCount, itemCount)
+      : 0;
+    const tier1Count = itemCount - higherTierCount;
+
+    const selectedItems: any[] = [
+      ...this.generatePoolSelection(higherTierPool, higherTierCount),
+      ...this.generatePoolSelection(tier1Pool, tier1Count),
+    ];
+
+    // Fisher-Yates: garantierte Tier-2+-Items nicht immer auf denselben Plätzen
+    for (let i = selectedItems.length - 1; i > 0; i--) {
+      const j = this.utilityService.getRandomIndex(selectedItems.slice(0, i + 1));
+      [selectedItems[i], selectedItems[j]] = [selectedItems[j], selectedItems[i]];
+    }
+
+    return selectedItems;
+  }
+
   /** Persistiert alle drei Shop-Angebote gebündelt im LocalStorage. */
   private saveAllShopsToLocalStorage() {
     if (!this.activeCharId) return;
@@ -237,9 +315,13 @@ export class ShopService {
    */
   public rerollAllShopsAtEndOfRun() {
     this.magicShopItems.set(this.generatePoolSelection(magicData, 6));
-    this.smitherShopItems.set(this.generatePoolSelection(smitherData, 5));
-    this.generalSuppliesShopItems.set(this.generatePoolSelection(generalSuppliesData, 5));
-    
+    this.smitherShopItems.set(
+      this.generateShopSelection(smitherTier1Pool, smitherHigherTierPool, 5, 2),
+    );
+    this.generalSuppliesShopItems.set(
+      this.generateShopSelection(generalTier1Pool, generalHigherTierPool, 5, 2),
+    );
+
     this.saveAllShopsToLocalStorage();
   }
 }

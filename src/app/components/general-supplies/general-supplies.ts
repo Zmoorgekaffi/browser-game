@@ -9,7 +9,21 @@ import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths } from '../../utils/frame-paths.util';
 
-import supplies from '../../../../public/item-data/head.json';
+import headTier1 from '../../../../public/item-data/equipment/head/head_tier1.json';
+import headTier2 from '../../../../public/item-data/equipment/head/head_tier2.json';
+import headTier3 from '../../../../public/item-data/equipment/head/head_tier3.json';
+import headTier4 from '../../../../public/item-data/equipment/head/head_tier4.json';
+import headTier5 from '../../../../public/item-data/equipment/head/head_tier5.json';
+import glovesTier1 from '../../../../public/item-data/equipment/gloves/gloves_tier1.json';
+import glovesTier2 from '../../../../public/item-data/equipment/gloves/gloves_tier2.json';
+import glovesTier3 from '../../../../public/item-data/equipment/gloves/gloves_tier3.json';
+import glovesTier4 from '../../../../public/item-data/equipment/gloves/gloves_tier4.json';
+import glovesTier5 from '../../../../public/item-data/equipment/gloves/gloves_tier5.json';
+
+const supplies: any[] = [
+  ...headTier1, ...headTier2, ...headTier3, ...headTier4, ...headTier5,
+  ...glovesTier1, ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
+];
 
 /**
  * @component GeneralSupplies

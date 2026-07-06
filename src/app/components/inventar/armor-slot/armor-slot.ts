@@ -1,6 +1,7 @@
 import { Component, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventarService } from '../../../services/inventar.service';
+import { DeviceService } from '../../../services/device.service';
 
 /**
  * @component ArmorSlot
@@ -15,6 +16,7 @@ import { InventarService } from '../../../services/inventar.service';
 })
 export class ArmorSlot {
   public inventarService = inject(InventarService);
+  private deviceService = inject(DeviceService);
 
   // Wichtig: Exakt 'slotName' schreiben
   public slotName = input.required<string>();
@@ -26,11 +28,13 @@ export class ArmorSlot {
   public devmode = input<boolean>(false);
 
   onEnter(): void {
+    if (this.deviceService.isTouch()) return;
     const item = this.inventarService.equippedSlots()[this.slotName()];
     if (item) this.inventarService.hoveredEquippedItem.set(item);
   }
 
   onLeave(): void {
+    if (this.deviceService.isTouch()) return;
     this.inventarService.hoveredEquippedItem.set(null);
   }
 

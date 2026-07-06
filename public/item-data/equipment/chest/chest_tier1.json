@@ -2,7 +2,7 @@
   {
     "name": "Flicken-Stoffrobe",
     "description": "Mehr Löcher als Stoff, aber sie bedeckt das Nötigste. Riecht nach altem Keller.",
-    "img-path": "imgs/items/chests/cloth-robe_1.webp",
+    "img-path": "imgs/items/chest/cloth-robe_1.webp",
     "price": 21,
     "armor-slot": "chest",
     "tier": "1",
@@ -34,7 +34,7 @@
   {
     "name": "Abgewetztes Lederwams",
     "description": "Ein steifes Oberteil mit sichtbaren Kampfspuren der Vorbesitzer.",
-    "img-path": "imgs/items/chests/leather-vest_1.webp",
+    "img-path": "imgs/items/chest/leather-vest_1.webp",
     "price": 24,
     "armor-slot": "chest",
     "tier": "1",
@@ -66,7 +66,7 @@
   {
     "name": "Rostiger Brustpanzer",
     "description": "Schützt das Herz, knarzt aber bei jedem Atemzug ohrenbetäubend.",
-    "img-path": "imgs/items/chests/iron-chest_1.webp",
+    "img-path": "imgs/items/chest/iron-chest_1.webp",
     "price": 24,
     "armor-slot": "chest",
     "tier": "1",
@@ -98,7 +98,7 @@
   {
     "name": "Wilderer-Mantel",
     "description": "Ein fleckiger Mantel mit unzähligen Innentaschen für Diebesgut oder Schlingen.",
-    "img-path": "imgs/items/chests/thief-chest_1.webp",
+    "img-path": "imgs/items/chest/thief-chest_1.webp",
     "price": 24,
     "armor-slot": "chest",
     "tier": "1",
@@ -130,7 +130,7 @@
   {
     "name": "Splitternder Knochenpanzer",
     "description": "Zusammengebundene Rippenknochen schützen deine Brust. Ein kalter Schauer geht von ihnen aus.",
-    "img-path": "imgs/items/chests/cursed-chest_1.webp",
+    "img-path": "imgs/items/chest/cursed-chest_1.webp",
     "price": 33,
     "armor-slot": "chest",
     "tier": "1",

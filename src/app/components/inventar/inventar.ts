@@ -4,7 +4,9 @@ import { InventarItem } from './inventar-item/inventar-item';
 import { CommonModule } from '@angular/common';
 import { ArmorSlot } from './armor-slot/armor-slot';
 import { ScreenSizingService } from '../../services/screen-sizing.service';
+import { DeviceService } from '../../services/device.service';
 import { getItemTier } from '../../utils/item-display.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../utils/stat-color.util';
 
 /**
  * @component Inventar
@@ -21,6 +23,7 @@ import { getItemTier } from '../../utils/item-display.util';
 })
 export class Inventar {
   public gameStateService = inject(GameStateService);
+  public deviceService = inject(DeviceService);
   private screenSizingService = inject(ScreenSizingService);
   private el = inject(ElementRef);
 
@@ -58,6 +61,21 @@ export class Inventar {
 
   public getTier(item: any): number | null {
     return getItemTier(item);
+  }
+
+  public statDefs = STAT_DEFINITIONS;
+  public getStatValue = getStatValue;
+  public hasPositiveStats = hasPositiveStats;
+  public hasNegativeStats = hasNegativeStats;
+
+  public statColor(key: string): string {
+    return getStatColor(key, 'dark');
+  }
+
+  /** Item des Slots, für den gerade der Ausziehen-Dialog offen ist (für die Handy-Infoanzeige). */
+  public get unequipConfirmItem(): any {
+    const slot = this.unequipConfirmSlot();
+    return slot ? (this.gameStateService.inventar.equippedSlots()[slot] ?? null) : null;
   }
 
   public confirmUnequip(): void {

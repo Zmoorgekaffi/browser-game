@@ -2,9 +2,11 @@ import { Component, ElementRef, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
 import { ScreenSizingService } from '../../services/screen-sizing.service';
+import { DeviceService } from '../../services/device.service';
 import { RouterLink } from '@angular/router';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { framePaths } from '../../utils/frame-paths.util';
+import { getStatColor } from '../../utils/stat-color.util';
 
 /**
  * @component Character
@@ -20,6 +22,7 @@ import { framePaths } from '../../utils/frame-paths.util';
 })
 export class Character {
   public gameStateService = inject(GameStateService);
+  public deviceService = inject(DeviceService);
   private screenSizingService = inject(ScreenSizingService);
   private el = inject(ElementRef);
 
@@ -65,9 +68,35 @@ export class Character {
     this.tooltipY = (event.clientY - rect.top - 100) / scale;
   }
 
+  /** Hover-Tooltip nur auf Desktop. Auf Touch-Geräten gibt es kein echtes
+   * Hover, ein Tap löst sonst über synthetische Mouse-Events denselben
+   * Tooltip aus, der dann ohne mouseleave hängen bleiben würde. */
+  public onStatEnter(key: string): void {
+    if (this.deviceService.isTouch()) return;
+    this.hoveredStat.set(key);
+  }
+
+  public onStatLeave(): void {
+    if (this.deviceService.isTouch()) return;
+    this.hoveredStat.set(null);
+  }
+
+  /** Auf Touch-Geräten ersetzt Tap-Toggle den Hover: erneutes Antippen
+   * derselben Zeile blendet den Tooltip wieder aus. Position wird aus dem
+   * Click-Event berechnet, da auf Touch kein mousemove feuert. */
+  public onStatClick(event: MouseEvent, key: string): void {
+    if (!this.deviceService.isTouch()) return;
+    this.onMouseMove(event);
+    this.hoveredStat.update((current) => (current === key ? null : key));
+  }
+
   /** Deutsches Label zu einem Stat-Key (für den Tooltip-Titel). */
   public getStatName(key: string): string {
     return this.displayStats.find((stat) => stat.key === key)?.name ?? key;
+  }
+
+  public statColor(key: string): string {
+    return getStatColor(key, 'dark');
   }
 
   /**

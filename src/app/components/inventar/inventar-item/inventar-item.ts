@@ -2,6 +2,7 @@ import { Component, Input, signal, OnChanges, SimpleChanges, inject } from '@ang
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 import { getSellPrice, getItemTier } from '../../../utils/item-display.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
 
 /**
  * @component InventarItem
@@ -45,6 +46,15 @@ export class InventarItem implements OnChanges {
 
   public get sellValue(): number {
     return getSellPrice(this.item?.price);
+  }
+
+  public statDefs = STAT_DEFINITIONS;
+  public getStatValue = getStatValue;
+  public hasPositiveStats = hasPositiveStats;
+  public hasNegativeStats = hasNegativeStats;
+
+  public statColor(key: string): string {
+    return getStatColor(key, 'dark');
   }
 
   toggleEquip(): void {

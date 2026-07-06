@@ -1,22 +1,65 @@
 @if (show()) {
   <div
-    class="card-container w-full flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
+    class="z-[3] card-container w-full flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
   >
     <div
       class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-[50%]"
       (click)="closeInfoCard()"
     ></div>
-    <div class="z-[9999] bg-[rgba(255,255,255,0.6)] border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col">
-      <span>name: {{ currentDisplayedItem().name }}</span>
-      <span>description: {{ currentDisplayedItem().description }}</span>
-      <span>price: {{ currentDisplayedItem().price }}</span>
-      <div class="w-full flex justify-end pt-5">
+    <div class="item-card z-[9999] bg-[rgba(255,255,255,0.9)] border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col gap-3 min-w-[20rem]">
+      <div class="flex items-start gap-3 w-full">
+        <div class="w-[128px] h-[128px] bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
+          <img [src]="currentDisplayedItem()['img-path']" [alt]="currentDisplayedItem().name" class="w-full h-full object-contain" />
+        </div>
+
+        <div class="flex flex-col flex-grow min-w-0">
+          <div class="flex justify-between items-baseline gap-2">
+            <h4 class="font-semibold text-sm">{{ currentDisplayedItem().name }}</h4>
+            @if (tier !== null) {
+              <span class="text-[11px] text-zinc-700 font-mono shrink-0">Tier {{ tier }}</span>
+            }
+          </div>
+          <p class="text-zinc-700 text-xs leading-tight mt-0.5">
+            {{ currentDisplayedItem().description }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1 text-[11px] font-mono">
+        @if (hasPositiveStats(currentDisplayedItem().stats)) {
+          <div>
+            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
+            <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+              @for (stat of statDefs; track stat.key) {
+                @if (getStatValue(currentDisplayedItem().stats, stat.key) > 0) {
+                  <span [class]="statColor(stat.key)">+{{ getStatValue(currentDisplayedItem().stats, stat.key) }} {{ stat.label }}</span>
+                }
+              }
+            </div>
+          </div>
+        }
+        @if (hasNegativeStats(currentDisplayedItem().stats)) {
+          <div>
+            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
+            <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+              @for (stat of statDefs; track stat.key) {
+                @if (getStatValue(currentDisplayedItem().stats, stat.key) < 0) {
+                  <span [class]="statColor(stat.key)">{{ getStatValue(currentDisplayedItem().stats, stat.key) }} {{ stat.label }}</span>
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="w-full flex justify-between items-center pt-2 border-t border-black/10">
+        <span class="text-xs font-mono">Preis: {{ currentDisplayedItem().price }} Gold</span>
         @if (gameStateService.wallet.gold() >= currentDisplayedItem().price) {
           <button
             (click)="buyItem()"
             class="rounded-xl border border-black px-4 py-2 min-w-[3rem] leading-3 cursor-pointer hover:bg-[rgba(0,0,0,0.1)]"
           >
-            buy item
+            Kaufen
           </button>
         }
       </div>

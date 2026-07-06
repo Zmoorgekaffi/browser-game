@@ -2,7 +2,7 @@
   {
     "name": "Robe der arkanen Erleuchtung",
     "description": "Fließender Stoff, der sich bewegt, als wäre er unter Wasser. Zieht Mana magisch aus der Luft an.",
-    "img-path": "imgs/items/chests/arcane-robe_4.webp",
+    "img-path": "imgs/items/chest/arcane-robe_4.webp",
     "price": 151,
     "armor-slot": "chest",
     "tier": "4",
@@ -34,7 +34,7 @@
   {
     "name": "Schattenmeister-Gewand",
     "description": "Schluckt jegliches Licht. Wer dieses Gewand fixiert, verliert schnell den Fokus.",
-    "img-path": "imgs/items/chests/shadow-chest_4.webp",
+    "img-path": "imgs/items/chest/shadow-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
     "tier": "4",
@@ -66,7 +66,7 @@
   {
     "name": "Prunkvoller Obsidianpanzer",
     "description": "Eine massive Panzerung aus schwarzem Vulkanglas. Schläge prallen wirkungslos an ihr ab.",
-    "img-path": "imgs/items/chests/obsidian-chest_4.webp",
+    "img-path": "imgs/items/chest/obsidian-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
     "tier": "4",
@@ -98,7 +98,7 @@
   {
     "name": "Sturmbringer-Harnisch",
     "description": "Aus blauem, modifiziertem Metall. Kleine Blitze zucken gelegentlich über die Oberfläche.",
-    "img-path": "imgs/items/chests/storm-chest_4.webp",
+    "img-path": "imgs/items/chest/storm-chest_4.webp",
     "price": 168,
     "armor-slot": "chest",
     "tier": "4",
@@ -130,7 +130,7 @@
   {
     "name": "Dämonenhaut-Kürass",
     "description": "Fühlt sich warm und lebendig an. Die Rüstung scheint sich bei Treffern selbst zu regenerieren.",
-    "img-path": "imgs/items/chests/demon-chest_4.webp",
+    "img-path": "imgs/items/chest/demon-chest_4.webp",
     "price": 235,
     "armor-slot": "chest",
     "tier": "4",

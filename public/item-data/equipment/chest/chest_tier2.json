@@ -2,7 +2,7 @@
   {
     "name": "Novizen-Gewand",
     "description": "Die einfache Tracht arkaner Lehrlinge. Bequem und reibungsfrei für komplexe Zaubergesten.",
-    "img-path": "imgs/items/chests/mage-robe_2.webp",
+    "img-path": "imgs/items/chest/mage-robe_2.webp",
     "price": 43,
     "armor-slot": "chest",
     "tier": "2",
@@ -34,7 +34,7 @@
   {
     "name": "Verstärktes Lederwams",
     "description": "Mit doppelten Nähten und Metallschnallen gefertigt. Hält Streifschüsse zuverlässig ab.",
-    "img-path": "imgs/items/chests/leather-chest_2.webp",
+    "img-path": "imgs/items/chest/leather-chest_2.webp",
     "price": 48,
     "armor-slot": "chest",
     "tier": "2",
@@ -66,7 +66,7 @@
   {
     "name": "Solides Kettenhemd",
     "description": "Schutz und Flexibilität im Gleichgewicht. Jedes Ringglied wurde einzeln vernietet.",
-    "img-path": "imgs/items/chests/chain-mail_2.webp",
+    "img-path": "imgs/items/chest/chain-mail_2.webp",
     "price": 48,
     "armor-slot": "chest",
     "tier": "2",
@@ -98,7 +98,7 @@
   {
     "name": "Pirscher-Mantel",
     "description": "Aus wetterfestem Tuch gefertigt. Schützt vor kaltem Wind und dämpft das Rascheln von Ausrüstung.",
-    "img-path": "imgs/items/chests/hunter-chest_2.webp",
+    "img-path": "imgs/items/chest/hunter-chest_2.webp",
     "price": 48,
     "armor-slot": "chest",
     "tier": "2",
@@ -130,7 +130,7 @@
   {
     "name": "Runenbeschriebene Robe",
     "description": "Blutrote Runen ziehen sich über den Stoff und pulsieren im Takt deines Herzschlags.",
-    "img-path": "imgs/items/chests/cursed-robe_2.webp",
+    "img-path": "imgs/items/chest/cursed-robe_2.webp",
     "price": 67,
     "armor-slot": "chest",
     "tier": "2",

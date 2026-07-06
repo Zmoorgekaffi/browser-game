@@ -2,7 +2,7 @@
   {
     "name": "Glimmender Kristall-Mantel",
     "description": "Aus reinem Kristallfaden gewebt. Eine schimmernde Aura umgibt den Träger schützend.",
-    "img-path": "imgs/items/chests/crystal-chest_5.webp",
+    "img-path": "imgs/items/chest/crystal-chest_5.webp",
     "price": 259,
     "armor-slot": "chest",
     "tier": "5",
@@ -34,7 +34,7 @@
   {
     "name": "Nachtwandler-Rüstung",
     "description": "Federleicht und absolut lautlos. Sie absorbiert die kinetische Energie von Stürzen.",
-    "img-path": "imgs/items/chests/night-chest_5.webp",
+    "img-path": "imgs/items/chest/night-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
     "tier": "5",
@@ -66,7 +66,7 @@
   {
     "name": "Unvergänglicher Drachenpanzer",
     "description": "Meisterhafte Drachenschuppen-Panzerung. Keine irdische Klinge kann dieses Material ritzen.",
-    "img-path": "imgs/items/chests/dragon-chest_5.webp",
+    "img-path": "imgs/items/chest/dragon-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
     "tier": "5",
@@ -98,7 +98,7 @@
   {
     "name": "Kosmischer Harnisch",
     "description": "In diesem Brustpanzer scheint sich der Nachthimmel mitsamt funkelnden Galaxien zu spiegeln.",
-    "img-path": "imgs/items/chests/cosmic-chest_5.webp",
+    "img-path": "imgs/items/chest/cosmic-chest_5.webp",
     "price": 288,
     "armor-slot": "chest",
     "tier": "5",
@@ -130,7 +130,7 @@
   {
     "name": "Antiker Schicksals-Kürass",
     "description": "Ein Relikt der Götter. Biegt das Schicksal des Trägers so, dass tödliche Treffer ihr Ziel verfehlen.",
-    "img-path": "imgs/items/chests/destiny-chest_5.webp",
+    "img-path": "imgs/items/chest/destiny-chest_5.webp",
     "price": 403,
     "armor-slot": "chest",
     "tier": "5",

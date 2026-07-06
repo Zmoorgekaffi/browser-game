@@ -138,8 +138,10 @@
   </div>
 
   <!-- Tooltip für angelegte Items: nur Name, Tier und Stats (keine Beschreibung).
-       position:absolute relativ zu #inventarRoot statt :fixed, siehe character.ts. -->
-  @if (hoveredEquippedItem(); as item) {
+       position:absolute relativ zu #inventarRoot statt :fixed, siehe character.ts.
+       Nur Desktop: auf dem Handy gibt es kein Hover, dort zeigt der
+       Ausziehen-Dialog unten alle Infos gebündelt beim Antippen. -->
+  @if (!deviceService.isTouch() && hoveredEquippedItem(); as item) {
     <div
       class="absolute z-[10000] pointer-events-none p-3 bg-black border border-white/10 rounded-md text-sm min-w-[220px]"
       [style.left.px]="tooltipX"
@@ -153,28 +155,83 @@
           <span class="text-zinc-300 text-xs font-mono">Tier {{ tier }}</span>
         }
       </div>
-      <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-emerald-400 font-mono text-xs">
-        @if (item.stats?.strength > 0) { <span>+{{ item.stats.strength }} STR</span> }
-        @if (item.stats?.attack > 0) { <span>+{{ item.stats.attack }} ATK</span> }
-        @if (item.stats?.vitality > 0) { <span>+{{ item.stats.vitality }} VIT</span> }
-        @if (item.stats?.intelligence > 0) { <span>+{{ item.stats.intelligence }} INT</span> }
-        @if (item.stats?.dexterity > 0) { <span>+{{ item.stats.dexterity }} DEX</span> }
-        @if (item.stats?.luck > 0) { <span>+{{ item.stats.luck }} LCK</span> }
-        @if (item.stats?.armor > 0) { <span>+{{ item.stats.armor }} ARM</span> }
-        @if (item.stats?.['energy-shield'] > 0) { <span>+{{ item.stats['energy-shield'] }} ESD</span> }
-        @if (item.stats?.['magic-find'] > 0) { <span>+{{ item.stats['magic-find'] }} MF</span> }
-        @if (item.stats?.resistances?.fire > 0) { <span>+{{ item.stats.resistances.fire }} Feuerres.</span> }
-        @if (item.stats?.resistances?.cold > 0) { <span>+{{ item.stats.resistances.cold }} Kälteres.</span> }
-        @if (item.stats?.resistances?.lightning > 0) { <span>+{{ item.stats.resistances.lightning }} Blitzres.</span> }
-        @if (item.stats?.resistances?.chaos > 0) { <span>+{{ item.stats.resistances.chaos }} Chaosres.</span> }
+      <div class="flex flex-col gap-1 font-mono text-xs">
+        @if (hasPositiveStats(item.stats)) {
+          <div>
+            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
+            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
+              @for (stat of statDefs; track stat.key) {
+                @if (getStatValue(item.stats, stat.key) > 0) {
+                  <span [class]="statColor(stat.key)">+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                }
+              }
+            </div>
+          </div>
+        }
+        @if (hasNegativeStats(item.stats)) {
+          <div>
+            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
+            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
+              @for (stat of statDefs; track stat.key) {
+                @if (getStatValue(item.stats, stat.key) < 0) {
+                  <span [class]="statColor(stat.key)">{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                }
+              }
+            </div>
+          </div>
+        }
       </div>
     </div>
   }
 
-  <!-- Bestätigungsdialog: auf ein angelegtes Item geklickt -> ausziehen? -->
+  <!-- Bestätigungsdialog: auf ein angelegtes Item geklickt -> ausziehen?
+       Auf dem Handy (kein Hover) zeigt dieser Dialog zusätzlich alle Infos
+       (Tier, Beschreibung, Stats), die auf Desktop bereits per Hover-Tooltip
+       sichtbar waren. -->
   @if (unequipConfirmSlot()) {
     <div class="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60">
       <div class="bg-black/90 border border-white/10 rounded-lg p-6 w-[320px] flex flex-col gap-4 items-center">
+        @if (deviceService.isTouch() && unequipConfirmItem; as item) {
+          <div class="w-full bg-black/40 border border-white/10 rounded-md p-3 text-sm">
+            <div class="flex justify-between items-baseline gap-3 mb-1">
+              <span class="font-bold text-amber-400">{{ item.name }}</span>
+              @if (item.soulbound) {
+                <span class="text-purple-300 text-xs font-mono">Soulbound</span>
+              } @else if (getTier(item); as tier) {
+                <span class="text-zinc-300 text-xs font-mono">Tier {{ tier }}</span>
+              }
+            </div>
+            @if (item.description) {
+              <p class="text-zinc-400 text-xs leading-tight mb-1.5">{{ item.description }}</p>
+            }
+            <div class="flex flex-col gap-1 font-mono text-xs">
+              @if (hasPositiveStats(item.stats)) {
+                <div>
+                  <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
+                  <div class="flex flex-wrap gap-x-3 gap-y-0.5">
+                    @for (stat of statDefs; track stat.key) {
+                      @if (getStatValue(item.stats, stat.key) > 0) {
+                        <span [class]="statColor(stat.key)">+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                      }
+                    }
+                  </div>
+                </div>
+              }
+              @if (hasNegativeStats(item.stats)) {
+                <div>
+                  <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
+                  <div class="flex flex-wrap gap-x-3 gap-y-0.5">
+                    @for (stat of statDefs; track stat.key) {
+                      @if (getStatValue(item.stats, stat.key) < 0) {
+                        <span [class]="statColor(stat.key)">{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                      }
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
         <p class="text-white text-center">Item ausziehen?</p>
         <div class="flex gap-3 w-full">
           <button

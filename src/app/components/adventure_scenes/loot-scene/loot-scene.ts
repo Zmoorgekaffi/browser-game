@@ -4,6 +4,7 @@ import { AnimationObject } from '../../shared/animation-object/animation-object'
 import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
+import { getItemTier } from '../../../utils/item-display.util';
 
 /**
  * @component LootScene
@@ -127,5 +128,9 @@ export class LootScene implements OnInit {
    */
   public onContinue(): void {
     this.gameStateService.adventureStateService.advanceToNextStep();
+  }
+
+  public getTier(item: any): number | null {
+    return getItemTier(item);
   }
 }

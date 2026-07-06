@@ -2,6 +2,8 @@ import { Component, Signal, inject, ElementRef, effect } from '@angular/core';
 import { GameStateService } from '../../../services/game-state.service';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap'; // <-- GSAP Import
+import { getItemTier } from '../../../utils/item-display.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
 
 /**
  * @component ItemInfoCard
@@ -30,7 +32,7 @@ export class ItemInfoCard {
     // Reaktiver Effekt: Springt an, sobald sich der Wert von 'show' ändert
     effect(() => {
       if (this.show()) {
-        // DER TRICK: requestAnimationFrame wartet exakt, bis Angular das HTML 
+        // DER TRICK: requestAnimationFrame wartet exakt, bis Angular das HTML
         // wegen dem @if (show()) ins DOM gerendert hat!
         requestAnimationFrame(() => {
           this.animateIn();
@@ -62,7 +64,7 @@ export class ItemInfoCard {
   }
 
   /**
-   * Schließen-Animation: Blendet erst das UI-Element aus und setzt 
+   * Schließen-Animation: Blendet erst das UI-Element aus und setzt
    * NACH Abschluss der Animation das Signal auf false, damit es verschwindet.
    */
   closeInfoCard() {
@@ -92,5 +94,18 @@ export class ItemInfoCard {
   /** Triggert den Kauf über die im Service gemerkten Variablen. */
   buyItem() {
     this.gameStateService.shop.buyCurrentlySelectedItem();
+  }
+
+  public get tier(): number | null {
+    return getItemTier(this.currentDisplayedItem());
+  }
+
+  public statDefs = STAT_DEFINITIONS;
+  public getStatValue = getStatValue;
+  public hasPositiveStats = hasPositiveStats;
+  public hasNegativeStats = hasNegativeStats;
+
+  public statColor(key: string): string {
+    return getStatColor(key, 'light');
   }
 }

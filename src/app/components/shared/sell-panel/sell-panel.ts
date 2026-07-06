@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { GameStateService } from '../../../services/game-state.service';
 import { getSellPrice, getItemTier } from '../../../utils/item-display.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
 
 /**
  * @component SellPanel
@@ -66,6 +67,15 @@ export class SellPanel {
 
   public getSellValue(item: any): number {
     return getSellPrice(item?.price);
+  }
+
+  public statDefs = STAT_DEFINITIONS;
+  public getStatValue = getStatValue;
+  public hasPositiveStats = hasPositiveStats;
+  public hasNegativeStats = hasNegativeStats;
+
+  public statColor(key: string): string {
+    return getStatColor(key, 'dark');
   }
 
   public close(): void {

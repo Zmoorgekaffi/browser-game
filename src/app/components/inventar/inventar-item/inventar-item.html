@@ -25,20 +25,31 @@
     </div>
   </div>
 
-  <div class="flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-emerald-400 font-mono">
-    @if (itemSignal()?.stats?.strength > 0) { <span>+{{ itemSignal().stats.strength }} STR</span> }
-    @if (itemSignal()?.stats?.attack > 0) { <span>+{{ itemSignal().stats.attack }} ATK</span> }
-    @if (itemSignal()?.stats?.vitality > 0) { <span>+{{ itemSignal().stats.vitality }} VIT</span> }
-    @if (itemSignal()?.stats?.intelligence > 0) { <span>+{{ itemSignal().stats.intelligence }} INT</span> }
-    @if (itemSignal()?.stats?.dexterity > 0) { <span>+{{ itemSignal().stats.dexterity }} DEX</span> }
-    @if (itemSignal()?.stats?.luck > 0) { <span>+{{ itemSignal().stats.luck }} LCK</span> }
-    @if (itemSignal()?.stats?.armor > 0) { <span>+{{ itemSignal().stats.armor }} ARM</span> }
-    @if (itemSignal()?.stats?.['energy-shield'] > 0) { <span>+{{ itemSignal().stats['energy-shield'] }} ESD</span> }
-    @if (itemSignal()?.stats?.['magic-find'] > 0) { <span>+{{ itemSignal().stats['magic-find'] }} MF</span> }
-    @if (itemSignal()?.stats?.resistances?.fire > 0) { <span>+{{ itemSignal().stats.resistances.fire }} Feuerres.</span> }
-    @if (itemSignal()?.stats?.resistances?.cold > 0) { <span>+{{ itemSignal().stats.resistances.cold }} Kälteres.</span> }
-    @if (itemSignal()?.stats?.resistances?.lightning > 0) { <span>+{{ itemSignal().stats.resistances.lightning }} Blitzres.</span> }
-    @if (itemSignal()?.stats?.resistances?.chaos > 0) { <span>+{{ itemSignal().stats.resistances.chaos }} Chaosres.</span> }
+  <div class="flex flex-col gap-1 text-[11px] font-mono">
+    @if (hasPositiveStats(itemSignal()?.stats)) {
+      <div>
+        <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
+        <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+          @for (stat of statDefs; track stat.key) {
+            @if (getStatValue(itemSignal()?.stats, stat.key) > 0) {
+              <span [class]="statColor(stat.key)">+{{ getStatValue(itemSignal()?.stats, stat.key) }} {{ stat.label }}</span>
+            }
+          }
+        </div>
+      </div>
+    }
+    @if (hasNegativeStats(itemSignal()?.stats)) {
+      <div>
+        <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
+        <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+          @for (stat of statDefs; track stat.key) {
+            @if (getStatValue(itemSignal()?.stats, stat.key) < 0) {
+              <span [class]="statColor(stat.key)">{{ getStatValue(itemSignal()?.stats, stat.key) }} {{ stat.label }}</span>
+            }
+          }
+        </div>
+      </div>
+    }
   </div>
 
   <div class="flex justify-between items-center pt-2 border-t border-white/10">

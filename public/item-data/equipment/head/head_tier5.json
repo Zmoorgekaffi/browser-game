@@ -2,9 +2,10 @@
   {
     "name": "Glimmende Kristall-Kappe",
     "description": "Eine seltene Kopfbedeckung aus den Tiefen der Kristallhöhle. Jede Faser ist mit purer magischer Energie geladen.",
-    "img-path": "imgs/items/helmets/crystal-helm_5.webp",
+    "img-path": "imgs/items/head/crystal-helm_5.webp",
     "price": 162,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 30,
       "dexterity": 0,
@@ -33,9 +34,10 @@
   {
     "name": "Nachtwandler-Kapuze",
     "description": "Ein legendäres Artefakt der lautlosen Assassinen. Wer sie trägt, hinterlässt nicht einmal einen Schatten.",
-    "img-path": "imgs/items/helmets/night-hood_5.webp",
+    "img-path": "imgs/items/head/night-hood_5.webp",
     "price": 180,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 26,
@@ -64,9 +66,10 @@
   {
     "name": "Unvergänglicher Drachenhelm",
     "description": "Aus einer echten Urdrachen-Schuppe geformt. Die Hitze der Schmiede glimmt noch immer im Inneren des Materials.",
-    "img-path": "imgs/items/helmets/dragon-helm_5.webp",
+    "img-path": "imgs/items/head/dragon-helm_5.webp",
     "price": 180,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": -12,
@@ -95,9 +98,10 @@
   {
     "name": "Kosmische Krone",
     "description": "Ein schwebendes Gebilde aus Sternenmetall. Dem Träger offenbart sich die Geometrie des gesamten Schlachtfeldes.",
-    "img-path": "imgs/items/helmets/cosmic-crown_5.webp",
+    "img-path": "imgs/items/head/cosmic-crown_5.webp",
     "price": 180,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 12,
       "dexterity": 18,
@@ -126,9 +130,10 @@
   {
     "name": "Antikes Schicksals-Visier",
     "description": "Ein legendärer Helm aus vergessener Zeit. Seine Runen glühen auf, sobald Gefahr droht, und lenken das Schicksal.",
-    "img-path": "imgs/items/helmets/destiny-helm_5.webp",
+    "img-path": "imgs/items/head/destiny-helm_5.webp",
     "price": 251,
     "armor-slot": "head",
+    "tier": "5",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

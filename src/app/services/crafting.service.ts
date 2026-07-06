@@ -96,10 +96,12 @@ export class CraftingService {
 
   /**
    * Führt das Crafting aus: Alle Stat-Werte der 3 eingesetzten Items landen
-   * in einem gemeinsamen Pool, 6 davon werden zufällig (und eindeutig)
-   * gezogen und bilden die Stats des neuen Items. Name, Beschreibung, Bild,
-   * Preis, Tier und Slot entsprechen dem Basis-Item (mittleres Kästchen).
-   * Alle 3 eingesetzten Items werden dabei verbraucht.
+   * in einem gemeinsamen Pool. Davon wird zuerst pro Stat-Typ genau ein
+   * (zufälliger) Eintrag behalten (dedupeStatsByPath), danach werden aus den
+   * verbliebenen eindeutigen Stat-Typen bis zu 6 zufällig gezogen
+   * (pickRandom) und bilden die Stats des neuen Items. Name, Beschreibung,
+   * Bild, Preis, Tier und Slot entsprechen dem Basis-Item (mittleres
+   * Kästchen). Alle 3 eingesetzten Items werden dabei verbraucht.
    */
   public craftItem(): void {
     const [left, base, right] = this.slots();
@@ -111,7 +113,10 @@ export class CraftingService {
       ...this.flattenStats(right.stats),
     ];
 
-    const chosen = this.pickUniqueStats(pool, 6);
+    // 1) Pro Stat-Typ genau einen (zufälligen) Eintrag behalten.
+    const uniqueStats = this.dedupeStatsByPath(pool);
+    // 2) Aus den übrig gebliebenen, bereits eindeutigen Stat-Typen 6 zufällige ziehen.
+    const chosen = this.pickRandom(uniqueStats, 6);
 
     const newStats = this.zeroStatsLike(base.stats);
     chosen.forEach((entry) => this.setAtPath(newStats, entry.path, entry.value));
@@ -173,22 +178,31 @@ export class CraftingService {
     node[path[path.length - 1]] = value;
   }
 
-  /** Zieht bis zu `count` zufällige Einträge mit eindeutigem Stat-Pfad aus dem Pool. */
-  private pickUniqueStats(pool: StatPoolEntry[], count: number): StatPoolEntry[] {
-    const shuffled = this.shuffle(pool);
-    const chosen: StatPoolEntry[] = [];
-    const seenPaths = new Set<string>();
+  /**
+   * Schritt 1: Gruppiert den Pool nach Stat-Pfad (z. B. alle 'strength'-Einträge
+   * der 3 Items zusammen) und behält pro Gruppe genau einen, zufällig
+   * gewählten Eintrag. Ein Stat-Typ, der auf mehreren der 3 Items vorkam,
+   * darf dadurch NICHT bevorzugt in die finale Auswahl gelangen — jeder
+   * Stat-Typ ist danach exakt einmal im Ergebnis vertreten.
+   */
+  private dedupeStatsByPath(pool: StatPoolEntry[]): StatPoolEntry[] {
+    const groups = new Map<string, StatPoolEntry[]>();
 
-    for (const entry of shuffled) {
+    for (const entry of pool) {
       const key = entry.path.join('.');
-      if (seenPaths.has(key)) continue;
-
-      seenPaths.add(key);
-      chosen.push(entry);
-      if (chosen.length === count) break;
+      const group = groups.get(key);
+      if (group) group.push(entry);
+      else groups.set(key, [entry]);
     }
 
-    return chosen;
+    return Array.from(groups.values()).map(
+      (group) => group[Math.floor(Math.random() * group.length)],
+    );
+  }
+
+  /** Schritt 2: Zieht bis zu `count` zufällige Einträge aus einer bereits eindeutigen Liste. */
+  private pickRandom(entries: StatPoolEntry[], count: number): StatPoolEntry[] {
+    return this.shuffle(entries).slice(0, count);
   }
 
   /** Fisher-Yates-Shuffle (mutiert nicht das übergebene Array). */

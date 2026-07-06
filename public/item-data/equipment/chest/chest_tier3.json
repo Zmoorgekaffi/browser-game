@@ -2,7 +2,7 @@
   {
     "name": "Magister-Gewand",
     "description": "Feinste Seide, durchwebt mit Silberfäden. Wehrt magische Angriffe sanft ab.",
-    "img-path": "imgs/items/chests/mage-coat_3.webp",
+    "img-path": "imgs/items/chest/mage-coat_3.webp",
     "price": 86,
     "armor-slot": "chest",
     "tier": "3",
@@ -34,7 +34,7 @@
   {
     "name": "Schlangenhaut-Rüstung",
     "description": "Sehr dehnbar und extrem leicht. Ermöglicht blitzschnelle Ausweichmanöver im dichten Getümmel.",
-    "img-path": "imgs/items/chests/snake-chest_3.webp",
+    "img-path": "imgs/items/chest/snake-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
     "tier": "3",
@@ -66,7 +66,7 @@
   {
     "name": "Brustplatte des Wächters",
     "description": "Schwerer, polierter Stahl mit dem Wappen der Stadtwache. Verleiht eine standhafte Präsenz.",
-    "img-path": "imgs/items/chests/guard-chest_3.webp",
+    "img-path": "imgs/items/chest/guard-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
     "tier": "3",
@@ -98,7 +98,7 @@
   {
     "name": "Falkenaugen-Harnisch",
     "description": "Aerodynamisch geformter Brustschutz, der die Bewegungsfreiheit der Arme maximiert.",
-    "img-path": "imgs/items/chests/hawk-chest_3.webp",
+    "img-path": "imgs/items/chest/hawk-chest_3.webp",
     "price": 96,
     "armor-slot": "chest",
     "tier": "3",
@@ -130,7 +130,7 @@
   {
     "name": "Gequälter Kürass",
     "description": "Geschmiedet im Feuer von Seelenflammen. Erhöht die Zerstörungskraft auf Kosten deiner Lebensenergie.",
-    "img-path": "imgs/items/chests/torment-chest_3.webp",
+    "img-path": "imgs/items/chest/torment-chest_3.webp",
     "price": 134,
     "armor-slot": "chest",
     "tier": "3",

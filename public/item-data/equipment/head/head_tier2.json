@@ -2,9 +2,10 @@
   {
     "name": "Novizen-Kapuze",
     "description": "Eine tiefe Kapuze aus feiner Wolle, die die Konzentration des Trägers schärft und den Geist beruhigt.",
-    "img-path": "imgs/items/helmets/mage-hood_2.webp",
+    "img-path": "imgs/items/head/mage-hood_2.webp",
     "price": 27,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 5,
       "dexterity": 0,
@@ -33,9 +34,10 @@
   {
     "name": "Verstärkte Lederkappe",
     "description": "Gegerbtes Leder, das an den Schläfen mit kleinen Eisenplatten verstärkt wurde. Leicht und flexibel.",
-    "img-path": "imgs/items/helmets/leather-cap_2.webp",
+    "img-path": "imgs/items/head/leather-cap_2.webp",
     "price": 30,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 4,
@@ -64,9 +66,10 @@
   {
     "name": "Solider Kettenhelm",
     "description": "Ein verlässlicher Schutz aus ineinandergreifenden Stahlringen. Dämpft selbst schwere Hiebe.",
-    "img-path": "imgs/items/helmets/chain-helm_2.webp",
+    "img-path": "imgs/items/head/chain-helm_2.webp",
     "price": 30,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": -2,
@@ -95,9 +98,10 @@
   {
     "name": "Pirscher-Haube",
     "description": "Perfekt ausbalancierte Kopfbedeckung für die Jagd. Die Ohrenpartie ist für besseres Hören frei ausgestellt.",
-    "img-path": "imgs/items/helmets/hunter-hood_2.webp",
+    "img-path": "imgs/items/head/hunter-hood_2.webp",
     "price": 30,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 2,
       "dexterity": 3,
@@ -126,9 +130,10 @@
   {
     "name": "Runenbeschriebene Binde",
     "description": "Diese Augenbinde lässt den Träger die physische Welt vergessen und stattdessen die Ströme der Gewalt sehen.",
-    "img-path": "imgs/items/helmets/cursed-blindfold_2.webp",
+    "img-path": "imgs/items/head/cursed-blindfold_2.webp",
     "price": 42,
     "armor-slot": "head",
+    "tier": "2",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,

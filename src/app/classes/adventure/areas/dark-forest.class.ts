@@ -72,7 +72,7 @@ const MF_STEP_SIZE = 20;
  * vorher standen hier drei identische, handgepflegte 25-Zeilen-Arrays.
  */
 const DARK_FOREST_INTRO_FRAMES = framePaths(
-  49,
+  44,
   (i) => `imgs/areas/dark-forest/intro/frame_${pad(i, 4)}.webp`,
 );
 
@@ -87,7 +87,7 @@ export class DarkForest extends Area {
   override monsterPool: any[] = [];
   override eventSteps: any[] = [];
 
-  override introDuration: number = 5500;
+  override introDuration: number = 4000;
   override introPaths = [...DARK_FOREST_INTRO_FRAMES];
 
   override lootIntroDuration: number = 2000;

@@ -2,9 +2,10 @@
   {
     "name": "Flicken-Stoffhaube",
     "description": "Eine einfache, aus Stoffresten zusammengenähte Haube. Bietet minimalen Schutz, wärmt aber den Kopf.",
-    "img-path": "imgs/items/helmets/cloth-hood_1.webp",
+    "img-path": "imgs/items/head/cloth-hood_1.webp",
     "price": 13,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 2,
       "dexterity": 0,
@@ -33,9 +34,10 @@
   {
     "name": "Abgewetzte Lederkappe",
     "description": "Ein altes Stück Leder, das notdürftig an die Kopfform angepasst wurde. Riecht nach billigem Tran.",
-    "img-path": "imgs/items/helmets/leather-cap_1.webp",
+    "img-path": "imgs/items/head/leather-cap_1.webp",
     "price": 15,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 2,
@@ -64,9 +66,10 @@
   {
     "name": "Rostiger Eisenhut",
     "description": "Schwer, unhandlich und voller Flecken. Schützt vor Schlägen, trübt aber das Gehör gewaltig.",
-    "img-path": "imgs/items/helmets/iron-helm_1.webp",
+    "img-path": "imgs/items/head/iron-helm_1.webp",
     "price": 15,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": -1,
@@ -95,9 +98,10 @@
   {
     "name": "Wilderer-Maske",
     "description": "Eine einfache Stoffmaske mit Augenschlitzen. Ideal, um im Unterholz unentdeckt zu bleiben.",
-    "img-path": "imgs/items/helmets/thief-mask_1.webp",
+    "img-path": "imgs/items/head/thief-mask_1.webp",
     "price": 15,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 1,
       "dexterity": 1,
@@ -126,9 +130,10 @@
   {
     "name": "Splitterndes Knochenband",
     "description": "Ein unheimliches Stirnband aus Tierknochen. Es flüstert leise, wenn Blut vergossen wird.",
-    "img-path": "imgs/items/helmets/cursed-band_1.webp",
+    "img-path": "imgs/items/head/cursed-band_1.webp",
     "price": 21,
     "armor-slot": "head",
+    "tier": "1",
     "stats": {
       "intelligence": 0,
       "dexterity": 0,
