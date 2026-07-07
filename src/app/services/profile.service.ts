@@ -24,7 +24,7 @@ const XP_GROWTH_RATE = 1.09;
 export class ProfileService {
   private skillsService = inject(SkillsService);
 
-  private state = signal<ProfileData>({ name: 'Hero', level: 1, exp: 0 });
+  private state = signal<ProfileData>({ name: '', level: 1, exp: 0 });
 
   name = computed(() => this.state().name);
   level = computed(() => this.state().level);

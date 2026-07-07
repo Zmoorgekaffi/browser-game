@@ -15,7 +15,7 @@
  * @param charId Die Charakter-ID, unter der gespeichert wird.
  */
 export function createDefaultProfile(charId: string) {
-  return { id: charId, name: 'Hero', level: 1, exp: 0 };
+  return { id: charId, name: '', level: 1, exp: 0 };
 }
 
 /** Basis-Attribute und Kampfwerte eines Level-1-Charakters. */

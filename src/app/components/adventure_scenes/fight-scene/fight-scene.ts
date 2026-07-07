@@ -10,6 +10,8 @@ import { ResolveChallenge } from '../../shared/resolve-challenge/resolve-challen
 import { ResolveChallengeService } from '../../../services/resolve-challenge.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
+import { FleeButton } from '../../shared/flee-button/flee-button';
+import { expandFrameBatch } from '../../../utils/frame-paths.util';
 
 /**
  * @component FightScene
@@ -24,7 +26,7 @@ import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 @Component({
   selector: 'app-fight-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen, ResolveChallenge],
+  imports: [CommonModule, AnimationObject, LoadingScreen, ResolveChallenge, FleeButton],
   templateUrl: './fight-scene.html',
   styleUrl: './fight-scene.scss',
 })
@@ -117,6 +119,9 @@ export class FightScene {
 
     const monster = this.fightService.getEnrichedMonster();
 
+    const introPaths = this.expandMonsterAnimation(monster, 'intro');
+    const idlePaths = this.expandMonsterAnimation(monster, 'idle');
+
     // 🆕 ALLE Kampf-Bilder (Hintergrund, Monster-Intro, Monster-Idle)
     // VOR dem Szenenstart laden — solange läuft der Ladebildschirm.
     // Erst danach starten Intro-Timer und Animationen, damit auf dem
@@ -124,15 +129,14 @@ export class FightScene {
     this.isLoading.set(true);
     await this.preloader.preloadImages([
       this.fightBackgroundPath,
-      ...(monster?.['intro-path'] ?? []),
-      ...(monster?.['idle-path'] ?? []),
+      ...introPaths,
+      ...idlePaths,
     ]);
     this.isLoading.set(false);
 
     // Idle-Animation IMMER setzen (auch bei Resume)
     const idleDuration = monster?.['idle-duration'] ?? 2500;
-    const idlePaths = monster?.['idle-path'] ?? [];
-    if (Array.isArray(idlePaths) && idlePaths.length > 0) {
+    if (idlePaths.length > 0) {
       this.monsterIdlePaths.set(idlePaths);
       this.monsterIdleDuration.set(idleDuration);
       console.log(`💤 Monster-Idle bereit (${idleDuration}ms, ${idlePaths.length} Frames)`);
@@ -153,9 +157,8 @@ export class FightScene {
     // Intro NUR bei einem frischen Kampfstart abspielen.
     if (isNewFight) {
       const introDuration = monster?.['intro-duration'] ?? 2500;
-      const introPaths = monster?.['intro-path'] ?? [];
 
-      if (Array.isArray(introPaths) && introPaths.length > 0) {
+      if (introPaths.length > 0) {
         this.monsterIntroPaths.set(introPaths);
         this.monsterIntroDuration.set(introDuration);
         this.showMonsterIntro.set(true);
@@ -175,6 +178,16 @@ export class FightScene {
     }
 
     console.log('✅ Kampf bereit, enrichedMonster gesetzt');
+  }
+
+  /**
+   * Expandiert eine Monster-Animation (z.B. 'intro' → 'intro-path' +
+   * 'intro-frameBatchCount' aus der Monster-JSON) zum vollen Frame-Pfad-Array.
+   */
+  private expandMonsterAnimation(monster: any, key: 'intro' | 'idle' | 'attack'): string[] {
+    const path = monster?.[`${key}-path`];
+    if (!path) return [];
+    return expandFrameBatch(path, monster[`${key}-frameBatchCount`]);
   }
 
   // --- UI Interaktionen (leiten an den Service weiter) ---

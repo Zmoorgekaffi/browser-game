@@ -23,7 +23,7 @@
     >
       Crafting
     </div>
-  </div>
+  </div>  
 
   <div class="absolute w-[268px] h-[260px] top-[128px] left-[375px]">
     <app-animation-object
@@ -37,8 +37,8 @@
     @if (!currentShopItems()[0].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="213"
-        [y]="340"
+        [x]="193"
+        [y]="293"
         [itemObject]="currentShopItems()[0]"
         (click)="gameStateService.shop.selectItemForPreview('smither', 0)"
       ></app-shop-item>
@@ -47,8 +47,8 @@
     @if (!currentShopItems()[1].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="395"
-        [y]="340"
+        [x]="376"
+        [y]="293"
         [itemObject]="currentShopItems()[1]"
         (click)="gameStateService.shop.selectItemForPreview('smither', 1)"
       ></app-shop-item>
@@ -57,8 +57,8 @@
     @if (!currentShopItems()[2].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="595"
-        [y]="340"
+        [x]="578"
+        [y]="293"
         [itemObject]="currentShopItems()[2]"
         (click)="gameStateService.shop.selectItemForPreview('smither', 2)"
       ></app-shop-item>
@@ -67,8 +67,8 @@
     @if (!currentShopItems()[3].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="803"
-        [y]="340"
+        [x]="783"
+        [y]="293"
         [itemObject]="currentShopItems()[3]"
         (click)="gameStateService.shop.selectItemForPreview('smither', 3)"
       ></app-shop-item>

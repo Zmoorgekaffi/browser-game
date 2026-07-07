@@ -4,7 +4,9 @@ import { AnimationObject } from '../../shared/animation-object/animation-object'
 import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
-import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
+import { CharacterFrame, EncounterAnimation } from '../../../classes/adventure/encounter.interface';
+import { FleeButton } from '../../shared/flee-button/flee-button';
+import { expandFrameBatch } from '../../../utils/frame-paths.util';
 
 type DialogPhase = 'intro' | 'dialog' | 'reaction';
 
@@ -28,7 +30,7 @@ type DialogPhase = 'intro' | 'dialog' | 'reaction';
 @Component({
   selector: 'app-dialog-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen],
+  imports: [CommonModule, AnimationObject, LoadingScreen, FleeButton],
   templateUrl: './dialog-scene.html',
   styleUrl: './dialog-scene.scss',
 })
@@ -129,7 +131,7 @@ export class DialogScene {
     // app-animation-object im Template ist NUR während phase()==='intro'
     // sichtbar (vollflächig) — danach übernimmt das reguläre Character-
     // Object (idle/reaction) in der characterFrame-Box.
-    this.introPaths.set(enc.intro?.paths ?? []);
+    this.introPaths.set(this.expandAnimation(enc.intro));
     this.introDuration.set(enc.intro?.duration ?? 2500);
 
     // Phase 1: Intro läuft (eigenes Intro-Object rendert die Animation).
@@ -189,7 +191,7 @@ export class DialogScene {
     switch (answer.reactionType) {
       case 'gold': {
         const gold = area.rollGoldReward();
-        this.gameStateService.wallet.addGold(gold);
+        adventure.recordRunGold(gold);
         this.rewardMessage.set(`+${gold} Gold`);
         console.log(`💰 Dialog reward: ${gold} gold`);
         break;
@@ -235,21 +237,25 @@ export class DialogScene {
     const paths: string[] = [];
 
     if (enc['scene-background']) paths.push(enc['scene-background']);
-    if (enc.intro?.paths) paths.push(...enc.intro.paths);
-    if (enc.idle?.paths) paths.push(...enc.idle.paths);
-    if (enc.speak?.paths) paths.push(...enc.speak.paths);
+    paths.push(...this.expandAnimation(enc.intro));
+    paths.push(...this.expandAnimation(enc.idle));
+    paths.push(...this.expandAnimation(enc.speak));
 
     for (const answer of enc.answers ?? []) {
-      if (answer.reactionAnimation?.paths) {
-        paths.push(...answer.reactionAnimation.paths);
-      }
+      paths.push(...this.expandAnimation(answer.reactionAnimation));
     }
 
     return paths;
   }
 
-  private setAnimation(anim: { paths: string[]; duration: number }, loop: boolean): void {
-    this.currentAnimationPaths.set(anim.paths ?? []);
+  /** Expandiert eine EncounterAnimation (path + frameBatchCount) zum vollen Frame-Pfad-Array. */
+  private expandAnimation(anim: EncounterAnimation | undefined): string[] {
+    if (!anim?.path) return [];
+    return expandFrameBatch(anim.path, anim.frameBatchCount);
+  }
+
+  private setAnimation(anim: EncounterAnimation, loop: boolean): void {
+    this.currentAnimationPaths.set(this.expandAnimation(anim));
     this.currentAnimationDuration.set(anim.duration ?? 2000);
     this.animationLoop.set(loop);
   }

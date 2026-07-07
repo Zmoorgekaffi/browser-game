@@ -9,7 +9,10 @@
 export type ReactionType = 'nothing' | 'gold' | 'item';
 
 export interface EncounterAnimation {
-  paths: string[];
+  /** Pfad des ersten Frames, z.B. 'imgs/x/frame_0000.webp'. */
+  path: string;
+  /** Gesamtzahl der Frames (siehe expandFrameBatch()). */
+  frameBatchCount: number;
   duration: number;
 }
 

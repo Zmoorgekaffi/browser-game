@@ -1,5 +1,6 @@
 // src/app/classes/adventure/area.class.ts
 import { Encounter } from './encounter.interface';
+import { getLevelBracket } from '../../utils/level-bracket.util';
 
 export interface LootEntry {
   item: any;
@@ -131,11 +132,7 @@ export abstract class Area {
 
   /** Ordnet ein Spieler-Level dem passenden LootTable-Tier zu. */
   private getLootTier(level: number): keyof LootTable {
-    if (level <= 10) return '1-10';
-    if (level <= 20) return '11-20';
-    if (level <= 30) return '21-30';
-    if (level <= 40) return '31-40';
-    return '41-50';
+    return getLevelBracket(level);
   }
 
   /**

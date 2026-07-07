@@ -7,6 +7,7 @@ import { Tavern } from './components/tavern/tavern';
 import { Shrine } from './components/shrine/shrine';
 import { Smither } from './components/smither/smither';
 import { Login } from './components/login/login';
+import { NameCreation } from './components/name-creation/name-creation';
 import { Inventar } from './components/inventar/inventar';
 import { Character } from './components/character/character';
 import { Skills } from './components/skills/skills';
@@ -31,5 +32,6 @@ export const routes: Routes = [
   { path: 'adventure/loot', component: LootScene },
   { path: 'adventure/fight', component: FightScene },
   { path: 'login', component: Login },
+  { path: 'name-creation', component: NameCreation },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

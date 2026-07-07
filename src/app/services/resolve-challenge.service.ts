@@ -113,11 +113,32 @@ export class ResolveChallengeService {
     this.cursorPos.set(pos);
   }
 
-  /** Pointer-Move während des Ziehens: aktualisiert den Strahl und prüft auf Verbindung. */
+  /** Pointer-Move während des Ziehens (Touch): aktualisiert den Strahl und prüft auf Verbindung. */
   public onDragMove(pos: { x: number; y: number }): void {
     if (!this.dragging()) return;
     this.cursorPos.set(pos);
+    this.tryConnectNext(pos);
+  }
 
+  /**
+   * Maus-Hover (Desktop): anders als bei Touch braucht die Maus kein Gedrückthalten —
+   * der nächste Punkt wird bereits verbunden, sobald der Mauszeiger ihn berührt.
+   * Wird nur für pointerType 'mouse' aufgerufen (siehe ResolveChallenge-Komponente).
+   */
+  public onHoverMove(pos: { x: number; y: number }): void {
+    if (!this.active()) return;
+    this.dragging.set(true);
+    this.cursorPos.set(pos);
+    this.tryConnectNext(pos);
+  }
+
+  /** Pointer-Up/-Cancel: der aktuell gezogene Strahl verschwindet, Fortschritt bleibt. */
+  public onDragEnd(): void {
+    this.dragging.set(false);
+  }
+
+  /** Verbindet den nächsten erwarteten Punkt, falls `pos` nah genug dran ist. */
+  private tryConnectNext(pos: { x: number; y: number }): void {
     const nextId = this.connectedIds().length + 1;
     const target = this.points().find((p) => p.id === nextId);
     if (!target) return;
@@ -129,11 +150,6 @@ export class ResolveChallengeService {
     if (this.connectedIds().length === this.points().length) {
       this.finishCurrent?.(this.connectedIds().length);
     }
-  }
-
-  /** Pointer-Up/-Cancel: der aktuell gezogene Strahl verschwindet, Fortschritt bleibt. */
-  public onDragEnd(): void {
-    this.dragging.set(false);
   }
 
   /**

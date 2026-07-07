@@ -15,6 +15,7 @@ export interface AdventureSaveState {
   steps: any[];
   playerLevel: number;
   pendingRewards: any[]; // 🎁 gesammelte Belohnungen für diesen Run
+  goldEarnedThisRun: number; // 💰 im laufenden Run vergebenes Gold (bei Tod/Flucht rückbuchbar)
   activeFight?: {
     monsterHp: number;
     playerHp: number;
@@ -64,6 +65,11 @@ export class AdventureStateService {
   // Inventar. Bei Niederlage / clearAdventure wird's verworfen.
   pendingRewards: WritableSignal<any[]> = signal<any[]>([]);
 
+  // 💰 Im laufenden Run bereits ausgezahltes Gold (Reise-Gold pro Step + Dialog-Belohnungen).
+  // Wird bei Tod/Flucht per walletService.spendGold() wieder abgezogen — analog zu
+  // pendingRewards, nur dass Gold (anders als Items) sofort statt erst am Run-Ende gezahlt wird.
+  goldEarnedThisRun: WritableSignal<number> = signal<number>(0);
+
   private hasAttemptedInitialLoad = true;
 
   constructor() {
@@ -98,7 +104,21 @@ export class AdventureStateService {
     this.activeFight.set(null);
     this.level.set(null);
     this.pendingRewards.set([]); // 🎁 verworfen
+    this.goldEarnedThisRun.set(0);
     this.shopService.rerollAllShopsAtEndOfRun();
+  }
+
+  /**
+   * 💰 Vergibt Gold, das an den laufenden Run gebunden ist (Reise-Gold pro Step,
+   * Dialog-Belohnungen). Im Gegensatz zu Items (siehe addReward/pendingRewards) wird
+   * Gold sofort ausgezahlt, aber die Summe wird mitgezählt, damit sie bei Tod/Flucht
+   * über finishFailedRun() wieder abgebucht werden kann.
+   */
+  public recordRunGold(amount: number): void {
+    if (amount <= 0) return;
+    this.walletService.addGold(amount);
+    this.goldEarnedThisRun.update((total) => total + amount);
+    this.saveAdventure();
   }
 
   /**
@@ -183,7 +203,7 @@ export class AdventureStateService {
       console.warn('[continueAdventure] Unbekannter Step-Typ:', currentStep.type);
     }
 
-    this.walletService.addGold(10);
+    this.recordRunGold(10);
   }
 
   /**
@@ -219,6 +239,7 @@ export class AdventureStateService {
     this.steps.set(newLevel.eventSteps);
     this.currentStepIndex.set(0);
     this.pendingRewards.set([]);
+    this.goldEarnedThisRun.set(0);
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
     this.saveAdventure();
   }
@@ -236,6 +257,7 @@ export class AdventureStateService {
       steps: this.steps(),
       playerLevel: this.profileService.level(),
       pendingRewards: this.pendingRewards(), // 🎁 mit-persistieren
+      goldEarnedThisRun: this.goldEarnedThisRun(),
       activeFight: this.activeFight(),
     };
     localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
@@ -262,6 +284,7 @@ export class AdventureStateService {
     this.steps.set(state.steps);
     this.activeFight.set(state.activeFight || null);
     this.pendingRewards.set(state.pendingRewards || []); // 🎁 restoren
+    this.goldEarnedThisRun.set(state.goldEarnedThisRun || 0);
     this.initializeLevel(state.adventureId, state.playerLevel, state.steps);
     return true;
   }
@@ -289,17 +312,37 @@ export class AdventureStateService {
     this.currentStepIndex.set(0);
     this.activeFight.set(null);
     this.pendingRewards.set([]); // 🎁 frischer Run = leere Rewards
+    this.goldEarnedThisRun.set(0);
     this.saveAdventure();
     this.router.navigate(['/adventure/intro']);
   }
 
   /**
-   * 💀 Abenteuer gescheitert (z.B. Kampf verloren, User klickt "zurück ins Dorf"
-   * mitten im Run). pendingRewards werden VERWORFEN — analog zur alten
-   * clearAdventure-Logik, aber navigiert zusätzlich zurück ins Dorf.
+   * 💀 Abenteuer gescheitert (Kampf verloren). Verhält sich wie fleeAdventure():
+   * kein Loot, kein Gold aus dem Run — nur die bereits vergebene EXP bleibt
+   * (die wird sofort bei Kampf-Sieg vergeben, ist also nie Teil von pendingRewards).
    */
   public failAdventure(): void {
-    console.log('💀 [failAdventure] Abenteuer gescheitert — pendingRewards verworfen.');
+    this.finishFailedRun('💀 Niederlage');
+  }
+
+  /**
+   * 🏃 Spieler bricht das Abenteuer freiwillig ab. Zählt exakt wie eine
+   * Niederlage — "so, als wäre man gestorben": kein Loot, kein Gold aus
+   * diesem Run, EXP bleibt erhalten.
+   */
+  public fleeAdventure(): void {
+    this.finishFailedRun('🏃 Flucht');
+  }
+
+  /** Gemeinsame Logik für Niederlage & Flucht (siehe failAdventure/fleeAdventure). */
+  private finishFailedRun(logPrefix: string): void {
+    const lostGold = this.goldEarnedThisRun();
+    if (lostGold > 0) {
+      this.walletService.spendGold(lostGold);
+      console.log(`${logPrefix}: ${lostGold} Gold aus diesem Lauf verworfen.`);
+    }
+    console.log(`${logPrefix}: Abenteuer beendet — pendingRewards verworfen.`);
     this.clearAdventure(); // löscht Storage, resetet Signals, rerollt Shops
     this.router.navigate(['/village']);
   }

@@ -119,6 +119,14 @@ export class GameStateService {
     this.inventar.refreshEquippedSlots();
 
     this.profile.init(JSON.parse(localStorage.getItem(profileKey) || '{}'));
+
+    // Neuer Charakter (oder Namensänderung angefordert) -> erst einen Namen
+    // wählen lassen, bevor der Rest des Spielzustands geladen wird.
+    if (!this.profile.name() && this.router.url !== '/name-creation') {
+      this.router.navigate(['/name-creation']);
+      return;
+    }
+
     this.skills.profileData = this.currentCharId;
 
     // Spells werden synchron angereichert – kein await nötig

@@ -1,7 +1,9 @@
 .shop-item {
   position: absolute;
-  width: 86px;
-  height: 86px;
+  width: 128px;
+  height: 128px;
+
+
   
   // 1. Die Schwebung läuft exklusiv über transform: translateY
   animation: floatAnimation 600ms ease-in-out infinite alternate;
@@ -19,6 +21,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    object-position: bottom;
   }
 }
 

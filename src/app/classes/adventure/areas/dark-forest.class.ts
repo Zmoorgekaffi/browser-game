@@ -2,7 +2,21 @@
 import { Area, LootTable } from '../area.class';
 import { Encounter } from '../encounter.interface'
 import { framePaths, pad } from '../../../utils/frame-paths.util';
+import { getLevelBracket, LevelBracket } from '../../../utils/level-bracket.util';
 import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json';
+import monsterData11o20 from '../../../../../public/mosters/dark-forest/dark-forest.11-20.json';
+import monsterData21o30 from '../../../../../public/mosters/dark-forest/dark-forest.21-30.json';
+import monsterData31o40 from '../../../../../public/mosters/dark-forest/dark-forest.31-40.json';
+import monsterData41o50 from '../../../../../public/mosters/dark-forest/dark-forest.41-50.json';
+
+/** Monster-Pool je Level-Bracket — analog zur LootTable, aber für Kämpfe. */
+const MONSTER_POOLS: Record<LevelBracket, any[]> = {
+  '1-10': monsterData1o10,
+  '11-20': monsterData11o20,
+  '21-30': monsterData21o30,
+  '31-40': monsterData31o40,
+  '41-50': monsterData41o50,
+};
 
 // ═══════════════════════════════════════════════════════════════════════
 // 🎒 ITEM-POOLS
@@ -120,10 +134,13 @@ export class DarkForest extends Area {
    */
   constructor(playerLevel: number, magicFind: number = 0) {
     super(playerLevel, magicFind);
+    const bracket = getLevelBracket(playerLevel);
+    this.monsterPool = MONSTER_POOLS[bracket];
     this.eventSteps = this.generateSteps(4, 8);
-    this.populateFights(monsterData1o10);
+    this.populateFights(this.monsterPool);
     this.populateDialogs(); // 💬 Encounters auf dialog-Steps verteilen
     this.lootTable = this.buildLootTable();
+    console.log(`👹 Monster-Pool für Bracket ${bracket} (playerLevel=${playerLevel}):`, this.monsterPool);
     console.log('die generierten steps sind: ', this.eventSteps);
     console.log(`🎲 LootTable generiert (playerLevel=${playerLevel}, magicFind=${magicFind}):`, this.lootTable);
   }

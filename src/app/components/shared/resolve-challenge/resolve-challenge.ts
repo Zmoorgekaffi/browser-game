@@ -46,6 +46,18 @@ export class ResolveChallenge {
     this.service.onDragEnd();
   }
 
+  /**
+   * Maus am Desktop: Punkte sollen allein durch Berühren mit dem Zeiger aktiviert
+   * werden, ohne Klicken/Gedrückthalten (auf Touch-Geräten bleibt es beim
+   * bewussten Ziehen — siehe onPointerDown/onPointerMove). Sitzt auf dem
+   * gesamten Container, damit es unabhängig davon greift, über welchem
+   * Kind-Element (Punkt, SVG, Hintergrund) sich der Zeiger gerade befindet.
+   */
+  public onContainerPointerMove(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse') return;
+    this.service.onHoverMove(this.toLocalPos(event.clientX, event.clientY));
+  }
+
   /** Wandelt Viewport-Koordinaten in popup-lokale Koordinaten um (kompensiert ScreenSizingService.scale()). */
   private toLocalPos(clientX: number, clientY: number): { x: number; y: number } {
     const rect = this.el.nativeElement.querySelector('.resolve-container')?.getBoundingClientRect();

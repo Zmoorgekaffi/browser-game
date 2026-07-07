@@ -1,14 +1,17 @@
 @if (service.active()) {
-  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+  <div class="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-4 bg-black/60">
+    <!-- 🆕 Außerhalb des Spielfelds, damit die Info-Zeile nie über einem
+         generierten Punkt liegt und dessen Aktivierung blockiert. -->
+    <p class="text-white text-lg font-semibold select-none text-center px-4">
+      Ziehe einen Strahl von Punkt zu Punkt, in der richtigen Reihenfolge!
+    </p>
+
     <div
       class="resolve-container relative bg-[rgba(20,20,20,0.9)] border border-white/10 rounded-lg overflow-hidden"
       style="width: 900px; height: 560px;"
+      (pointermove)="onContainerPointerMove($event)"
     >
       <div class="absolute top-0 left-0 h-1.5 bg-amber-400 timer-bar" [style.animation-duration.ms]="service.durationMs"></div>
-
-      <p class="absolute top-4 left-1/2 -translate-x-1/2 text-white text-lg font-semibold select-none z-10">
-        Ziehe einen Strahl von Punkt zu Punkt, in der richtigen Reihenfolge!
-      </p>
 
       <svg class="absolute inset-0 pointer-events-none" width="900" height="560">
         @for (seg of service.connectedSegments(); track seg.to.id) {
