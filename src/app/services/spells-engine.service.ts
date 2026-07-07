@@ -1,6 +1,7 @@
 import { Injectable, inject, Injector } from '@angular/core';
 import { SkillsService } from './skills.service';
 import { FightService } from './fight.service';
+import { ResolveChallengeService } from './resolve-challenge.service';
 
 /**
  * @service SpellsEngineService
@@ -16,6 +17,7 @@ import { FightService } from './fight.service';
 export class SpellsEngineService {
   private skillsService = inject(SkillsService);
   private injector = inject(Injector);
+  private resolveChallengeService = inject(ResolveChallengeService);
 
   /**
    * Wirkt einen Spell.
@@ -23,11 +25,15 @@ export class SpellsEngineService {
    * Ablauf: 1. Mana prüfen/abziehen (nur Spieler) → 2. Schadens-Boni aus
    * den Stats ermitteln → 3. Effekt anhand von effectType verarbeiten.
    *
+   * Nur beim Spieler-Cast (casterType 'player') wird der Skill-Endwert
+   * (Schaden oder Heilung) zusätzlich durch das Resolve-Minigame reskaliert
+   * (siehe applyResolveChallenge). Monster-Casts sind davon unberührt.
+   *
    * @param spell      Vollständiges Spell-Objekt (mit effectType!).
    * @param casterType Wer wirkt: 'player' (Default) oder 'monster'.
    * @returns true, wenn der Spell erfolgreich gewirkt wurde.
    */
-  public castSpell(spell: any, casterType: 'player' | 'monster' = 'player'): boolean {
+  public async castSpell(spell: any, casterType: 'player' | 'monster' = 'player'): Promise<boolean> {
     console.log(`🔍 [SpellsEngine] castSpell aufgerufen von [${casterType}]. Inhalt von spell:`, spell);
 
     // Sicherheits-Check: Spell muss ein vollständiges Objekt sein
@@ -75,8 +81,9 @@ export class SpellsEngineService {
     // --- 3. EFFEKT VERARBEITUNG ---
     switch (spell.effectType) {
       case 'PHYSICAL_DAMAGE': {
-        const totalDamage = Number(spell.effectValues.value) + bonusAttack;
+        let totalDamage = Number(spell.effectValues.value) + bonusAttack;
         if (casterType === 'player') {
+          totalDamage = await this.applyResolveChallenge(spell, totalDamage);
           fightService.applyDamageToMonster(totalDamage);
         } else {
           fightService.applyDamageToPlayer(totalDamage);
@@ -85,10 +92,11 @@ export class SpellsEngineService {
       }
 
       case 'ELEMENTAL_DAMAGE': {
-        const totalDamage = Number(spell.effectValues.value) + bonusMagic;
+        let totalDamage = Number(spell.effectValues.value) + bonusMagic;
         const element = spell.effectValues.element;
         console.log(`💥 ${element}-Schaden abgefeuert von [${casterType}]: ${totalDamage}`);
         if (casterType === 'player') {
+          totalDamage = await this.applyResolveChallenge(spell, totalDamage);
           fightService.applyDamageToMonster(totalDamage);
         } else {
           fightService.applyDamageToPlayer(totalDamage);
@@ -97,8 +105,9 @@ export class SpellsEngineService {
       }
 
       case 'HEAL': {
-        const healAmount = Number(spell.effectValues.value);
+        let healAmount = Number(spell.effectValues.value);
         if (casterType === 'player') {
+          healAmount = await this.applyResolveChallenge(spell, healAmount);
           fightService.playerHp.update((hp) =>
             Math.min(fightService.playerMaxHp(), hp + healAmount),
           );
@@ -116,5 +125,17 @@ export class SpellsEngineService {
     }
 
     return true;
+  }
+
+  /**
+   * Reskaliert den Skill-Endwert (Schaden/Heilung) anhand des Resolve-
+   * Minigames: (Endwert / resolvePoints) * korrekt verbundene Punkte.
+   * Nur für Spieler-Casts aufgerufen — Monster sind von der Resolve-
+   * Mechanik nicht betroffen.
+   */
+  private async applyResolveChallenge(spell: any, finalValue: number): Promise<number> {
+    const resolvePoints = Number(spell.resolvePoints) || 3;
+    const correctCount = await this.resolveChallengeService.start(resolvePoints);
+    return Math.round((finalValue / resolvePoints) * correctCount);
   }
 }

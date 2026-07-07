@@ -5,6 +5,7 @@
     "manaCost": 120,
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": { "element": "chaos", "value": 200 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 6
   }
 ]

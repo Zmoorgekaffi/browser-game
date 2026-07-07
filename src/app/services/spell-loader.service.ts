@@ -46,6 +46,8 @@ export interface SpellData {
   equipped?: boolean;
   /** true = nur über ein Shrine-Levelup-Passive erlernbar (siehe passives.json). */
   shrineSkill?: boolean;
+  /** Anzahl der Punkte in der Resolve-Minigame-Sequenz beim Wirken dieses Skills (nur Spieler). */
+  resolvePoints?: number;
   [key: string]: any; // Für beliebige weitere Felder aus den JSONs
 }
 

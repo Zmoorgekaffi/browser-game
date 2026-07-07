@@ -2,7 +2,7 @@
   {
     "name": "Beinkleider der Erleuchtung",
     "description": "Die Beine fühlen sich federleicht an, als würde man knapp über dem Boden schweben.",
-    "img-path": "imgs/items/legs/arcane-leg_4.webp",
+    "img-path": "imgs/items/leg/arcane-leg_4.webp",
     "price": 113,
     "armor-slot": "leg",
     "tier": "4",
@@ -34,7 +34,7 @@
   {
     "name": "Schattenmeister-Hose",
     "description": "Verzerrt die Konturen der Beine in der Bewegung, was das Zielen für Feinde erschwert.",
-    "img-path": "imgs/items/legs/shadow-leg_4.webp",
+    "img-path": "imgs/items/leg/shadow-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
     "tier": "4",
@@ -66,7 +66,7 @@
   {
     "name": "Prunkvolle Obsidianbeinplatten",
     "description": "Wuchtige Platten, die den Träger wie eine unerschütterliche Festung im Boden verankern.",
-    "img-path": "imgs/items/legs/obsidian-leg_4.webp",
+    "img-path": "imgs/items/leg/obsidian-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
     "tier": "4",
@@ -98,7 +98,7 @@
   {
     "name": "Sturmbringer-Beinschutz",
     "description": "Erfüllt die Muskeln mit elektrischer Energie und erhöht die Reaktionszeit.",
-    "img-path": "imgs/items/legs/storm-leg_4.webp",
+    "img-path": "imgs/items/leg/storm-leg_4.webp",
     "price": 126,
     "armor-slot": "leg",
     "tier": "4",
@@ -130,7 +130,7 @@
   {
     "name": "Dämonen-Beinschienen",
     "description": "Aus den harten Hornplatten eines Abyss-Dämonen gefertigt. Pulsieren in mattem Rot.",
-    "img-path": "imgs/items/legs/demon-leg_4.webp",
+    "img-path": "imgs/items/leg/demon-leg_4.webp",
     "price": 176,
     "armor-slot": "leg",
     "tier": "4",

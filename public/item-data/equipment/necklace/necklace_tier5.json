@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Kosmisches Auge",
+    "description": "Ein rotierender Kristall, der die Gesetze der Realität leicht beugt, um den Träger absolut zu schützen.",
+    "img-path": "imgs/items/necklace/cosmic-eye_5.webp",
+    "price": 194,
+    "armor-slot": "necklace",
+    "tier": "5",
+    "stats": {
+      "intelligence": 36,
+      "dexterity": 0,
+      "strength": -14,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 144,
+      "magic-find": 0,
+      "armor": 15,
+      "attack": 0,
+      "magic-attack": 14,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 36,
+        "cold": 36,
+        "lightning": 36,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Nachtwandler-Kollier",
+    "description": "Verschmilzt perfekt mit der Dunkelheit und macht deinen Herzschlag für lauernde Feinde unhörbar.",
+    "img-path": "imgs/items/necklace/night-collar_5.webp",
+    "price": 216,
+    "armor-slot": "necklace",
+    "tier": "5",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 31,
+      "strength": 0,
+      "vitality": -14,
+      "luck": 14,
+      "energy-shield": 0,
+      "magic-find": 21,
+      "armor": 46,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 28,
+      "crit-chance": 14,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 24
+      }
+    }
+  },
+  {
+    "name": "Unvergängliches Drachen-Amulett",
+    "description": "Enthält eine echte, makellose Drachenschuppe. Absolut feuerfest und von unbändiger Urkraft erfüllt.",
+    "img-path": "imgs/items/necklace/dragon-amulet_5.webp",
+    "price": 216,
+    "armor-slot": "necklace",
+    "tier": "5",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -14,
+      "strength": 36,
+      "vitality": 43,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 109,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -14,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 24,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Kosmischer Zeit-Talisman",
+    "description": "Manipuliert das lokale Schwerkraft- und Zeitempfinden des Trägers für unvorstellbare Reflexe.",
+    "img-path": "imgs/items/necklace/cosmic-talisman_5.webp",
+    "price": 216,
+    "armor-slot": "necklace",
+    "tier": "5",
+    "stats": {
+      "intelligence": 14,
+      "dexterity": 21,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 62,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 28,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -14,
+      "resistances": {
+        "fire": 0,
+        "cold": 24,
+        "lightning": 24,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Antiker Schicksals-Anhänger",
+    "description": "Ein uraltes, pulsierendes Artefakt, das das Schicksal selbst biegt und jeden deiner Angriffe verheerend macht.",
+    "img-path": "imgs/items/necklace/destiny-pendant_5.webp",
+    "price": 302,
+    "armor-slot": "necklace",
+    "tier": "5",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -28,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 31,
+      "attack": 28,
+      "magic-attack": 28,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 43,
+      "chaosDamage": 28,
+      "charisma": 0,
+      "resistances": {
+        "fire": -36,
+        "cold": -36,
+        "lightning": -36,
+        "chaos": 48
+      }
+    }
+  }
+]

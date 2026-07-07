@@ -2,7 +2,7 @@
   {
     "name": "Novizen-Robe (Unterteil)",
     "description": "Gewährt viel Beinfreiheit für rituelle Tänze oder schnelle Fluchtmanöver.",
-    "img-path": "imgs/items/legs/mage-pants_2.webp",
+    "img-path": "imgs/items/leg/mage-pants_2.webp",
     "price": 32,
     "armor-slot": "leg",
     "tier": "2",
@@ -34,7 +34,7 @@
   {
     "name": "Verstärkte Lederhose",
     "description": "Mit zusätzlichen Lederflicken an den Oberschenkeln gegen Schnittwunden geschützt.",
-    "img-path": "imgs/items/legs/leather-leg_2.webp",
+    "img-path": "imgs/items/leg/leather-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
     "tier": "2",
@@ -66,7 +66,7 @@
   {
     "name": "Solide Kettenbeinschienen",
     "description": "Schwerer Schutz für die Beine, der Angriffe von unten effektiv abgleiten lässt.",
-    "img-path": "imgs/items/legs/chain-leg_2.webp",
+    "img-path": "imgs/items/leg/chain-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
     "tier": "2",
@@ -98,7 +98,7 @@
   {
     "name": "Pirscher-Hose",
     "description": "Besonders elastisch im Schritt, ideal für weite Sprünge und schnelles Kriechen.",
-    "img-path": "imgs/items/legs/hunter-leg_2.webp",
+    "img-path": "imgs/items/leg/hunter-leg_2.webp",
     "price": 36,
     "armor-slot": "leg",
     "tier": "2",
@@ -130,7 +130,7 @@
   {
     "name": "Runenbeschriebene Beinkleider",
     "description": "Erhöhen das Lauftempo durch dunkle Magie, belasten aber den Kreislauf.",
-    "img-path": "imgs/items/legs/cursed-pants_2.webp",
+    "img-path": "imgs/items/leg/cursed-pants_2.webp",
     "price": 50,
     "armor-slot": "leg",
     "tier": "2",

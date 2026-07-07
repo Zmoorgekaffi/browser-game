@@ -2,7 +2,7 @@
   {
     "name": "Flicken-Stoffhose",
     "description": "Eine kratzige, unbequeme Hose mit groben Nähten.",
-    "img-path": "imgs/items/legs/cloth-pants_1.webp",
+    "img-path": "imgs/items/leg/cloth-pants_1.webp",
     "price": 16,
     "armor-slot": "leg",
     "tier": "1",
@@ -34,7 +34,7 @@
   {
     "name": "Abgewetzte Lederhose",
     "description": "An den Knien bereits stark abgelaufen, schützt aber vor Dornen.",
-    "img-path": "imgs/items/legs/leather-pants_1.webp",
+    "img-path": "imgs/items/leg/leather-pants_1.webp",
     "price": 18,
     "armor-slot": "leg",
     "tier": "1",
@@ -66,7 +66,7 @@
   {
     "name": "Rostige Beinschienen",
     "description": "Schränken den Schritt ein und verursachen beim Laufen ein lautes Quietschen.",
-    "img-path": "imgs/items/legs/iron-leg_1.webp",
+    "img-path": "imgs/items/leg/iron-leg_1.webp",
     "price": 18,
     "armor-slot": "leg",
     "tier": "1",
@@ -98,7 +98,7 @@
   {
     "name": "Wilderer-Hose",
     "description": "Aus unauffälligem, erdfarbenem Stoff genäht. Perfekt für die Pirsch.",
-    "img-path": "imgs/items/legs/thief-leg_1.webp",
+    "img-path": "imgs/items/leg/thief-leg_1.webp",
     "price": 18,
     "armor-slot": "leg",
     "tier": "1",
@@ -130,7 +130,7 @@
   {
     "name": "Splitternde Knochenschienen",
     "description": "Beinschutz aus spitzen Schienbeinknochen, die dich unaufhaltsam vorantreiben.",
-    "img-path": "imgs/items/legs/cursed-leg_1.webp",
+    "img-path": "imgs/items/leg/cursed-leg_1.webp",
     "price": 25,
     "armor-slot": "leg",
     "tier": "1",

@@ -6,6 +6,7 @@
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": {
       "value": 25
-    }
+    },
+    "resolvePoints": 2
   }
 ]

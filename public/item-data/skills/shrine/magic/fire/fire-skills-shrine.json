@@ -5,6 +5,7 @@
     "manaCost": 85,
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": { "element": "fire", "value": 130 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 5
   }
 ]

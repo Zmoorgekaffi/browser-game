@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Novizen-Amulett",
+    "description": "Ein von Gelehrten gesegnetes Amulett, das den Fluss des Mana spürbar harmonisiert.",
+    "img-path": "imgs/items/necklace/novice-amulet_2.webp",
+    "price": 32,
+    "armor-slot": "necklace",
+    "tier": "2",
+    "stats": {
+      "intelligence": 6,
+      "dexterity": 0,
+      "strength": -2,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 24,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 0,
+      "magic-attack": 2,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 6,
+        "cold": 6,
+        "lightning": 6,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Smaragd-Auge",
+    "description": "Das grüne Juwel schärft die Sinne für verborgene Schätze und schützt vor tückischen Giften.",
+    "img-path": "imgs/items/necklace/emerald-eye_2.webp",
+    "price": 36,
+    "armor-slot": "necklace",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 5,
+      "strength": 0,
+      "vitality": -2,
+      "luck": 2,
+      "energy-shield": 0,
+      "magic-find": 3,
+      "armor": 7,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 4,
+      "crit-chance": 2,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 4
+      }
+    }
+  },
+  {
+    "name": "Rubin-Medaillon",
+    "description": "Ein schweres, warmes Medaillon. Die feurige Glut des Rubins stärkt die Lebenskraft und schützt vor Kälte.",
+    "img-path": "imgs/items/necklace/ruby-medallion_2.webp",
+    "price": 36,
+    "armor-slot": "necklace",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -2,
+      "strength": 6,
+      "vitality": 7,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 18,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -2,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 4,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Topas-Talisman",
+    "description": "Ein vom Blitz geformter Kristall. Er verleiht dem Träger katzenartige Reflexe und flinke Finger.",
+    "img-path": "imgs/items/necklace/topaz-talisman_2.webp",
+    "price": 36,
+    "armor-slot": "necklace",
+    "tier": "2",
+    "stats": {
+      "intelligence": 2,
+      "dexterity": 3,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 10,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 4,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -2,
+      "resistances": {
+        "fire": 0,
+        "cold": 4,
+        "lightning": 4,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Runenbeschriebenes Onyx-Amulett",
+    "description": "Dunkle Runen auf tiefschwarzem Stein leiten feindliche Magie ab, belasten jedoch den Geist.",
+    "img-path": "imgs/items/necklace/runic-onyx_2.webp",
+    "price": 50,
+    "armor-slot": "necklace",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -4,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 5,
+      "attack": 4,
+      "magic-attack": 4,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 7,
+      "chaosDamage": 4,
+      "charisma": 0,
+      "resistances": {
+        "fire": -6,
+        "cold": -6,
+        "lightning": -6,
+        "chaos": 8
+      }
+    }
+  }
+]

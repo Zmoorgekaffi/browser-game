@@ -1,0 +1,50 @@
+@if (service.active()) {
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+    <div
+      class="resolve-container relative bg-[rgba(20,20,20,0.9)] border border-white/10 rounded-lg overflow-hidden"
+      style="width: 900px; height: 560px;"
+    >
+      <div class="absolute top-0 left-0 h-1.5 bg-amber-400 timer-bar" [style.animation-duration.ms]="service.durationMs"></div>
+
+      <p class="absolute top-4 left-1/2 -translate-x-1/2 text-white text-lg font-semibold select-none z-10">
+        Ziehe einen Strahl von Punkt zu Punkt, in der richtigen Reihenfolge!
+      </p>
+
+      <svg class="absolute inset-0 pointer-events-none" width="900" height="560">
+        @for (seg of service.connectedSegments(); track seg.to.id) {
+          <line
+            [attr.x1]="seg.from.x" [attr.y1]="seg.from.y"
+            [attr.x2]="seg.to.x" [attr.y2]="seg.to.y"
+            stroke="#34d399" stroke-width="6" stroke-linecap="round"
+          />
+        }
+        @if (service.dragging() && service.anchorPoint(); as anchor) {
+          <line
+            [attr.x1]="anchor.x" [attr.y1]="anchor.y"
+            [attr.x2]="service.cursorPos().x" [attr.y2]="service.cursorPos().y"
+            stroke="#60a5fa" stroke-width="6" stroke-linecap="round"
+          />
+        }
+      </svg>
+
+      @for (point of service.points(); track point.id) {
+        <div
+          class="resolve-point absolute w-12 h-12 rounded-full border-2 flex items-center justify-center font-bold text-white text-lg transition-colors select-none"
+          [class.bg-emerald-600]="isConnected(point.id)"
+          [class.border-emerald-300]="isConnected(point.id)"
+          [class.bg-zinc-800]="!isConnected(point.id)"
+          [class.border-white]="!isConnected(point.id)"
+          [style.left.px]="point.x"
+          [style.top.px]="point.y"
+          style="touch-action: none;"
+          (pointerdown)="onPointerDown($event, point.id)"
+          (pointermove)="onPointerMove($event)"
+          (pointerup)="onPointerUp()"
+          (pointercancel)="onPointerCancel()"
+        >
+          {{ point.id }}
+        </div>
+      }
+    </div>
+  </div>
+}

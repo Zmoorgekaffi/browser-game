@@ -4,6 +4,7 @@
     "name": "Eislanze",
     "manaCost": 30,
     "effectType": "ELEMENTAL_DAMAGE",
-    "effectValues": { "element": "cold", "value": 45 }
+    "effectValues": { "element": "cold", "value": 45 },
+    "resolvePoints": 3
   }
 ]

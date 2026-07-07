@@ -4,6 +4,7 @@
     "name": "Kettenblitz",
     "manaCost": 50,
     "effectType": "ELEMENTAL_DAMAGE",
-    "effectValues": { "element": "lightning", "value": 70 }
+    "effectValues": { "element": "lightning", "value": 70 },
+    "resolvePoints": 4
   }
 ]

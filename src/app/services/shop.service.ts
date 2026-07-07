@@ -5,8 +5,17 @@ import { InventarService } from './inventar.service';
 import { PersonalItemsService } from './personal-items.service';
 import { getSellPrice } from '../utils/item-display.util';
 
-// Import der korrekten JSON-Pools für deine 3 Shops
-import magicData from '../../../public/item-data/necklace.json';
+// ✨ Magie-Laden: Necklace + Ring (Tier 1-5)
+import necklaceTier1 from '../../../public/item-data/equipment/necklace/necklace_tier1.json';
+import necklaceTier2 from '../../../public/item-data/equipment/necklace/necklace_tier2.json';
+import necklaceTier3 from '../../../public/item-data/equipment/necklace/necklace_tier3.json';
+import necklaceTier4 from '../../../public/item-data/equipment/necklace/necklace_tier4.json';
+import necklaceTier5 from '../../../public/item-data/equipment/necklace/necklace_tier5.json';
+import ringTier1 from '../../../public/item-data/equipment/ring/ring_tier1.json';
+import ringTier2 from '../../../public/item-data/equipment/ring/ring_tier2.json';
+import ringTier3 from '../../../public/item-data/equipment/ring/ring_tier3.json';
+import ringTier4 from '../../../public/item-data/equipment/ring/ring_tier4.json';
+import ringTier5 from '../../../public/item-data/equipment/ring/ring_tier5.json';
 
 // 🛠️ Schmiede: Chest + Leg (Tier 1-5)
 import chestTier1 from '../../../public/item-data/equipment/chest/chest_tier1.json';
@@ -50,6 +59,12 @@ const generalTier1Pool: any[] = [...headTier1, ...glovesTier1];
 const generalHigherTierPool: any[] = [
   ...headTier2, ...headTier3, ...headTier4, ...headTier5,
   ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
+];
+
+const magicTier1Pool: any[] = [...necklaceTier1, ...ringTier1];
+const magicHigherTierPool: any[] = [
+  ...necklaceTier2, ...necklaceTier3, ...necklaceTier4, ...necklaceTier5,
+  ...ringTier2, ...ringTier3, ...ringTier4, ...ringTier5,
 ];
 
 interface AllShopsData {
@@ -245,18 +260,32 @@ export class ShopService {
   }
 
   /**
-   * Zieht `itemCount` zufällige Items aus dem Pool (Ziehen mit Zurücklegen).
+   * Zieht `itemCount` zufällige, eindeutige Items aus dem Pool (Ziehen ohne
+   * Zurücklegen, nach Item-Name). So landet nie dasselbe Item doppelt im
+   * selben Shop-Angebot.
    *
    * @param itemPool  Quell-Pool aus den JSON-Daten.
    * @param itemCount Anzahl der Shop-Plätze.
+   * @param usedNames Namen, die bereits an anderer Stelle im selben Shop-Roll
+   *                  gezogen wurden (z. B. aus dem Higher-Tier-Pool) und daher
+   *                  hier ausgeschlossen werden. Wird um neu gezogene Namen
+   *                  ergänzt.
    */
-  private generatePoolSelection(itemPool: any[], itemCount: number): any[] {
+  private generatePoolSelection(
+    itemPool: any[],
+    itemCount: number,
+    usedNames: Set<string> = new Set<string>(),
+  ): any[] {
     const selectedItems: any[] = [];
     if (!itemPool || itemPool.length === 0) return selectedItems;
 
-    for (let i = 0; i < itemCount; i++) {
-      const randomIndex = this.utilityService.getRandomIndex(itemPool);
-      selectedItems.push({ ...itemPool[randomIndex], isSold: false });
+    const availableItems = itemPool.filter((item) => !usedNames.has(item.name));
+
+    for (let i = 0; i < itemCount && availableItems.length > 0; i++) {
+      const randomIndex = this.utilityService.getRandomIndex(availableItems);
+      const [pickedItem] = availableItems.splice(randomIndex, 1);
+      usedNames.add(pickedItem.name);
+      selectedItems.push({ ...pickedItem, isSold: false });
     }
     return selectedItems;
   }
@@ -264,7 +293,9 @@ export class ShopService {
   /**
    * Würfelt das Angebot für einen Ausrüstungs-Shop: `guaranteedHigherTierCount`
    * Items kommen garantiert aus `higherTierPool` (Tier 2+), der Rest aus
-   * `tier1Pool` (Ziehen jeweils mit Zurücklegen). Die Reihenfolge der
+   * `tier1Pool` (Ziehen jeweils ohne Zurücklegen, s. `generatePoolSelection`).
+   * Ein gemeinsames `usedNames`-Set sorgt dafür, dass innerhalb des gesamten
+   * Angebots kein Item-Name doppelt vorkommt. Die Reihenfolge der
    * Shop-Plätze wird danach gemischt.
    *
    * @param tier1Pool               Pool mit reinen Tier-1-Items.
@@ -283,9 +314,10 @@ export class ShopService {
       : 0;
     const tier1Count = itemCount - higherTierCount;
 
+    const usedNames = new Set<string>();
     const selectedItems: any[] = [
-      ...this.generatePoolSelection(higherTierPool, higherTierCount),
-      ...this.generatePoolSelection(tier1Pool, tier1Count),
+      ...this.generatePoolSelection(higherTierPool, higherTierCount, usedNames),
+      ...this.generatePoolSelection(tier1Pool, tier1Count, usedNames),
     ];
 
     // Fisher-Yates: garantierte Tier-2+-Items nicht immer auf denselben Plätzen
@@ -314,7 +346,9 @@ export class ShopService {
    * Generiert das Angebot für die 3 neuen Shops
    */
   public rerollAllShopsAtEndOfRun() {
-    this.magicShopItems.set(this.generatePoolSelection(magicData, 6));
+    this.magicShopItems.set(
+      this.generateShopSelection(magicTier1Pool, magicHigherTierPool, 6, 2),
+    );
     this.smitherShopItems.set(
       this.generateShopSelection(smitherTier1Pool, smitherHigherTierPool, 5, 2),
     );

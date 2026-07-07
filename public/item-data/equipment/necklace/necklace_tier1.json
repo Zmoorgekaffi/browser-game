@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Einfache Saphir-Halskette",
+    "description": "Ein schlichtes Band mit einem kleinen Saphir, der schwach im Dunkeln schimmert.",
+    "img-path": "imgs/items/necklace/sapphire-neck_1.webp",
+    "price": 16,
+    "armor-slot": "necklace",
+    "tier": "1",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 0,
+      "strength": -1,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 12,
+      "magic-find": 0,
+      "armor": 1,
+      "attack": 0,
+      "magic-attack": 1,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 3,
+        "cold": 3,
+        "lightning": 3,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Abgewetztes Smaragd-Band",
+    "description": "Ein einfaches Lederband. Der matte Smaragd schenkt ein winziges Fünkchen Glück.",
+    "img-path": "imgs/items/necklace/emerald-band_1.webp",
+    "price": 18,
+    "armor-slot": "necklace",
+    "tier": "1",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 2,
+      "strength": 0,
+      "vitality": -1,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 1,
+      "armor": 3,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 2,
+      "crit-chance": 1,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 2
+      }
+    }
+  },
+  {
+    "name": "Schweres Kupfer-Medaillon",
+    "description": "Ein klobiges Medaillon, das schwer auf der Brust liegt, aber Angriffe dämpft.",
+    "img-path": "imgs/items/necklace/copper-medallion_1.webp",
+    "price": 18,
+    "armor-slot": "necklace",
+    "tier": "1",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -1,
+      "strength": 3,
+      "vitality": 3,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 9,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 2,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Wilderer-Glücksbringer",
+    "description": "Aus Federn und Zähnen gefertigt. Erhöht die Aufmerksamkeit im dichten Unterholz.",
+    "img-path": "imgs/items/necklace/poacher-charm_1.webp",
+    "price": 18,
+    "armor-slot": "necklace",
+    "tier": "1",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 1,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 5,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 2,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 0,
+        "cold": 2,
+        "lightning": 2,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Splitternder Knochen-Anhänger",
+    "description": "Ein unheimliches Relikt, das dem Träger Kraft entzieht, aber seine Wut schürt.",
+    "img-path": "imgs/items/necklace/bone-pendant_1.webp",
+    "price": 25,
+    "armor-slot": "necklace",
+    "tier": "1",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -2,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 2,
+      "magic-attack": 2,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 3,
+      "chaosDamage": 2,
+      "charisma": 0,
+      "resistances": {
+        "fire": -3,
+        "cold": -3,
+        "lightning": -3,
+        "chaos": 4
+      }
+    }
+  }
+]

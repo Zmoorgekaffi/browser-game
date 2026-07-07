@@ -1,0 +1,20 @@
+.resolve-point {
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.timer-bar {
+  width: 100%;
+  animation-name: shrink-timer;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes shrink-timer {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

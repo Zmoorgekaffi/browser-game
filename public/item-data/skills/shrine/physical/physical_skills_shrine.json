@@ -5,7 +5,8 @@
     "manaCost": 40,
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": { "value": 70 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 4
   },
   {
     "id": "shrine_physical_02",
@@ -13,6 +14,7 @@
     "manaCost": 90,
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": { "value": 150 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 5
   }
 ]

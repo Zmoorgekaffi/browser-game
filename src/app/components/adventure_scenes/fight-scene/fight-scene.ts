@@ -6,6 +6,8 @@ import { ProfileService } from '../../../services/profile.service';
 import { AdventureStateService } from '../../../services/adventure-state.service';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
 import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
+import { ResolveChallenge } from '../../shared/resolve-challenge/resolve-challenge';
+import { ResolveChallengeService } from '../../../services/resolve-challenge.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 
@@ -22,7 +24,7 @@ import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 @Component({
   selector: 'app-fight-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen],
+  imports: [CommonModule, AnimationObject, LoadingScreen, ResolveChallenge],
   templateUrl: './fight-scene.html',
   styleUrl: './fight-scene.scss',
 })
@@ -31,6 +33,7 @@ export class FightScene {
   fightService = inject(FightService);
   skillsService = inject(SkillsService);
   profileService = inject(ProfileService);
+  resolveChallengeService = inject(ResolveChallengeService);
   private adventureStateService = inject(AdventureStateService);
   private preloader = inject(AssetPreloaderService);
 
@@ -181,7 +184,7 @@ export class FightScene {
   }
 
   onCastSpell(spellId: string): void {
-    this.fightService.executeCastSpell(spellId);
+    void this.fightService.executeCastSpell(spellId);
   }
 
   hasEnoughMana(spellId: string): boolean {

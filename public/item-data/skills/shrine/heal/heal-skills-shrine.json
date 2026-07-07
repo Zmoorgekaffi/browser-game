@@ -5,7 +5,8 @@
     "manaCost": 30,
     "effectType": "HEAL",
     "effectValues": { "value": 80 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 4
   },
   {
     "id": "shrine_heal_02",
@@ -13,6 +14,7 @@
     "manaCost": 65,
     "effectType": "HEAL",
     "effectValues": { "value": 180 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 6
   }
 ]

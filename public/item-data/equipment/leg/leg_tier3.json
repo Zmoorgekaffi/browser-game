@@ -2,7 +2,7 @@
   {
     "name": "Magister-Hose",
     "description": "Aus edlem Tuch, das Schmutz und Staub durch eine feine Barriere einfach abweist.",
-    "img-path": "imgs/items/legs/mage-leg_3.webp",
+    "img-path": "imgs/items/leg/mage-leg_3.webp",
     "price": 64,
     "armor-slot": "leg",
     "tier": "3",
@@ -34,7 +34,7 @@
   {
     "name": "Schlangenhaut-Beinschienen",
     "description": "Glatt und geschmeidig. Ermöglichen es, sich mühelos aus Fesseln oder Griffen zu winden.",
-    "img-path": "imgs/items/legs/snake-leg_3.webp",
+    "img-path": "imgs/items/leg/snake-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
     "tier": "3",
@@ -66,7 +66,7 @@
   {
     "name": "Beinplatten des Wächters",
     "description": "Massiver Beinschutz aus dickem Stahl. Hält selbst dem Ansturm von Reitern stand.",
-    "img-path": "imgs/items/legs/guard-leg_3.webp",
+    "img-path": "imgs/items/leg/guard-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
     "tier": "3",
@@ -98,7 +98,7 @@
   {
     "name": "Falkenaugen-Beinschutz",
     "description": "Leichte Aluminium-Stahl-Legierung, die Sprints spürbar erleichtert.",
-    "img-path": "imgs/items/legs/hawk-leg_3.webp",
+    "img-path": "imgs/items/leg/hawk-leg_3.webp",
     "price": 72,
     "armor-slot": "leg",
     "tier": "3",
@@ -130,7 +130,7 @@
   {
     "name": "Gequälter Beinschutz",
     "description": "Aus verfluchtem Erz gegossen. Verleiht rohe Zerstörungskraft beim Treten.",
-    "img-path": "imgs/items/legs/torment-leg_3.webp",
+    "img-path": "imgs/items/leg/torment-leg_3.webp",
     "price": 100,
     "armor-slot": "leg",
     "tier": "3",

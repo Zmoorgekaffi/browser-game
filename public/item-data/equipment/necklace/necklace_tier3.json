@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Magister-Medaillon",
+    "description": "Ein edles Schmuckstück, das eine schützende Barriere gegen schädliche Zauber projiziert.",
+    "img-path": "imgs/items/necklace/magister-medallion_3.webp",
+    "price": 64,
+    "armor-slot": "necklace",
+    "tier": "3",
+    "stats": {
+      "intelligence": 12,
+      "dexterity": 0,
+      "strength": -4,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 48,
+      "magic-find": 0,
+      "armor": 5,
+      "attack": 0,
+      "magic-attack": 4,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 12,
+        "cold": 12,
+        "lightning": 12,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Schlangenhaut-Talisman",
+    "description": "Aus geschmeidigen Schuppen geflochten. Ermöglicht es, brenzligen Situationen mühelos zu entgehen.",
+    "img-path": "imgs/items/necklace/snake-talisman_3.webp",
+    "price": 72,
+    "armor-slot": "necklace",
+    "tier": "3",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 10,
+      "strength": 0,
+      "vitality": -4,
+      "luck": 4,
+      "energy-shield": 0,
+      "magic-find": 7,
+      "armor": 15,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 9,
+      "crit-chance": 4,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 8
+      }
+    }
+  },
+  {
+    "name": "Malachit-Kollier",
+    "description": "Ein klobiger, roher Brocken aus den tiefsten Minen. Bietet exzellenten physischen Schutz.",
+    "img-path": "imgs/items/necklace/malachite-collar_3.webp",
+    "price": 72,
+    "armor-slot": "necklace",
+    "tier": "3",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -4,
+      "strength": 12,
+      "vitality": 14,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 36,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": -4,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 8,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Falkenaugen-Kette",
+    "description": "Ein feines Kettenglied mit einer Raubvogelfeder, das die Sinne und Reaktionen schärft.",
+    "img-path": "imgs/items/necklace/hawk-eye-neck_3.webp",
+    "price": 72,
+    "armor-slot": "necklace",
+    "tier": "3",
+    "stats": {
+      "intelligence": 4,
+      "dexterity": 7,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 20,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 9,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -4,
+      "resistances": {
+        "fire": 0,
+        "cold": 8,
+        "lightning": 8,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Gequälter Splitter",
+    "description": "Ein rissiger Kristall, der von finsterer Energie erfüllt ist und die reine Zerstörungskraft nährt.",
+    "img-path": "imgs/items/necklace/tormented-shard_3.webp",
+    "price": 100,
+    "armor-slot": "necklace",
+    "tier": "3",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": -9,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 10,
+      "attack": 9,
+      "magic-attack": 9,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 14,
+      "chaosDamage": 9,
+      "charisma": 0,
+      "resistances": {
+        "fire": -12,
+        "cold": -12,
+        "lightning": -12,
+        "chaos": 16
+      }
+    }
+  }
+]

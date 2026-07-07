@@ -2,7 +2,7 @@
   {
     "name": "Glimmende Kristall-Hose",
     "description": "Aus reinem, flexiblem Kristallgeflecht. Schützt vor kinetischen Schockwellen.",
-    "img-path": "imgs/items/legs/crystal-leg_5.webp",
+    "img-path": "imgs/items/leg/crystal-leg_5.webp",
     "price": 194,
     "armor-slot": "leg",
     "tier": "5",
@@ -34,7 +34,7 @@
   {
     "name": "Nachtwandler-Hose",
     "description": "Verschmilzt perfekt mit der Dunkelheit. Macht Bewegungen im Schatten absolut unsichtbar.",
-    "img-path": "imgs/items/legs/night-leg_5.webp",
+    "img-path": "imgs/items/leg/night-leg_5.webp",
     "price": 216,
     "armor-slot": "leg",
     "tier": "5",
@@ -66,7 +66,7 @@
   {
     "name": "Unvergängliche Drachenbeinschienen",
     "description": "Aus den massiven Beinschuppen eines Drachen. Absolut feuerfest und unzerstörbar.",
-    "img-path": "imgs/items/legs/dragon-leg_5.webp",
+    "img-path": "imgs/items/leg/dragon-leg_5.webp",
     "price": 216,
     "armor-slot": "leg",
     "tier": "5",
@@ -98,7 +98,7 @@
   {
     "name": "Kosmische Beinhülle",
     "description": "Manipuliert das lokale Schwerefeld des Trägers für unvorstellbare Sprunghöhen.",
-    "img-path": "imgs/items/legs/cosmic-leg_5.webp",
+    "img-path": "imgs/items/leg/cosmic-leg_5.webp",
     "price": 216,
     "armor-slot": "leg",
     "tier": "5",
@@ -130,7 +130,7 @@
   {
     "name": "Antiker Schicksals-Beinschutz",
     "description": "Uralte Schienen, deren Runen im Kampf leuchten und jeden Ausfallschritt perfektionieren.",
-    "img-path": "imgs/items/legs/destiny-leg_5.webp",
+    "img-path": "imgs/items/leg/destiny-leg_5.webp",
     "price": 302,
     "armor-slot": "leg",
     "tier": "5",

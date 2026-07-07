@@ -5,6 +5,7 @@
     "manaCost": 50,
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": { "element": "lightning", "value": 75 },
-    "shrineSkill": true
+    "shrineSkill": true,
+    "resolvePoints": 4
   }
 ]

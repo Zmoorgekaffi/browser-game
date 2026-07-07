@@ -190,11 +190,11 @@ export class FightService {
    *
    * @param spellId ID des zu wirkenden Spells.
    */
-  executeCastSpell(spellId: string): void {
+  async executeCastSpell(spellId: string): Promise<void> {
     if (this.currentTurn() !== 'player') return;
     const spell = this.skillsService.spells().find((s: any) => s.id === spellId);
     if (!spell) return;
-    const success = this.spellsEngineService.castSpell(spell, 'player');
+    const success = await this.spellsEngineService.castSpell(spell, 'player');
     if (success) this.endTurn();
   }
 
@@ -237,12 +237,20 @@ export class FightService {
   /**
    * Zieht dem Spieler Schaden ab (nach Ausweich-/Krit-Wurf, siehe
    * `resolveAttack()`); bei 0 HP endet der Kampf mit Niederlage.
+   *
+   * NUR hier (Schaden von NPC-Gegnern gegen den Spieler) wird der Schaden
+   * zusätzlich zufällig auf 75%–100% skaliert. Die Skalierung passiert VOR
+   * `resolveAttack()`, damit Kampf-Log (Krit-/Treffer-Zeile) und tatsächlich
+   * abgezogene HP übereinstimmen. applyDamageToMonster (Spieler-Schaden)
+   * bleibt davon unberührt.
    */
   public applyDamageToPlayer(damage: number): void {
     const monster = this.enrichedMonster();
     const playerStats = this.skillsService.combatStats();
 
-    const { finalDamage, dodged } = this.resolveAttack(damage, {
+    const scaledDamage = Math.round(damage * (0.75 + Math.random() * 0.25));
+
+    const { finalDamage, dodged } = this.resolveAttack(scaledDamage, {
       attackerLuck: monster?.luck ?? 0,
       attackerCritChance: monster?.critChance ?? 0,
       attackerCritDamage: monster?.critDamage ?? 0,
@@ -391,7 +399,10 @@ export class FightService {
       }
 
       console.log('👹 Monster wirkt Spell:', resolvedSpell);
-      this.spellsEngineService.castSpell(resolvedSpell, 'monster');
+      // Monster-Casts durchlaufen die Resolve-Mechanik nicht (kein await in
+      // diesem Zweig von SpellsEngineService.castSpell) und laufen daher
+      // trotz async-Signatur synchron durch, bevor endTurn() greift.
+      void this.spellsEngineService.castSpell(resolvedSpell, 'monster');
       this.endTurn();
     } else {
       console.log('Monster greift normal an!');

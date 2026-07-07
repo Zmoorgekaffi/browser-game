@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Platinreif des Erzzauberers",
+    "description": "Ein makelloser Platinring, gekrönt von einem pulsierenden Manakristall. Das reinste Werkzeug eines Magiers.",
+    "img-path": "imgs/items/ring/platinum-archmage_4.webp",
+    "price": 310,
+    "armor-slot": "ring",
+    "tier": "4",
+    "stats": {
+      "intelligence": 24,
+      "dexterity": 0,
+      "strength": -5,
+      "vitality": 3,
+      "luck": 1,
+      "energy-shield": 140,
+      "magic-find": 3,
+      "armor": 8,
+      "attack": 0,
+      "magic-attack": 16,
+      "initiative": 1,
+      "evasion": 0,
+      "crit-chance": 3,
+      "crit-damage": 4,
+      "chaosDamage": 0,
+      "charisma": 5,
+      "resistances": {
+        "fire": 25,
+        "cold": 25,
+        "lightning": 25,
+        "chaos": 3
+      }
+    }
+  },
+  {
+    "name": "Reif des Meisterdiebs",
+    "description": "Mit integrierten, mikroskopisch feinen Werkzeugen im Mechanismus. Garantiert lautlose Bewegungen.",
+    "img-path": "imgs/items/ring/master-thief_4.webp",
+    "price": 350,
+    "armor-slot": "ring",
+    "tier": "4",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 22,
+      "strength": 0,
+      "vitality": -3,
+      "luck": 8,
+      "energy-shield": 0,
+      "magic-find": 8,
+      "armor": 25,
+      "attack": 3,
+      "magic-attack": 0,
+      "initiative": 7,
+      "evasion": 18,
+      "crit-chance": 8,
+      "crit-damage": 6,
+      "chaosDamage": 2,
+      "charisma": 1,
+      "resistances": {
+        "fire": 3,
+        "cold": 3,
+        "lightning": 3,
+        "chaos": 18
+      }
+    }
+  },
+  {
+    "name": "Titanisches Juggernaut-Band",
+    "description": "Geschmiedet aus Meteoritenstahl. Schwer genug, um eine Waffe aus der Bahn zu werfen.",
+    "img-path": "imgs/items/ring/titan-juggernaut_4.webp",
+    "price": 350,
+    "armor-slot": "ring",
+    "tier": "4",
+    "stats": {
+      "intelligence": -2,
+      "dexterity": -5,
+      "strength": 25,
+      "vitality": 28,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 82,
+      "attack": 8,
+      "magic-attack": 0,
+      "initiative": -4,
+      "evasion": -1,
+      "crit-chance": 1,
+      "crit-damage": 2,
+      "chaosDamage": 0,
+      "charisma": 4,
+      "resistances": {
+        "fire": 20,
+        "cold": 12,
+        "lightning": 12,
+        "chaos": 3
+      }
+    }
+  },
+  {
+    "name": "Ring der unendlichen Weite",
+    "description": "Ein mystisches, grün schimmerndes Holzband, das die Winde des Umlands kontrollierbar macht.",
+    "img-path": "imgs/items/ring/endless-wilds_4.webp",
+    "price": 350,
+    "armor-slot": "ring",
+    "tier": "4",
+    "stats": {
+      "intelligence": 8,
+      "dexterity": 18,
+      "strength": 1,
+      "vitality": 8,
+      "luck": 3,
+      "energy-shield": 0,
+      "magic-find": 5,
+      "armor": 48,
+      "attack": 5,
+      "magic-attack": 0,
+      "initiative": 16,
+      "evasion": 8,
+      "crit-chance": 4,
+      "crit-damage": 3,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 8,
+        "cold": 22,
+        "lightning": 22,
+        "chaos": 3
+      }
+    }
+  },
+  {
+    "name": "Lich-König-Knochenreif",
+    "description": "Ein unheiliges Relikt, gefertigt aus dem Fingerknochen eines untoten Herrschers. Reißt die Realität auf.",
+    "img-path": "imgs/items/ring/lich-king_4.webp",
+    "price": 450,
+    "armor-slot": "ring",
+    "tier": "4",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 2,
+      "strength": 4,
+      "vitality": -2,
+      "luck": -10,
+      "energy-shield": 15,
+      "magic-find": 0,
+      "armor": 16,
+      "attack": 22,
+      "magic-attack": 22,
+      "initiative": 5,
+      "evasion": 2,
+      "crit-chance": 7,
+      "crit-damage": 25,
+      "chaosDamage": 24,
+      "charisma": -8,
+      "resistances": {
+        "fire": -20,
+        "cold": -20,
+        "lightning": -20,
+        "chaos": 34
+      }
+    }
+  }
+]

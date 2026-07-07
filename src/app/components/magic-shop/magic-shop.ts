@@ -9,7 +9,16 @@ import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
-import necklace from '../../../../public/item-data/necklace.json';
+import necklaceTier1 from '../../../../public/item-data/equipment/necklace/necklace_tier1.json';
+import necklaceTier2 from '../../../../public/item-data/equipment/necklace/necklace_tier2.json';
+import necklaceTier3 from '../../../../public/item-data/equipment/necklace/necklace_tier3.json';
+import necklaceTier4 from '../../../../public/item-data/equipment/necklace/necklace_tier4.json';
+import necklaceTier5 from '../../../../public/item-data/equipment/necklace/necklace_tier5.json';
+import ringTier1 from '../../../../public/item-data/equipment/ring/ring_tier1.json';
+import ringTier2 from '../../../../public/item-data/equipment/ring/ring_tier2.json';
+import ringTier3 from '../../../../public/item-data/equipment/ring/ring_tier3.json';
+import ringTier4 from '../../../../public/item-data/equipment/ring/ring_tier4.json';
+import ringTier5 from '../../../../public/item-data/equipment/ring/ring_tier5.json';
 
 /**
  * @component MagicShop
@@ -46,7 +55,10 @@ export class MagicShop implements OnInit {
   currentShopItems = this.gameStateService.shop.currentMagicItems;
 
   async ngOnInit(): Promise<void> {
-    this.amuletsArray = necklace;
+    this.amuletsArray = [
+      ...necklaceTier1, ...necklaceTier2, ...necklaceTier3, ...necklaceTier4, ...necklaceTier5,
+      ...ringTier1, ...ringTier2, ...ringTier3, ...ringTier4, ...ringTier5,
+    ];
     this.gameStateService.utility.mapArray(this.amuletsMap, this.amuletsArray);
 
     // 🆕 Hintergrund, Händler-Frames und (falls schon da) die Item-Bilder

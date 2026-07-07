@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Silberreif des Adepten",
+    "description": "Ein fein geschmiedeter Silberring, in den ein kleiner, schwach glühender Saphir eingelassen ist.",
+    "img-path": "imgs/items/ring/silver-ring_2.webp",
+    "price": 45,
+    "armor-slot": "ring",
+    "tier": "2",
+    "stats": {
+      "intelligence": 6,
+      "dexterity": 0,
+      "strength": -2,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 28,
+      "magic-find": 0,
+      "armor": 2,
+      "attack": 0,
+      "magic-attack": 3,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 1,
+      "resistances": {
+        "fire": 6,
+        "cold": 6,
+        "lightning": 6,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Geschliffener Banditen-Ring",
+    "description": "Dieser dunkle Ring reflektiert kaum Licht, erhöht aber spürbar die Reaktionszeit beim Ziehen einer Waffe.",
+    "img-path": "imgs/items/ring/bandit-band_2.webp",
+    "price": 50,
+    "armor-slot": "ring",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 5,
+      "strength": 0,
+      "vitality": -1,
+      "luck": 2,
+      "energy-shield": 0,
+      "magic-find": 2,
+      "armor": 6,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 1,
+      "evasion": 4,
+      "crit-chance": 2,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 4
+      }
+    }
+  },
+  {
+    "name": "Verstärkter Stahlring",
+    "description": "Massiver Rüstungsstahl schützt den Finger. Seine Wucht verstärkt jeden Faustschlag.",
+    "img-path": "imgs/items/ring/steel-ring_2.webp",
+    "price": 50,
+    "armor-slot": "ring",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": -2,
+      "strength": 6,
+      "vitality": 6,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 18,
+      "attack": 1,
+      "magic-attack": 0,
+      "initiative": -1,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 5,
+        "cold": 2,
+        "lightning": 2,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Ring des Fährtensuchers",
+    "description": "Aus dem gehärteten Leder einer Kriechtierart gefertigt. Er schmiegt sich lautlos an die Hand.",
+    "img-path": "imgs/items/ring/tracker-ring_2.webp",
+    "price": 50,
+    "armor-slot": "ring",
+    "tier": "2",
+    "stats": {
+      "intelligence": 2,
+      "dexterity": 3,
+      "strength": 0,
+      "vitality": 1,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 1,
+      "armor": 10,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 4,
+      "evasion": 1,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 2,
+        "cold": 5,
+        "lightning": 5,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Grabesknochen-Siegel",
+    "description": "Aus dem splitternden Kieferknochen eines Ghuls geformt. Ein modriger Geruch geht von ihm aus.",
+    "img-path": "imgs/items/ring/grave-bone_2.webp",
+    "price": 70,
+    "armor-slot": "ring",
+    "tier": "2",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 1,
+      "vitality": 0,
+      "luck": -3,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 4,
+      "attack": 5,
+      "magic-attack": 5,
+      "initiative": 1,
+      "evasion": 0,
+      "crit-chance": 1,
+      "crit-damage": 6,
+      "chaosDamage": 5,
+      "charisma": -2,
+      "resistances": {
+        "fire": -5,
+        "cold": -5,
+        "lightning": -5,
+        "chaos": 8
+      }
+    }
+  }
+]

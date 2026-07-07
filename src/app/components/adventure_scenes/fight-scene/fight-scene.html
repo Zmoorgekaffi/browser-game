@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div class="player-area w-full flex flex-col items-center gap-4">
+    <div class="absolute bottom-4 player-area w-full flex flex-col items-center gap-4">
       <div class="player-info text-center flex flex-col items-center gap-2">
         <h2 class="text-2xl font-bold text-blue-600">
           {{ playerName() }} (Level {{ playerLevel() }})
@@ -114,13 +114,13 @@
         <button
           class="px-6 py-3 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           (click)="onPlayerAttack()"
-          [disabled]="currentTurn() !== 'player'"
+          [disabled]="currentTurn() !== 'player' || resolveChallengeService.active()"
         >
           Angreifen
         </button>
         <button
           class="px-6 py-3 bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          [disabled]="currentTurn() !== 'player'"
+          [disabled]="currentTurn() !== 'player' || resolveChallengeService.active()"
         >
           Verteidigen (TBD)
         </button>
@@ -130,7 +130,7 @@
             *ngIf="spells.spell_1"
             class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
             (click)="onCastSpell(spells.spell_1)"
-            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_1)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_1) || resolveChallengeService.active()"
           >
             {{ getSpellName(spells.spell_1) }}
           </button>
@@ -138,7 +138,7 @@
             *ngIf="spells.spell_2"
             class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
             (click)="onCastSpell(spells.spell_2)"
-            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_2)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_2) || resolveChallengeService.active()"
           >
             {{ getSpellName(spells.spell_2) }}
           </button>
@@ -146,7 +146,7 @@
             *ngIf="spells.spell_3"
             class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
             (click)="onCastSpell(spells.spell_3)"
-            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_3)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_3) || resolveChallengeService.active()"
           >
             {{ getSpellName(spells.spell_3) }}
           </button>
@@ -154,7 +154,7 @@
             *ngIf="spells.spell_4"
             class="px-6 py-3 bg-yellow-600 rounded-lg shadow-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
             (click)="onCastSpell(spells.spell_4)"
-            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_4)"
+            [disabled]="currentTurn() !== 'player' || !hasEnoughMana(spells.spell_4) || resolveChallengeService.active()"
           >
             {{ getSpellName(spells.spell_4) }}
           </button>
@@ -164,4 +164,6 @@
   }
 
   } <!-- Ende @else (isLoading) -->
+
+  <app-resolve-challenge></app-resolve-challenge>
 </div>

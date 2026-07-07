@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Chronos-Aetherreif",
+    "description": "Dieser Ring besteht aus reinem, verfestigtem Mana. Er krümmt die magischen Gesetze von Zeit und Raum.",
+    "img-path": "imgs/items/ring/chronos-aether_5.webp",
+    "price": 850,
+    "armor-slot": "ring",
+    "tier": "5",
+    "stats": {
+      "intelligence": 50,
+      "dexterity": 1,
+      "strength": -10,
+      "vitality": 8,
+      "luck": 4,
+      "energy-shield": 320,
+      "magic-find": 8,
+      "armor": 16,
+      "attack": 0,
+      "magic-attack": 35,
+      "initiative": 4,
+      "evasion": 2,
+      "crit-chance": 8,
+      "crit-damage": 10,
+      "chaosDamage": 0,
+      "charisma": 12,
+      "resistances": {
+        "fire": 55,
+        "cold": 55,
+        "lightning": 55,
+        "chaos": 10
+      }
+    }
+  },
+  {
+    "name": "Ring der flüsternden Klingen",
+    "description": "Ein legendäres Erbstück der Assassinen-Gilde. Bewegungen verblassen im Auge des Betrachters.",
+    "img-path": "imgs/items/ring/whispering-blades_5.webp",
+    "price": 950,
+    "armor-slot": "ring",
+    "tier": "5",
+    "stats": {
+      "intelligence": 3,
+      "dexterity": 48,
+      "strength": 1,
+      "vitality": -5,
+      "luck": 18,
+      "energy-shield": 0,
+      "magic-find": 18,
+      "armor": 50,
+      "attack": 10,
+      "magic-attack": 0,
+      "initiative": 15,
+      "evasion": 40,
+      "crit-chance": 18,
+      "crit-damage": 15,
+      "chaosDamage": 8,
+      "charisma": 4,
+      "resistances": {
+        "fire": 10,
+        "cold": 10,
+        "lightning": 10,
+        "chaos": 40
+      }
+    }
+  },
+  {
+    "name": "Götterdämmerungs-Siegel",
+    "description": "Ein gewaltiges Monument am Finger. Erhöht die Lebenskraft und Dichte des Trägers auf ein mythologisches Niveau.",
+    "img-path": "imgs/items/ring/ragnarok-seal_5.webp",
+    "price": 950,
+    "armor-slot": "ring",
+    "tier": "5",
+    "stats": {
+      "intelligence": -5,
+      "dexterity": -10,
+      "strength": 52,
+      "vitality": 60,
+      "luck": 2,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 190,
+      "attack": 20,
+      "magic-attack": 0,
+      "initiative": -8,
+      "evasion": -2,
+      "crit-chance": 4,
+      "crit-damage": 5,
+      "chaosDamage": 0,
+      "charisma": 10,
+      "resistances": {
+        "fire": 45,
+        "cold": 30,
+        "lightning": 30,
+        "chaos": 10
+      }
+    }
+  },
+  {
+    "name": "Auge des Weltenwanderers",
+    "description": "Ein Ring aus den Blättern des Weltenbaums, besetzt mit einem ewig rotierenden, prismatischen Kristall.",
+    "img-path": "imgs/items/ring/world-walker_5.webp",
+    "price": 950,
+    "armor-slot": "ring",
+    "tier": "5",
+    "stats": {
+      "intelligence": 18,
+      "dexterity": 40,
+      "strength": 4,
+      "vitality": 18,
+      "luck": 8,
+      "energy-shield": 10,
+      "magic-find": 12,
+      "armor": 105,
+      "attack": 12,
+      "magic-attack": 2,
+      "initiative": 35,
+      "evasion": 20,
+      "crit-chance": 10,
+      "crit-damage": 8,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 20,
+        "cold": 48,
+        "lightning": 48,
+        "chaos": 10
+      }
+    }
+  },
+  {
+    "name": "Abgrundtiefer Seelenschlinger",
+    "description": "Geflochten aus den puren Splittern der Unterwelt. Dieser Ring giert nach der Lebenskraft sterblicher Wesen.",
+    "img-path": "imgs/items/ring/soul-devourer_5.webp",
+    "price": 1250,
+    "armor-slot": "ring",
+    "tier": "5",
+    "stats": {
+      "intelligence": 8,
+      "dexterity": 6,
+      "strength": 10,
+      "vitality": -4,
+      "luck": -20,
+      "energy-shield": 40,
+      "magic-find": 2,
+      "armor": 35,
+      "attack": 48,
+      "magic-attack": 48,
+      "initiative": 12,
+      "evasion": 5,
+      "crit-chance": 15,
+      "crit-damage": 55,
+      "chaosDamage": 52,
+      "charisma": -16,
+      "resistances": {
+        "fire": -40,
+        "cold": -40,
+        "lightning": -40,
+        "chaos": 75
+      }
+    }
+  }
+]

@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Goldring des Gelehrten",
+    "description": "Reines Gold umschließt einen funkelnden Smaragd. Die magischen Schwingungen sind deutlich spürbar.",
+    "img-path": "imgs/items/ring/gold-scholar_3.webp",
+    "price": 120,
+    "armor-slot": "ring",
+    "tier": "3",
+    "stats": {
+      "intelligence": 12,
+      "dexterity": 0,
+      "strength": -3,
+      "vitality": 1,
+      "luck": 0,
+      "energy-shield": 65,
+      "magic-find": 1,
+      "armor": 4,
+      "attack": 0,
+      "magic-attack": 7,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 1,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 2,
+      "resistances": {
+        "fire": 12,
+        "cold": 12,
+        "lightning": 12,
+        "chaos": 1
+      }
+    }
+  },
+  {
+    "name": "Schattenläufer-Band",
+    "description": "Aus obsidianfarbenem Metall gegossen. Es scheint das umgebende Licht förmlich aufzusaugen.",
+    "img-path": "imgs/items/ring/shadow-band_3.webp",
+    "price": 135,
+    "armor-slot": "ring",
+    "tier": "3",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 11,
+      "strength": 0,
+      "vitality": -2,
+      "luck": 4,
+      "energy-shield": 0,
+      "magic-find": 4,
+      "armor": 12,
+      "attack": 1,
+      "magic-attack": 0,
+      "initiative": 3,
+      "evasion": 8,
+      "crit-chance": 4,
+      "crit-damage": 2,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "resistances": {
+        "fire": 1,
+        "cold": 1,
+        "lightning": 1,
+        "chaos": 8
+      }
+    }
+  },
+  {
+    "name": "Ritterlicher Festungsring",
+    "description": "Ein mächtiger Prunkring mit dem Wappen einer uralten Festung. Er verleiht unbändige Entschlossenheit.",
+    "img-path": "imgs/items/ring/fortress-ring_3.webp",
+    "price": 135,
+    "armor-slot": "ring",
+    "tier": "3",
+    "stats": {
+      "intelligence": -1,
+      "dexterity": -3,
+      "strength": 12,
+      "vitality": 14,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 38,
+      "attack": 3,
+      "magic-attack": 0,
+      "initiative": -2,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 2,
+      "resistances": {
+        "fire": 10,
+        "cold": 6,
+        "lightning": 6,
+        "chaos": 1
+      }
+    }
+  },
+  {
+    "name": "Ring des Falkenauges",
+    "description": "In dieses Band wurde die geschliffene Kralle eines Raubvogels eingearbeitet. Schärft die Sinne ungemein.",
+    "img-path": "imgs/items/ring/hawk-eye_3.webp",
+    "price": 135,
+    "armor-slot": "ring",
+    "tier": "3",
+    "stats": {
+      "intelligence": 4,
+      "dexterity": 8,
+      "strength": 0,
+      "vitality": 3,
+      "luck": 1,
+      "energy-shield": 0,
+      "magic-find": 2,
+      "armor": 22,
+      "attack": 2,
+      "magic-attack": 0,
+      "initiative": 8,
+      "evasion": 3,
+      "crit-chance": 2,
+      "crit-damage": 1,
+      "chaosDamage": 0,
+      "charisma": -1,
+      "resistances": {
+        "fire": 4,
+        "cold": 10,
+        "lightning": 10,
+        "chaos": 1
+      }
+    }
+  },
+  {
+    "name": "Zersplitterter Prora-Siegelring",
+    "description": "Dunkle Runen fressen sich in das kalte Knochenmaterial. Seine Präsenz lässt das Blut in den Adern gefrieren.",
+    "img-path": "imgs/items/ring/shattered-prora_3.webp",
+    "price": 180,
+    "armor-slot": "ring",
+    "tier": "3",
+    "stats": {
+      "intelligence": 1,
+      "dexterity": 1,
+      "strength": 2,
+      "vitality": -1,
+      "luck": -5,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 8,
+      "attack": 10,
+      "magic-attack": 10,
+      "initiative": 2,
+      "evasion": 1,
+      "crit-chance": 3,
+      "crit-damage": 12,
+      "chaosDamage": 11,
+      "charisma": -4,
+      "resistances": {
+        "fire": -10,
+        "cold": -10,
+        "lightning": -10,
+        "chaos": 16
+      }
+    }
+  }
+]

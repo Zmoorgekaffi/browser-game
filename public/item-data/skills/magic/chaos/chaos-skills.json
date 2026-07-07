@@ -3,6 +3,7 @@
     "name": "Chaos-Kollaps",
     "manaCost": 110,
     "effectType": "ELEMENTAL_DAMAGE",
-    "effectValues": { "element": "chaos", "value": 180 }
+    "effectValues": { "element": "chaos", "value": 180 },
+    "resolvePoints": 6
   }
 ]
