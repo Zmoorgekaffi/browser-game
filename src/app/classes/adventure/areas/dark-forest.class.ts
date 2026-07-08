@@ -3,7 +3,7 @@ import { Area, LootTable } from '../area.class';
 import { Encounter } from '../encounter.interface'
 import { framePaths, pad } from '../../../utils/frame-paths.util';
 import { getLevelBracket, LevelBracket } from '../../../utils/level-bracket.util';
-import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json';
+import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json'
 import monsterData11o20 from '../../../../../public/mosters/dark-forest/dark-forest.11-20.json';
 import monsterData21o30 from '../../../../../public/mosters/dark-forest/dark-forest.21-30.json';
 import monsterData31o40 from '../../../../../public/mosters/dark-forest/dark-forest.31-40.json';

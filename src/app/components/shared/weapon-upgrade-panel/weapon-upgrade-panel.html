@@ -1,0 +1,172 @@
+@if (show()) {
+  <div class="inset-0 w-full h-full p-10 absolute z-[9999] flex items-center justify-center bg-black/60">
+    <div class="panel-container relative bg-[rgba(20,20,20,0.9)] border border-white/10 rounded-lg p-6 w-[820px] max-h-[85%] flex gap-6">
+      <div
+        class="cursor-pointer text-white bg-gray-700/80 hover:bg-gray-600/80 rounded-full w-8 h-8 flex items-center justify-center absolute top-4 right-4 z-10"
+        (click)="close()"
+      >
+        ✕
+      </div>
+
+      <!-- Linke Seite: Waffen-Kästchen, Material-Kästchen, Upgrade-Button, Infobox -->
+      <div class="flex flex-col gap-4 w-[280px] shrink-0">
+        <h3 class="text-white text-lg font-bold">Qualität aufwerten</h3>
+
+        <div class="flex gap-3 justify-center items-center">
+          <!-- Waffen-Kästchen -->
+          <div
+            (click)="slots().weapon && clearWeaponSlot()"
+            class="w-20 h-20 border-2 border-dashed rounded-md flex items-center justify-center bg-black/40 cursor-pointer transition-colors"
+            [class.border-amber-400]="slots().weapon"
+            [class.border-zinc-600]="!slots().weapon"
+          >
+            @if (slots().weapon; as weapon) {
+              <img [src]="weapon['img-path']" [alt]="weapon.name" class="w-full h-full object-contain p-1" />
+            } @else {
+              <span class="text-[10px] text-zinc-500 text-center px-1 select-none">Waffe</span>
+            }
+          </div>
+
+          <span class="text-zinc-500 text-xl">+</span>
+
+          <!-- Material-Kästchen -->
+          <div
+            (click)="slots().material && clearMaterialSlot()"
+            class="w-20 h-20 border-2 border-dashed rounded-md flex items-center justify-center bg-black/40 cursor-pointer transition-colors"
+            [class.border-amber-400]="slots().material"
+            [class.border-zinc-600]="!slots().material"
+          >
+            @if (slots().material; as material) {
+              <img [src]="material['img-path']" [alt]="material.name" class="w-full h-full object-contain p-1" />
+            } @else {
+              <span class="text-[10px] text-zinc-500 text-center px-1 select-none">Material</span>
+            }
+          </div>
+        </div>
+
+        @if (slots().weapon; as weapon) {
+          <div class="bg-black/40 border border-white/10 rounded-md p-2 text-xs">
+            <div class="flex justify-between items-baseline gap-2 mb-1">
+              <span class="font-bold text-amber-400">{{ weapon.name }}</span>
+              <span class="text-zinc-300 font-mono shrink-0">Qualität +{{ weapon.quality ?? 0 }}</span>
+            </div>
+            <span class="text-zinc-400">
+              Benötigt: {{ requiredMaterialType === 'upgrade-creme' ? 'Item-UpgradeCreme' : 'Item-Schleifpapier' }}
+            </span>
+          </div>
+        }
+
+        <button
+          (click)="upgrade()"
+          [disabled]="!canUpgrade"
+          class="rounded-md border px-3 py-2 text-sm transition-colors text-white"
+          [class.border-emerald-500]="canUpgrade"
+          [class.bg-emerald-600]="canUpgrade"
+          [class.bg-opacity-30]="canUpgrade"
+          [class.hover:bg-opacity-50]="canUpgrade"
+          [class.cursor-pointer]="canUpgrade"
+          [class.border-white]="!canUpgrade"
+          [class.border-opacity-10]="!canUpgrade"
+          [class.opacity-40]="!canUpgrade"
+          [class.cursor-not-allowed]="!canUpgrade"
+        >
+          Aufwerten
+        </button>
+
+        <div class="bg-black/40 border border-white/10 rounded-md p-3 text-[11px] text-zinc-300 leading-snug flex flex-col gap-1.5">
+          <p>Wähle eine Waffe und das passende Material aus deinem Inventar (Listen rechts).</p>
+          <p>Physische Waffen (schnitt/stumpf/stich) benötigen <strong>Item-Schleifpapier</strong>, Magie-Waffen <strong>Item-UpgradeCreme</strong>.</p>
+          <p>Jede Stufe erhöht die Schadens-Range der Waffe um +5% (min und max). Es gibt kein Stufen-Limit.</p>
+        </div>
+      </div>
+
+      <!-- Rechte Seite: Waffen- und Material-Listen zur Auswahl -->
+      <div class="flex-1 overflow-y-auto flex flex-col gap-4 pr-1">
+        <div>
+          <h4 class="text-zinc-400 text-[11px] uppercase tracking-wide mb-2">Waffen</h4>
+          <div class="flex flex-col gap-2">
+            @for (entry of upgradableWeapons; track entry.index) {
+              <div
+                (click)="selectWeapon(entry.index)"
+                class="border border-zinc-700 hover:border-white rounded-md p-3 flex gap-3 bg-[rgba(0,0,0,0.8)] transition-colors cursor-pointer"
+              >
+                <div class="w-14 h-14 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
+                  <img [src]="entry.item['img-path']" [alt]="entry.item.name" class="w-full h-full object-contain" />
+                </div>
+                <div class="flex flex-col flex-grow min-w-0">
+                  <div class="flex justify-between items-baseline gap-2">
+                    <h4 class="text-amber-400 font-semibold text-sm">{{ entry.item.name }}</h4>
+                    @if (getTier(entry.item); as tier) {
+                      <span class="text-[11px] text-zinc-300 font-mono shrink-0">Tier {{ tier }} · Qualität +{{ entry.item.quality ?? 0 }}</span>
+                    }
+                  </div>
+                  <p class="text-zinc-400 text-xs leading-tight mt-0.5">{{ entry.item.description }}</p>
+                </div>
+              </div>
+            } @empty {
+              <div class="text-white text-center opacity-50 py-2 text-sm">Keine aufwertbaren Waffen im Inventar.</div>
+            }
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-zinc-400 text-[11px] uppercase tracking-wide mb-2">Materialien</h4>
+          <div class="flex flex-col gap-2">
+            @for (entry of availableMaterials; track entry.index) {
+              <div
+                (click)="selectMaterial(entry.index)"
+                class="border border-zinc-700 hover:border-white rounded-md p-3 flex gap-3 bg-[rgba(0,0,0,0.8)] transition-colors cursor-pointer"
+              >
+                <div class="w-14 h-14 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
+                  <img [src]="entry.item['img-path']" [alt]="entry.item.name" class="w-full h-full object-contain" />
+                </div>
+                <div class="flex flex-col flex-grow min-w-0">
+                  <h4 class="text-amber-400 font-semibold text-sm">{{ entry.item.name }}</h4>
+                  <p class="text-zinc-400 text-xs leading-tight mt-0.5">{{ entry.item.description }}</p>
+                </div>
+              </div>
+            } @empty {
+              <div class="text-white text-center opacity-50 py-2 text-sm">Keine Materialien im Inventar.</div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (upgradeResultItem(); as result) {
+  <div class="fixed inset-0 z-[10000] flex items-center justify-center bg-black/70">
+    <div class="bg-black/90 border border-purple-400/60 rounded-lg p-6 w-[380px] flex flex-col gap-3">
+      <div class="flex justify-between items-baseline gap-2">
+        <h3 class="text-amber-400 font-bold text-lg">{{ result.name }}</h3>
+        <span class="text-zinc-300 font-mono text-[11px]">Qualität +{{ result.quality }}</span>
+      </div>
+
+      <div class="w-20 h-20 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 self-center">
+        <img [src]="result['img-path']" [alt]="result.name" class="w-full h-full object-contain" />
+      </div>
+
+      <p class="text-zinc-400 text-sm leading-tight">Erfolgreich aufgewertet!</p>
+
+      <div class="flex flex-col gap-1 text-xs border-t border-white/10 pt-2">
+        @if (hasPositiveStats(result.stats)) {
+          <div class="flex flex-wrap gap-x-3 gap-y-1 font-mono">
+            @for (stat of statDefs; track stat.key) {
+              @if (getStatValue(result.stats, stat.key) > 0) {
+                <span [class]="statColor(stat.key)">+{{ getStatValue(result.stats, stat.key) }} {{ stat.label }}</span>
+              }
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        (click)="closeResult()"
+        class="mt-2 rounded-md border border-emerald-500 bg-emerald-600 bg-opacity-30 px-3 py-2 text-sm cursor-pointer hover:bg-opacity-50 transition-colors text-white self-end"
+      >
+        Super!
+      </button>
+    </div>
+  </div>
+}

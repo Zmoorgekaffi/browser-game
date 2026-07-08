@@ -58,8 +58,23 @@ export class InventarItem implements OnChanges {
   }
 
   toggleEquip(): void {
-    if (this.index !== undefined) {
-      this.gameStateService.inventar.toggleEquipItem(this.index, this.source);
+    if (this.index === undefined) return;
+
+    const isEquipping = !this.item?.equipped;
+    if (isEquipping && !this.meetsRequirement(this.item?.requirement)) {
+      console.warn(
+        `❌ Anforderung nicht erfüllt: ${this.item.requirement.value} ${this.item.requirement.stat} benötigt.`,
+      );
+      return;
     }
+
+    this.gameStateService.inventar.toggleEquipItem(this.index, this.source);
+  }
+
+  /** Prüft ein optionales `requirement: { stat, value }`-Feld gegen die aktuellen Gesamt-Attribute. */
+  private meetsRequirement(requirement: { stat: string; value: number } | undefined | null): boolean {
+    if (!requirement) return true;
+    const current = (this.gameStateService.skills.combatStats() as any)[requirement.stat] ?? 0;
+    return current >= requirement.value;
   }
 }

@@ -6,6 +6,7 @@ import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
 import { SellPanel } from '../shared/sell-panel/sell-panel';
 import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
+import { WeaponUpgradePanel } from '../shared/weapon-upgrade-panel/weapon-upgrade-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
@@ -41,7 +42,7 @@ const weaponsData: any[] = [
 @Component({
   selector: 'app-smither',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel, WeaponUpgradePanel],
   templateUrl: './smither.html',
   styleUrl: './smither.scss',
 })

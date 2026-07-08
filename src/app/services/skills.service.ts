@@ -30,8 +30,6 @@ const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
   ['armor', 'armor'],
   ['energy-shield', 'energy-shield'],
   ['magic-find', 'magic-find'],
-  ['attack', 'attack'],
-  ['magic-attack', 'magicAttack'],
   ['initiative', 'initiative'],
   ['evasion', 'evasion'],
   ['crit-chance', 'critChance'],
@@ -170,13 +168,17 @@ export class SkillsService {
       this.addFlatItemStats(afterEquipment, item.stats);
       this.addItemResistances(afterEquipment, item.stats);
       this.addItemAttributes(afterEquipment, item.stats);
+      this.addWeaponRangeStats(afterEquipment, item.stats);
     });
+    this.deriveAttackScalars(afterEquipment);
 
     const afterMainStats = this.cloneStats(afterEquipment);
     this.applyAttributeScaling(afterMainStats);
+    this.deriveAttackScalars(afterMainStats);
 
     const afterPassives = this.cloneStats(afterMainStats);
     this.addPassiveEffects(afterPassives, base.unlockedPassives ?? []);
+    this.deriveAttackScalars(afterPassives);
 
     const breakdown = {
       base: baseLayer,
@@ -198,7 +200,7 @@ export class SkillsService {
    * (bewusst OHNE das spells-Array — combatStats enthält nur Zahlenwerte).
    */
   private createBaseCombatStats(base: any): any {
-    return {
+    const stats = {
       intelligence: base.intelligence,
       dexterity: base.dexterity,
       strength: base.strength,
@@ -211,6 +213,11 @@ export class SkillsService {
       mana: base.mana,
       attack: base.attack,
       magicAttack: base.magicAttack,
+      // Basis-Range ohne Waffe: min = max = Flat-Basiswert (siehe deriveAttackScalars).
+      attackMin: base.attack,
+      attackMax: base.attack,
+      magicAttackMin: base.magicAttack,
+      magicAttackMax: base.magicAttack,
       initiative: base.initiative,
       evasion: base.evasion,
       critChance: base.critChance,
@@ -219,6 +226,19 @@ export class SkillsService {
       charisma: base.charisma,
       resistances: { ...base.resistances },
     };
+    this.deriveAttackScalars(stats);
+    return stats;
+  }
+
+  /**
+   * Leitet die flachen `attack`/`magicAttack`-Anzeigewerte (Rückwärtskompatibilität,
+   * z.B. für Tooltips) als Mittelwert der jeweiligen Min/Max-Range her. Die Range
+   * selbst ist die alleinige Quelle der Wahrheit für den tatsächlichen Kampf-Schaden
+   * (siehe FightService.resolvePlayerAttack / SpellsEngineService.castSpell).
+   */
+  private deriveAttackScalars(stats: any): void {
+    stats.attack = Math.round((stats.attackMin + stats.attackMax) / 2);
+    stats.magicAttack = Math.round((stats.magicAttackMin + stats.magicAttackMax) / 2);
   }
 
   /**
@@ -265,6 +285,30 @@ export class SkillsService {
   }
 
   /**
+   * Übernimmt die Schadens-Range eines Items additiv auf die Min/Max-Ranges.
+   * Waffen liefern `damage-min`/`damage-max` (physisch → attackMin/Max) bzw.
+   * `magic-damage-min`/`magic-damage-max` (Magie → magicAttackMin/Max). Nicht-
+   * Waffen-Ausrüstung mit einem flachen `attack`/`magic-attack`-Bonus (z.B. ein
+   * Ring) addiert sich gleichmäßig auf beide Seiten der jeweiligen Range.
+   *
+   * @param finalStats Ziel-Objekt (wird mutiert).
+   * @param s          stats-Block des Items.
+   */
+  private addWeaponRangeStats(finalStats: any, s: any): void {
+    const flatAttack = Number(s['attack']) || 0;
+    const flatMagicAttack = Number(s['magic-attack']) || 0;
+    const dmgMin = Number(s['damage-min']) || 0;
+    const dmgMax = Number(s['damage-max']) || 0;
+    const magicDmgMin = Number(s['magic-damage-min']) || 0;
+    const magicDmgMax = Number(s['magic-damage-max']) || 0;
+
+    finalStats.attackMin += dmgMin + flatAttack;
+    finalStats.attackMax += dmgMax + flatAttack;
+    finalStats.magicAttackMin += magicDmgMin + flatMagicAttack;
+    finalStats.magicAttackMax += magicDmgMax + flatMagicAttack;
+  }
+
+  /**
    * Skaliert die GESAMT-Attribute (Basis + Schrein + Ausrüstung) einmalig auf
    * abgeleitete Kampfwerte:
    *  - Stärke:      Physischer Schaden (Angriff) +2/Punkt
@@ -277,9 +321,13 @@ export class SkillsService {
    *                   Gesamt-Attributwerte (inkl. Ausrüstung) enthalten.
    */
   private applyAttributeScaling(finalStats: any): void {
-    finalStats.attack += finalStats.strength * 2;
+    const strengthBonus = finalStats.strength * 2;
+    finalStats.attackMin += strengthBonus;
+    finalStats.attackMax += strengthBonus;
     finalStats.initiative += finalStats.dexterity * 2;
-    finalStats.magicAttack += finalStats.intelligence * 2;
+    const intelligenceAttackBonus = finalStats.intelligence * 2;
+    finalStats.magicAttackMin += intelligenceAttackBonus;
+    finalStats.magicAttackMax += intelligenceAttackBonus;
     finalStats.mana += finalStats.intelligence * 5;
     finalStats['energy-shield'] += finalStats.intelligence * 2;
     finalStats.hp += finalStats.vitality * 3;
@@ -334,7 +382,15 @@ export class SkillsService {
     for (const passive of passives) {
       for (const effect of passive.effects) {
         if (effect.type === 'stat-flat') {
-          finalStats[effect.stat] = (finalStats[effect.stat] ?? 0) + effect.value;
+          if (effect.stat === 'attack') {
+            finalStats.attackMin += effect.value;
+            finalStats.attackMax += effect.value;
+          } else if (effect.stat === 'magicAttack') {
+            finalStats.magicAttackMin += effect.value;
+            finalStats.magicAttackMax += effect.value;
+          } else {
+            finalStats[effect.stat] = (finalStats[effect.stat] ?? 0) + effect.value;
+          }
         }
         if (effect.type === 'resistance') {
           for (const element of effect.elements) {
@@ -347,8 +403,16 @@ export class SkillsService {
     for (const passive of passives) {
       for (const effect of passive.effects) {
         if (effect.type === 'stat-percent') {
-          const current = finalStats[effect.stat] ?? 0;
-          finalStats[effect.stat] = Math.round(current + current * (effect.value / 100));
+          if (effect.stat === 'attack') {
+            finalStats.attackMin = Math.round(finalStats.attackMin * (1 + effect.value / 100));
+            finalStats.attackMax = Math.round(finalStats.attackMax * (1 + effect.value / 100));
+          } else if (effect.stat === 'magicAttack') {
+            finalStats.magicAttackMin = Math.round(finalStats.magicAttackMin * (1 + effect.value / 100));
+            finalStats.magicAttackMax = Math.round(finalStats.magicAttackMax * (1 + effect.value / 100));
+          } else {
+            const current = finalStats[effect.stat] ?? 0;
+            finalStats[effect.stat] = Math.round(current + current * (effect.value / 100));
+          }
         }
       }
     }

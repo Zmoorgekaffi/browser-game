@@ -34,6 +34,10 @@ const STAT_COLORS: Record<string, { dark: string; light: string }> = {
   resistancescold: { dark: 'text-blue-400', light: 'text-blue-700' },
   resistanceslightning: { dark: 'text-amber-600', light: 'text-amber-800' },
   resistanceschaos: { dark: 'text-violet-600', light: 'text-violet-800' },
+  damagemin: { dark: 'text-orange-400', light: 'text-orange-700' },
+  damagemax: { dark: 'text-orange-500', light: 'text-orange-800' },
+  magicdamagemin: { dark: 'text-violet-400', light: 'text-violet-700' },
+  magicdamagemax: { dark: 'text-violet-500', light: 'text-violet-800' },
 };
 
 const DEFAULT_COLOR = { dark: 'text-emerald-400', light: 'text-emerald-700' };
@@ -59,6 +63,10 @@ export function getStatColor(key: string, variant: 'dark' | 'light' = 'dark'): s
  */
 export const STAT_DEFINITIONS: { key: string; label: string }[] = [
   { key: 'strength', label: 'Stärke' },
+  { key: 'damage-min', label: 'Schaden Min.' },
+  { key: 'damage-max', label: 'Schaden Max.' },
+  { key: 'magic-damage-min', label: 'Magieschaden Min.' },
+  { key: 'magic-damage-max', label: 'Magieschaden Max.' },
   { key: 'attack', label: 'Angriff' },
   { key: 'vitality', label: 'Vitalität' },
   { key: 'intelligence', label: 'Intell.' },

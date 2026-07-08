@@ -132,9 +132,10 @@ export class InventarService {
       const isEquipping = !targetItem.equipped;
 
       if (isEquipping) {
-        const finalSlot = this.resolveTargetSlot(baseSlot);
+        const finalSlot = this.resolveTargetSlot(baseSlot, targetItem);
         targetItem['assigned-slot'] = finalSlot;
         this.clearSlotEverywhere(finalSlot, 'inventar', itemIndex, updatedItems);
+        this.enforceTwoHandedExclusivity(targetItem, finalSlot, 'inventar', itemIndex, updatedItems);
       } else {
         targetItem['assigned-slot'] = null;
       }
@@ -161,11 +162,12 @@ export class InventarService {
     const isEquipping = !targetItem.equipped;
 
     if (isEquipping) {
-      const finalSlot = this.resolveTargetSlot(baseSlot);
+      const finalSlot = this.resolveTargetSlot(baseSlot, targetItem);
 
       // Etwaige Konflikte im Inventar auflösen (mutiert eine Arbeits-Kopie).
       const workingInventarItems = JSON.parse(JSON.stringify(this.inventar()?.items ?? []));
       this.clearSlotEverywhere(finalSlot, 'personal', itemIndex, workingInventarItems);
+      this.enforceTwoHandedExclusivity(targetItem, finalSlot, 'personal', itemIndex, workingInventarItems);
       const newInventar = { ...this.inventar(), items: workingInventarItems };
       this.inventar.set(newInventar);
       this.saveToLocalStorage(newInventar);
@@ -281,7 +283,7 @@ export class InventarService {
    *
    * @param baseSlot Der 'armor-slot' des Items (z.B. 'ring', 'head').
    */
-  private resolveTargetSlot(baseSlot: string): string {
+  private resolveTargetSlot(baseSlot: string, item?: any): string {
     const slots = this.equippedSlots();
 
     if (baseSlot === 'ring') {
@@ -290,7 +292,36 @@ export class InventarService {
     if (baseSlot === 'accessoire') {
       return !slots['accessoire-left'] ? 'accessoire-left' : 'accessoire-right';
     }
+    if (baseSlot === 'weapon-1') {
+      const isTwoHanded = String(item?.hands) === '2';
+      const mainHand = slots['weapon-1'];
+      const mainHandIsTwoHanded = String(mainHand?.hands) === '2';
+      // 1H-Waffe, Haupthand schon mit einer anderen 1H-Waffe belegt und Nebenhand frei
+      // → dorthin ausweichen (Dual-Wield). In jedem anderen Fall (leer, 2H in Haupthand,
+      // eigene Waffe ist 2H) bleibt es bei weapon-1.
+      if (!isTwoHanded && mainHand && !mainHandIsTwoHanded && !slots['weapon-2']) {
+        return 'weapon-2';
+      }
+      return 'weapon-1';
+    }
     return baseSlot;
+  }
+
+  /**
+   * 2H-Waffen belegen beide Waffen-Slots gleichzeitig: liegt eine 2H-Waffe in
+   * `weapon-1`, muss `weapon-2` zwangsläufig leer bleiben und umgekehrt.
+   * Wird direkt nach dem Belegen von `finalSlot` aufgerufen.
+   */
+  private enforceTwoHandedExclusivity(
+    item: any,
+    finalSlot: string,
+    exceptSource: 'inventar' | 'personal',
+    exceptIndex: number,
+    workingInventarItems: any[],
+  ): void {
+    if (String(item?.hands) === '2' && finalSlot === 'weapon-1') {
+      this.clearSlotEverywhere('weapon-2', exceptSource, exceptIndex, workingInventarItems);
+    }
   }
 
   /**

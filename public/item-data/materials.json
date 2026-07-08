@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Item-Schleifpapier",
+    "description": "Feines Schleifpapier, um die Schneide oder Wucht einer nicht-magischen Waffe zu verbessern. Selten im Handel zu finden.",
+    "img-path": "imgs/items/material/grinding_paper.webp",
+    "price": 180,
+    "armor-slot": "material",
+    "tier": "1",
+    "material-type": "grinding",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "damage-min": 0,
+      "damage-max": 0,
+      "magic-damage-min": 0,
+      "magic-damage-max": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  },
+  {
+    "name": "Item-UpgradeCreme",
+    "description": "Alchemistische Creme, die die magische Resonanz einer Waffe verstärkt. Nur wenige Alchemisten beherrschen das Rezept.",
+    "img-path": "imgs/items/material/upgrade_creme.webp",
+    "price": 420,
+    "armor-slot": "material",
+    "tier": "1",
+    "material-type": "upgrade-creme",
+    "stats": {
+      "intelligence": 0,
+      "dexterity": 0,
+      "strength": 0,
+      "vitality": 0,
+      "luck": 0,
+      "energy-shield": 0,
+      "magic-find": 0,
+      "armor": 0,
+      "attack": 0,
+      "magic-attack": 0,
+      "initiative": 0,
+      "evasion": 0,
+      "crit-chance": 0,
+      "crit-damage": 0,
+      "chaosDamage": 0,
+      "charisma": 0,
+      "damage-min": 0,
+      "damage-max": 0,
+      "magic-damage-min": 0,
+      "magic-damage-max": 0,
+      "resistances": {
+        "fire": 0,
+        "cold": 0,
+        "lightning": 0,
+        "chaos": 0
+      }
+    }
+  }
+]

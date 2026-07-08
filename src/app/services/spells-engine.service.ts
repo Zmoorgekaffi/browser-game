@@ -2,6 +2,7 @@ import { Injectable, inject, Injector } from '@angular/core';
 import { SkillsService } from './skills.service';
 import { FightService } from './fight.service';
 import { ResolveChallengeService } from './resolve-challenge.service';
+import { rollBetween } from '../utils/combat-roll.util';
 
 /**
  * @service SpellsEngineService
@@ -74,9 +75,13 @@ export class SpellsEngineService {
     // ✅ Monster-Stats aus enrichedMonster holen (vollständiges Objekt, nicht activeFight)
     const enrichedMonster = fightService.getEnrichedMonster();
     const bonusAttack =
-      casterType === 'player' ? playerStats.attack : enrichedMonster?.attack || 10;
+      casterType === 'player'
+        ? rollBetween(playerStats.attackMin, playerStats.attackMax)
+        : enrichedMonster?.attack || 10;
     const bonusMagic =
-      casterType === 'player' ? playerStats.magicAttack : enrichedMonster?.magicAttack || 10;
+      casterType === 'player'
+        ? rollBetween(playerStats.magicAttackMin, playerStats.magicAttackMax)
+        : enrichedMonster?.magicAttack || 10;
 
     // --- 3. EFFEKT VERARBEITUNG ---
     switch (spell.effectType) {

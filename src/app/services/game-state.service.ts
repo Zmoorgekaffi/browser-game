@@ -5,6 +5,7 @@ import { SkillsService } from './skills.service';
 import { InventarService } from './inventar.service';
 import { PersonalItemsService } from './personal-items.service';
 import { CraftingService } from './crafting.service';
+import { WeaponUpgradeService } from './weapon-upgrade.service';
 import { ProfileService } from './profile.service';
 import { UtilityService } from './utility.service';
 import { ShopService } from './shop.service';
@@ -39,6 +40,7 @@ export class GameStateService {
   public inventar = inject(InventarService);
   public personalItems = inject(PersonalItemsService);
   public crafting = inject(CraftingService);
+  public weaponUpgrade = inject(WeaponUpgradeService);
   public profile = inject(ProfileService);
   public utility = inject(UtilityService);
   public shop = inject(ShopService);

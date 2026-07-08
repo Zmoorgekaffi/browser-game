@@ -4,6 +4,7 @@ import { SkillsService } from './skills.service';
 import { SpellsEngineService } from './spells-engine.service';
 import { SpellLoaderService } from './spell-loader.service';
 import { ProfileService } from './profile.service';
+import { rollBetween } from '../utils/combat-roll.util';
 
 /** XP-Vergütung, wenn ein Monster keine eigene `expReward` mitbringt. */
 const DEFAULT_MONSTER_EXP_REWARD = 30;
@@ -180,7 +181,8 @@ export class FightService {
   /** Führt den normalen Angriff des Spielers aus (nur im Spieler-Zug). */
   executePlayerAttack(): void {
     if (this.currentTurn() !== 'player') return;
-    const damage = this.skillsService.combatStats().attack;
+    const stats = this.skillsService.combatStats();
+    const damage = rollBetween(stats.attackMin, stats.attackMax);
     this.applyDamageToMonster(damage);
     this.endTurn();
   }

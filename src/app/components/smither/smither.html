@@ -9,6 +9,7 @@
   <app-item-info-card></app-item-info-card>
   <app-sell-panel></app-sell-panel>
   <app-crafting-panel></app-crafting-panel>
+  <app-weapon-upgrade-panel></app-weapon-upgrade-panel>
 
   <div class="absolute bottom-4 left-4 flex gap-2 z-50">
     <div
@@ -23,7 +24,13 @@
     >
       Crafting
     </div>
-  </div>  
+    <div
+      (click)="gameStateService.weaponUpgrade.openPanel()"
+      class="cursor-pointer bg-amber-700 hover:bg-amber-800 text-white font-bold px-4 py-2 rounded-md select-none"
+    >
+      Aufwerten
+    </div>
+  </div>
 
   <div class="absolute w-[268px] h-[260px] top-[128px] left-[375px]">
     <app-animation-object
@@ -77,8 +84,8 @@
     @if (!currentShopItems()[4].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="989"
-        [y]="340"
+        [x]="969"
+        [y]="293"
         [itemObject]="currentShopItems()[4]"
         (click)="gameStateService.shop.selectItemForPreview('smither', 4)"
       ></app-shop-item>

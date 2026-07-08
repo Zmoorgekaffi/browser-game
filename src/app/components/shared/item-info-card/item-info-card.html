@@ -22,6 +22,14 @@
           <p class="text-zinc-700 text-xs leading-tight mt-0.5">
             {{ currentDisplayedItem().description }}
           </p>
+          @if (currentDisplayedItem()['weapon-type']) {
+            <p class="text-[11px] text-zinc-600 font-mono mt-1">
+              {{ currentDisplayedItem()['weapon-type'] }} · {{ currentDisplayedItem().hands }}H
+              @if (currentDisplayedItem().requirement; as req) {
+                · Benötigt: {{ req.value }} {{ req.stat }}
+              }
+            </p>
+          }
         </div>
       </div>
 

@@ -39,10 +39,13 @@ export class FightScene {
   private adventureStateService = inject(AdventureStateService);
   private preloader = inject(AssetPreloaderService);
 
-  // 🆕 Hintergrund-Pfad als Property, damit Template UND Preloader
-  // denselben String verwenden (vorher stand er nur hart im Template).
-  public readonly fightBackgroundPath =
-    'imgs/areas/dark-forest/fight/background/dark-forest-fight-background.png';
+  // 🆕 Hintergrund kommt jetzt pro Monster aus der Monster-JSON (Feld
+  // "fight-background"), damit pro Kampf Abwechslung möglich ist. Fällt
+  // zurück auf den alten Dark-Forest-Hintergrund, falls ein Monster (noch)
+  // keinen eigenen hinterlegt hat.
+  private static readonly DEFAULT_FIGHT_BACKGROUND =
+    'imgs/areas/dark-forest/fight/background/dark-forest-fight-background.webp';
+  public fightBackgroundPath = signal<string>(FightScene.DEFAULT_FIGHT_BACKGROUND);
 
   // --- 🆕 Preloading: solange true zeigt das Template nur den Ladebildschirm ---
   public isLoading = signal<boolean>(true);
@@ -122,16 +125,22 @@ export class FightScene {
     const introPaths = this.expandMonsterAnimation(monster, 'intro');
     const idlePaths = this.expandMonsterAnimation(monster, 'idle');
 
+    // 🆕 Hintergrund kommt aus dem Monster (Feld "fight-background"), damit
+    // pro Kampf Abwechslung möglich ist. Fallback auf den Dark-Forest-Default.
+    const backgroundPath =
+      monster?.['fight-background'] ?? FightScene.DEFAULT_FIGHT_BACKGROUND;
+
     // 🆕 ALLE Kampf-Bilder (Hintergrund, Monster-Intro, Monster-Idle)
     // VOR dem Szenenstart laden — solange läuft der Ladebildschirm.
     // Erst danach starten Intro-Timer und Animationen, damit auf dem
     // Webserver kein Frame mehr mitten in der Animation nachgeladen wird.
     this.isLoading.set(true);
     await this.preloader.preloadImages([
-      this.fightBackgroundPath,
+      backgroundPath,
       ...introPaths,
       ...idlePaths,
     ]);
+    this.fightBackgroundPath.set(backgroundPath);
     this.isLoading.set(false);
 
     // Idle-Animation IMMER setzen (auch bei Resume)

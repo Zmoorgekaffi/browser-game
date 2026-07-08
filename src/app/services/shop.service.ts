@@ -33,6 +33,12 @@ import footwearTier2 from '../../../public/item-data/equipment/footwear/footwear
 import footwearTier3 from '../../../public/item-data/equipment/footwear/footwear_tier3.json';
 import footwearTier4 from '../../../public/item-data/equipment/footwear/footwear_tier4.json';
 import footwearTier5 from '../../../public/item-data/equipment/footwear/footwear_tier5.json';
+import weaponTier1 from '../../../public/item-data/weapons/weapon_tier1.json';
+import weaponTier2 from '../../../public/item-data/weapons/weapon_tier2.json';
+import weaponTier3 from '../../../public/item-data/weapons/weapon_tier3.json';
+import weaponTier4 from '../../../public/item-data/weapons/weapon_tier4.json';
+import weaponTier5 from '../../../public/item-data/weapons/weapon_tier5.json';
+import materials from '../../../public/item-data/materials.json';
 
 // 🎒 Gemischtwaren: Head + Gloves (Tier 1-5)
 import headTier1 from '../../../public/item-data/equipment/head/head_tier1.json';
@@ -46,25 +52,38 @@ import glovesTier3 from '../../../public/item-data/equipment/gloves/gloves_tier3
 import glovesTier4 from '../../../public/item-data/equipment/gloves/gloves_tier4.json';
 import glovesTier5 from '../../../public/item-data/equipment/gloves/gloves_tier5.json';
 
+// Aufwerte-Materialien nach Typ getrennt: Item-Schleifpapier gehört zum
+// Gemischtwaren-Laden (physische Waffen), Item-UpgradeCreme zum Magie-Laden
+// (magische Waffen) — siehe WeaponUpgradeService.requiredMaterialType.
+const grindingMaterials: any[] = materials.filter((m: any) => m['material-type'] === 'grinding');
+const upgradeCremeMaterials: any[] = materials.filter((m: any) => m['material-type'] === 'upgrade-creme');
+
 // Tier-1-Pool und Tier-2+-Pool je Shop — 2 Items im Angebot sind garantiert
 // Tier 2 oder höher, der Rest ist Tier 1 (siehe generateShopSelection()).
-const smitherTier1Pool: any[] = [...chestTier1, ...legTier1, ...footwearTier1];
+const smitherTier1Pool: any[] = [...chestTier1, ...legTier1, ...footwearTier1, ...weaponTier1];
 const smitherHigherTierPool: any[] = [
   ...chestTier2, ...chestTier3, ...chestTier4, ...chestTier5,
   ...legTier2, ...legTier3, ...legTier4, ...legTier5,
-    ...footwearTier2, ...footwearTier3, ...footwearTier4, ...footwearTier5,
+  ...footwearTier2, ...footwearTier3, ...footwearTier4, ...footwearTier5,
+  ...weaponTier2, ...weaponTier3, ...weaponTier4, ...weaponTier5,
 ];
 
 const generalTier1Pool: any[] = [...headTier1, ...glovesTier1];
 const generalHigherTierPool: any[] = [
   ...headTier2, ...headTier3, ...headTier4, ...headTier5,
   ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
+  // Item-Schleifpapier: wenige Einträge im großen Pool → über die
+  // bestehende Zufallsauswahl automatisch selten im Angebot.
+  ...grindingMaterials,
 ];
 
 const magicTier1Pool: any[] = [...necklaceTier1, ...ringTier1];
 const magicHigherTierPool: any[] = [
   ...necklaceTier2, ...necklaceTier3, ...necklaceTier4, ...necklaceTier5,
   ...ringTier2, ...ringTier3, ...ringTier4, ...ringTier5,
+  // Item-UpgradeCreme: wenige Einträge im großen Pool → über die
+  // bestehende Zufallsauswahl automatisch selten im Angebot.
+  ...upgradeCremeMaterials,
 ];
 
 interface AllShopsData {
