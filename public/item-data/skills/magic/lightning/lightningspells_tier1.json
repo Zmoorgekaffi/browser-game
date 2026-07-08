@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_lightning_02",
+    "name": "Blitzschlag",
+    "description": "Ein greller Blitz schießt aus der Hand des Zauberers.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 13,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "lightning",
+      "value": 19
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 10
+      }
+    ]
+  }
+]

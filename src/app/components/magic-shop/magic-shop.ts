@@ -6,6 +6,7 @@ import { AnimationObject } from '../shared/animation-object/animation-object';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
 import { SellPanel } from '../shared/sell-panel/sell-panel';
 import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
+import { SkillShopPanel } from '../shared/skill-shop-panel/skill-shop-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths, pad } from '../../utils/frame-paths.util';
 
@@ -28,7 +29,7 @@ import ringTier5 from '../../../../public/item-data/equipment/ring/ring_tier5.js
 @Component({
   selector: 'app-magic-shop',
   standalone: true,
-  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel],
+  imports: [ShopItem, ItemInfoCard, AnimationObject, LoadingScreen, SellPanel, CraftingPanel, SkillShopPanel],
   templateUrl: './magic-shop.html',
   styleUrl: './magic-shop.scss',
 })

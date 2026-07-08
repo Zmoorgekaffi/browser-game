@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_lightning_04",
+    "name": "Donnerkeil",
+    "description": "Ein gewaltiger Blitzkeil schlägt mit ohrenbetäubendem Donner ein.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 88,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "lightning",
+      "value": 132
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 55
+      }
+    ]
+  }
+]

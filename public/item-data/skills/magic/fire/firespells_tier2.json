@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_fire_03",
+    "name": "Feuerball",
+    "description": "Eine kompakte Kugel aus Flammen, die beim Einschlag explodiert.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 28,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "fire",
+      "value": 45
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 20
+      }
+    ]
+  }
+]

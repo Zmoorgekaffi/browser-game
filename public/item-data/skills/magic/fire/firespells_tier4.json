@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_fire_02",
+    "name": "Meteor",
+    "description": "Ruft einen brennenden Gesteinsbrocken vom Himmel herab.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 85,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "fire",
+      "value": 130
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 55
+      }
+    ]
+  }
+]

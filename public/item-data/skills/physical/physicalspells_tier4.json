@@ -1,0 +1,26 @@
+[
+  {
+    "id": "strike_04",
+    "name": "Verheerender Schlag",
+    "description": "Ein wuchtiger Schlag mit dem vollen Körpergewicht dahinter.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 62,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": {
+      "value": 135
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "stumpf",
+    "requirements": [
+      {
+        "stat": "strength",
+        "value": 55
+      },
+      {
+        "stat": "dexterity",
+        "value": 28
+      }
+    ]
+  }
+]

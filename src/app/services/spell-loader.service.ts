@@ -11,12 +11,38 @@ import { Injectable, signal } from '@angular/core';
 //
 // Trage hier deine echten Pfade ein:
 // ─────────────────────────────────────────────────────────────────────────
-import healSkills from '../../../public/item-data/skills/heal/heal-skills.json';
-import chaosSkills from '../../../public/item-data/skills/magic/chaos/chaos-skills.json';
-import coldSkills from '../../../public/item-data/skills/magic/cold/cold-skills.json';
-import fireSkills from '../../../public/item-data/skills/magic/fire/fire-skills.json';
-import lightningSkills from '../../../public/item-data/skills/magic/lightning/lightning-skills.json';
-import physicalSkills from '../../../public/item-data/skills/physical/physical_skills.json';
+// 🆕 Tier 1-5 pro Kategorie (ersetzt die früheren flachen *-skills.json
+// Dateien) — jede Tier-Datei enthält genau einen Spell dieser Stärkestufe.
+import healSkillsTier1 from '../../../public/item-data/skills/heal/healspells_tier1.json';
+import healSkillsTier2 from '../../../public/item-data/skills/heal/healspells_tier2.json';
+import healSkillsTier3 from '../../../public/item-data/skills/heal/healspells_tier3.json';
+import healSkillsTier4 from '../../../public/item-data/skills/heal/healspells_tier4.json';
+import healSkillsTier5 from '../../../public/item-data/skills/heal/healspells_tier5.json';
+import chaosSkillsTier1 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier1.json';
+import chaosSkillsTier2 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier2.json';
+import chaosSkillsTier3 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier3.json';
+import chaosSkillsTier4 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier4.json';
+import chaosSkillsTier5 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier5.json';
+import coldSkillsTier1 from '../../../public/item-data/skills/magic/cold/coldspells_tier1.json';
+import coldSkillsTier2 from '../../../public/item-data/skills/magic/cold/coldspells_tier2.json';
+import coldSkillsTier3 from '../../../public/item-data/skills/magic/cold/coldspells_tier3.json';
+import coldSkillsTier4 from '../../../public/item-data/skills/magic/cold/coldspells_tier4.json';
+import coldSkillsTier5 from '../../../public/item-data/skills/magic/cold/coldspells_tier5.json';
+import fireSkillsTier1 from '../../../public/item-data/skills/magic/fire/firespells_tier1.json';
+import fireSkillsTier2 from '../../../public/item-data/skills/magic/fire/firespells_tier2.json';
+import fireSkillsTier3 from '../../../public/item-data/skills/magic/fire/firespells_tier3.json';
+import fireSkillsTier4 from '../../../public/item-data/skills/magic/fire/firespells_tier4.json';
+import fireSkillsTier5 from '../../../public/item-data/skills/magic/fire/firespells_tier5.json';
+import lightningSkillsTier1 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier1.json';
+import lightningSkillsTier2 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier2.json';
+import lightningSkillsTier3 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier3.json';
+import lightningSkillsTier4 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier4.json';
+import lightningSkillsTier5 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier5.json';
+import physicalSkillsTier1 from '../../../public/item-data/skills/physical/physicalspells_tier1.json';
+import physicalSkillsTier2 from '../../../public/item-data/skills/physical/physicalspells_tier2.json';
+import physicalSkillsTier3 from '../../../public/item-data/skills/physical/physicalspells_tier3.json';
+import physicalSkillsTier4 from '../../../public/item-data/skills/physical/physicalspells_tier4.json';
+import physicalSkillsTier5 from '../../../public/item-data/skills/physical/physicalspells_tier5.json';
 
 // Shrine-exklusive Skills (nur über Levelup-Passives freischaltbar, siehe
 // passives.json / SkillsService.applySkillUnlockEffects). Bewusst in einem
@@ -48,6 +74,14 @@ export interface SpellData {
   shrineSkill?: boolean;
   /** Anzahl der Punkte in der Resolve-Minigame-Sequenz beim Wirken dieses Skills (nur Spieler). */
   resolvePoints?: number;
+  /** Tier 1-5 (als String, analog zu den Equipment-Tier-JSONs) — für getItemTier()/den Skill-Shop. */
+  tier?: string;
+  /** Gold-Preis im Skill-Shop. */
+  price?: number;
+  /** Stat-Anforderungen zum Ausrüsten (analog zu `requirement` bei Waffen, aber als Array für Mehrfach-Gates). */
+  requirements?: { stat: string; value: number }[];
+  /** Geforderter Waffentyp zum Wirken ('schnitt' | 'stumpf' | 'stich' | 'magie'), z.B. Feuerzauber nur mit Mage-Waffe. */
+  requiredWeaponType?: string;
   [key: string]: any; // Für beliebige weitere Felder aus den JSONs
 }
 
@@ -57,12 +91,12 @@ export interface SpellData {
  * oder ein Objekt mit ID-Keys sein — wird beim Cache-Aufbau normalisiert.
  */
 const SPELL_JSON_MODULES: any[] = [
-  healSkills,
-  chaosSkills,
-  coldSkills,
-  fireSkills,
-  lightningSkills,
-  physicalSkills,
+  healSkillsTier1, healSkillsTier2, healSkillsTier3, healSkillsTier4, healSkillsTier5,
+  chaosSkillsTier1, chaosSkillsTier2, chaosSkillsTier3, chaosSkillsTier4, chaosSkillsTier5,
+  coldSkillsTier1, coldSkillsTier2, coldSkillsTier3, coldSkillsTier4, coldSkillsTier5,
+  fireSkillsTier1, fireSkillsTier2, fireSkillsTier3, fireSkillsTier4, fireSkillsTier5,
+  lightningSkillsTier1, lightningSkillsTier2, lightningSkillsTier3, lightningSkillsTier4, lightningSkillsTier5,
+  physicalSkillsTier1, physicalSkillsTier2, physicalSkillsTier3, physicalSkillsTier4, physicalSkillsTier5,
   healSkillsShrine,
   chaosSkillsShrine,
   coldSkillsShrine,

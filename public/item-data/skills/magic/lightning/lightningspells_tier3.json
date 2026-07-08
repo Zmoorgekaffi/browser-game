@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_lightning_01",
+    "name": "Kettenblitz",
+    "description": "Ein Blitz, der von Gegner zu Gegner überspringt.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 50,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "lightning",
+      "value": 70
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 35
+      }
+    ]
+  }
+]

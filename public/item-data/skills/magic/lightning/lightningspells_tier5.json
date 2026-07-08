@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_lightning_05",
+    "name": "Gewittersturm",
+    "description": "Ein tobendes Unwetter entlädt sich in einer Kaskade aus Blitzen.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 118,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "lightning",
+      "value": 195
+    },
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 80
+      }
+    ]
+  }
+]

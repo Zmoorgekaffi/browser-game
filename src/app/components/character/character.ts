@@ -130,6 +130,7 @@ export class Character {
     { key: 'vitality', name: 'Vitalität' },
     { key: 'luck', name: 'Glück' },
     { key: 'hp', name: 'Lebenspunkte (HP)' },
+    { key: 'hp-regeneration', name: 'Lebensregeneration' },
     { key: 'mana', name: 'Mana' },
     { key: 'attack', name: 'Physischer Angriff' },
     { key: 'magicAttack', name: 'Magischer Angriff' },

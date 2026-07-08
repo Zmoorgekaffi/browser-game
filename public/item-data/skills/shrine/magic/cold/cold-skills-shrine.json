@@ -6,6 +6,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": { "element": "cold", "value": 160 },
     "shrineSkill": true,
-    "resolvePoints": 5
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie"
   }
 ]

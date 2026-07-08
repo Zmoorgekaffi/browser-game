@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stat- &amp; Schadensberechnung — Referenz</title>
+<style>
+  :root{
+    --bg:#eef0ea; --surface:#ffffff; --surface-2:#e4e8dd;
+    --text:#1f2a22; --text-muted:#5b6b5e; --border:#d7ddd1;
+    --accent:#a8722f; --accent-soft:#a8722f22;
+    --ok:#3f7a4d; --ok-soft:#3f7a4d1a;
+    --dead:#a8452f; --dead-soft:#a8452f1a;
+    --fire:#c1552c; --cold:#3f7ea3; --lightning:#a3872c; --chaos:#7c5cb0; --physical:#6d7266; --heal:#4a8f6b;
+    --code-bg:#1f2a22; --code-text:#e7e9df;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12150f; --surface:#1a1f16; --surface-2:#212719;
+      --text:#e7e9df; --text-muted:#9aa392; --border:#2c3526;
+      --accent:#d9a355; --accent-soft:#d9a35522;
+      --ok:#6fbf7d; --ok-soft:#6fbf7d1f;
+      --dead:#d97a63; --dead-soft:#d97a631f;
+      --fire:#e07a4c; --cold:#6bafd6; --lightning:#d1b654; --chaos:#a687d9; --physical:#9aa392; --heal:#7fc39c;
+      --code-bg:#0e1109; --code-text:#dfe4d6;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12150f; --surface:#1a1f16; --surface-2:#212719;
+    --text:#e7e9df; --text-muted:#9aa392; --border:#2c3526;
+    --accent:#d9a355; --accent-soft:#d9a35522;
+    --ok:#6fbf7d; --ok-soft:#6fbf7d1f;
+    --dead:#d97a63; --dead-soft:#d97a631f;
+    --fire:#e07a4c; --cold:#6bafd6; --lightning:#d1b654; --chaos:#a687d9; --physical:#9aa392; --heal:#7fc39c;
+    --code-bg:#0e1109; --code-text:#dfe4d6;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --bg:#eef0ea; --surface:#ffffff; --surface-2:#e4e8dd;
+    --text:#1f2a22; --text-muted:#5b6b5e; --border:#d7ddd1;
+    --accent:#a8722f; --accent-soft:#a8722f22;
+    --ok:#3f7a4d; --ok-soft:#3f7a4d1a;
+    --dead:#a8452f; --dead-soft:#a8452f1a;
+    --fire:#c1552c; --cold:#3f7ea3; --lightning:#a3872c; --chaos:#7c5cb0; --physical:#6d7266; --heal:#4a8f6b;
+    --code-bg:#1f2a22; --code-text:#e7e9df;
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  ::selection{ background:var(--accent-soft); }
+
+  h1,h2,h3{
+    font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    font-weight:600; text-wrap:balance; color:var(--text);
+  }
+
+  .layout{ display:flex; max-width:1180px; margin:0 auto; align-items:flex-start; }
+
+  nav.toc{
+    position:sticky; top:0; align-self:flex-start;
+    width:238px; flex:0 0 238px; height:100vh; overflow-y:auto;
+    padding:2.5rem 1.25rem 2rem 1.5rem;
+    border-right:1px solid var(--border);
+  }
+  nav.toc .kicker{
+    font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:1rem;
+  }
+  nav.toc ol{ list-style:none; margin:0; padding:0; counter-reset:tocnum; }
+  nav.toc li{ counter-increment:tocnum; margin-bottom:0.35rem; }
+  nav.toc a{
+    display:flex; gap:0.55rem; text-decoration:none; color:var(--text-muted);
+    font-size:0.86rem; padding:0.3rem 0.4rem; border-radius:4px;
+  }
+  nav.toc a::before{
+    content:counter(tocnum,decimal-leading-zero);
+    font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    font-size:0.72rem; color:var(--accent); flex:0 0 auto;
+  }
+  nav.toc a:hover{ background:var(--surface-2); color:var(--text); }
+
+  main{ flex:1 1 auto; min-width:0; padding:3rem 3.5rem 6rem; max-width:820px; }
+
+  header.doc-head{ margin-bottom:2.75rem; }
+  header.doc-head .kicker{
+    font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:0.6rem; font-weight:600;
+  }
+  header.doc-head h1{ font-size:2.4rem; margin:0 0 0.5rem; }
+  header.doc-head p.lede{ color:var(--text-muted); font-size:1.02rem; max-width:60ch; margin:0; }
+  header.doc-head .meta{
+    margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid var(--border);
+    display:flex; gap:1.5rem; font-size:0.8rem; color:var(--text-muted);
+  }
+  header.doc-head .meta strong{ color:var(--text); font-weight:600; }
+
+  section{ margin-bottom:3rem; scroll-margin-top:1.5rem; }
+  section h2{
+    font-size:1.5rem; margin:0 0 0.9rem;
+    padding-bottom:0.6rem; border-bottom:1px solid var(--border);
+    display:flex; align-items:baseline; gap:0.6rem;
+  }
+  section h2 .num{
+    font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    color:var(--accent); font-size:1rem;
+  }
+  section h3{ font-size:1.08rem; margin:1.6rem 0 0.6rem; }
+  p{ margin:0.75rem 0; }
+  section > p:first-of-type{ margin-top:0; }
+
+  code{
+    font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    font-size:0.86em; background:var(--surface-2); padding:0.12em 0.4em; border-radius:4px;
+  }
+  pre{
+    background:var(--code-bg); color:var(--code-text);
+    border-left:3px solid var(--accent);
+    border-radius:6px; padding:1rem 1.15rem; overflow-x:auto;
+    font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    font-size:0.83rem; line-height:1.55; margin:0.9rem 0;
+  }
+  pre code{ background:none; padding:0; font-size:1em; color:inherit; }
+
+  .src{
+    display:inline-block; font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    font-size:0.74rem; color:var(--text-muted); background:var(--surface-2);
+    padding:0.1em 0.5em; border-radius:10px; margin-left:0.4rem;
+  }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:0.35rem;
+    font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:600;
+    padding:0.2rem 0.55rem; border-radius:20px; white-space:nowrap;
+  }
+  .tag.fire{ background:color-mix(in srgb, var(--fire) 18%, transparent); color:var(--fire); }
+  .tag.cold{ background:color-mix(in srgb, var(--cold) 18%, transparent); color:var(--cold); }
+  .tag.lightning{ background:color-mix(in srgb, var(--lightning) 18%, transparent); color:var(--lightning); }
+  .tag.chaos{ background:color-mix(in srgb, var(--chaos) 18%, transparent); color:var(--chaos); }
+  .tag.physical{ background:color-mix(in srgb, var(--physical) 18%, transparent); color:var(--physical); }
+  .tag.heal{ background:color-mix(in srgb, var(--heal) 18%, transparent); color:var(--heal); }
+  .tag.ok{ background:var(--ok-soft); color:var(--ok); }
+  .tag.dead{ background:var(--dead-soft); color:var(--dead); }
+
+  .callout{
+    border:1px solid var(--border); border-left:3px solid var(--accent);
+    background:var(--surface); border-radius:6px; padding:0.9rem 1.1rem; margin:1rem 0;
+  }
+  .callout.warn{ border-left-color:var(--dead); }
+  .callout p{ margin:0.35rem 0; font-size:0.94rem; }
+  .callout .lbl{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--dead); font-weight:700; }
+  .callout.warn .lbl{ color:var(--dead); }
+  .callout:not(.warn) .lbl{ color:var(--accent); }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:8px; margin:1rem 0; }
+  table{ border-collapse:collapse; width:100%; min-width:560px; font-size:0.88rem; }
+  th,td{ text-align:left; padding:0.6rem 0.85rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  thead th{
+    background:var(--surface-2); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--text-muted); font-weight:600;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:var(--surface-2); }
+  td.num, th.num{ font-variant-numeric:tabular-nums; font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace; font-size:0.82rem; }
+
+  .formula{
+    font-family:"Cascadia Code","JetBrains Mono",ui-monospace,Consolas,monospace;
+    background:var(--accent-soft); border:1px solid var(--border);
+    padding:0.6rem 0.9rem; border-radius:6px; font-size:0.88rem; margin:0.6rem 0; display:inline-block;
+  }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; }
+  @media (max-width:640px){ .grid2{ grid-template-columns:1fr; } }
+  .card{ border:1px solid var(--border); border-radius:8px; padding:0.9rem 1.05rem; background:var(--surface); }
+  .card h4{ margin:0 0 0.4rem; font-size:0.92rem; }
+  .card p{ margin:0.2rem 0; font-size:0.86rem; color:var(--text-muted); }
+
+  footer{ border-top:1px solid var(--border); margin-top:2rem; padding-top:1.5rem; color:var(--text-muted); font-size:0.8rem; }
+
+  @media (max-width:900px){
+    .layout{ flex-direction:column; }
+    nav.toc{ position:relative; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--border); padding:1.25rem 1.5rem; }
+    nav.toc ol{ display:flex; flex-wrap:wrap; gap:0.4rem; }
+    nav.toc li{ margin:0; }
+    main{ padding:2rem 1.25rem 4rem; }
+  }
+  @media (prefers-reduced-motion:no-preference){
+    a{ transition:background-color 0.15s ease, color 0.15s ease; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="toc">
+    <div class="kicker">Inhalt</div>
+    <ol>
+      <li><a href="#ueberblick">Überblick</a></li>
+      <li><a href="#basiswerte">Basiswerte</a></li>
+      <li><a href="#pipeline">Die Berechnungs&#8209;Pipeline</a></li>
+      <li><a href="#level">Level &amp; Statpunkte</a></li>
+      <li><a href="#kampf">Kampfauflösung</a></li>
+      <li><a href="#zauber">Zauberschaden</a></li>
+      <li><a href="#waffen">Waffentypen &amp; Anforderungen</a></li>
+      <li><a href="#qualitaet">Waffen&#8209;Qualität</a></li>
+      <li><a href="#monster">Monster&#8209;Stats</a></li>
+      <li><a href="#tabelle">Gesamttabelle</a></li>
+      <li><a href="#totgelegt">Totgelegte Systeme</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="doc-head">
+      <div class="kicker">Code-Analyse · Kampfsystem</div>
+      <h1>Wie Stats &amp; Schaden berechnet werden</h1>
+      <p class="lede">Vollständige Übersicht über den aktuellen Berechnungscode: alle Basiswerte, jeder Multiplikator, jede Formel — von den Rohattributen bis zum finalen Trefferpunkt im Kampf.</p>
+      <div class="meta">
+        <span><strong>Kernquelle</strong> skills.service.ts</span>
+        <span><strong>Kampf</strong> fight.service.ts</span>
+        <span><strong>Zauber</strong> spells-engine.service.ts</span>
+      </div>
+    </header>
+
+    <section id="ueberblick">
+      <h2><span class="num">01</span>Überblick</h2>
+      <p>Es gibt keine dedizierte <code>Character</code>-Klasse. Alles läuft über ein einziges <code>state</code>-Signal in <code>SkillsService</code> plus eine berechnete Kette namens <code>combatStats</code>. Diese Kette läuft in vier Schichten, jedes Mal neu berechnet, wenn sich Ausrüstung oder Statpunkte ändern:</p>
+      <div class="grid2">
+        <div class="card"><h4>1 · Basis</h4><p>Rohe Grundwerte (Level&nbsp;1-Defaults)</p></div>
+        <div class="card"><h4>2 · Ausrüstung</h4><p>Flache Item-Boni, Attribute, Waffenschaden</p></div>
+        <div class="card"><h4>3 · Attribut-Skalierung</h4><p>STR/DEX/INT/VIT/Glück → abgeleitete Kampfwerte</p></div>
+        <div class="card"><h4>4 · Schrein-Passives</h4><p>Flat-Boni zuerst, dann Prozent-Boni</p></div>
+      </div>
+      <p>Der eigentliche Treffer läuft dann so ab: <strong>Grundschaden</strong> (Waffenwurf oder Zauberwert) → <strong>Schadens-Multiplikator</strong> (Stärke/Intelligenz) → bei Elementarschaden <strong>Resistenz-Mitigation</strong> des Ziels → optional <strong>Resolve-Minigame</strong> (nur Spieler) → gemeinsame <strong>Kampfauflösung</strong> (Ausweichen → Krit) → bei physischem Schaden <strong>Rüstungs-Mitigation</strong> → <strong>Energieschild</strong> absorbiert zuerst → Rest auf HP.</p>
+    </section>
+
+    <section id="basiswerte">
+      <h2><span class="num">02</span>Basiswerte (Level 1)</h2>
+      <p>Definiert in <code>skills.service.ts:72-104</code>:</p>
+      <pre><code>intelligence: 5, dexterity: 5, strength: 5, vitality: 5, luck: 5,
+'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, mana: 20,
+attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
+critChance: 5, critDamage: 150, chaosDamage: 0, charisma: 1,
+resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 }</code></pre>
+      <p>Zusätzlich verwaltet: <code>statPoints</code> (verfügbare Punkte), <code>investedPoints</code> (pro Attribut investiert, Cap 100), <code>unlockedPassives</code>.</p>
+    </section>
+
+    <section id="pipeline">
+      <h2><span class="num">03</span>Die Berechnungs-Pipeline</h2>
+
+      <h3>Schicht 2 — Ausrüstung</h3>
+      <p>Für jedes ausgerüstete Item (12 Slots: Kopf, Brust, Bein, Handschuhe, Fußwerk, Accessoire L/R, Kette, Ring L/R, Waffe 1/2, Rücken) werden vier Additionsschritte durchlaufen:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Schritt</th><th>Was passiert</th><th class="num">Formel</th></tr></thead>
+          <tbody>
+            <tr><td>Flache Stats</td><td>armor, energy-shield, magic-find, initiative, evasion, critChance, critDamage, chaosDamage, charisma</td><td class="num">stat += item[key]</td></tr>
+            <tr><td>Resistenzen</td><td>fire / cold / lightning / chaos, additiv</td><td class="num">res[e] += item.res[e]</td></tr>
+            <tr><td>Attribute</td><td>strength, dexterity, intelligence, vitality, luck — 1:1, ohne Skalierung</td><td class="num">attr += item.attr</td></tr>
+            <tr><td>Waffenbereich</td><td>Schaden-Min/Max aus Waffe + flacher Angriffswert</td><td class="num">attackMin += dmgMin + flatAtk</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Anzeige-Durchschnitt (<code>skills.service.ts:239-242</code>): <span class="formula">attack = round((attackMin + attackMax) / 2)</span> — analog für <code>magicAttack</code>.</p>
+
+      <h3>Schicht 3 — Attribut-Skalierung <span class="src">skills.service.ts:323-341</span></h3>
+      <p>Läuft über die <em>Gesamt</em>-Attribute (Basis + Ausrüstung + Schrein-Investment). Das ist die zentrale Formelsammlung:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Attribut</th><th>Wirkt auf</th><th class="num">Multiplikator</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stärke</strong></td><td>physicalDamageMultiplier</td><td class="num">+0.01&nbsp;% pro Punkt (1000&nbsp;Pkt.&nbsp;=&nbsp;+10&nbsp;%)</td></tr>
+            <tr><td><strong>Geschick</strong></td><td>initiative</td><td class="num">+2 pro Punkt</td></tr>
+            <tr><td rowspan="3"><strong>Intelligenz</strong></td><td>magicDamageMultiplier</td><td class="num">+0.01&nbsp;% pro Punkt (analog Stärke)</td></tr>
+            <tr><td>mana</td><td class="num">+5 pro Punkt</td></tr>
+            <tr><td>energy-shield</td><td class="num">+2 pro Punkt</td></tr>
+            <tr><td rowspan="2"><strong>Vitalität</strong></td><td>hp</td><td class="num">+3 pro Punkt</td></tr>
+            <tr><td>hp-regeneration</td><td class="num">+0.5 pro Punkt</td></tr>
+            <tr><td rowspan="2"><strong>Glück</strong></td><td>critChance</td><td class="num">+0.2 pro Punkt (abgerundet)</td></tr>
+            <tr><td>magic-find</td><td class="num">+0.5 pro Punkt (abgerundet)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <p class="lbl">Wichtig</p>
+        <p>Stärke/Intelligenz wirken <strong>nicht mehr</strong> flach auf <code>attackMin/Max</code> — diese Ranges kommen jetzt <em>ausschließlich</em> von der Waffe (+ nicht-Waffen-Item-Boni). Stattdessen liefern beide Attribute einen <strong>Schadens-Multiplikator</strong>, der erst beim tatsächlichen Treffer auf <code>(Waffen-Wurf + Skill-Bonus)</code> angewendet wird — siehe <a href="#kampf">Kampfauflösung</a> und <a href="#zauber">Zauberschaden</a>.</p>
+      </div>
+      <pre><code>finalStats.physicalDamageMultiplier = 1 + finalStats.strength / 10000;
+finalStats.initiative += finalStats.dexterity * 2;
+finalStats.magicDamageMultiplier = 1 + finalStats.intelligence / 10000;
+finalStats.mana += finalStats.intelligence * 5;
+finalStats['energy-shield'] += finalStats.intelligence * 2;
+finalStats.hp += finalStats.vitality * 3;
+finalStats['hp-regeneration'] += finalStats.vitality * 0.5;
+finalStats.critChance += Math.floor(finalStats.luck * 0.2);
+finalStats['magic-find'] += Math.floor(finalStats.luck * 0.5);</code></pre>
+
+      <h3>Schicht 4 — Schrein-Passives <span class="src">skills.service.ts:375-419</span></h3>
+      <p>Erst werden alle <code>stat-flat</code>-Effekte addiert, danach alle <code>stat-percent</code>-Effekte auf den bereits erhöhten Wert angewendet:</p>
+      <pre><code>// stat-percent, nachdem alle Flat-Boni angewendet sind:
+finalStats.attackMin = Math.round(finalStats.attackMin * (1 + effect.value / 100));
+finalStats.attackMax = Math.round(finalStats.attackMax * (1 + effect.value / 100));
+// generischer Fall:
+finalStats[stat] = Math.round(current + current * (effect.value / 100));</code></pre>
+    </section>
+
+    <section id="level">
+      <h2><span class="num">04</span>Level &amp; Statpunkte</h2>
+      <p>Level/XP-Logik liegt entgegen der Erwartung nicht in <code>level-up.service.ts</code> (nur UI-Sichtbarkeit), sondern in <code>profile.service.ts</code>:</p>
+      <pre><code>const STAT_POINTS_PER_LEVEL = 5;
+const MAX_LEVEL = 50;
+const BASE_XP_TO_NEXT_LEVEL = 200;
+const XP_GROWTH_RATE = 1.09;
+
+xpRequiredForLevel(level) = round(200 * 1.09^(level - 1))</code></pre>
+      <p>Pro Level-Up gibt es <strong>5 Statpunkte</strong>, gedeckelt bei Level 50. Jeder investierte Punkt erhöht das Rohattribut um genau <strong>+1</strong> (Cap: 100 investierte Punkte je Attribut). Bei 10/20/30…100 investierten Punkten schaltet ein Schrein-Passiv frei.</p>
+    </section>
+
+    <section id="kampf">
+      <h2><span class="num">05</span>Kampfauflösung <span class="src">fight.service.ts</span></h2>
+
+      <h3>Initiative — wer beginnt</h3>
+      <p class="formula">result = 1d20 + (initiative<sub>Spieler</sub> − initiative<sub>Monster</sub>); Spieler beginnt wenn result &gt; 10</p>
+
+      <h3>Ausweichen (Dodge)</h3>
+      <p>Verteidiger würfelt zuerst, Gleichstand gewinnt der Verteidiger:</p>
+      <pre><code>defenseTotal = 1d20 + verteidigerEvasion
+attackTotal  = 1d20 + angreiferLuck
+if (defenseTotal &gt;= attackTotal) → komplett ausgewichen, 0 Schaden</code></pre>
+
+      <h3>Kritischer Treffer</h3>
+      <pre><code>critChancePercent = 1d10 + angreiferCritChance - 5
+if (random(0-100) &lt; critChancePercent) {
+  critMultiplierPercent = angreiferCritDamage / 2
+  finalDamage = round(rawDamage * (1 + critMultiplierPercent / 100))
+}</code></pre>
+      <p>Bei Basis-<code>critDamage&nbsp;=&nbsp;150</code> ergibt das <strong>+75&nbsp;%</strong> Schaden bei einem Krit.</p>
+
+      <div class="callout warn">
+        <p class="lbl">Asymmetrie</p>
+        <p>Eingehender Monsterschaden wird <em>vor</em> der Kampfauflösung zusätzlich zufällig reskaliert: <span class="formula">scaledDamage = round(damage * (0.75 + random() * 0.25))</span> — also 75–100&nbsp;% des Nominalwerts. Spieler-Schaden erhält diese Streuung nicht.</p>
+      </div>
+
+      <h3>Energieschild &amp; Rüstung <span class="src">combat-roll.util.ts</span></h3>
+      <p>Der Energieschild absorbiert Schaden 1:1 (<code>min(shield, damage)</code>) bevor HP verringert werden. <strong>Rüstung mindert physischen Schaden jetzt aktiv</strong> — aber NICHT linear wie Resistenz (siehe <a href="#zauber">Zauberschaden</a>), sondern über eine <strong>Diminishing-Returns-Kurve</strong>:</p>
+      <pre><code>mitigationPercent = min(75, armor / (armor + 150) * 100)
+finalDamage = round(rawDamage * (1 - mitigationPercent / 100))</code></pre>
+      <div class="callout">
+        <p class="lbl">Warum nicht linear?</p>
+        <p>Rüstungs-Werte auf Ausrüstung stapeln sich über 8 Nicht-Waffen-Slots (Kopf/Brust/Bein/Handschuhe/Schuhe/Kette/2×Ring) auf im Schnitt <strong>~29 (Tier&nbsp;1) bis ~436 (Tier&nbsp;5)</strong> — eine lineare "1&nbsp;Punkt&nbsp;=&nbsp;1&nbsp;%"-Formel wie bei Resistenz würde den 75&nbsp;%-Deckel schon mit Tier-2-Gear sprengen. Mit der Kurve landet ein Tier-5-Charakter im Schnitt bei <strong>~74&nbsp;% Mitigation</strong> — knapp am Deckel, wie beabsichtigt (siehe <a href="#monster">Monster-Stats</a>: Monster-Angriffswerte sind bewusst so hoch gesetzt, dass auch bei ~74&nbsp;% Mitigation noch spürbarer Schaden durchkommt).</p>
+      </div>
+      <p>Angewendet in <code>FightService.mitigateByArmor()</code> — nur bei <code>damageType&nbsp;=&nbsp;'physical'</code> (Basisangriff, <code>PHYSICAL_DAMAGE</code>-Skills). Elementarschaden nutzt stattdessen die Resistenz-Mitigation aus <code>SpellsEngineService</code> und überspringt diesen Schritt.</p>
+
+      <h3>Mana- &amp; HP-Regeneration</h3>
+      <p class="formula">manaRegen = 3 + floor(intelligence / 5)</p>
+      <p class="formula">hpRegen = floor(combatStats['hp-regeneration']) — <span class="tag ok">neuer Stat</span>, skaliert mit Vitalität × 0.5/Punkt</p>
+      <p>Beide werden einmal pro vollständiger Runde angewendet (<code>FightService.endTurn()</code>), HP-Regeneration wird dabei abgerundet.</p>
+
+      <h3>Monster-Zug</h3>
+      <p>50&nbsp;% Chance auf einen zufälligen bekannten Zauber, sonst Basisangriff mit <strong>flachem</strong> <code>monster.attack</code>-Wert (kein Würfelbereich wie beim Spieler).</p>
+    </section>
+
+    <section id="zauber">
+      <h2><span class="num">06</span>Zauberschaden <span class="src">spells-engine.service.ts</span></h2>
+      <p>Bonuswurf je nach Effekttyp — beim Spieler ein frischer, unabhängiger Wurf über den Kampfwertbereich, beim Monster ein flacher Wert:</p>
+      <pre><code>bonusAttack = Spieler: rollBetween(attackMin, attackMax) | Monster: monster.attack || 10
+bonusMagic  = Spieler: rollBetween(magicAttackMin, magicAttackMax) | Monster: monster.magicAttack || 10</code></pre>
+
+      <div class="callout">
+        <p class="lbl">Neu — Waffentyp-Anforderung</p>
+        <p>Skills können jetzt einen <code>requiredWeaponType</code> tragen (<code>schnitt</code>/<code>stumpf</code>/<code>stich</code>/<code>magie</code>) — z.&nbsp;B. braucht <em>Funke</em> (Feuer) eine <code>magie</code>-Waffe, ein wuchtiger Schlag eine <code>stumpf</code>-Waffe. Geprüft bei <strong>jedem Cast</strong> (nicht nur beim Ausrüsten) via <code>SkillsService.hasEquippedWeaponType()</code> — <code>SpellsEngineService.castSpell()</code> bricht sonst vor dem Mana-Abzug ab.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4><span class="tag physical">Physical Damage</span></h4>
+          <p class="formula" style="display:block">totalDamage = (value + bonusAttack) × physicalDamageMultiplier</p>
+        </div>
+        <div class="card">
+          <h4><span class="tag fire">Elemental Damage</span></h4>
+          <p class="formula" style="display:block">totalDamage = (value + bonusMagic) × magicDamageMultiplier</p>
+        </div>
+        <div class="card">
+          <h4><span class="tag heal">Heal</span></h4>
+          <p class="formula" style="display:block">healAmount = spell.effectValues.value</p>
+        </div>
+        <div class="card">
+          <h4>Resolve-Minigame <span class="src">nur Spieler</span></h4>
+          <p class="formula" style="display:block">final = round(value / resolvePoints * correctCount)</p>
+        </div>
+      </div>
+      <p>Multiplikatoren nur bei Spieler-Casts (siehe <a href="#pipeline">Attribut-Skalierung</a>); Monster-Casts nutzen ihre flachen Werte unverändert.</p>
+
+      <div class="callout">
+        <p class="lbl">Neu — Element-Resistenz mindert jetzt aktiv</p>
+        <p><code>spell.effectValues.element</code> (<span class="tag fire">fire</span> <span class="tag cold">cold</span> <span class="tag lightning">lightning</span> <span class="tag chaos">chaos</span>) wird gegen die Resistenz DES ZIELS geprüft — <strong>linear, 1 Resistenz-Punkt = 1&nbsp;% Endschaden-Mitigation, gedeckelt bei 75&nbsp;%</strong> (<code>applyResistanceMitigation()</code>, angewendet nach dem Schadens-Multiplikator, vor dem Resolve-Minigame):</p>
+        <pre><code>totalDamage = round(totalDamage * (1 - min(resistance, 75) / 100))</code></pre>
+        <p><code>chaosDamage</code> bleibt weiterhin ungenutzt — nur <code>resistances.{fire,cold,lightning,chaos}</code> wirken.</p>
+      </div>
+
+      <p>Beispiel Tier-1-Feuerzauber (<code>firespells_tier1.json</code>): <code>value: 20</code>, <code>requiredWeaponType: "magie"</code>, Anforderung <code>intelligence ≥ 10</code> → Rohschaden <span class="formula">(20 + rollBetween(magicAttackMin, magicAttackMax)) × magicDamageMultiplier</span>, dann Resistenz-Mitigation des Ziels, danach Resolve-Rescaling, dann Krit/Dodge.</p>
+    </section>
+
+    <section id="waffen">
+      <h2><span class="num">07</span>Waffentypen &amp; Anforderungen</h2>
+      <p>Die "4 Schadenstypen" aus der Commit-Historie sind <strong>Waffenkategorien</strong>, keine Elementtypen:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Typ</th><th>Bedeutung</th><th>Anforderungs-Attribut</th><th>Schadensfeld</th></tr></thead>
+          <tbody>
+            <tr><td><code>schnitt</code></td><td>Schnitt (physisch)</td><td>Stärke</td><td>base-damage-min/max</td></tr>
+            <tr><td><code>stumpf</code></td><td>Stumpf (physisch)</td><td>Stärke</td><td>base-damage-min/max</td></tr>
+            <tr><td><code>stich</code></td><td>Stich (physisch)</td><td>Geschick</td><td>base-damage-min/max</td></tr>
+            <tr><td><code>magie</code></td><td>Magisch</td><td>Intelligenz</td><td>base-magic-damage-min/max</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Pro Tier: 8 Waffen = 4 Typen × {1‑Hand, 2‑Hand}; die 2‑Hand-Variante verlangt ein höheres Attribut, liefert dafür mehr Schaden. Beispiel Tier 1:</p>
+      <pre><code>Kurzschwert der Wache   schnitt 1H  STR≥6  dmg  9-14
+Zweihandschwert Rekrut  schnitt 2H  STR≥9  dmg 13-19
+Holzknüppel             stumpf 1H  STR≥6  dmg 10-13
+Kriegshammer Lehrling   stumpf 2H  STR≥9  dmg 14-18
+Rostiger Dolch          stich  1H  DEX≥6  dmg  7-15
+Jagdspeer               stich  2H  DEX≥9  dmg 11-21
+Lehrlingsstab           magie  1H  INT≥6  magic-dmg  8-14
+Runenstab der Novizen   magie  2H  INT≥9  magic-dmg 12-20</code></pre>
+      <div class="callout">
+        <p class="lbl">Nur UI-Gate</p>
+        <p>Die Anforderungsprüfung (<code>requirement.stat/value</code> für Waffen, <code>requirements[]</code> für Zauber) läuft ausschließlich in den Ausrüsten-Buttons der UI-Komponenten. Der Service-Layer (<code>InventarService.toggleEquipItem</code>, <code>SpellsEngineService</code>) prüft nichts erneut.</p>
+      </div>
+    </section>
+
+    <section id="qualitaet">
+      <h2><span class="num">08</span>Waffen-Qualität / Upgrades</h2>
+      <p><code>weapon-quality.util.ts</code> — jede Qualitätsstufe addiert <strong>+5&nbsp;%</strong>, immer neu berechnet aus dem unveränderlichen Basiswert (kein kumulierter Rundungsfehler):</p>
+      <pre><code>multiplier = 1 + 0.05 * quality
+stats['damage-min']       = round(base-damage-min       * multiplier)
+stats['damage-max']       = round(base-damage-max       * multiplier)
+stats['magic-damage-min'] = round(base-magic-damage-min * multiplier)
+stats['magic-damage-max'] = round(base-magic-damage-max * multiplier)</code></pre>
+      <p>Ein Upgrade verbraucht die Waffe + 1 passendes Material aus 2 Upgrade-Slots (<code>magie</code> → <code>upgrade-creme</code>, alles andere → <code>grinding</code>).</p>
+    </section>
+
+    <section id="monster">
+      <h2><span class="num">09</span>Monster-Stats</h2>
+      <p>Monster teilen sich die gleiche Feldstruktur wie der Spieler-Basiszustand, durchlaufen aber <strong>keine</strong> Attribut-Skalierung — <code>attack</code>/<code>magicAttack</code>/<code>hp</code>/<code>armor</code>/<code>resistances</code> sind einfach die vom JSON vorgegebenen, fest autorisierten Zahlen. Beispiel Goblin (<code>dark-forest.1-10.json</code>, nach dem Rüstungs-/Resistenz-Rebalance):</p>
+      <pre><code>hp: 49, expReward: 42, mana: 100,
+strength: 4, dexterity: 4, vitality: 4, luck: 8,
+attack: 23, magicAttack: 12, initiative: 10, evasion: 5,
+critChance: 5, critDamage: 150, armor: 1,
+resistances: { fire: 1, cold: 1, lightning: 1, chaos: 1 }</code></pre>
+      <p>XP-Belohnung beim Sieg: <code>expReward ?? 30</code>.</p>
+
+      <h3>Balance-Skript <span class="src">scripts/balance-sim.mjs</span></h3>
+      <p>Da Rüstung/Resistenz jetzt aktiv mindern, mussten Monster-Werte neu simuliert werden — reines "Werte hochsetzen" hätte die 35 Düsterwald-Monster entweder trivial oder unbesiegbar gemacht. Kernerkenntnisse aus dem Rebalance:</p>
+      <ul>
+        <li><strong>Echte Gear-Stapelung reverse-engineered</strong>: 100 zufällige Vollausrüstungen (8 Nicht-Waffen-Slots) je Tier ausgewertet → Ø-Rüstung 29 (Tier&nbsp;1) bis 436 (Tier&nbsp;5), Ø-Resistenz/Element 4 bis 61.</li>
+        <li><strong>Monster-Schaden rückwärts aus der Mitigation berechnet</strong>: Da ein Tier-5-Charakter im Schnitt ~74&nbsp;% Rüstungs-Mitigation hat, muss der rohe Monster-Angriff ungefähr das <strong>4-fache</strong> dessen sein, was ohne Mitigation nötig wäre, damit am Bracket-Ende noch spürbarer Schaden ankommt (<code>computeBaseAttack()</code>/<code>computeMagicSplit()</code> in <code>balance-sim.mjs</code>).</li>
+        <li><strong>Monster-Luck von Monster-Evasion entkoppelt</strong>: Monster-Luck muss mit der (stark gear-getriebenen) Spieler-Evasion mithalten, sonst landen Treffer praktisch nie (1w20+Luck vs. 1w20+Evasion). Monster-Evasion bleibt dagegen niedrig, damit der Spieler seinerseits zuverlässig trifft.</li>
+        <li><strong>Trade-off (bewusst so entschieden)</strong>: Getunt auf ein forderndes <em>Bracket-Ende</em> (eigenes Tier-Gear) — <em>Bracket-Start</em> (frisch geleveltes, noch altes Gear) bleibt dadurch spürbar härter als vorher, v.&nbsp;a. bei harten Rollen (Brute/Elite/Aberration).</li>
+      </ul>
+      <p><code>scripts/patch-monster-defense.mjs</code> schreibt die getunten Werte (hp, attack, magicAttack, luck, critChance, armor, resistances) gezielt in die bestehenden Monster-JSONs, ohne von Hand ergänzte Felder (Sprite-Pfade, <code>fight-background</code>, <code>monster-frame</code>) zu überschreiben.</p>
+    </section>
+
+    <section id="tabelle">
+      <h2><span class="num">10</span>Gesamttabelle aller Stats</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stat</th><th class="num">Basis</th><th>Skalierungsformel</th><th>Wirkung im Kampf</th></tr></thead>
+          <tbody>
+            <tr><td>Stärke</td><td class="num">5</td><td class="num">—</td><td>physicalDamageMultiplier = 1 + Stärke/10000</td></tr>
+            <tr><td>Geschick</td><td class="num">5</td><td class="num">—</td><td>initiative += Geschick × 2</td></tr>
+            <tr><td>Intelligenz</td><td class="num">5</td><td class="num">—</td><td>magicDamageMultiplier = 1 + Int/10000, mana += ×5, shield += ×2, Manaregen +⌊int/5⌋</td></tr>
+            <tr><td>Vitalität</td><td class="num">5</td><td class="num">—</td><td>hp += Vitalität × 3, hp-regeneration += Vitalität × 0.5</td></tr>
+            <tr><td>Glück</td><td class="num">5</td><td class="num">—</td><td>critChance += ⌊Glück×0.2⌋, magic-find += ⌊Glück×0.5⌋, zählt als Dodge-Wert</td></tr>
+            <tr><td>attackMin/Max</td><td class="num">5</td><td class="num">rollBetween(min,max)</td><td>Basisangriff &amp; Physical-Spells (× physicalDamageMultiplier)</td></tr>
+            <tr><td>magicAttackMin/Max</td><td class="num">5</td><td class="num">rollBetween(min,max)</td><td>Elemental-Spells (× magicDamageMultiplier)</td></tr>
+            <tr><td>critChance</td><td class="num">5</td><td class="num">1d10 + crit − 5</td><td>Krit-Wahrscheinlichkeit in %</td></tr>
+            <tr><td>critDamage</td><td class="num">150</td><td class="num">/2 als Bonus-%</td><td>final = raw × (1 + critDamage/200)</td></tr>
+            <tr><td>evasion</td><td class="num">5</td><td class="num">1d20 + evasion</td><td>Ausweich-Wurf (Verteidiger)</td></tr>
+            <tr><td>energy-shield</td><td class="num">0</td><td class="num">1:1 Absorption</td><td>fängt Schaden vor HP ab</td></tr>
+            <tr><td>hp-regeneration</td><td class="num">0</td><td class="num">⌊Wert⌋ pro Runde</td><td><span class="tag ok">neu</span> heilt HP am Rundenende</td></tr>
+            <tr><td>armor</td><td class="num">0</td><td class="num">armor/(armor+150), Deckel 75%</td><td><span class="tag ok">aktiv</span> mindert physischen Schaden</td></tr>
+            <tr><td>resistances.*</td><td class="num">0</td><td class="num">linear 1:1, Deckel 75%</td><td><span class="tag ok">aktiv</span> mindert Elementarschaden je Element</td></tr>
+            <tr><td>chaosDamage</td><td class="num">0</td><td class="num">—</td><td><span class="tag dead">nicht genutzt</span></td></tr>
+            <tr><td>magic-find</td><td class="num">0</td><td class="num">—</td><td>nur Loot-Rolls, kein Kampf</td></tr>
+            <tr><td>charisma</td><td class="num">1</td><td class="num">—</td><td><span class="tag dead">nicht genutzt</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="totgelegt">
+      <h2><span class="num">11</span>Verbleibend totgelegt <span class="tag dead">wirkungslos</span></h2>
+      <p>Nach dem Rüstungs-/Resistenz-Rebalance sind nur noch diese beiden Stats ohne Wirkung im Kampf- oder Zaubercode:</p>
+      <ul>
+        <li><strong>chaosDamage</strong> — additiv aus Items/Passives gesammelt, aber nie ausgelesen.</li>
+        <li><strong>charisma</strong> — vermutlich für ein Dialog-/Sozialsystem vorgesehen, aktuell irrelevant für den Kampf.</li>
+      </ul>
+      <p><code>armor</code> und <code>resistances.*</code> sind seit dem Rebalance <strong>aktiv</strong> (siehe <a href="#kampf">Kampfauflösung</a> und <a href="#zauber">Zauberschaden</a>) — nicht mehr Teil dieser Liste.</p>
+    </section>
+
+    <footer>
+      Codebasis-Analyse — Kampfsystem-Formeln, Stand Juli 2026 (inkl. Rüstungs-/Resistenz-Rebalance). Kernquellen: <code>skills.service.ts</code>, <code>fight.service.ts</code>, <code>spells-engine.service.ts</code>, <code>profile.service.ts</code>, <code>weapon-quality.util.ts</code>, <code>combat-roll.util.ts</code>, <code>scripts/balance-sim.mjs</code>, <code>scripts/patch-monster-defense.mjs</code>.
+    </footer>
+  </main>
+</div>
+</body>
+</html>

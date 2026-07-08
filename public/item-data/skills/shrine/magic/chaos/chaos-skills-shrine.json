@@ -6,6 +6,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": { "element": "chaos", "value": 200 },
     "shrineSkill": true,
-    "resolvePoints": 6
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie"
   }
 ]

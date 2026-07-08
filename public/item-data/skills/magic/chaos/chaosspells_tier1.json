@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_chaos_02",
+    "name": "Chaosbolt",
+    "description": "Ein instabiler Energieball aus reinem Chaos.",
+    "tier": "1",
+    "price": 55,
+    "manaCost": 16,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "chaos",
+      "value": 22
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 15
+      }
+    ]
+  }
+]

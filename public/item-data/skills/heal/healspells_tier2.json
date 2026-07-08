@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heal_02",
+    "name": "Verband anlegen",
+    "description": "Ein schneller Verband stillt die Blutung.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 25,
+    "effectType": "HEAL",
+    "effectValues": {
+      "value": 50
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 18
+      }
+    ]
+  }
+]

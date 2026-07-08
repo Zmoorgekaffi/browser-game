@@ -6,7 +6,8 @@
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": { "value": 70 },
     "shrineSkill": true,
-    "resolvePoints": 4
+    "resolvePoints": 4,
+    "requiredWeaponType": "stumpf"
   },
   {
     "id": "shrine_physical_02",
@@ -15,6 +16,7 @@
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": { "value": 150 },
     "shrineSkill": true,
-    "resolvePoints": 5
+    "resolvePoints": 5,
+    "requiredWeaponType": "stumpf"
   }
 ]

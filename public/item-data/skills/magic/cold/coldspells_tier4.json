@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_cold_04",
+    "name": "Gletschersturz",
+    "description": "Massive Eisblöcke stürzen mit voller Wucht auf den Gegner.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 84,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "cold",
+      "value": 128
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 55
+      }
+    ]
+  }
+]

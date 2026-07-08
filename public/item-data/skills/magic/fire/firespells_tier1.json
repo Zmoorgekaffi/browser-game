@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_fire_01",
+    "name": "Funke",
+    "description": "Ein kleiner Feuerstoß, der den Gegner leicht versengt.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 15,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "fire",
+      "value": 20
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 10
+      }
+    ]
+  }
+]

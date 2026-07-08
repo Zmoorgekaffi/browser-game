@@ -25,6 +25,18 @@
         {{ spell?.manaCost }} Mana
       </span>
     </p>
+
+    @if (!spell?.equipped && spell?.requirements?.length && !meetsRequirements(spell.requirements)) {
+      <p class="text-red-400 text-[10px] leading-tight mt-0.5">
+        Benötigt: {{ requirementText }}
+      </p>
+    }
+
+    @if (!spell?.equipped && spell?.requiredWeaponType && !meetsWeaponRequirement(spell)) {
+      <p class="text-red-400 text-[10px] leading-tight mt-0.5">
+        Benötigt Waffe: {{ spell.requiredWeaponType }}
+      </p>
+    }
   </div>
 
   <div

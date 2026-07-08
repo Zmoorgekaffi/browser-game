@@ -9,6 +9,7 @@
   <app-item-info-card></app-item-info-card>
   <app-sell-panel></app-sell-panel>
   <app-crafting-panel></app-crafting-panel>
+  <app-skill-shop-panel></app-skill-shop-panel>
 
   <div class="absolute bottom-4 left-4 flex gap-2 z-50">
     <div
@@ -22,6 +23,12 @@
       class="cursor-pointer bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-4 py-2 rounded-md select-none"
     >
       Crafting
+    </div>
+    <div
+      (click)="gameStateService.shop.openSkillShop()"
+      class="cursor-pointer bg-purple-700 hover:bg-purple-800 text-white font-bold px-4 py-2 rounded-md select-none"
+    >
+      Skill-Shop
     </div>
   </div>
 

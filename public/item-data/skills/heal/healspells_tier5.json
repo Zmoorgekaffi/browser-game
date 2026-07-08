@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heal_05",
+    "name": "Göttliche Sanierung",
+    "description": "Göttliche Kraft stellt den Körper nahezu vollständig wieder her.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 100,
+    "effectType": "HEAL",
+    "effectValues": {
+      "value": 300
+    },
+    "resolvePoints": 7,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 70
+      }
+    ]
+  }
+]

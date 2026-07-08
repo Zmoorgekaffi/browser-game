@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heal_04",
+    "name": "Große Genesung",
+    "description": "Ein kraftvoller Segen heilt schwere Verletzungen.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 70,
+    "effectType": "HEAL",
+    "effectValues": {
+      "value": 160
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 48
+      }
+    ]
+  }
+]

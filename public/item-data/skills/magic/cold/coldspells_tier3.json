@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_cold_03",
+    "name": "Frostnova",
+    "description": "Eine Welle eisiger Kälte breitet sich explosionsartig aus.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 50,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "cold",
+      "value": 70
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 35
+      }
+    ]
+  }
+]

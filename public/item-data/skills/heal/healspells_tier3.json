@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heal_03",
+    "name": "Lichtwelle",
+    "description": "Warmes Licht durchflutet den Körper und schließt Wunden.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 45,
+    "effectType": "HEAL",
+    "effectValues": {
+      "value": 90
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 30
+      }
+    ]
+  }
+]

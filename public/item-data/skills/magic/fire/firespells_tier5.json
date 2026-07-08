@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_fire_05",
+    "name": "Inferno",
+    "description": "Entfesselt ein Flammenmeer, das alles in Reichweite verzehrt.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 115,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "fire",
+      "value": 190
+    },
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 80
+      }
+    ]
+  }
+]

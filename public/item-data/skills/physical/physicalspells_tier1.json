@@ -1,0 +1,26 @@
+[
+  {
+    "id": "strike_01",
+    "name": "Präziser Stoß",
+    "description": "Ein gezielter Stich in eine ungeschützte Stelle.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 12,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": {
+      "value": 25
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "schnitt",
+    "requirements": [
+      {
+        "stat": "strength",
+        "value": 10
+      },
+      {
+        "stat": "dexterity",
+        "value": 5
+      }
+    ]
+  }
+]

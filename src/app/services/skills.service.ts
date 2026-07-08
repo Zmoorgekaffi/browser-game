@@ -29,6 +29,7 @@ const EQUIPMENT_SLOTS = [
 const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
   ['armor', 'armor'],
   ['energy-shield', 'energy-shield'],
+  ['hp-regeneration', 'hp-regeneration'],
   ['magic-find', 'magic-find'],
   ['initiative', 'initiative'],
   ['evasion', 'evasion'],
@@ -79,6 +80,7 @@ export class SkillsService {
     'magic-find': 0,
     armor: 0,
     hp: 100,
+    'hp-regeneration': 0,
     mana: 20,
     attack: 5,
     magicAttack: 5,
@@ -121,6 +123,7 @@ export class SkillsService {
   magicFind = computed(() => this.state()['magic-find']);
   armor = computed(() => this.state().armor);
   hp = computed(() => this.state().hp);
+  hpRegeneration = computed(() => this.state()['hp-regeneration']);
   mana = computed(() => this.state().mana);
   attack = computed(() => this.state().attack);
   magicAttack = computed(() => this.state().magicAttack);
@@ -210,6 +213,7 @@ export class SkillsService {
       'magic-find': base['magic-find'],
       armor: base.armor,
       hp: base.hp,
+      'hp-regeneration': base['hp-regeneration'] ?? 0,
       mana: base.mana,
       attack: base.attack,
       magicAttack: base.magicAttack,
@@ -218,6 +222,10 @@ export class SkillsService {
       attackMax: base.attack,
       magicAttackMin: base.magicAttack,
       magicAttackMax: base.magicAttack,
+      // Physischer/Magischer Schadens-Multiplikator (siehe applyAttributeScaling) —
+      // hier nur der neutrale Basiswert für eine korrekte Layer-Aufschlüsselung.
+      physicalDamageMultiplier: 1,
+      magicDamageMultiplier: 1,
       initiative: base.initiative,
       evasion: base.evasion,
       critChance: base.critChance,
@@ -311,26 +319,29 @@ export class SkillsService {
   /**
    * Skaliert die GESAMT-Attribute (Basis + Schrein + Ausrüstung) einmalig auf
    * abgeleitete Kampfwerte:
-   *  - Stärke:      Physischer Schaden (Angriff) +2/Punkt
+   *  - Stärke:      Physischer Schadens-Multiplikator +0.01%/Punkt (1000 Punkte = +10%,
+   *                 1500 = +15%, 12000 = +12% usw.). Wirkt NICHT auf attackMin/Max (das
+   *                 bleibt reine Waffen-Range) — der Multiplikator wird erst beim
+   *                 tatsächlichen Treffer auf (Waffen-Wurf + Skill-Bonus) angewendet,
+   *                 siehe FightService / SpellsEngineService.
    *  - Geschick:    Initiative +2/Punkt
-   *  - Intelligenz: Magie-Angriff +2/Punkt, Mana +5/Punkt, Energieschild +2/Punkt
-   *  - Vitalität:   HP +3/Punkt
+   *  - Intelligenz: Magischer Schadens-Multiplikator +0.01%/Punkt (analog Stärke),
+   *                 Mana +5/Punkt, Energieschild +2/Punkt
+   *  - Vitalität:   HP +3/Punkt, HP-Regeneration +0.5/Punkt (Rest wird erst beim
+   *                 Anwenden pro Runde abgerundet, siehe FightService.endTurn)
    *  - Glück:       Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
    *
    * @param finalStats Ziel-Objekt (wird mutiert). Muss bereits die
    *                   Gesamt-Attributwerte (inkl. Ausrüstung) enthalten.
    */
   private applyAttributeScaling(finalStats: any): void {
-    const strengthBonus = finalStats.strength * 2;
-    finalStats.attackMin += strengthBonus;
-    finalStats.attackMax += strengthBonus;
+    finalStats.physicalDamageMultiplier = 1 + finalStats.strength / 10000;
     finalStats.initiative += finalStats.dexterity * 2;
-    const intelligenceAttackBonus = finalStats.intelligence * 2;
-    finalStats.magicAttackMin += intelligenceAttackBonus;
-    finalStats.magicAttackMax += intelligenceAttackBonus;
+    finalStats.magicDamageMultiplier = 1 + finalStats.intelligence / 10000;
     finalStats.mana += finalStats.intelligence * 5;
     finalStats['energy-shield'] += finalStats.intelligence * 2;
     finalStats.hp += finalStats.vitality * 3;
+    finalStats['hp-regeneration'] += finalStats.vitality * 0.5;
     finalStats.critChance += Math.floor(finalStats.luck * 0.2);
     finalStats['magic-find'] += Math.floor(finalStats.luck * 0.5);
   }
@@ -416,6 +427,22 @@ export class SkillsService {
         }
       }
     }
+  }
+
+  /**
+   * True, wenn aktuell eine Waffe vom angegebenen Typ ausgerüstet ist
+   * (`weapon-type`: 'schnitt' | 'stumpf' | 'stich' | 'magie'). Prüft beide
+   * Waffen-Slots, damit Dual-Wield-Kombinationen (z.B. zwei 1H-Waffen
+   * unterschiedlichen Typs) berücksichtigt werden.
+   *
+   * @param weaponType Geforderter Waffentyp (z.B. aus `spell.requiredWeaponType`).
+   */
+  public hasEquippedWeaponType(weaponType: string): boolean {
+    const slots = this.inventarService.equippedSlots();
+    return (
+      slots['weapon-1']?.['weapon-type'] === weaponType ||
+      slots['weapon-2']?.['weapon-type'] === weaponType
+    );
   }
 
   /** Liefert die Default-Spells (Start-Loadout) für neue/leere Savegames. */

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_lightning_03",
+    "name": "Funkenbogen",
+    "description": "Ein knisternder Lichtbogen springt zum Gegner über.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 29,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "lightning",
+      "value": 44
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 20
+      }
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_chaos_03",
+    "name": "Chaoswoge",
+    "description": "Eine Welle verzerrter Energie reißt an der Realität.",
+    "tier": "2",
+    "price": 160,
+    "manaCost": 32,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "chaos",
+      "value": 48
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 28
+      }
+    ]
+  }
+]

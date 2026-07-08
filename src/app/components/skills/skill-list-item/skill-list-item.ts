@@ -46,6 +46,20 @@ export class SkillListItem {
         this.gameStateService.skills.updateSpells('unequip', this.spell, slotKey);
       }
     } else {
+      if (!this.meetsRequirements(this.spell?.requirements)) {
+        console.warn(
+          `❌ Anforderung nicht erfüllt für "${this.spell.name}": ${this.requirementText}`,
+        );
+        return;
+      }
+
+      if (!this.meetsWeaponRequirement(this.spell)) {
+        console.warn(
+          `❌ "${this.spell.name}" benötigt eine Waffe vom Typ "${this.spell.requiredWeaponType}"!`,
+        );
+        return;
+      }
+
       const freeSlot = this.gameStateService.skills.getNextFreeSlot();
       if (freeSlot) {
         this.gameStateService.skills.updateSpells('equip', this.spell, freeSlot);
@@ -53,5 +67,25 @@ export class SkillListItem {
         console.warn('⚠️ Alle Spell-Slots belegt!');
       }
     }
+  }
+
+  /** True, wenn alle Einträge in `requirements: [{stat, value}]` erfüllt sind (kein Feld = immer true). */
+  public meetsRequirements(requirements: { stat: string; value: number }[] | undefined | null): boolean {
+    if (!requirements || requirements.length === 0) return true;
+    const stats = this.gameStateService.skills.combatStats() as any;
+    return requirements.every((req) => (stats[req.stat] ?? 0) >= req.value);
+  }
+
+  /** Menschenlesbare Anforderungs-Liste fürs Template/Log, z.B. "10 strength, 5 dexterity". */
+  public get requirementText(): string {
+    return (this.spell?.requirements ?? [])
+      .map((req: { stat: string; value: number }) => `${req.value} ${req.stat}`)
+      .join(', ');
+  }
+
+  /** True, wenn der Skill keinen Waffentyp fordert oder eine passende Waffe ausgerüstet ist. */
+  public meetsWeaponRequirement(spell: any): boolean {
+    if (!spell?.requiredWeaponType) return true;
+    return this.gameStateService.skills.hasEquippedWeaponType(spell.requiredWeaponType);
   }
 }

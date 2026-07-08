@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_chaos_05",
+    "name": "Entropiewelle",
+    "description": "Zerfall und Verderben breiten sich unaufhaltsam aus.",
+    "tier": "4",
+    "price": 720,
+    "manaCost": 90,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "chaos",
+      "value": 128
+    },
+    "resolvePoints": 5,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 65
+      }
+    ]
+  }
+]

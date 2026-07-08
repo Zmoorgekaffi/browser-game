@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_chaos_04",
+    "name": "Verzerrung",
+    "description": "Der Raum um den Gegner verzerrt sich schmerzhaft.",
+    "tier": "3",
+    "price": 380,
+    "manaCost": 54,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "chaos",
+      "value": 75
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 42
+      }
+    ]
+  }
+]

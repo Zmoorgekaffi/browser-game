@@ -1,0 +1,26 @@
+[
+  {
+    "id": "strike_03",
+    "name": "Klingensturm",
+    "description": "Eine Serie blitzschneller Hiebe überwältigt den Gegner.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 36,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": {
+      "value": 78
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "schnitt",
+    "requirements": [
+      {
+        "stat": "strength",
+        "value": 35
+      },
+      {
+        "stat": "dexterity",
+        "value": 18
+      }
+    ]
+  }
+]

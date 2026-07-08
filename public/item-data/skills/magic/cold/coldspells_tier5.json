@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_cold_05",
+    "name": "Ewiger Frost",
+    "description": "Absoluter Nullpunkt gefriert alles, was dem Zauber zu nahe kommt.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 112,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "cold",
+      "value": 182
+    },
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 80
+      }
+    ]
+  }
+]

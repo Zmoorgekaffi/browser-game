@@ -1,0 +1,26 @@
+[
+  {
+    "id": "strike_05",
+    "name": "Todesstoß",
+    "description": "Ein finaler, gnadenloser Stich, der keine Schwäche verzeiht.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 90,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": {
+      "value": 195
+    },
+    "resolvePoints": 6,
+    "requiredWeaponType": "stich",
+    "requirements": [
+      {
+        "stat": "strength",
+        "value": 80
+      },
+      {
+        "stat": "dexterity",
+        "value": 40
+      }
+    ]
+  }
+]

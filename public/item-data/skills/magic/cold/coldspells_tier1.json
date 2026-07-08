@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_cold_02",
+    "name": "Frostpfeil",
+    "description": "Ein spitzer Eissplitter, der den Gegner durchbohrt.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 14,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "cold",
+      "value": 20
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 10
+      }
+    ]
+  }
+]

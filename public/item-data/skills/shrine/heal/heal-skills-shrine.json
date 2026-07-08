@@ -6,7 +6,8 @@
     "effectType": "HEAL",
     "effectValues": { "value": 80 },
     "shrineSkill": true,
-    "resolvePoints": 4
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie"
   },
   {
     "id": "shrine_heal_02",
@@ -15,6 +16,7 @@
     "effectType": "HEAL",
     "effectValues": { "value": 180 },
     "shrineSkill": true,
-    "resolvePoints": 6
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie"
   }
 ]

@@ -2,7 +2,7 @@ import { Injectable, inject, Injector } from '@angular/core';
 import { SkillsService } from './skills.service';
 import { FightService } from './fight.service';
 import { ResolveChallengeService } from './resolve-challenge.service';
-import { rollBetween } from '../utils/combat-roll.util';
+import { rollBetween, applyResistanceMitigation } from '../utils/combat-roll.util';
 
 /**
  * @service SpellsEngineService
@@ -23,8 +23,9 @@ export class SpellsEngineService {
   /**
    * Wirkt einen Spell.
    *
-   * Ablauf: 1. Mana prüfen/abziehen (nur Spieler) → 2. Schadens-Boni aus
-   * den Stats ermitteln → 3. Effekt anhand von effectType verarbeiten.
+   * Ablauf: 1. Waffentyp-Anforderung prüfen (nur Spieler) → 2. Mana prüfen/
+   * abziehen (nur Spieler) → 3. Schadens-Boni aus den Stats ermitteln →
+   * 4. Effekt anhand von effectType verarbeiten.
    *
    * Nur beim Spieler-Cast (casterType 'player') wird der Skill-Endwert
    * (Schaden oder Heilung) zusätzlich durch das Resolve-Minigame reskaliert
@@ -46,7 +47,21 @@ export class SpellsEngineService {
     const fightService = this.injector.get(FightService);
     const isCombat = fightService.activeFight() !== null;
 
-    // --- 1. MANA CHECK & ABZUG ---
+    // --- 1. WAFFENTYP CHECK (nur Spieler) ---
+    // Manche Skills sind an einen Waffentyp gebunden (z.B. Feuerzauber nur mit
+    // 'magie'-Waffe, ein wuchtiger Schlag nur mit 'stumpf'). Wird bei jedem Cast
+    // neu geprüft (nicht nur beim Ausrüsten), da die Waffe jederzeit gewechselt
+    // werden kann, während der Skill im Slot bleibt.
+    if (casterType === 'player' && spell.requiredWeaponType) {
+      if (!this.skillsService.hasEquippedWeaponType(spell.requiredWeaponType)) {
+        console.warn(
+          `❌ "${spell.name}" benötigt eine Waffe vom Typ "${spell.requiredWeaponType}"!`,
+        );
+        return false;
+      }
+    }
+
+    // --- 2. MANA CHECK & ABZUG ---
     if (casterType === 'player') {
       const currentMana = isCombat
         ? fightService.playerMana()
@@ -69,7 +84,7 @@ export class SpellsEngineService {
       console.log(`👹 Monster wirkt ${spell.name}.`);
     }
 
-    // --- 2. SCHADENS-BONI BERECHNEN ---
+    // --- 3. SCHADENS-BONI BERECHNEN ---
     const playerStats = this.skillsService.combatStats();
 
     // ✅ Monster-Stats aus enrichedMonster holen (vollständiges Objekt, nicht activeFight)
@@ -83,15 +98,20 @@ export class SpellsEngineService {
         ? rollBetween(playerStats.magicAttackMin, playerStats.magicAttackMax)
         : enrichedMonster?.magicAttack || 10;
 
-    // --- 3. EFFEKT VERARBEITUNG ---
+    // --- 4. EFFEKT VERARBEITUNG ---
     switch (spell.effectType) {
       case 'PHYSICAL_DAMAGE': {
         let totalDamage = Number(spell.effectValues.value) + bonusAttack;
         if (casterType === 'player') {
+          // Physischer Schadens-Multiplikator aus Stärke (siehe SkillsService.
+          // applyAttributeScaling) wirkt auf (Waffen-Wurf + Skill-Wert), NICHT
+          // auf die Waffen-Range selbst. Rüstungs-Mitigation passiert danach
+          // zentral in applyDamageToMonster (damageType 'physical', Default).
+          totalDamage = Math.round(totalDamage * (playerStats.physicalDamageMultiplier ?? 1));
           totalDamage = await this.applyResolveChallenge(spell, totalDamage);
-          fightService.applyDamageToMonster(totalDamage);
+          fightService.applyDamageToMonster(totalDamage, 'physical');
         } else {
-          fightService.applyDamageToPlayer(totalDamage);
+          fightService.applyDamageToPlayer(totalDamage, 'physical');
         }
         break;
       }
@@ -101,10 +121,21 @@ export class SpellsEngineService {
         const element = spell.effectValues.element;
         console.log(`💥 ${element}-Schaden abgefeuert von [${casterType}]: ${totalDamage}`);
         if (casterType === 'player') {
+          // Magischer Schadens-Multiplikator aus Intelligenz, analog zum
+          // physischen Multiplikator oben.
+          totalDamage = Math.round(totalDamage * (playerStats.magicDamageMultiplier ?? 1));
+          // Element-Resistenz des ZIELS mindert den Schaden (1 Punkt = 1%,
+          // gedeckelt bei 75%) — muss HIER passieren, da nur die Engine das
+          // konkrete Element kennt. FightService bekommt danach 'elemental'
+          // übergeben, damit die Rüstungs-Mitigation dort nicht nochmal greift.
+          const defenderResistance = enrichedMonster?.resistances?.[element] ?? 0;
+          totalDamage = applyResistanceMitigation(totalDamage, defenderResistance);
           totalDamage = await this.applyResolveChallenge(spell, totalDamage);
-          fightService.applyDamageToMonster(totalDamage);
+          fightService.applyDamageToMonster(totalDamage, 'elemental');
         } else {
-          fightService.applyDamageToPlayer(totalDamage);
+          const defenderResistance = playerStats.resistances?.[element] ?? 0;
+          totalDamage = applyResistanceMitigation(totalDamage, defenderResistance);
+          fightService.applyDamageToPlayer(totalDamage, 'elemental');
         }
         break;
       }

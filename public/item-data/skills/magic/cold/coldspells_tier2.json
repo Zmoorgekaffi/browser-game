@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_cold_01",
+    "name": "Eislanze",
+    "description": "Eine scharfe Lanze aus purem Eis durchbohrt den Gegner.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 30,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "cold",
+      "value": 45
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 20
+      }
+    ]
+  }
+]

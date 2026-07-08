@@ -1,0 +1,85 @@
+@if (show()) {
+  <div class="inset-0 w-full h-full p-10 absolute z-[9999] flex items-center justify-center bg-black/60">
+    <div class="panel-container relative bg-[rgba(20,20,20,0.9)] border border-white/10 rounded-lg p-6 w-[720px] flex flex-col gap-4">
+      <div
+        class="cursor-pointer text-white bg-gray-700/80 hover:bg-gray-600/80 rounded-full w-8 h-8 flex items-center justify-center absolute top-4 right-4 z-10"
+        (click)="close()"
+      >
+        ✕
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <h3 class="text-white text-lg font-bold">Skill-Shop</h3>
+        <p class="text-zinc-400 text-xs">Wähle einen von 3 zufälligen Zaubern, um ihn dauerhaft zu erlernen.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+        @for (spell of offers(); track $index) {
+          @if (spell && !spell.isSold) {
+            <div class="border border-zinc-700 rounded-md p-3 flex flex-col gap-2 bg-black/40">
+              <div class="flex justify-between items-baseline gap-2">
+                <h4 [class]="'font-semibold text-sm ' + elementColor(spell)">{{ spell.name }}</h4>
+                @if (getTier(spell); as tier) {
+                  <span class="text-[10px] text-zinc-400 font-mono shrink-0">T{{ tier }}</span>
+                }
+              </div>
+
+              <p class="text-zinc-400 text-[11px] leading-tight min-h-[2.2em]">{{ spell.description }}</p>
+
+              <div class="flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono">
+                @if (spell.effectType === 'HEAL') {
+                  <span class="text-emerald-400 font-bold">💚 +{{ spell.effectValues?.value }} HP</span>
+                } @else {
+                  <span [class]="'font-bold ' + elementColor(spell)">
+                    {{ spell.effectType === 'PHYSICAL_DAMAGE' ? '⚔️' : '💥' }} {{ spell.effectValues?.value }} DMG
+                  </span>
+                }
+                <span class="text-cyan-400">{{ spell.manaCost }} Mana</span>
+              </div>
+
+              @if (spell.requirements?.length) {
+                <div class="text-[10px] text-zinc-500">
+                  Benötigt:
+                  @for (req of spell.requirements; track req.stat) {
+                    <span class="text-zinc-300">{{ req.value }} {{ req.stat }}</span>{{ !$last ? ', ' : '' }}
+                  }
+                </div>
+              }
+
+              <div class="flex justify-between items-center pt-1 mt-auto border-t border-white/10">
+                <span class="text-xs font-mono text-yellow-300">{{ spell.price }} Gold</span>
+
+                @if (isAlreadyKnown(spell)) {
+                  <span class="text-[11px] text-zinc-500 italic">Bereits erlernt</span>
+                } @else {
+                  <button
+                    (click)="buy($index)"
+                    [disabled]="!canAfford(spell)"
+                    class="rounded-md border px-3 py-1.5 text-xs transition-colors text-white"
+                    [class.border-emerald-500]="canAfford(spell)"
+                    [class.bg-emerald-600]="canAfford(spell)"
+                    [class.bg-opacity-30]="canAfford(spell)"
+                    [class.hover:bg-opacity-50]="canAfford(spell)"
+                    [class.cursor-pointer]="canAfford(spell)"
+                    [class.border-white]="!canAfford(spell)"
+                    [class.border-opacity-10]="!canAfford(spell)"
+                    [class.opacity-40]="!canAfford(spell)"
+                    [class.cursor-not-allowed]="!canAfford(spell)"
+                  >
+                    Kaufen
+                  </button>
+                }
+              </div>
+            </div>
+          } @else {
+            <div class="border border-white/10 rounded-md p-3 flex items-center justify-center bg-black/20 text-zinc-600 text-xs italic">
+              Verkauft
+            </div>
+          }
+        } @empty {
+          <div class="col-span-3 text-white text-center opacity-50 py-4">Kein Angebot vorhanden.</div>
+        }
+      </div>
+    </div>
+  </div>
+}

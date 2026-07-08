@@ -4,7 +4,7 @@ import { SkillsService } from './skills.service';
 import { SpellsEngineService } from './spells-engine.service';
 import { SpellLoaderService } from './spell-loader.service';
 import { ProfileService } from './profile.service';
-import { rollBetween } from '../utils/combat-roll.util';
+import { rollBetween, applyArmorMitigation } from '../utils/combat-roll.util';
 
 /** XP-Vergütung, wenn ein Monster keine eigene `expReward` mitbringt. */
 const DEFAULT_MONSTER_EXP_REWARD = 30;
@@ -182,7 +182,10 @@ export class FightService {
   executePlayerAttack(): void {
     if (this.currentTurn() !== 'player') return;
     const stats = this.skillsService.combatStats();
-    const damage = rollBetween(stats.attackMin, stats.attackMax);
+    const rawDamage = rollBetween(stats.attackMin, stats.attackMax);
+    // Physischer Schadens-Multiplikator aus Stärke (siehe SkillsService.
+    // applyAttributeScaling) wirkt erst hier auf den ausgewürfelten Waffenschaden.
+    const damage = Math.round(rawDamage * (stats.physicalDamageMultiplier ?? 1));
     this.applyDamageToMonster(damage);
     this.endTurn();
   }
@@ -216,8 +219,14 @@ export class FightService {
   /**
    * Zieht dem Monster Schaden ab (nach Ausweich-/Krit-Wurf, siehe
    * `resolveAttack()`); bei 0 HP endet der Kampf mit Sieg.
+   *
+   * @param damageType 'physical' (Default) mindert über die Rüstung des
+   *                   Monsters (siehe applyArmorMitigation); 'elemental'
+   *                   überspringt das, da Elementarschaden bereits VOR
+   *                   diesem Aufruf per Resistenz gemindert wurde (siehe
+   *                   SpellsEngineService, wo das konkrete Element bekannt ist).
    */
-  public applyDamageToMonster(damage: number): void {
+  public applyDamageToMonster(damage: number, damageType: 'physical' | 'elemental' = 'physical'): void {
     const monster = this.enrichedMonster();
     const playerStats = this.skillsService.combatStats();
 
@@ -231,7 +240,8 @@ export class FightService {
     });
     if (dodged) return;
 
-    const remaining = this.drainEnergyShield(this.monsterEnergyShield, finalDamage);
+    const mitigatedDamage = this.mitigateByArmor(finalDamage, damageType, monster?.armor ?? 0);
+    const remaining = this.drainEnergyShield(this.monsterEnergyShield, mitigatedDamage);
     this.monsterHp.update((hp) => Math.max(0, hp - remaining));
     if (this.monsterHp() <= 0) this.handleFightEnd(true);
   }
@@ -245,8 +255,11 @@ export class FightService {
    * `resolveAttack()`, damit Kampf-Log (Krit-/Treffer-Zeile) und tatsächlich
    * abgezogene HP übereinstimmen. applyDamageToMonster (Spieler-Schaden)
    * bleibt davon unberührt.
+   *
+   * @param damageType Siehe applyDamageToMonster — hier mindert die Rüstung
+   *                   des SPIELERS bei 'physical'.
    */
-  public applyDamageToPlayer(damage: number): void {
+  public applyDamageToPlayer(damage: number, damageType: 'physical' | 'elemental' = 'physical'): void {
     const monster = this.enrichedMonster();
     const playerStats = this.skillsService.combatStats();
 
@@ -262,7 +275,8 @@ export class FightService {
     });
     if (dodged) return;
 
-    const remaining = this.drainEnergyShield(this.playerEnergyShield, finalDamage);
+    const mitigatedDamage = this.mitigateByArmor(finalDamage, damageType, playerStats.armor ?? 0);
+    const remaining = this.drainEnergyShield(this.playerEnergyShield, mitigatedDamage);
     this.playerHp.update((hp) => Math.max(0, hp - remaining));
     if (this.playerHp() <= 0) this.handleFightEnd(false);
   }
@@ -318,6 +332,22 @@ export class FightService {
   }
 
   /**
+   * Mindert physischen Schaden über die Rüstung des Verteidigers per Diminishing-
+   * Returns-Kurve (siehe combat-roll.util.applyArmorMitigation — NICHT linear wie
+   * Elementar-Resistenz, da Rüstungs-Item-Werte eine ganz andere Zahlenskala haben).
+   * Bei 'elemental' greift stattdessen die Element-Resistenz (siehe SpellsEngineService),
+   * daher hier ein reines Passthrough.
+   */
+  private mitigateByArmor(damage: number, damageType: 'physical' | 'elemental', armor: number): number {
+    if (damageType !== 'physical' || armor <= 0) return damage;
+    const mitigated = applyArmorMitigation(damage, armor);
+    if (mitigated < damage) {
+      this.addLogMessage(`🛡️ Rüstung mindert den Schaden: ${damage} → ${mitigated}`);
+    }
+    return mitigated;
+  }
+
+  /**
    * Zieht Schaden zuerst vom Energieschild ab, der Rest geht auf die HP.
    *
    * @param energyShieldSignal Signal von Spieler oder Monster (wird mutiert).
@@ -362,9 +392,16 @@ export class FightService {
       this.currentTurn.set('player');
       this.round.update((r) => r + 1);
 
-      const intelligence = this.skillsService.combatStats().intelligence || 0;
-      const manaRegen = 3 + Math.floor(intelligence / 5);
+      const playerStats = this.skillsService.combatStats();
+      const manaRegen = 3 + Math.floor((playerStats.intelligence || 0) / 5);
       this.playerMana.update((mana) => Math.min(this.playerMaxMana(), mana + manaRegen));
+
+      // HP-Regeneration: skaliert mit Vitalität (+0.5/Punkt, siehe SkillsService.
+      // applyAttributeScaling), erst hier beim tatsächlichen Anwenden abgerundet.
+      const hpRegen = Math.floor(playerStats['hp-regeneration'] ?? 0);
+      if (hpRegen > 0) {
+        this.playerHp.update((hp) => Math.min(this.playerMaxHp(), hp + hpRegen));
+      }
 
       if (this.monsterHp() <= 0) this.handleFightEnd(true);
     }

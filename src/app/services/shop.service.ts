@@ -3,6 +3,7 @@ import { UtilityService } from './utility.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
 import { PersonalItemsService } from './personal-items.service';
+import { SkillsService } from './skills.service';
 import { getSellPrice } from '../utils/item-display.util';
 
 // ✨ Magie-Laden: Necklace + Ring (Tier 1-5)
@@ -52,6 +53,38 @@ import glovesTier3 from '../../../public/item-data/equipment/gloves/gloves_tier3
 import glovesTier4 from '../../../public/item-data/equipment/gloves/gloves_tier4.json';
 import glovesTier5 from '../../../public/item-data/equipment/gloves/gloves_tier5.json';
 
+// ✨ Skill-Shop (Magie-Laden): 6 Kategorien x Tier 1-5, je 1 Spell pro Tier.
+import firespellsTier1 from '../../../public/item-data/skills/magic/fire/firespells_tier1.json';
+import firespellsTier2 from '../../../public/item-data/skills/magic/fire/firespells_tier2.json';
+import firespellsTier3 from '../../../public/item-data/skills/magic/fire/firespells_tier3.json';
+import firespellsTier4 from '../../../public/item-data/skills/magic/fire/firespells_tier4.json';
+import firespellsTier5 from '../../../public/item-data/skills/magic/fire/firespells_tier5.json';
+import coldspellsTier1 from '../../../public/item-data/skills/magic/cold/coldspells_tier1.json';
+import coldspellsTier2 from '../../../public/item-data/skills/magic/cold/coldspells_tier2.json';
+import coldspellsTier3 from '../../../public/item-data/skills/magic/cold/coldspells_tier3.json';
+import coldspellsTier4 from '../../../public/item-data/skills/magic/cold/coldspells_tier4.json';
+import coldspellsTier5 from '../../../public/item-data/skills/magic/cold/coldspells_tier5.json';
+import lightningspellsTier1 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier1.json';
+import lightningspellsTier2 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier2.json';
+import lightningspellsTier3 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier3.json';
+import lightningspellsTier4 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier4.json';
+import lightningspellsTier5 from '../../../public/item-data/skills/magic/lightning/lightningspells_tier5.json';
+import chaosspellsTier1 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier1.json';
+import chaosspellsTier2 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier2.json';
+import chaosspellsTier3 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier3.json';
+import chaosspellsTier4 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier4.json';
+import chaosspellsTier5 from '../../../public/item-data/skills/magic/chaos/chaosspells_tier5.json';
+import physicalspellsTier1 from '../../../public/item-data/skills/physical/physicalspells_tier1.json';
+import physicalspellsTier2 from '../../../public/item-data/skills/physical/physicalspells_tier2.json';
+import physicalspellsTier3 from '../../../public/item-data/skills/physical/physicalspells_tier3.json';
+import physicalspellsTier4 from '../../../public/item-data/skills/physical/physicalspells_tier4.json';
+import physicalspellsTier5 from '../../../public/item-data/skills/physical/physicalspells_tier5.json';
+import healspellsTier1 from '../../../public/item-data/skills/heal/healspells_tier1.json';
+import healspellsTier2 from '../../../public/item-data/skills/heal/healspells_tier2.json';
+import healspellsTier3 from '../../../public/item-data/skills/heal/healspells_tier3.json';
+import healspellsTier4 from '../../../public/item-data/skills/heal/healspells_tier4.json';
+import healspellsTier5 from '../../../public/item-data/skills/heal/healspells_tier5.json';
+
 // Aufwerte-Materialien nach Typ getrennt: Item-Schleifpapier gehört zum
 // Gemischtwaren-Laden (physische Waffen), Item-UpgradeCreme zum Magie-Laden
 // (magische Waffen) — siehe WeaponUpgradeService.requiredMaterialType.
@@ -86,13 +119,30 @@ const magicHigherTierPool: any[] = [
   ...upgradeCremeMaterials,
 ];
 
+// ✨ Skill-Shop-Pool: Tier-1-Spells aller 6 Kategorien vs. Tier 2-5.
+const skillsTier1Pool: any[] = [
+  ...firespellsTier1, ...coldspellsTier1, ...lightningspellsTier1,
+  ...chaosspellsTier1, ...physicalspellsTier1, ...healspellsTier1,
+];
+const skillsHigherTierPool: any[] = [
+  ...firespellsTier2, ...firespellsTier3, ...firespellsTier4, ...firespellsTier5,
+  ...coldspellsTier2, ...coldspellsTier3, ...coldspellsTier4, ...coldspellsTier5,
+  ...lightningspellsTier2, ...lightningspellsTier3, ...lightningspellsTier4, ...lightningspellsTier5,
+  ...chaosspellsTier2, ...chaosspellsTier3, ...chaosspellsTier4, ...chaosspellsTier5,
+  ...physicalspellsTier2, ...physicalspellsTier3, ...physicalspellsTier4, ...physicalspellsTier5,
+  ...healspellsTier2, ...healspellsTier3, ...healspellsTier4, ...healspellsTier5,
+];
+
 interface AllShopsData {
   magic: any[];
   smither: any[];
   'general': any[];
+  skills: any[];
 }
 
-// Auf 3 feste Shop-Typen reduziert
+// Auf 3 feste Item-Shop-Typen reduziert + der separat behandelte Skill-Shop
+// (kein ShopType-Member, weil er nicht über die Item-Info-Card/Inventar
+// läuft, sondern Spells direkt in den SkillsService "lernt" — siehe unten).
 export type ShopType = 'magic' | 'smither' | 'general';
 
 /**
@@ -109,16 +159,22 @@ export class ShopService {
   private walletService = inject(WalletService);
   private inventarService = inject(InventarService);
   private personalItemsService = inject(PersonalItemsService);
+  private skillsService = inject(SkillsService);
 
-  // Die 3 reaktiven Shop-Signals
+  // Die 3 reaktiven Item-Shop-Signals
   private magicShopItems = signal<any[]>([]);
-  private smitherShopItems = signal<any[]>([]);      
-  private generalSuppliesShopItems = signal<any[]>([]);   
+  private smitherShopItems = signal<any[]>([]);
+  private generalSuppliesShopItems = signal<any[]>([]);
 
   // Computed Properties für deine UI-Komponenten
   public currentMagicItems = computed(() => this.magicShopItems());
   public currentSmitherItems = computed(() => this.smitherShopItems());
   public currentGeneralSuppliesItems = computed(() => this.generalSuppliesShopItems());
+
+  // ✨ Skill-Shop: 3 zufällige Spells im Angebot (eigener Kauf-Flow, siehe buySkill()).
+  private skillShopItems = signal<any[]>([]);
+  public currentSkillShopItems = computed(() => this.skillShopItems());
+  public skillShopPanelShow = signal<boolean>(false);
 
   private activeCharId: string | null = null;
 
@@ -153,6 +209,7 @@ export class ShopService {
       this.magicShopItems.set(shopsData.magic || []);
       this.smitherShopItems.set(shopsData.smither || []);
       this.generalSuppliesShopItems.set(shopsData['general'] || []);
+      this.skillShopItems.set(shopsData.skills || []);
     } else {
       this.rerollAllShopsAtEndOfRun();
     }
@@ -299,6 +356,55 @@ export class ShopService {
     return true;
   }
 
+  /** Öffnet den Skill-Shop (3 zufällige Spells zum Erlernen). */
+  public openSkillShop(): void {
+    this.skillShopPanelShow.set(true);
+  }
+
+  /** Schließt den Skill-Shop. */
+  public closeSkillShop(): void {
+    this.skillShopPanelShow.set(false);
+  }
+
+  /**
+   * Kauft/lernt einen Spell aus dem Skill-Shop-Angebot. Anders als
+   * buyCurrentlySelectedItem() landet das Ergebnis nicht im Inventar,
+   * sondern direkt in SkillsService.updateSpells('learn', ...).
+   *
+   * @param index Platz im skillShopItems-Array.
+   * @returns true, wenn der Kauf erfolgreich war.
+   */
+  public buySkill(index: number): boolean {
+    const currentItems = [...this.skillShopItems()];
+    const spell = currentItems[index];
+
+    if (!spell || spell.isSold || !spell.price) {
+      console.warn('❌ Dieser Spell existiert nicht oder wurde bereits verkauft!');
+      return false;
+    }
+
+    const alreadyKnown = this.skillsService.spells().some((s: any) => s.id === spell.id);
+    if (alreadyKnown) {
+      console.warn(`❌ "${spell.name}" ist bereits erlernt!`);
+      return false;
+    }
+
+    const hasEnoughGold = this.walletService.spendGold(spell.price);
+    if (!hasEnoughGold) {
+      console.error('❌ Nicht genug Gold für diesen Spell!');
+      return false;
+    }
+
+    this.skillsService.updateSpells('learn', spell);
+
+    currentItems[index] = { isSold: true };
+    this.skillShopItems.set(currentItems);
+    this.saveAllShopsToLocalStorage();
+
+    console.log(`📖 *Spell "${spell.name}" erfolgreich gelernt!*`);
+    return true;
+  }
+
   /** Anzahl der Plätze im aktuell für die Info-Card aktiven Shop (für die Pfeil-Navigation). */
   public getActiveShopItemCount(): number {
     const shopType = this.activeShopType();
@@ -392,14 +498,16 @@ export class ShopService {
     const combinedShopsData: AllShopsData = {
       magic: this.magicShopItems(),
       smither: this.smitherShopItems(),
-      'general': this.generalSuppliesShopItems()
+      'general': this.generalSuppliesShopItems(),
+      skills: this.skillShopItems(),
     };
 
     localStorage.setItem(`${this.activeCharId}_shops`, JSON.stringify(combinedShopsData));
   }
 
   /**
-   * Generiert das Angebot für die 3 neuen Shops
+   * Generiert das Angebot für die 3 Item-Shops + den Skill-Shop (3 Spells,
+   * davon garantiert 1 Tier 2+).
    */
   public rerollAllShopsAtEndOfRun() {
     this.magicShopItems.set(
@@ -410,6 +518,9 @@ export class ShopService {
     );
     this.generalSuppliesShopItems.set(
       this.generateShopSelection(generalTier1Pool, generalHigherTierPool, 5, 2),
+    );
+    this.skillShopItems.set(
+      this.generateShopSelection(skillsTier1Pool, skillsHigherTierPool, 3, 1),
     );
 
     this.saveAllShopsToLocalStorage();

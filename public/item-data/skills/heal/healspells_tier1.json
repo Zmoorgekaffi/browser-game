@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heal_01",
+    "name": "Minderwertige Heilung",
+    "description": "Schließt kleinere Wunden notdürftig.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 15,
+    "effectType": "HEAL",
+    "effectValues": {
+      "value": 25
+    },
+    "resolvePoints": 2,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 8
+      }
+    ]
+  }
+]

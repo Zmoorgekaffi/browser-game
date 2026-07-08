@@ -1,0 +1,26 @@
+[
+  {
+    "id": "strike_02",
+    "name": "Wirbelhieb",
+    "description": "Eine schnelle Drehung trifft den Gegner aus mehreren Winkeln.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 22,
+    "effectType": "PHYSICAL_DAMAGE",
+    "effectValues": {
+      "value": 48
+    },
+    "resolvePoints": 3,
+    "requiredWeaponType": "schnitt",
+    "requirements": [
+      {
+        "stat": "strength",
+        "value": 20
+      },
+      {
+        "stat": "dexterity",
+        "value": 10
+      }
+    ]
+  }
+]

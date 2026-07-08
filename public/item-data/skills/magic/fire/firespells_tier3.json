@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_fire_04",
+    "name": "Flammenwand",
+    "description": "Eine Wand aus loderndem Feuer schlägt dem Gegner entgegen.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 48,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "fire",
+      "value": 72
+    },
+    "resolvePoints": 4,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 35
+      }
+    ]
+  }
+]

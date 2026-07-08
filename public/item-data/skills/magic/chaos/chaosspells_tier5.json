@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spell_chaos_01",
+    "name": "Chaos-Kollaps",
+    "description": "Reines Chaos bricht über den Gegner herein und zerreißt ihn.",
+    "tier": "5",
+    "price": 1500,
+    "manaCost": 110,
+    "effectType": "ELEMENTAL_DAMAGE",
+    "effectValues": {
+      "element": "chaos",
+      "value": 180
+    },
+    "resolvePoints": 6,
+    "requiredWeaponType": "magie",
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 90
+      }
+    ]
+  }
+]
