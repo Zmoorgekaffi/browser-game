@@ -1,0 +1,85 @@
+<div
+  class="summary-scene-container w-full h-full relative flex items-center justify-center p-8 text-white"
+  [class.bg-black]="!isDeath"
+  [class.bg-red-950]="isDeath"
+>
+  <div class="w-full max-w-[640px] max-h-full overflow-y-auto bg-[rgba(15,15,15,0.92)] border rounded-lg p-8 flex flex-col gap-6"
+       [class.border-white/10]="!isDeath"
+       [class.border-red-500/40]="isDeath"
+  >
+    <div class="flex flex-col gap-2 text-center">
+      @if (isDeath) {
+        <h2 class="text-3xl font-bold text-red-400">Niederlage</h2>
+        <p class="text-zinc-300 leading-snug">
+          Du wurdest besiegt. Deine gesammelte Beute bleibt im Düsterwald zurück –
+          möge ein anderer Abenteurer sie mit mehr Glück finden.
+        </p>
+      } @else {
+        <h2 class="text-3xl font-bold text-amber-300">Zwischenstand</h2>
+        <p class="text-zinc-300 leading-snug">
+          Das hast du bisher auf deiner Reise gefunden. Bring es sicher ins Dorf zurück!
+        </p>
+      }
+    </div>
+
+    <!-- 💰 Gold -->
+    <div class="flex items-center justify-between bg-black/40 border border-white/10 rounded-md px-4 py-3">
+      <span class="text-sm text-zinc-400 uppercase tracking-wide">Gold</span>
+      <span class="flex items-baseline gap-2">
+        <span class="text-xl font-mono font-semibold text-yellow-300">{{ totalGold() }}</span>
+        @if (!isDeath && newGold() > 0) {
+          <span class="text-xs font-mono text-emerald-400">+{{ newGold() }} neu</span>
+        }
+      </span>
+    </div>
+
+    <!-- 🎒 Items -->
+    <div class="flex flex-col gap-2">
+      <span class="text-sm text-zinc-400 uppercase tracking-wide">Gegenstände ({{ totalItems().length }})</span>
+
+      @if (totalItems().length === 0) {
+        <div class="text-zinc-500 text-sm text-center py-6">
+          Bisher noch nichts gefunden.
+        </div>
+      } @else {
+        <div class="grid grid-cols-4 gap-3 max-h-[280px] overflow-y-auto pr-1">
+          @for (item of totalItems(); track $index) {
+            <div
+              class="relative flex flex-col items-center gap-1 bg-black/40 border rounded-md p-2"
+              [class.border-emerald-400]="!isDeath && isNewItem(item)"
+              [class.border-white/10]="isDeath || !isNewItem(item)"
+            >
+              @if (!isDeath && isNewItem(item)) {
+                <span class="absolute -top-2 -right-2 text-[9px] font-bold bg-emerald-500 text-black rounded-full px-1.5 py-0.5">
+                  NEU
+                </span>
+              }
+              <div class="w-12 h-12 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1">
+                <img [src]="item['img-path']" [alt]="item.name" class="w-full h-full object-contain" />
+              </div>
+              <span class="text-[10px] text-center leading-tight text-zinc-200">{{ item.name }}</span>
+              @if (getTier(item); as tier) {
+                <span class="text-[9px] text-zinc-500 font-mono">Tier {{ tier }}</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <button
+      (click)="onContinue()"
+      class="self-center mt-2 rounded-md border px-6 py-3 text-sm font-semibold cursor-pointer transition-colors"
+      [class.border-emerald-500]="!isDeath"
+      [class.bg-emerald-600]="!isDeath"
+      [class.bg-opacity-30]="!isDeath"
+      [class.hover:bg-opacity-50]="!isDeath"
+      [class.border-red-500]="isDeath"
+      [class.bg-red-600]="isDeath"
+      [class.bg-opacity-30]="isDeath"
+      [class.hover:bg-opacity-50]="isDeath"
+    >
+      {{ isDeath ? 'Zurück ins Dorf' : 'Weiterziehen →' }}
+    </button>
+  </div>
+</div>

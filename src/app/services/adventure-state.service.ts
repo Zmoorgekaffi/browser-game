@@ -70,6 +70,20 @@ export class AdventureStateService {
   // pendingRewards, nur dass Gold (anders als Items) sofort statt erst am Run-Ende gezahlt wird.
   goldEarnedThisRun: WritableSignal<number> = signal<number>(0);
 
+  // 📜 Zwischenstand-Fenster: läuft nach jedem erfolgreich abgeschlossenen Step
+  // (Kampf gewonnen, Loot eingesackt, Dialog beendet) UND bei Niederlage.
+  // 'step'  → normaler Zwischenstand, "Weiter" führt zum nächsten Step.
+  // 'death' → Niederlage, "Weiter" beendet den Run (failAdventure).
+  public summaryMode: WritableSignal<'step' | 'death' | null> = signal(null);
+  // Items/Gold, die seit dem LETZTEN Zwischenstand neu dazugekommen sind (fürs Hervorheben).
+  public summaryNewItems: WritableSignal<any[]> = signal<any[]>([]);
+  public summaryNewGold: WritableSignal<number> = signal<number>(0);
+
+  // Merkt sich den Stand von pendingRewards/goldEarnedThisRun beim letzten
+  // Zwischenstand, um beim nächsten den Diff ("neu seit letztem Mal") zu bilden.
+  private lastSummaryItemCount = 0;
+  private lastSummaryGold = 0;
+
   private hasAttemptedInitialLoad = true;
 
   constructor() {
@@ -105,6 +119,11 @@ export class AdventureStateService {
     this.level.set(null);
     this.pendingRewards.set([]); // 🎁 verworfen
     this.goldEarnedThisRun.set(0);
+    this.summaryMode.set(null);
+    this.summaryNewItems.set([]);
+    this.summaryNewGold.set(0);
+    this.lastSummaryItemCount = 0;
+    this.lastSummaryGold = 0;
     this.shopService.rerollAllShopsAtEndOfRun();
   }
 
@@ -168,6 +187,67 @@ export class AdventureStateService {
     this.currentStepIndex.update((idx) => idx + 1);
     this.saveAdventure();
     this.continueAdventure();
+  }
+
+  /**
+   * 📜 Zeigt den Zwischenstand nach einem erfolgreich abgeschlossenen Step
+   * (Kampf gewonnen, Loot eingesackt, Dialog beendet). Bildet den Diff zu
+   * pendingRewards/goldEarnedThisRun seit dem letzten Zwischenstand, damit
+   * die Summary-Scene zeigen kann, was gerade NEU dazugekommen ist.
+   *
+   * Ersetzt an den entsprechenden Stellen den direkten advanceToNextStep()-
+   * Aufruf — der eigentliche Step-Wechsel passiert erst, wenn der Spieler
+   * die Summary-Scene bestätigt (siehe acknowledgeSummary()).
+   */
+  public showStepSummary(): void {
+    const items = this.pendingRewards();
+    const gold = this.goldEarnedThisRun();
+
+    this.summaryNewItems.set(items.slice(this.lastSummaryItemCount));
+    this.summaryNewGold.set(gold - this.lastSummaryGold);
+
+    this.lastSummaryItemCount = items.length;
+    this.lastSummaryGold = gold;
+
+    this.summaryMode.set('step');
+
+    // 🛡️ Vor JEDER Navigation speichern: SceneContainerComponent lädt bei
+    // jedem Szenenwechsel den Adventure-State aus dem LocalStorage neu
+    // (siehe gameStateService.init()). Ist der zuletzt gespeicherte Stand
+    // veraltet (z.B. activeFight vom gerade beendeten Kampf), würde dieser
+    // Reload das frisch aufgeräumte In-Memory-Signal wieder überschreiben.
+    this.saveAdventure();
+    this.router.navigate(['/adventure/summary']);
+  }
+
+  /**
+   * 💀 Zeigt denselben Zwischenstand mit der Niederlage-Nachricht, BEVOR
+   * der Run über failAdventure() tatsächlich beendet wird (siehe
+   * acknowledgeSummary()) — Items/Gold sind an dieser Stelle noch nicht
+   * verworfen, die Summary-Scene zeigt also genau das, was verloren geht.
+   */
+  public showDeathSummary(): void {
+    this.summaryNewItems.set([]);
+    this.summaryNewGold.set(0);
+    this.summaryMode.set('death');
+    this.saveAdventure(); // 🛡️ siehe Kommentar in showStepSummary()
+    this.router.navigate(['/adventure/summary']);
+  }
+
+  /**
+   * Wird von der Summary-Scene beim Klick auf "Weiter" aufgerufen:
+   * bei 'step' geht's zum nächsten Step, bei 'death' wird der Run
+   * über failAdventure() beendet (Loot/Gold verworfen).
+   */
+  public acknowledgeSummary(): void {
+    const mode = this.summaryMode();
+    this.summaryMode.set(null);
+
+    if (mode === 'death') {
+      this.failAdventure();
+    } else {
+      this.advanceToNextStep();
+    }
   }
 
   /**
@@ -240,6 +320,8 @@ export class AdventureStateService {
     this.currentStepIndex.set(0);
     this.pendingRewards.set([]);
     this.goldEarnedThisRun.set(0);
+    this.lastSummaryItemCount = 0;
+    this.lastSummaryGold = 0;
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
     this.saveAdventure();
   }
@@ -313,6 +395,8 @@ export class AdventureStateService {
     this.activeFight.set(null);
     this.pendingRewards.set([]); // 🎁 frischer Run = leere Rewards
     this.goldEarnedThisRun.set(0);
+    this.lastSummaryItemCount = 0;
+    this.lastSummaryGold = 0;
     this.saveAdventure();
     this.router.navigate(['/adventure/intro']);
   }

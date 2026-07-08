@@ -436,8 +436,9 @@ export class FightService {
   }
 
   /**
-   * Beendet den Kampf: Bei Sieg geht's zum nächsten Step, bei Niederlage
-   * wird das komplette Abenteuer abgebrochen (failAdventure).
+   * Beendet den Kampf: Bei Sieg geht's zum Zwischenstand (danach nächster
+   * Step), bei Niederlage zum Zwischenstand mit Niederlage-Nachricht
+   * (danach wird das Abenteuer über failAdventure() abgebrochen).
    *
    * XP werden sofort bei Sieg vergeben (nicht erst am Ende des Abenteuers,
    * anders als Loot/Items) — daher hier und nicht im LootScene-Flow.
@@ -452,12 +453,39 @@ export class FightService {
       console.log('🏆 Sieg!');
       const expReward = defeatedMonster?.expReward ?? DEFAULT_MONSTER_EXP_REWARD;
       this.profileService.addExp(expReward);
+
+      // ⚠️ WICHTIG: activeFight VOR den Reward-Rolls nullen. recordRunGold()/
+      // addReward() speichern (saveAdventure()) sofort — würde activeFight erst
+      // danach genullt, persistiert dieser Save-Aufruf noch den besiegten Kampf
+      // (Monster-HP 0). Beim nächsten Szenenwechsel lädt SceneContainer den
+      // State aus dem LocalStorage neu und würde diesen toten Kampf zurück ins
+      // Signal holen — der nächste Kampf startet dann fälschlich als "Resume"
+      // mit 0 HP statt mit den vollen HP des neuen Monsters.
       this.adventureStateService.activeFight.set(null);
-      this.adventureStateService.advanceToNextStep();
+
+      // 🎁 Kampf-Beute: zufällig entweder Gold oder ein Item — exakt dieselben
+      // Roll-Methoden, die auch die Dialog-Encounters für ihre Belohnungen nutzen.
+      const area = this.adventureStateService.level();
+      if (area) {
+        if (Math.random() < 0.5) {
+          const gold = area.rollGoldReward();
+          this.adventureStateService.recordRunGold(gold);
+          console.log(`💰 Kampf-Beute: ${gold} Gold`);
+        } else {
+          const item = area.rollLoot();
+          if (item) {
+            this.adventureStateService.addReward(item);
+            console.log(`🎁 Kampf-Beute: ${item.name}`);
+          }
+        }
+      }
+
+      this.adventureStateService.showStepSummary();
     } else {
-      console.log('💀 Niederlage! Adventure wird beendet.');
-      // activeFight nicht extra nullen — failAdventure → clearAdventure macht das.
-      this.adventureStateService.failAdventure();
+      console.log('💀 Niederlage! Zeige Zwischenstand vor Adventure-Abbruch.');
+      // activeFight nicht extra nullen — failAdventure → clearAdventure macht das,
+      // sobald der Spieler den Zwischenstand bestätigt.
+      this.adventureStateService.showDeathSummary();
     }
   }
 }

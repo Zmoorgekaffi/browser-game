@@ -124,11 +124,11 @@ export class LootScene implements OnInit {
 
   /**
    * Wird gefeuert wenn der Spieler nach dem Loot weiterklickt.
-   * advanceToNextStep() ruft entweder die nächste Szene oder
-   * completeAdventure (wenn keine Steps mehr übrig sind).
+   * Zeigt erst den Zwischenstand (Fortschritts-Fenster), der beim
+   * Bestätigen dann advanceToNextStep() auslöst.
    */
   public onContinue(): void {
-    this.gameStateService.adventureStateService.advanceToNextStep();
+    this.gameStateService.adventureStateService.showStepSummary();
   }
 
   public getTier(item: any): number | null {

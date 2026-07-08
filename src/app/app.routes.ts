@@ -15,6 +15,7 @@ import { IntroScene } from './components/adventure_scenes/intro-scene/intro-scen
 import { FightScene } from './components/adventure_scenes/fight-scene/fight-scene';
 import { LootScene } from './components/adventure_scenes/loot-scene/loot-scene';
 import { DialogScene } from './components/adventure_scenes/dialog-scene/dialog-scene';
+import { SummaryScene } from './components/adventure_scenes/summary-scene/summary-scene';
 
 export const routes: Routes = [
   { path: 'village', component: VillageSceneComponent },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'adventure/dialog', component: DialogScene },
   { path: 'adventure/loot', component: LootScene },
   { path: 'adventure/fight', component: FightScene },
+  { path: 'adventure/summary', component: SummaryScene },
   { path: 'login', component: Login },
   { path: 'name-creation', component: NameCreation },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

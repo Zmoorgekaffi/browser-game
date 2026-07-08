@@ -219,9 +219,9 @@ export class DialogScene {
   // Weiterziehen zum nächsten Step
   // -----------------------------------------------------------------------
 
-  /** Schließt die Begegnung ab und wechselt zum nächsten Adventure-Step. */
+  /** Schließt die Begegnung ab und zeigt den Zwischenstand vor dem nächsten Adventure-Step. */
   public continueToNextStep(): void {
-    this.gameStateService.adventureStateService.advanceToNextStep();
+    this.gameStateService.adventureStateService.showStepSummary();
   }
 
   // -----------------------------------------------------------------------

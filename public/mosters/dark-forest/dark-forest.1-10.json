@@ -4,10 +4,10 @@
     "name": "Goblin",
     "fight-background": "imgs/areas/dark-forest/fight/background/dark-forest-fight-background.webp",
     "monster-frame": {
-      "top": "280px",
-      "left": "540px",
-      "width": "180px",
-      "height": "260px"
+      "top": "232px",
+      "left": "481px",
+      "width": "303px",
+      "height": "291px"
     },
     "intro-duration": 2500,
     "intro-path": "imgs/areas/dark-forest/monsters/goblin/intro/frame_0000.webp",
@@ -49,18 +49,18 @@
     "name": "Waldläufer-Kobold",
     "fight-background": "imgs/areas/dark-forest/fight/background/dark-forest-fight-background_2.webp.jpeg",
     "monster-frame": {
-      "top": "280px",
-      "left": "540px",
-      "width": "180px",
-      "height": "260px"
+      "top": "-72px",
+      "left": "231px",
+      "width": "800px",
+      "height": "800px"
     },
     "intro-duration": 2500,
-    "intro-path": "imgs/areas/dark-forest/monsters/goblin/intro/frame_0000.webp",
-    "intro-frameBatchCount": 29,
-    "idle-duration": 5000,
-    "idle-path": "imgs/areas/dark-forest/monsters/goblin/idle/frame_0000.webp",
-    "idle-frameBatchCount": 28,
-    "attack-duration": 2500,
+    "intro-path": "imgs/areas/dark-forest/monsters/kobold-waldlaeufer/intro/frame_0000.webp",
+    "intro-frameBatchCount": 49,
+    "idle-duration": 6000,
+    "idle-path": "imgs/areas/dark-forest/monsters/kobold-waldlaeufer/idle/frame_0000.webp",
+    "idle-frameBatchCount": 30,
+    "attack-duration": 5000,
     "attack-path": "imgs/areas/dark-forest/intro/frame_0001.webp",
     "attack-frameBatchCount": 24,
     "hp": 36,
@@ -94,10 +94,10 @@
     "name": "Wurzelhexe",
     "fight-background": "imgs/areas/dark-forest/fight/background/dark-forest-fight-background_2.webp.jpeg",
     "monster-frame": {
-      "top": "213px",
-      "left": "349px",
-      "width": "560px",
-      "height": "359px"
+      "top": "-19px",
+      "left": "257px",
+      "width": "770px",
+      "height": "691px"
     },
     "intro-duration": 2500,
     "intro-path": "imgs/areas/dark-forest/monsters/wurzelhexe/intro/frame_0000.webp",
