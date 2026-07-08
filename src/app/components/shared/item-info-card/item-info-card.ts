@@ -21,6 +21,7 @@ import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DE
 export class ItemInfoCard {
   show: Signal<boolean>;
   currentDisplayedItem: Signal<any>;
+  activeItemIndex: Signal<number | null>;
 
   // Injiziert die Referenz auf das HTML-Element dieser Komponente für GSAP
   private el = inject(ElementRef);
@@ -28,6 +29,7 @@ export class ItemInfoCard {
   constructor(public gameStateService: GameStateService) {
     this.show = this.gameStateService.shop.itemInfoCardShow;
     this.currentDisplayedItem = this.gameStateService.shop.currentDisplayedItem;
+    this.activeItemIndex = this.gameStateService.shop.activeItemIndex;
 
     // Reaktiver Effekt: Springt an, sobald sich der Wert von 'show' ändert
     effect(() => {
@@ -94,6 +96,16 @@ export class ItemInfoCard {
   /** Triggert den Kauf über die im Service gemerkten Variablen. */
   buyItem() {
     this.gameStateService.shop.buyCurrentlySelectedItem();
+  }
+
+  /** Blättert zum nächsten (+1) oder vorherigen (-1) Item desselben Shops. */
+  cycleItem(direction: 1 | -1): void {
+    this.gameStateService.shop.cycleItem(direction);
+  }
+
+  /** Anzahl der Plätze im aktuell aktiven Shop (5 bei Schmied/Gemischtwaren, 6 beim Magie-Laden). */
+  shopItemCount(): number {
+    return this.gameStateService.shop.getActiveShopItemCount();
   }
 
   public get tier(): number | null {

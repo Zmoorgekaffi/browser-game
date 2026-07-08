@@ -40,6 +40,9 @@ export class CraftingPanel {
   public ghostX = 0;
   public ghostY = 0;
 
+  /** Steuert das Info-Popup mit den Crafting-Regeln (Klick auf den "i"-Button). */
+  public showInfoPopup = signal<boolean>(false);
+
   constructor() {
     effect(() => {
       if (this.show()) {
@@ -167,5 +170,13 @@ export class CraftingPanel {
 
   public closeResult(): void {
     this.gameStateService.crafting.craftResultItem.set(null);
+  }
+
+  public openInfo(): void {
+    this.showInfoPopup.set(true);
+  }
+
+  public closeInfo(): void {
+    this.showInfoPopup.set(false);
   }
 }

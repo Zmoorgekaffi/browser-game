@@ -124,28 +124,31 @@
           </div>
         }
 
-        <button
-          (click)="craft()"
-          [disabled]="!canCraft"
-          class="rounded-md border px-3 py-2 text-sm transition-colors text-white"
-          [class.border-emerald-500]="canCraft"
-          [class.bg-emerald-600]="canCraft"
-          [class.bg-opacity-30]="canCraft"
-          [class.hover:bg-opacity-50]="canCraft"
-          [class.cursor-pointer]="canCraft"
-          [class.border-white]="!canCraft"
-          [class.border-opacity-10]="!canCraft"
-          [class.opacity-40]="!canCraft"
-          [class.cursor-not-allowed]="!canCraft"
-        >
-          Craften
-        </button>
+        <div class="flex gap-2">
+          <button
+            (click)="craft()"
+            [disabled]="!canCraft"
+            class="flex-1 rounded-md border px-3 py-2 text-sm transition-colors text-white"
+            [class.border-emerald-500]="canCraft"
+            [class.bg-emerald-600]="canCraft"
+            [class.bg-opacity-30]="canCraft"
+            [class.hover:bg-opacity-50]="canCraft"
+            [class.cursor-pointer]="canCraft"
+            [class.border-white]="!canCraft"
+            [class.border-opacity-10]="!canCraft"
+            [class.opacity-40]="!canCraft"
+            [class.cursor-not-allowed]="!canCraft"
+          >
+            Craften
+          </button>
 
-        <div class="bg-black/40 border border-white/10 rounded-md p-3 text-[11px] text-zinc-300 leading-snug flex flex-col gap-1.5">
-          <p>Ziehe 3 Items aus deinem Inventar in die Kästchen. Das mittlere Kästchen ist die <strong>Basis</strong> des neuen Items.</p>
-          <p>Beim Craften werden alle Stats der 3 Items gesammelt und 6 davon zufällig auf das neue Item übertragen.</p>
-          <p>Name, Bild, Slot und Preis des neuen Items entsprechen dem Basis-Item. Alle 3 eingesetzten Items werden dabei verbraucht.</p>
-          <p>Gecraftete Items sind <span class="text-purple-300">seelengebunden</span> (soulbound) und können nicht erneut verwendet werden.</p>
+          <button
+            (click)="openInfo()"
+            class="rounded-md border border-white/10 w-9 h-9 shrink-0 flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:bg-white/10 transition-colors"
+            aria-label="Crafting-Infos anzeigen"
+          >
+            i
+          </button>
         </div>
       </div>
 
@@ -223,6 +226,33 @@
           style="transform: translate(-50%, -50%);"
         />
       }
+    </div>
+  </div>
+}
+
+@if (showInfoPopup()) {
+  <div class="fixed inset-0 z-[10000] flex items-center justify-center bg-black/70" (click)="closeInfo()">
+    <div
+      class="bg-black/90 border border-white/10 rounded-lg p-6 w-[380px] flex flex-col gap-3"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="flex justify-between items-baseline gap-2">
+        <h3 class="text-white font-bold text-lg">Crafting-Infos</h3>
+      </div>
+
+      <div class="bg-black/40 border border-white/10 rounded-md p-3 text-[11px] text-zinc-300 leading-snug flex flex-col gap-1.5">
+        <p>Ziehe 3 Items aus deinem Inventar in die Kästchen. Das mittlere Kästchen ist die <strong>Basis</strong> des neuen Items.</p>
+        <p>Beim Craften werden alle Stats der 3 Items gesammelt und 6 davon zufällig auf das neue Item übertragen.</p>
+        <p>Name, Bild, Slot und Preis des neuen Items entsprechen dem Basis-Item. Alle 3 eingesetzten Items werden dabei verbraucht.</p>
+        <p>Gecraftete Items sind <span class="text-purple-300">seelengebunden</span> (soulbound) und können nicht erneut verwendet werden.</p>
+      </div>
+
+      <button
+        (click)="closeInfo()"
+        class="mt-2 rounded-md border border-white/10 px-3 py-2 text-sm cursor-pointer hover:bg-white/10 transition-colors text-white self-end"
+      >
+        Verstanden
+      </button>
     </div>
   </div>
 }

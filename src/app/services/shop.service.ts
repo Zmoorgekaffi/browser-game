@@ -177,6 +177,36 @@ export class ShopService {
   }
 
   /**
+   * Blättert von der offenen Item-Info-Card aus zum nächsten/vorherigen
+   * Item desselben Shops (wrap-around: nach dem letzten kommt wieder das
+   * erste). Bereits verkaufte Plätze werden dabei übersprungen.
+   *
+   * @param direction +1 für vorwärts (rechter Pfeil), -1 für rückwärts.
+   */
+  public cycleItem(direction: 1 | -1): void {
+    const shopType = this.activeShopType();
+    const currentIndex = this.activeItemIndex();
+    if (shopType === null || currentIndex === null) return;
+
+    const shopSignal = this.getSignalByShopType(shopType);
+    if (!shopSignal) return;
+
+    const items = shopSignal();
+    const count = items.length;
+    if (count === 0) return;
+
+    for (let step = 1; step <= count; step++) {
+      const nextIndex = ((currentIndex + direction * step) % count + count) % count;
+      const nextItem = items[nextIndex];
+      if (nextItem && !nextItem.isSold) {
+        this.activeItemIndex.set(nextIndex);
+        this.currentDisplayedItem.set(nextItem);
+        return;
+      }
+    }
+  }
+
+  /**
    * ZENTRALE KAUF-LOGIK: prüft Verfügbarkeit und Gold, überführt das Item
    * ins Inventar, markiert den Shop-Platz als verkauft und schließt die Card.
    *
@@ -267,6 +297,13 @@ export class ShopService {
 
     console.log(`💰 Item verkauft für ${getSellPrice(item.price)} Gold!`);
     return true;
+  }
+
+  /** Anzahl der Plätze im aktuell für die Info-Card aktiven Shop (für die Pfeil-Navigation). */
+  public getActiveShopItemCount(): number {
+    const shopType = this.activeShopType();
+    if (shopType === null) return 0;
+    return this.getSignalByShopType(shopType)?.().length ?? 0;
   }
 
   /** Liefert das passende Item-Signal zum Shop-Typ. */

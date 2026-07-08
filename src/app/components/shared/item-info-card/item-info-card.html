@@ -1,6 +1,6 @@
 @if (show()) {
   <div
-    class="z-[3] card-container w-full flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
+    class="z-30 card-container w-full flex justify-center items-start p-8 absolute left-0 top-0 right-0 h-[27rem] bg-gradient-to-b from-white/70 from-[60%] to-transparent"
   >
     <div
       class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-[50%]"
@@ -70,6 +70,27 @@
             Kaufen
           </button>
         }
+      </div>
+
+      <!-- Navigation: zum nächsten/vorherigen Item desselben Shops blättern -->
+      <div class="w-full flex justify-center items-center gap-4 pt-1">
+        <button
+          (click)="cycleItem(-1)"
+          class="rounded-full border border-black/40 w-7 h-7 flex items-center justify-center leading-none cursor-pointer hover:bg-[rgba(0,0,0,0.1)]"
+          aria-label="Vorheriges Item"
+        >
+          ←
+        </button>
+        <span class="text-[11px] font-mono text-zinc-600">
+          {{ (activeItemIndex() ?? 0) + 1 }} / {{ shopItemCount() }}
+        </span>
+        <button
+          (click)="cycleItem(1)"
+          class="rounded-full border border-black/40 w-7 h-7 flex items-center justify-center leading-none cursor-pointer hover:bg-[rgba(0,0,0,0.1)]"
+          aria-label="Nächstes Item"
+        >
+          →
+        </button>
       </div>
     </div>
   </div>
