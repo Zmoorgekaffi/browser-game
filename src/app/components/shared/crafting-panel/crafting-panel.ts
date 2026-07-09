@@ -5,7 +5,8 @@ import { GameStateService } from '../../../services/game-state.service';
 import { ScreenSizingService } from '../../../services/screen-sizing.service';
 import { DeviceService } from '../../../services/device.service';
 import { getItemTier } from '../../../utils/item-display.util';
-import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS, getElementLabel } from '../../../utils/stat-color.util';
+import { getItemRequirements, formatRequirements } from '../../../utils/item-requirements.util';
 
 /**
  * @component CraftingPanel
@@ -71,6 +72,10 @@ export class CraftingPanel {
     return this.gameStateService.crafting.canCraft;
   }
 
+  public get craftBlockReason(): string | null {
+    return this.gameStateService.crafting.craftBlockReason;
+  }
+
   public getTier(item: any): number | null {
     return getItemTier(item);
   }
@@ -79,6 +84,9 @@ export class CraftingPanel {
   public getStatValue = getStatValue;
   public hasPositiveStats = hasPositiveStats;
   public hasNegativeStats = hasNegativeStats;
+  public getItemRequirements = getItemRequirements;
+  public formatRequirements = formatRequirements;
+  public getElementLabel = getElementLabel;
 
   public statColor(key: string): string {
     return getStatColor(key, 'dark');

@@ -22,6 +22,20 @@
       <p class="text-zinc-400 text-xs leading-tight mt-0.5">
         {{ itemSignal()?.description }}
       </p>
+      @if (itemSignal()?.['weapon-type']) {
+        <p class="text-[11px] text-zinc-500 font-mono mt-0.5">
+          {{ itemSignal()?.['weapon-type'] }}
+          @if (itemSignal()?.['magic-damage-type']; as element) {
+            ({{ getElementLabel(element) }})
+          }
+          · {{ itemSignal()?.hands }}H
+        </p>
+      }
+      @if (getItemRequirements(itemSignal()).length) {
+        <p class="text-[11px] text-zinc-500 font-mono mt-0.5">
+          Benötigt: {{ formatRequirements(itemSignal()) }}
+        </p>
+      }
     </div>
   </div>
 

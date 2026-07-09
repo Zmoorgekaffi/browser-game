@@ -252,7 +252,9 @@ export class AdventureStateService {
 
   /**
    * Navigiert zur Szene des aktuellen Steps — oder schließt das Abenteuer
-   * ab, wenn keine Steps mehr übrig sind. Vergibt pro Aufruf 10 Gold.
+   * ab, wenn keine Steps mehr übrig sind. Gold gibt es nur noch über
+   * Encounter- bzw. Loot-Belohnungen (recordRunGold-Aufrufe in fight.service
+   * und dialog-scene), kein fester Betrag mehr pro Step.
    */
   public continueAdventure(): void {
     const currentIndex = this.currentStepIndex();
@@ -282,8 +284,6 @@ export class AdventureStateService {
     } else {
       console.warn('[continueAdventure] Unbekannter Step-Typ:', currentStep.type);
     }
-
-    this.recordRunGold(10);
   }
 
   /**

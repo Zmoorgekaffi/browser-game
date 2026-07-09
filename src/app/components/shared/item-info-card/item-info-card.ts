@@ -3,7 +3,8 @@ import { GameStateService } from '../../../services/game-state.service';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap'; // <-- GSAP Import
 import { getItemTier } from '../../../utils/item-display.util';
-import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS, getElementLabel } from '../../../utils/stat-color.util';
+import { getItemRequirements, formatRequirements } from '../../../utils/item-requirements.util';
 
 /**
  * @component ItemInfoCard
@@ -116,6 +117,9 @@ export class ItemInfoCard {
   public getStatValue = getStatValue;
   public hasPositiveStats = hasPositiveStats;
   public hasNegativeStats = hasNegativeStats;
+  public getItemRequirements = getItemRequirements;
+  public formatRequirements = formatRequirements;
+  public getElementLabel = getElementLabel;
 
   public statColor(key: string): string {
     return getStatColor(key, 'light');

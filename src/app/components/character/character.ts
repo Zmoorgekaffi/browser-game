@@ -145,5 +145,9 @@ export class Character {
     { key: 'resistances.cold', name: 'Kälteresistenz' },
     { key: 'resistances.lightning', name: 'Blitzresistenz' },
     { key: 'resistances.chaos', name: 'Chaosresistenz' },
+    { key: 'magicDamageFire', name: 'Feuerschaden' },
+    { key: 'magicDamageCold', name: 'Kälteschaden' },
+    { key: 'magicDamageLightning', name: 'Blitzschaden' },
+    { key: 'chaosDamage', name: 'Chaosschaden' },
   ];
 }

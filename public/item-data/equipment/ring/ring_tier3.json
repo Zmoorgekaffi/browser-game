@@ -22,6 +22,9 @@
       "crit-chance": 1,
       "crit-damage": 0,
       "chaosDamage": 0,
+      "magic-damage-fire": 0,
+      "magic-damage-cold": 0,
+      "magic-damage-lightning": 0,
       "charisma": 2,
       "resistances": {
         "fire": 12,
@@ -54,6 +57,9 @@
       "crit-chance": 4,
       "crit-damage": 2,
       "chaosDamage": 0,
+      "magic-damage-fire": 0,
+      "magic-damage-cold": 0,
+      "magic-damage-lightning": 0,
       "charisma": 0,
       "resistances": {
         "fire": 1,
@@ -86,6 +92,9 @@
       "crit-chance": 0,
       "crit-damage": 0,
       "chaosDamage": 0,
+      "magic-damage-fire": 0,
+      "magic-damage-cold": 0,
+      "magic-damage-lightning": 0,
       "charisma": 2,
       "resistances": {
         "fire": 10,
@@ -118,6 +127,9 @@
       "crit-chance": 2,
       "crit-damage": 1,
       "chaosDamage": 0,
+      "magic-damage-fire": 0,
+      "magic-damage-cold": 0,
+      "magic-damage-lightning": 0,
       "charisma": -1,
       "resistances": {
         "fire": 4,
@@ -150,6 +162,9 @@
       "crit-chance": 3,
       "crit-damage": 12,
       "chaosDamage": 11,
+      "magic-damage-fire": 0,
+      "magic-damage-cold": 0,
+      "magic-damage-lightning": 0,
       "charisma": -4,
       "resistances": {
         "fire": -10,

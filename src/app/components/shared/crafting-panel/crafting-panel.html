@@ -43,6 +43,18 @@
                         <span class="text-zinc-300 font-mono shrink-0">Tier {{ tier }}</span>
                       }
                     </div>
+                    @if (slot['weapon-type'] || getItemRequirements(slot).length) {
+                      <div class="text-zinc-400 font-mono mb-1">
+                        @if (slot['weapon-type']) {
+                          <div>
+                            {{ slot['weapon-type'] }}@if (slot['magic-damage-type']; as element) { ({{ getElementLabel(element) }}) } · {{ slot.hands }}H
+                          </div>
+                        }
+                        @if (getItemRequirements(slot).length) {
+                          <div>Benötigt: {{ formatRequirements(slot) }}</div>
+                        }
+                      </div>
+                    }
                     <div class="flex flex-col gap-1">
                       @if (hasPositiveStats(slot.stats)) {
                         <div>
@@ -92,6 +104,18 @@
                       <span class="text-zinc-300 font-mono shrink-0">Tier {{ tier }}</span>
                     }
                   </div>
+                  @if (slot['weapon-type'] || getItemRequirements(slot).length) {
+                    <div class="text-zinc-400 font-mono mb-1">
+                      @if (slot['weapon-type']) {
+                        <div>
+                          {{ slot['weapon-type'] }}@if (slot['magic-damage-type']; as element) { ({{ getElementLabel(element) }}) } · {{ slot.hands }}H
+                        </div>
+                      }
+                      @if (getItemRequirements(slot).length) {
+                        <div>Benötigt: {{ formatRequirements(slot) }}</div>
+                      }
+                    </div>
+                  }
                   <div class="flex flex-col gap-1">
                     @if (hasPositiveStats(slot.stats)) {
                       <div>
@@ -122,6 +146,10 @@
               }
             }
           </div>
+        }
+
+        @if (craftBlockReason) {
+          <p class="text-[11px] text-red-400 -mb-2">{{ craftBlockReason }}</p>
         }
 
         <div class="flex gap-2">
@@ -183,6 +211,16 @@
                 }
               </div>
               <p class="text-zinc-400 text-xs leading-tight mt-0.5">{{ entry.item.description }}</p>
+              @if (entry.item['weapon-type']) {
+                <p class="text-[11px] text-zinc-500 font-mono mt-0.5">
+                  {{ entry.item['weapon-type'] }}@if (entry.item['magic-damage-type']; as element) { ({{ getElementLabel(element) }}) } · {{ entry.item.hands }}H
+                </p>
+              }
+              @if (getItemRequirements(entry.item).length) {
+                <p class="text-[11px] text-zinc-500 font-mono mt-0.5">
+                  Benötigt: {{ formatRequirements(entry.item) }}
+                </p>
+              }
               <div class="flex flex-col gap-1 text-[11px] mt-1">
                 @if (hasPositiveStats(entry.item.stats)) {
                   <div>
@@ -244,6 +282,8 @@
         <p>Ziehe 3 Items aus deinem Inventar in die Kästchen. Das mittlere Kästchen ist die <strong>Basis</strong> des neuen Items.</p>
         <p>Beim Craften werden alle Stats der 3 Items gesammelt und 6 davon zufällig auf das neue Item übertragen.</p>
         <p>Name, Bild, Slot und Preis des neuen Items entsprechen dem Basis-Item. Alle 3 eingesetzten Items werden dabei verbraucht.</p>
+        <p>Rüstung kann nur mit Rüstung kombiniert werden. Waffen nur mit Waffen derselben Schadensart (z. B. stumpf mit stumpf).</p>
+        <p>Anforderungen: Hat eines der 3 Items die meisten Anforderungs-Stats (z. B. 2), bekommt das neue Item genau so viele — mit den höchsten Anforderungswerten aller 3 Items, verteilt auf zufällig gewählte Stats.</p>
         <p>Gecraftete Items sind <span class="text-purple-300">seelengebunden</span> (soulbound) und können nicht erneut verwendet werden.</p>
       </div>
 
@@ -275,6 +315,15 @@
       </div>
 
       <p class="text-zinc-400 text-sm leading-tight">{{ result.description }}</p>
+
+      @if (result['weapon-type']) {
+        <p class="text-[11px] text-zinc-400 font-mono">
+          {{ result['weapon-type'] }}@if (result['magic-damage-type']; as element) { ({{ getElementLabel(element) }}) } · {{ result.hands }}H
+        </p>
+      }
+      @if (getItemRequirements(result).length) {
+        <p class="text-[11px] text-zinc-400 font-mono">Benötigt: {{ formatRequirements(result) }}</p>
+      }
 
       <div class="flex flex-col gap-1 text-xs border-t border-white/10 pt-2">
         @if (hasPositiveStats(result.stats)) {

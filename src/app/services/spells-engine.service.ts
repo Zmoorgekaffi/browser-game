@@ -1,5 +1,5 @@
 import { Injectable, inject, Injector } from '@angular/core';
-import { SkillsService } from './skills.service';
+import { SkillsService, ELEMENT_DAMAGE_MULTIPLIER_KEYS } from './skills.service';
 import { FightService } from './fight.service';
 import { ResolveChallengeService } from './resolve-challenge.service';
 import { rollBetween, applyResistanceMitigation } from '../utils/combat-roll.util';
@@ -116,14 +116,61 @@ export class SpellsEngineService {
         break;
       }
 
+      // ELEMENTAL_DAMAGE-Formel (Spieler-Cast), Schritt für Schritt — jede Quelle,
+      // die Elementarschaden (fire/cold/lightning/chaos) beeinflusst, taucht HIER
+      // auf, nirgendwo sonst:
+      //   1. spell.effectValues.value       – der reine Basiswert des Spells (JSON).
+      //   2. + bonusMagic                    – generischer Magie-Pool, gewürfelt aus
+      //      playerStats.magicAttackMin/Max. Speist sich aus: Basis-`magicAttack`
+      //      (State, ~5) + jedem flachen `magic-attack`-Stat auf JEDEM Ausrüstungs-
+      //      slot (Ringe/Rüstung/Waffe, additiv, siehe SkillsService.addWeaponRangeStats)
+      //      + Passive-Effekte auf 'magicAttack' (flat UND percent, siehe
+      //      SkillsService.addPassiveEffects). Gilt für JEDES Element gleichermaßen.
+      //   3. + elementBonus                  – NUR wenn eine ausgerüstete "magie"-
+      //      Waffe (weapon-1/weapon-2) ihr `magic-damage-type` exakt auf DIESES
+      //      Element gesetzt hat (siehe magic-damage-type in den Waffen-JSONs unter
+      //      public/item-data/weapons/). Gewürfelt aus
+      //      playerStats.magicAttackByElement[element].min/max, die sich additiv aus
+      //      `magic-damage-min/max` der passenden Waffe(n) speisen (skaliert per
+      //      Waffen-Quality, siehe weapon-quality.util.ts applyQualityScaling) +
+      //      Passive-Percent-Effekte auf 'magicAttack' (NICHT die Flat-Variante,
+      //      siehe SkillsService.addPassiveEffects). Eine Feuer-Waffe liefert also
+      //      NUR bei Feuer-Spells diesen dritten Summanden; bei einem Cold-Spell mit
+      //      derselben Waffe ist elementBonus = 0, es bleibt bei Basiswert + bonusMagic.
+      //   4. * magicDamageMultiplier         – 1 + GESAMT-Intelligenz/1000 (Basis +
+      //      Schrein-Investition + Ausrüstung, siehe applyAttributeScaling), wirkt auf
+      //      die volle Summe aus 1-3. Gilt für JEDES Element gleichermaßen.
+      //   4b. * elementDamageMultiplier      – 1 + <Element>-Flat-Stat/1000, exakt
+      //      dieselbe Formel wie magicDamageMultiplier, aber NUR aus dem elementeigenen
+      //      Item-/Passive-Stat: `magic-damage-fire/cold/lightning` bzw. für Chaos der
+      //      bestehende `chaosDamage`-Stat (SkillsService.applyAttributeScaling,
+      //      ELEMENT_DAMAGE_STAT_KEYS/-MULTIPLIER_KEYS). Ein Feuer-Ring erhöht so NUR
+      //      Feuer-Endschaden, nie Cold/Lightning/Chaos. Multiplikation ist kommutativ,
+      //      die Reihenfolge zu magicDamageMultiplier spielt daher keine Rolle — beide
+      //      werden in EINEM Schritt zusammen angewendet (siehe unten).
+      //   5. Ziel-Mitigation                 – applyResistanceMitigation() in
+      //      combat-roll.util.ts: 1 Punkt `resistances[element]` DES ZIELS = 1%
+      //      Schadensminderung, gedeckelt bei MAX_MITIGATION_PERCENT (75%). Läuft
+      //      NUR gegen das Element des Spells, nicht gegen andere Resistenzen.
+      //   6. Resolve-Minigame (nur Spieler)  – applyResolveChallenge() reskaliert das
+      //      Ergebnis auf (Endwert / resolvePoints) * korrekt getroffene Punkte.
+      // Rüstung (applyArmorMitigation) greift hier NICHT — die gibt es nur bei
+      // damageType 'physical' in FightService.applyDamageToMonster/-Player.
       case 'ELEMENTAL_DAMAGE': {
-        let totalDamage = Number(spell.effectValues.value) + bonusMagic;
         const element = spell.effectValues.element;
+        const elementRange = casterType === 'player' ? playerStats.magicAttackByElement?.[element] : null;
+        const elementBonus = elementRange ? rollBetween(elementRange.min, elementRange.max) : 0;
+        let totalDamage = Number(spell.effectValues.value) + bonusMagic + elementBonus;
         console.log(`💥 ${element}-Schaden abgefeuert von [${casterType}]: ${totalDamage}`);
         if (casterType === 'player') {
-          // Magischer Schadens-Multiplikator aus Intelligenz, analog zum
-          // physischen Multiplikator oben.
-          totalDamage = Math.round(totalDamage * (playerStats.magicDamageMultiplier ?? 1));
+          // Magischer Schadens-Multiplikator (Intelligenz) UND Element-Multiplikator
+          // (elementeigener Flat-Stat) wirken beide auf dieselbe Summe — siehe
+          // Formel-Doku oben, Schritt 4/4b.
+          const elementMultiplierKey = ELEMENT_DAMAGE_MULTIPLIER_KEYS[element as keyof typeof ELEMENT_DAMAGE_MULTIPLIER_KEYS];
+          const elementDamageMultiplier = playerStats[elementMultiplierKey] ?? 1;
+          totalDamage = Math.round(
+            totalDamage * (playerStats.magicDamageMultiplier ?? 1) * elementDamageMultiplier,
+          );
           // Element-Resistenz des ZIELS mindert den Schaden (1 Punkt = 1%,
           // gedeckelt bei 75%) — muss HIER passieren, da nur die Engine das
           // konkrete Element kennt. FightService bekommt danach 'elemental'

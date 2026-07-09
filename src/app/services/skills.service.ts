@@ -36,11 +36,46 @@ const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
   ['crit-chance', 'critChance'],
   ['crit-damage', 'critDamage'],
   ['chaosDamage', 'chaosDamage'],
+  ['magic-damage-fire', 'magicDamageFire'],
+  ['magic-damage-cold', 'magicDamageCold'],
+  ['magic-damage-lightning', 'magicDamageLightning'],
   ['charisma', 'charisma'],
 ];
 
 /** Die vier Elementar-Resistenzen, die Items mitbringen können. */
 const RESISTANCE_KEYS = ['fire', 'cold', 'lightning', 'chaos'] as const;
+
+/**
+ * Dieselben vier Elemente, hier als Schlüssel für `magicAttackByElement`
+ * verwendet (Magieschaden-Ranges von "magie"-Waffen, siehe `magic-damage-type`
+ * auf dem Item). Bewusst derselbe Wertesatz wie RESISTANCE_KEYS.
+ */
+const ELEMENT_KEYS = RESISTANCE_KEYS;
+
+/**
+ * Mapping: Element → combatStats-Key des additiven Flat-Stats, der das
+ * "% erhöhter <Element>-Schaden"-Passive/Item-Stat trägt (siehe FLAT_STAT_MAP
+ * und ELEMENT_DAMAGE_MULTIPLIER_KEYS). Chaos nutzt bewusst den bereits
+ * bestehenden `chaosDamage`-Stat statt eines neuen `magic-damage-chaos`.
+ */
+const ELEMENT_DAMAGE_STAT_KEYS: Record<(typeof ELEMENT_KEYS)[number], string> = {
+  fire: 'magicDamageFire',
+  cold: 'magicDamageCold',
+  lightning: 'magicDamageLightning',
+  chaos: 'chaosDamage',
+};
+
+/**
+ * Mapping: Element → combatStats-Key des daraus abgeleiteten Schadens-Multiplikators
+ * (siehe applyAttributeScaling). Exportiert, da SpellsEngineService denselben
+ * Lookup braucht, um beim Spell-Cast den passenden Multiplikator zu lesen.
+ */
+export const ELEMENT_DAMAGE_MULTIPLIER_KEYS: Record<(typeof ELEMENT_KEYS)[number], string> = {
+  fire: 'fireDamageMultiplier',
+  cold: 'coldDamageMultiplier',
+  lightning: 'lightningDamageMultiplier',
+  chaos: 'chaosDamageMultiplier',
+};
 
 /** Die vier Grundattribute, in die am Schrein investiert werden kann. */
 const INVESTABLE_STATS = ['strength', 'dexterity', 'intelligence', 'vitality'] as const;
@@ -89,6 +124,9 @@ export class SkillsService {
     critChance: 5,
     critDamage: 150,
     chaosDamage: 0,
+    magicDamageFire: 0,
+    magicDamageCold: 0,
+    magicDamageLightning: 0,
     charisma: 1,
     resistances: {
       fire: 0,
@@ -171,7 +209,7 @@ export class SkillsService {
       this.addFlatItemStats(afterEquipment, item.stats);
       this.addItemResistances(afterEquipment, item.stats);
       this.addItemAttributes(afterEquipment, item.stats);
-      this.addWeaponRangeStats(afterEquipment, item.stats);
+      this.addWeaponRangeStats(afterEquipment, item.stats, item['magic-damage-type']);
     });
     this.deriveAttackScalars(afterEquipment);
 
@@ -222,15 +260,26 @@ export class SkillsService {
       attackMax: base.attack,
       magicAttackMin: base.magicAttack,
       magicAttackMax: base.magicAttack,
-      // Physischer/Magischer Schadens-Multiplikator (siehe applyAttributeScaling) —
-      // hier nur der neutrale Basiswert für eine korrekte Layer-Aufschlüsselung.
+      // Elementgebundener Magieschaden von "magie"-Waffen (magic-damage-type),
+      // getrennt vom generischen Pool oben — siehe addWeaponRangeStats.
+      magicAttackByElement: this.zeroMagicAttackByElement(),
+      // Physischer/Magischer/Elementar-Schadens-Multiplikator (siehe
+      // applyAttributeScaling) — hier nur der neutrale Basiswert für eine
+      // korrekte Layer-Aufschlüsselung.
       physicalDamageMultiplier: 1,
       magicDamageMultiplier: 1,
+      fireDamageMultiplier: 1,
+      coldDamageMultiplier: 1,
+      lightningDamageMultiplier: 1,
+      chaosDamageMultiplier: 1,
       initiative: base.initiative,
       evasion: base.evasion,
       critChance: base.critChance,
       critDamage: base.critDamage,
       chaosDamage: base.chaosDamage,
+      magicDamageFire: base.magicDamageFire ?? 0,
+      magicDamageCold: base.magicDamageCold ?? 0,
+      magicDamageLightning: base.magicDamageLightning ?? 0,
       charisma: base.charisma,
       resistances: { ...base.resistances },
     };
@@ -246,7 +295,24 @@ export class SkillsService {
    */
   private deriveAttackScalars(stats: any): void {
     stats.attack = Math.round((stats.attackMin + stats.attackMax) / 2);
-    stats.magicAttack = Math.round((stats.magicAttackMin + stats.magicAttackMax) / 2);
+    // Anzeigewert bündelt den generischen Pool UND alle elementgebundenen
+    // Ranges (siehe magicAttackByElement) — im Kampf werden sie hingegen
+    // getrennt behandelt (SpellsEngineService prüft dort das Spell-Element).
+    const elementAverageSum = ELEMENT_KEYS.reduce((sum, element) => {
+      const range = stats.magicAttackByElement?.[element];
+      return sum + (range ? (range.min + range.max) / 2 : 0);
+    }, 0);
+    stats.magicAttack = Math.round((stats.magicAttackMin + stats.magicAttackMax) / 2 + elementAverageSum);
+  }
+
+  /** Frisches `magicAttackByElement`-Objekt mit allen vier Elementen auf {min:0, max:0}. */
+  private zeroMagicAttackByElement(): Record<(typeof ELEMENT_KEYS)[number], { min: number; max: number }> {
+    return {
+      fire: { min: 0, max: 0 },
+      cold: { min: 0, max: 0 },
+      lightning: { min: 0, max: 0 },
+      chaos: { min: 0, max: 0 },
+    };
   }
 
   /**
@@ -294,15 +360,23 @@ export class SkillsService {
 
   /**
    * Übernimmt die Schadens-Range eines Items additiv auf die Min/Max-Ranges.
-   * Waffen liefern `damage-min`/`damage-max` (physisch → attackMin/Max) bzw.
-   * `magic-damage-min`/`magic-damage-max` (Magie → magicAttackMin/Max). Nicht-
-   * Waffen-Ausrüstung mit einem flachen `attack`/`magic-attack`-Bonus (z.B. ein
-   * Ring) addiert sich gleichmäßig auf beide Seiten der jeweiligen Range.
+   * Waffen liefern `damage-min`/`damage-max` (physisch → attackMin/Max). Der
+   * flache `attack`/`magic-attack`-Bonus (z.B. von einem Ring) ist generisch
+   * und addiert sich gleichmäßig auf beide Seiten der jeweiligen Range.
    *
-   * @param finalStats Ziel-Objekt (wird mutiert).
-   * @param s          stats-Block des Items.
+   * `magic-damage-min`/`magic-damage-max` einer "magie"-Waffe sind hingegen an
+   * ihr `magic-damage-type` (fire/cold/lightning/chaos) gebunden und landen in
+   * `magicAttackByElement[type]`, NICHT im generischen `magicAttackMin/Max`-Pool
+   * — siehe SpellsEngineService.castSpell: nur ein Spell desselben Elements
+   * bekommt diesen Bonus, alle anderen nur den generischen Pool. Fehlt ein
+   * gültiges `magic-damage-type` (z.B. bei älteren/fehlerhaften Items), fällt
+   * der Wert sicherheitshalber in den generischen Pool zurück.
+   *
+   * @param finalStats      Ziel-Objekt (wird mutiert).
+   * @param s               stats-Block des Items.
+   * @param magicDamageType `item['magic-damage-type']`, falls vorhanden.
    */
-  private addWeaponRangeStats(finalStats: any, s: any): void {
+  private addWeaponRangeStats(finalStats: any, s: any, magicDamageType?: string): void {
     const flatAttack = Number(s['attack']) || 0;
     const flatMagicAttack = Number(s['magic-attack']) || 0;
     const dmgMin = Number(s['damage-min']) || 0;
@@ -312,8 +386,17 @@ export class SkillsService {
 
     finalStats.attackMin += dmgMin + flatAttack;
     finalStats.attackMax += dmgMax + flatAttack;
-    finalStats.magicAttackMin += magicDmgMin + flatMagicAttack;
-    finalStats.magicAttackMax += magicDmgMax + flatMagicAttack;
+    finalStats.magicAttackMin += flatMagicAttack;
+    finalStats.magicAttackMax += flatMagicAttack;
+
+    const elementRange = magicDamageType ? finalStats.magicAttackByElement?.[magicDamageType] : null;
+    if (elementRange) {
+      elementRange.min += magicDmgMin;
+      elementRange.max += magicDmgMax;
+    } else {
+      finalStats.magicAttackMin += magicDmgMin;
+      finalStats.magicAttackMax += magicDmgMax;
+    }
   }
 
   /**
@@ -325,11 +408,22 @@ export class SkillsService {
    *                 tatsächlichen Treffer auf (Waffen-Wurf + Skill-Bonus) angewendet,
    *                 siehe FightService / SpellsEngineService.
    *  - Geschick:    Initiative +2/Punkt
-   *  - Intelligenz: Magischer Schadens-Multiplikator +0.01%/Punkt (analog Stärke),
-   *                 Mana +5/Punkt, Energieschild +2/Punkt
+   *  - Intelligenz: Magischer Schadens-Multiplikator +0.1%/Punkt (1000 Punkte
+   *                 Gesamt-Intelligenz = +100%; bewusst NICHT mehr analog zu
+   *                 Stärke, siehe unten), Mana +5/Punkt, Energieschild +2/Punkt
    *  - Vitalität:   HP +3/Punkt, HP-Regeneration +0.5/Punkt (Rest wird erst beim
    *                 Anwenden pro Runde abgerundet, siehe FightService.endTurn)
    *  - Glück:       Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
+   *
+   * Zusätzlich (NICHT attributbasiert, sondern aus additiven Item-/Passive-
+   * Stats): die vier Elementar-Schadens-Multiplikatoren `fire/cold/lightning/
+   * chaosDamageMultiplier`, dieselbe Formel wie magicDamageMultiplier
+   * (`1 + statWert/1000`), aber jeweils NUR aus dem elementeigenen Flat-Stat
+   * (`magicDamageFire/Cold/Lightning`, Chaos nutzt den bestehenden
+   * `chaosDamage`-Stat) statt aus einem Attribut. SpellsEngineService
+   * multipliziert bei einem Elementarschaden-Spell BEIDE Multiplikatoren
+   * (magicDamageMultiplier UND das passende Element) auf den Endschaden —
+   * Reihenfolge ist wegen Multiplikation egal.
    *
    * @param finalStats Ziel-Objekt (wird mutiert). Muss bereits die
    *                   Gesamt-Attributwerte (inkl. Ausrüstung) enthalten.
@@ -337,18 +431,28 @@ export class SkillsService {
   private applyAttributeScaling(finalStats: any): void {
     finalStats.physicalDamageMultiplier = 1 + finalStats.strength / 10000;
     finalStats.initiative += finalStats.dexterity * 2;
-    finalStats.magicDamageMultiplier = 1 + finalStats.intelligence / 10000;
+    finalStats.magicDamageMultiplier = 1 + finalStats.intelligence / 1000;
     finalStats.mana += finalStats.intelligence * 5;
     finalStats['energy-shield'] += finalStats.intelligence * 2;
     finalStats.hp += finalStats.vitality * 3;
     finalStats['hp-regeneration'] += finalStats.vitality * 0.5;
     finalStats.critChance += Math.floor(finalStats.luck * 0.2);
     finalStats['magic-find'] += Math.floor(finalStats.luck * 0.5);
+
+    for (const element of ELEMENT_KEYS) {
+      const statKey = ELEMENT_DAMAGE_STAT_KEYS[element];
+      const multiplierKey = ELEMENT_DAMAGE_MULTIPLIER_KEYS[element];
+      finalStats[multiplierKey] = 1 + (finalStats[statKey] ?? 0) / 1000;
+    }
   }
 
-  /** Tiefe Kopie eines Kampfwerte-Objekts (inkl. verschachteltem `resistances`). */
+  /** Tiefe Kopie eines Kampfwerte-Objekts (inkl. verschachteltem `resistances`/`magicAttackByElement`). */
   private cloneStats(stats: any): any {
-    return { ...stats, resistances: { ...stats.resistances } };
+    const clonedByElement: any = {};
+    for (const element of ELEMENT_KEYS) {
+      clonedByElement[element] = { ...stats.magicAttackByElement?.[element] };
+    }
+    return { ...stats, resistances: { ...stats.resistances }, magicAttackByElement: clonedByElement };
   }
 
   /**
@@ -365,6 +469,16 @@ export class SkillsService {
         result.resistances = {};
         for (const element of RESISTANCE_KEYS) {
           result.resistances[element] = (after.resistances?.[element] ?? 0) - (before.resistances?.[element] ?? 0);
+        }
+        continue;
+      }
+      if (key === 'magicAttackByElement') {
+        result.magicAttackByElement = {};
+        for (const element of ELEMENT_KEYS) {
+          result.magicAttackByElement[element] = {
+            min: (after.magicAttackByElement?.[element]?.min ?? 0) - (before.magicAttackByElement?.[element]?.min ?? 0),
+            max: (after.magicAttackByElement?.[element]?.max ?? 0) - (before.magicAttackByElement?.[element]?.max ?? 0),
+          };
         }
         continue;
       }
@@ -397,6 +511,10 @@ export class SkillsService {
             finalStats.attackMin += effect.value;
             finalStats.attackMax += effect.value;
           } else if (effect.stat === 'magicAttack') {
+            // Bewusst NUR der generische Pool — anders als beim Prozent-Ast unten
+            // wird hier NICHT auch magicAttackByElement erhöht, ein Flat-Passive
+            // wirkt also wie ein normaler Ring-Bonus (jedes Element gleichermaßen
+            // über bonusMagic in SpellsEngineService, siehe dortige Formel-Doku).
             finalStats.magicAttackMin += effect.value;
             finalStats.magicAttackMax += effect.value;
           } else {
@@ -420,6 +538,13 @@ export class SkillsService {
           } else if (effect.stat === 'magicAttack') {
             finalStats.magicAttackMin = Math.round(finalStats.magicAttackMin * (1 + effect.value / 100));
             finalStats.magicAttackMax = Math.round(finalStats.magicAttackMax * (1 + effect.value / 100));
+            // Wirkt auch auf die elementgebundenen Waffen-Ranges, damit ein
+            // "+X% Magieangriff"-Passive nicht nur den generischen Pool trifft.
+            for (const element of ELEMENT_KEYS) {
+              const range = finalStats.magicAttackByElement[element];
+              range.min = Math.round(range.min * (1 + effect.value / 100));
+              range.max = Math.round(range.max * (1 + effect.value / 100));
+            }
           } else {
             const current = finalStats[effect.stat] ?? 0;
             finalStats[effect.stat] = Math.round(current + current * (effect.value / 100));

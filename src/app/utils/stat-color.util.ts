@@ -39,6 +39,9 @@ const STAT_COLORS: Record<string, { dark: string; light: string }> = {
   damagemax: { dark: 'text-orange-500', light: 'text-orange-800' },
   magicdamagemin: { dark: 'text-violet-400', light: 'text-violet-700' },
   magicdamagemax: { dark: 'text-violet-500', light: 'text-violet-800' },
+  magicdamagefire: { dark: 'text-orange-400', light: 'text-orange-700' },
+  magicdamagecold: { dark: 'text-blue-400', light: 'text-blue-700' },
+  magicdamagelightning: { dark: 'text-amber-400', light: 'text-amber-700' },
 };
 
 const DEFAULT_COLOR = { dark: 'text-emerald-400', light: 'text-emerald-700' };
@@ -83,6 +86,9 @@ export const STAT_DEFINITIONS: { key: string; label: string }[] = [
   { key: 'crit-chance', label: 'Kritchance' },
   { key: 'crit-damage', label: 'Kritschad.' },
   { key: 'chaosDamage', label: 'Chaossch.' },
+  { key: 'magic-damage-fire', label: 'Feuerschad.' },
+  { key: 'magic-damage-cold', label: 'Kälteschad.' },
+  { key: 'magic-damage-lightning', label: 'Blitzschad.' },
   { key: 'charisma', label: 'Charisma' },
   { key: 'resistances.fire', label: 'Feuerres.' },
   { key: 'resistances.cold', label: 'Kälteres.' },
@@ -107,4 +113,18 @@ export function hasPositiveStats(stats: any): boolean {
 /** True, sobald das Item mindestens einen Malus-Stat (< 0) hat. */
 export function hasNegativeStats(stats: any): boolean {
   return STAT_DEFINITIONS.some((def) => getStatValue(stats, def.key) < 0);
+}
+
+/** Deutsche Anzeige-Labels für die vier Elemente (`magic-damage-type`, `resistances`-Keys). */
+const ELEMENT_LABELS: Record<string, string> = {
+  fire: 'Feuer',
+  cold: 'Kälte',
+  lightning: 'Blitz',
+  chaos: 'Chaos',
+};
+
+/** Deutsches Label für einen Element-Key, z. B. `getElementLabel('fire')` → 'Feuer'. Unbekannte Keys werden unverändert zurückgegeben. */
+export function getElementLabel(element: string | undefined | null): string {
+  if (!element) return '';
+  return ELEMENT_LABELS[element] ?? element;
 }

@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { InventarService } from './inventar.service';
 import { PersonalItemsService } from './personal-items.service';
+import { ItemRequirement, getItemRequirements } from '../utils/item-requirements.util';
 
 interface StatPoolEntry {
   path: string[];
@@ -91,7 +92,46 @@ export class CraftingService {
 
   /** True, sobald alle 3 Kästchen belegt sind. */
   public get canCraft(): boolean {
-    return this.slots().every((entry) => entry !== null);
+    return this.slots().every((entry) => entry !== null) && this.craftBlockReason === null;
+  }
+
+  /**
+   * Erklärt, warum die aktuelle Kästchen-Belegung nicht craftbar ist, oder
+   * `null`, wenn die Kombination gültig ist (unabhängig davon, ob noch
+   * Kästchen leer sind). Regeln: Rüstung nur mit Rüstung, Waffen nur mit
+   * Waffen derselben Schadensart (`weapon-type`) — bei "magie"-Waffen zählt
+   * zusätzlich das elementgebundene `magic-damage-type` (fire/cold/lightning/
+   * chaos) als Teil der Schadensart.
+   */
+  public get craftBlockReason(): string | null {
+    const filled = this.slots().filter((entry) => entry !== null);
+    if (filled.length < 2) return null;
+
+    const kinds = filled.map((item) => this.getItemKind(item));
+    if (new Set(kinds).size > 1) {
+      return 'Waffen und Rüstung können nicht zusammen gecraftet werden.';
+    }
+
+    if (kinds[0] === 'weapon') {
+      const damageTypes = filled.map((item) => item['weapon-type']);
+      if (new Set(damageTypes).size > 1) {
+        return 'Waffen mit unterschiedlichen Schadensarten können nicht zusammen gecraftet werden.';
+      }
+
+      if (damageTypes[0] === 'magie') {
+        const magicElements = filled.map((item) => item['magic-damage-type']);
+        if (new Set(magicElements).size > 1) {
+          return 'Magie-Waffen mit unterschiedlichen Elementen können nicht zusammen gecraftet werden.';
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /** Waffe, wenn das Item eine `weapon-type` trägt, sonst Rüstung. */
+  private getItemKind(item: any): 'weapon' | 'armor' {
+    return item?.['weapon-type'] ? 'weapon' : 'armor';
   }
 
   /**
@@ -112,10 +152,17 @@ export class CraftingService {
    *
    * Name, Beschreibung, Bild, Preis, Tier und Slot entsprechen dem Basis-Item
    * (mittleres Kästchen). Alle 3 eingesetzten Items werden dabei verbraucht.
+   *
+   * Voraussetzung (siehe `craftBlockReason`): alle 3 Items müssen von
+   * derselben Art sein (nur Rüstung mit Rüstung, nur Waffen mit Waffen) und
+   * bei Waffen dieselbe Schadensart (`weapon-type`) tragen.
+   *
+   * ANFORDERUNGEN: werden separat von den Stats über `mergeRequirements`
+   * berechnet (siehe dort) und ersetzen die des Basis-Items komplett.
    */
   public craftItem(): void {
     const [left, base, right] = this.slots();
-    if (!left || !base || !right) return;
+    if (!left || !base || !right || this.craftBlockReason) return;
 
     const pool: StatPoolEntry[] = [
       ...this.flattenStats(left.stats),
@@ -143,9 +190,15 @@ export class CraftingService {
     const newStats = this.zeroStatsLike(base.stats);
     chosen.forEach((entry) => this.setAtPath(newStats, entry.path, entry.value));
 
-    const { equipped, 'assigned-slot': _assignedSlot, ...baseRest } = base;
+    const {
+      equipped,
+      'assigned-slot': _assignedSlot,
+      requirement: _requirement,
+      requirements: _requirements,
+      ...baseRest
+    } = base;
 
-    const craftedItem = {
+    const craftedItem: any = {
       ...baseRest,
       stats: newStats,
       soulbound: true,
@@ -153,9 +206,42 @@ export class CraftingService {
       'assigned-slot': null,
     };
 
+    const craftedRequirements = this.mergeRequirements(left, base, right);
+    if (craftedRequirements.length === 1) {
+      craftedItem.requirement = craftedRequirements[0];
+    } else if (craftedRequirements.length > 1) {
+      craftedItem.requirements = craftedRequirements;
+    }
+
     this.personalItemsService.addItem(craftedItem);
     this.slots.set([null, null, null]);
     this.craftResultItem.set(craftedItem);
+  }
+
+  /**
+   * Ermittelt die Anforderungen des gecrafteten Items aus den Anforderungen
+   * der 3 Zutaten. Die Anzahl entspricht dem Item mit den meisten
+   * Anforderungs-Stats; die Werte sind die N höchsten Anforderungswerte über
+   * alle 3 Items hinweg; die Stats dafür werden zufällig aus der Menge aller
+   * in den 3 Items vorkommenden Anforderungs-Stats gezogen (ohne
+   * Wiederholung, sofern genug unterschiedliche Stats vorhanden sind).
+   */
+  private mergeRequirements(left: any, base: any, right: any): ItemRequirement[] {
+    const perItem = [left, base, right].map((item) => getItemRequirements(item));
+    const count = Math.max(...perItem.map((reqs) => reqs.length));
+    if (count === 0) return [];
+
+    const topValues = perItem
+      .flat()
+      .map((req) => req.value)
+      .sort((a, b) => b - a)
+      .slice(0, count);
+
+    const statPool = Array.from(new Set(perItem.flat().map((req) => req.stat)));
+    const shuffledStats = this.shuffle(statPool);
+    const chosenStats = topValues.map((_, i) => shuffledStats[i % shuffledStats.length]);
+
+    return topValues.map((value, i) => ({ stat: chosenStats[i], value }));
   }
 
   /**

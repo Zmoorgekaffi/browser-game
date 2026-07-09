@@ -24,6 +24,9 @@ export type PassiveStatKey =
   | 'critChance'
   | 'critDamage'
   | 'chaosDamage'
+  | 'magicDamageFire'
+  | 'magicDamageCold'
+  | 'magicDamageLightning'
   | 'charisma'
   | 'magic-find';
 

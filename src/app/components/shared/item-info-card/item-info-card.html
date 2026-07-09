@@ -24,10 +24,16 @@
           </p>
           @if (currentDisplayedItem()['weapon-type']) {
             <p class="text-[11px] text-zinc-600 font-mono mt-1">
-              {{ currentDisplayedItem()['weapon-type'] }} · {{ currentDisplayedItem().hands }}H
-              @if (currentDisplayedItem().requirement; as req) {
-                · Benötigt: {{ req.value }} {{ req.stat }}
+              {{ currentDisplayedItem()['weapon-type'] }}
+              @if (currentDisplayedItem()['magic-damage-type']; as element) {
+                ({{ getElementLabel(element) }})
               }
+              · {{ currentDisplayedItem().hands }}H
+            </p>
+          }
+          @if (getItemRequirements(currentDisplayedItem()).length) {
+            <p class="text-[11px] text-zinc-600 font-mono mt-1">
+              Benötigt: {{ formatRequirements(currentDisplayedItem()) }}
             </p>
           }
         </div>

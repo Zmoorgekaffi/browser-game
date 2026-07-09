@@ -2,7 +2,8 @@ import { Component, Input, signal, OnChanges, SimpleChanges, inject } from '@ang
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 import { getSellPrice, getItemTier } from '../../../utils/item-display.util';
-import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../../utils/stat-color.util';
+import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS, getElementLabel } from '../../../utils/stat-color.util';
+import { getItemRequirements, meetsAllRequirements, formatRequirements } from '../../../utils/item-requirements.util';
 
 /**
  * @component InventarItem
@@ -57,24 +58,26 @@ export class InventarItem implements OnChanges {
     return getStatColor(key, 'dark');
   }
 
+  public getItemRequirements = getItemRequirements;
+  public formatRequirements = formatRequirements;
+  public getElementLabel = getElementLabel;
+
   toggleEquip(): void {
     if (this.index === undefined) return;
 
     const isEquipping = !this.item?.equipped;
-    if (isEquipping && !this.meetsRequirement(this.item?.requirement)) {
-      console.warn(
-        `❌ Anforderung nicht erfüllt: ${this.item.requirement.value} ${this.item.requirement.stat} benötigt.`,
-      );
-      return;
+    if (isEquipping) {
+      const currentStats = this.gameStateService.skills.combatStats() as any;
+      if (!meetsAllRequirements(this.item, currentStats)) {
+        const missing = getItemRequirements(this.item)
+          .filter((req) => (currentStats[req.stat] ?? 0) < req.value)
+          .map((req) => `${req.value} ${req.stat}`)
+          .join(', ');
+        console.warn(`❌ Anforderung nicht erfüllt: ${missing} benötigt.`);
+        return;
+      }
     }
 
     this.gameStateService.inventar.toggleEquipItem(this.index, this.source);
-  }
-
-  /** Prüft ein optionales `requirement: { stat, value }`-Feld gegen die aktuellen Gesamt-Attribute. */
-  private meetsRequirement(requirement: { stat: string; value: number } | undefined | null): boolean {
-    if (!requirement) return true;
-    const current = (this.gameStateService.skills.combatStats() as any)[requirement.stat] ?? 0;
-    return current >= requirement.value;
   }
 }
