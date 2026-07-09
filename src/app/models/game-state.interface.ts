@@ -13,6 +13,7 @@ export interface ProfileData {
   name: string;
   level: number;
   exp: number;
+  avatar?: string;
 }
 
 export interface InventarData {

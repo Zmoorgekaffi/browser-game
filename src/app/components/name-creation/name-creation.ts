@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameStateService } from '../../services/game-state.service';
+import { PORTRAITS } from '../../models/portraits.data';
 
 /**
  * @component NameCreation
- * @description Namenswahl für den Charakter. Wird beim ersten Login eines
- * neuen Charakters (leerer Name im Profil) automatisch angezeigt, und
- * erneut, wenn der Spieler im Header auf seinen Namen klickt.
+ * @description Namens- und Portrait-Wahl für den Charakter. Wird beim ersten
+ * Login eines neuen Charakters (leerer Name im Profil) automatisch angezeigt,
+ * und erneut, wenn der Spieler im Header auf seinen Namen klickt. Name und
+ * Portrait lassen sich hier jederzeit unabhängig voneinander ändern.
  */
 @Component({
   selector: 'app-name-creation',
@@ -23,7 +25,14 @@ export class NameCreation {
   name = this.gameStateService.profile.name() || '';
   error = '';
 
-  /** Übernimmt den eingegebenen Namen und geht weiter ins Dorf. */
+  portraits = PORTRAITS;
+  selectedPortraitId = this.gameStateService.profile.avatar();
+
+  selectPortrait(id: string): void {
+    this.selectedPortraitId = id;
+  }
+
+  /** Übernimmt Namen und Portrait und geht weiter ins Dorf. */
   onConfirm(): void {
     const trimmed = this.name.trim();
     if (!trimmed) {
@@ -32,6 +41,7 @@ export class NameCreation {
     }
 
     this.gameStateService.profile.updateName(trimmed);
+    this.gameStateService.profile.updateAvatar(this.selectedPortraitId);
     this.router.navigate(['/village']);
   }
 }

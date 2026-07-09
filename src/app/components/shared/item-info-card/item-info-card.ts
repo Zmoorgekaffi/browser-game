@@ -1,21 +1,26 @@
-import { Component, Signal, inject, ElementRef, effect } from '@angular/core';
+import { Component, Signal, inject, ElementRef, effect, signal, computed } from '@angular/core';
 import { GameStateService } from '../../../services/game-state.service';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap'; // <-- GSAP Import
-import { getItemTier } from '../../../utils/item-display.util';
-import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS, getElementLabel } from '../../../utils/stat-color.util';
-import { getItemRequirements, formatRequirements } from '../../../utils/item-requirements.util';
+import { ItemDetails } from '../item-details/item-details';
+import { DeviceService } from '../../../services/device.service';
+import { getCompareSlots, CompareSlot } from '../../../utils/item-compare.util';
 
 /**
  * @component ItemInfoCard
  * @description Detail-Karte eines Shop-Items mit Kauf-Button.
  * Ein-/Ausblenden läuft über GSAP-Animationen, der Zustand
  * (sichtbar + angezeigtes Item) lebt im ShopService.
+ *
+ * Vergleich mit der aktuell ausgerüsteten Ausrüstung: Hover auf dem
+ * Item-Bild zeigt (Desktop) eine oder zwei Vergleichs-Toolboxen daneben;
+ * Tap auf dem Bild (Touch) öffnet stattdessen einen Vollbild-Vergleich, der
+ * durch Antippen wieder schließt (kein Hover auf Touch-Geräten möglich).
  */
 @Component({
   selector: 'app-item-info-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ItemDetails],
   templateUrl: './item-info-card.html',
   styleUrl: './item-info-card.scss',
 })
@@ -23,6 +28,18 @@ export class ItemInfoCard {
   show: Signal<boolean>;
   currentDisplayedItem: Signal<any>;
   activeItemIndex: Signal<number | null>;
+
+  private deviceService = inject(DeviceService);
+
+  /** Desktop: Vergleichs-Tooltip neben dem Item-Bild sichtbar. */
+  public showCompareHover = signal<boolean>(false);
+  /** Touch: Vollbild-Vergleich sichtbar. */
+  public showCompareMobile = signal<boolean>(false);
+
+  /** Vergleichs-Slot(s) für das aktuell angezeigte Item (z.B. Waffe 1 + Waffe 2). */
+  public compareSlots: Signal<CompareSlot[]> = computed(() =>
+    getCompareSlots(this.currentDisplayedItem(), this.gameStateService.inventar.equippedSlots()),
+  );
 
   // Injiziert die Referenz auf das HTML-Element dieser Komponente für GSAP
   private el = inject(ElementRef);
@@ -40,8 +57,31 @@ export class ItemInfoCard {
         requestAnimationFrame(() => {
           this.animateIn();
         });
+      } else {
+        // Card geschlossen -> Vergleichs-Overlays nicht stale offen lassen.
+        this.showCompareHover.set(false);
+        this.showCompareMobile.set(false);
       }
     });
+  }
+
+  onIconEnter(): void {
+    if (this.deviceService.isTouch()) return;
+    this.showCompareHover.set(true);
+  }
+
+  onIconLeave(): void {
+    if (this.deviceService.isTouch()) return;
+    this.showCompareHover.set(false);
+  }
+
+  onIconClick(): void {
+    if (!this.deviceService.isTouch()) return;
+    this.showCompareMobile.set(true);
+  }
+
+  closeCompareMobile(): void {
+    this.showCompareMobile.set(false);
   }
 
   /**
@@ -107,21 +147,5 @@ export class ItemInfoCard {
   /** Anzahl der Plätze im aktuell aktiven Shop (5 bei Schmied/Gemischtwaren, 6 beim Magie-Laden). */
   shopItemCount(): number {
     return this.gameStateService.shop.getActiveShopItemCount();
-  }
-
-  public get tier(): number | null {
-    return getItemTier(this.currentDisplayedItem());
-  }
-
-  public statDefs = STAT_DEFINITIONS;
-  public getStatValue = getStatValue;
-  public hasPositiveStats = hasPositiveStats;
-  public hasNegativeStats = hasNegativeStats;
-  public getItemRequirements = getItemRequirements;
-  public formatRequirements = formatRequirements;
-  public getElementLabel = getElementLabel;
-
-  public statColor(key: string): string {
-    return getStatColor(key, 'light');
   }
 }

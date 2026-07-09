@@ -68,14 +68,18 @@
     </div>
 
     @if (!isDeath) {
-      <!-- 🧪 HP/MP: werden über den Run mitgenommen, hier vor dem nächsten Step nutzbar -->
+      <!-- 🧪 HP/MP/ES: werden über den Run mitgenommen, hier vor dem nächsten Step nutzbar -->
       <div class="flex flex-col gap-2 bg-black/40 border border-white/10 rounded-md px-4 py-3">
         <div class="flex items-center justify-between text-xs">
-          <span class="text-zinc-400 uppercase tracking-wide">HP / MP</span>
+          <span class="text-zinc-400 uppercase tracking-wide">HP / MP@if (maxEnergyShield() > 0) { / ES }</span>
           <span class="font-mono">
             <span class="text-green-500">{{ currentHp() }}/{{ maxHp() }}</span>
             &nbsp;·&nbsp;
             <span class="text-blue-400">{{ currentMana() }}/{{ maxMana() }}</span>
+            @if (maxEnergyShield() > 0) {
+              &nbsp;·&nbsp;
+              <span class="text-cyan-300">{{ currentEnergyShield() }}/{{ maxEnergyShield() }}</span>
+            }
           </span>
         </div>
         <div class="flex items-center justify-center">

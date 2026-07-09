@@ -39,3 +39,46 @@ app-village-scene {
   min-height: 1280px;
   max-height: 1280px;
 }
+
+/* ==========================================================================
+   ANGULAR GLOBAL SCROLLBAR FORCE-RESET (In styles.css einfügen)
+   ========================================================================== */
+
+/* 1. WebKit (Chrome, Safari, Edge, alle Chromium-Browser) */
+/* Der Stern '*' sorgt dafür, dass JEDES scrollbare Element erfasst wird, egal ob body oder ein div */
+*::-webkit-scrollbar {
+  width: 12px !important;
+  height: 12px !important;
+  display: block !important; /* Verhindert, dass es komplett versteckt wird */
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888 !important;
+  border-radius: 6px !important;
+  border: 3px solid #f1f1f1 !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555 !important;
+}
+
+/* Pfeile radikal entfernen */
+*::-webkit-scrollbar-button,
+*::-webkit-scrollbar-button:start,
+*::-webkit-scrollbar-button:end {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
+/* 2. Firefox & moderne Standards */
+/* Wir klatschen es auf html, body und jedes Element */
+html, body, * {
+  scrollbar-color: #888 #f1f1f1 !important;
+  scrollbar-width: thin !important;
+}

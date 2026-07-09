@@ -1,0 +1,71 @@
+@if (item) {
+  <div class="flex items-start gap-3 w-full">
+    <div
+      class="bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0"
+      [style.width.px]="imageSize"
+      [style.height.px]="imageSize"
+      (mouseenter)="iconEnter.emit()"
+      (mouseleave)="iconLeave.emit()"
+      (click)="iconClick.emit()"
+    >
+      <img [src]="item['img-path']" [alt]="item.name" class="w-full h-full object-contain" />
+    </div>
+
+    <div class="flex flex-col flex-grow min-w-0">
+      <div class="flex justify-between items-baseline gap-2">
+        <h4 class="font-semibold text-sm">{{ item.name }}</h4>
+        @if (item.soulbound) {
+          <span class="text-purple-500 text-[11px] font-mono shrink-0">Soulbound</span>
+        } @else if (tier !== null) {
+          <span class="text-[11px] text-zinc-700 font-mono shrink-0">Tier {{ tier }}</span>
+        }
+      </div>
+      @if (item.description) {
+        <p class="text-zinc-700 text-xs leading-tight mt-0.5">
+          {{ item.description }}
+        </p>
+      }
+      @if (item['weapon-type']) {
+        <p class="text-[11px] text-zinc-600 font-mono mt-1">
+          {{ item['weapon-type'] }}
+          @if (item['magic-damage-type']; as element) {
+            ({{ getElementLabel(element) }})
+          }
+          · {{ item.hands }}H
+        </p>
+      }
+      @if (getItemRequirements(item).length) {
+        <p class="text-[11px] text-zinc-600 font-mono mt-1">
+          Benötigt: {{ formatRequirements(item) }}
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1 text-[11px] font-mono mt-2">
+    @if (hasPositiveStats(item.stats)) {
+      <div>
+        <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
+        <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+          @for (stat of statDefs; track stat.key) {
+            @if (getStatValue(item.stats, stat.key) > 0) {
+              <span [class]="statColor(stat.key)">+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+            }
+          }
+        </div>
+      </div>
+    }
+    @if (hasNegativeStats(item.stats)) {
+      <div>
+        <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
+        <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+          @for (stat of statDefs; track stat.key) {
+            @if (getStatValue(item.stats, stat.key) < 0) {
+              <span [class]="statColor(stat.key)">{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

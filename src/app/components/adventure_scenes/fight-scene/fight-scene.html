@@ -60,12 +60,12 @@
       }
     </div>
 
-    <div class="battle-log text-center absolute top-[24px] left-[76px] bg-[rgba(0,0,0,0.6)] p-4 rounded-md w-[420px]">
+    <div class="battle-log z-10 text-center absolute bottom-[16px] right-[16px] bg-[rgba(0,0,0,0.6)] p-4 rounded-md w-[330px]">
       <p class="text-lg">Runde: {{ round() }}</p>
       <p class="text-xl font-semibold text-yellow-300">
         {{ currentTurn() === 'player' ? 'Dein Zug!' : 'Gegner am Zug...' }}
       </p>
-      <div class="text-left text-sm mt-2 max-h-32 overflow-y-auto flex flex-col-reverse gap-1">
+      <div class="text-left small-scrollbar text-sm mt-2 max-h-32 overflow-y-auto flex flex-col-reverse gap-1">
         @for (message of battleLog().slice().reverse(); track $index) {
           <p>{{ message }}</p>
         }

@@ -33,12 +33,14 @@ export class SummaryScene {
   newItems = this.adventure.summaryNewItems;
   newGold = this.adventure.summaryNewGold;
 
-  // 🧪 HP/Mana werden über den Run mitgenommen — hier sichtbar, damit man vor
+  // 🧪 HP/Mana/ES werden über den Run mitgenommen — hier sichtbar, damit man vor
   // dem nächsten Step gezielt einen Trank trinken kann (siehe PotionPanel).
   maxHp = computed(() => this.gameStateService.skills.combatStats().hp);
   maxMana = computed(() => this.gameStateService.skills.combatStats().mana);
+  maxEnergyShield = computed(() => this.gameStateService.skills.combatStats()['energy-shield']);
   currentHp = computed(() => this.adventure.currentPlayerHp() ?? this.maxHp());
   currentMana = computed(() => this.adventure.currentPlayerMana() ?? this.maxMana());
+  currentEnergyShield = computed(() => this.adventure.currentPlayerEnergyShield() ?? this.maxEnergyShield());
 
   get isDeath(): boolean {
     return this.mode() === 'death';

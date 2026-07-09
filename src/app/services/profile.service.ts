@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, inject, WritableSignal } from '@angular/core';
 import { ProfileData } from '../models/game-state.interface';
 import { SkillsService } from './skills.service';
+import { DEFAULT_PORTRAIT_ID } from '../models/portraits.data';
 
 /** Anzahl der Attributspunkte, die pro Level-up am Schrein verteilt werden können. */
 const STAT_POINTS_PER_LEVEL = 5;
@@ -29,6 +30,8 @@ export class ProfileService {
   name = computed(() => this.state().name);
   level = computed(() => this.state().level);
   exp = computed(() => this.state().exp);
+  /** Fällt auf das Standard-Portrait zurück, falls noch keins gewählt wurde (z.B. Altbestand-Spielstände). */
+  avatar = computed(() => this.state().avatar || DEFAULT_PORTRAIT_ID);
   charId: WritableSignal<any | null> = signal(null);
 
   /** True, sobald der Charakter das Levelcap (50) erreicht hat. */
@@ -58,6 +61,15 @@ export class ProfileService {
   updateName(name: string): void {
     this.state.update(state => {
       const newState = { ...state, name };
+      this.persist(newState);
+      return newState;
+    });
+  }
+
+  /** Ändert das gewählte Portrait des Charakters. */
+  updateAvatar(avatar: string): void {
+    this.state.update(state => {
+      const newState = { ...state, avatar };
       this.persist(newState);
       return newState;
     });

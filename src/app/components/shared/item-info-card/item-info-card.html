@@ -6,65 +6,30 @@
       class="cursor-pointer bg-black w-8 h-8 absolute top-4 right-4 rounded-[50%]"
       (click)="closeInfoCard()"
     ></div>
-    <div class="item-card z-[9999] bg-[rgba(255,255,255,0.9)] border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col gap-3 min-w-[20rem]">
-      <div class="flex items-start gap-3 w-full">
-        <div class="w-[128px] h-[128px] bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
-          <img [src]="currentDisplayedItem()['img-path']" [alt]="currentDisplayedItem().name" class="w-full h-full object-contain" />
-        </div>
+    <div class="relative item-card z-[9999] bg-[rgba(255,255,255,0.9)] border rounded-md p-[2rem] border-gray-950 flex items-start justify-start flex-col gap-3 min-w-[20rem]">
+      <app-item-details
+        [item]="currentDisplayedItem()"
+        [imageSize]="128"
+        (iconEnter)="onIconEnter()"
+        (iconLeave)="onIconLeave()"
+        (iconClick)="onIconClick()"
+      ></app-item-details>
 
-        <div class="flex flex-col flex-grow min-w-0">
-          <div class="flex justify-between items-baseline gap-2">
-            <h4 class="font-semibold text-sm">{{ currentDisplayedItem().name }}</h4>
-            @if (tier !== null) {
-              <span class="text-[11px] text-zinc-700 font-mono shrink-0">Tier {{ tier }}</span>
-            }
-          </div>
-          <p class="text-zinc-700 text-xs leading-tight mt-0.5">
-            {{ currentDisplayedItem().description }}
-          </p>
-          @if (currentDisplayedItem()['weapon-type']) {
-            <p class="text-[11px] text-zinc-600 font-mono mt-1">
-              {{ currentDisplayedItem()['weapon-type'] }}
-              @if (currentDisplayedItem()['magic-damage-type']; as element) {
-                ({{ getElementLabel(element) }})
-              }
-              · {{ currentDisplayedItem().hands }}H
-            </p>
-          }
-          @if (getItemRequirements(currentDisplayedItem()).length) {
-            <p class="text-[11px] text-zinc-600 font-mono mt-1">
-              Benötigt: {{ formatRequirements(currentDisplayedItem()) }}
-            </p>
-          }
-        </div>
-      </div>
-
-      <div class="flex flex-col gap-1 text-[11px] font-mono">
-        @if (hasPositiveStats(currentDisplayedItem().stats)) {
-          <div>
-            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Positive:</span>
-            <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-              @for (stat of statDefs; track stat.key) {
-                @if (getStatValue(currentDisplayedItem().stats, stat.key) > 0) {
-                  <span [class]="statColor(stat.key)">+{{ getStatValue(currentDisplayedItem().stats, stat.key) }} {{ stat.label }}</span>
-                }
+      <!-- 🖥️ Desktop: Vergleichs-Tooltip(s) neben der Card, beim Hover auf das Item-Bild -->
+      @if (showCompareHover() && compareSlots().length) {
+        <div class="absolute z-[10000] left-full top-0 ml-3 flex gap-2 pointer-events-none">
+          @for (slot of compareSlots(); track slot.label) {
+            <div class="w-[220px] bg-[rgba(255,255,255,0.97)] border rounded-md border-gray-950 p-3">
+              <div class="text-[10px] text-zinc-500 uppercase tracking-wide font-mono mb-1">{{ slot.label }}</div>
+              @if (slot.item) {
+                <app-item-details [item]="slot.item" [imageSize]="64"></app-item-details>
+              } @else {
+                <div class="text-zinc-500 text-xs italic py-3 text-center">Dieser Slot ist noch leer.</div>
               }
             </div>
-          </div>
-        }
-        @if (hasNegativeStats(currentDisplayedItem().stats)) {
-          <div>
-            <span class="text-zinc-500 text-[10px] uppercase tracking-wide">Negative:</span>
-            <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-              @for (stat of statDefs; track stat.key) {
-                @if (getStatValue(currentDisplayedItem().stats, stat.key) < 0) {
-                  <span [class]="statColor(stat.key)">{{ getStatValue(currentDisplayedItem().stats, stat.key) }} {{ stat.label }}</span>
-                }
-              }
-            </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
 
       <div class="w-full flex justify-between items-center pt-2 border-t border-black/10">
         <span class="text-xs font-mono">Preis: {{ currentDisplayedItem().price }} Gold</span>
@@ -100,4 +65,27 @@
       </div>
     </div>
   </div>
+
+  <!-- 📱 Touch: Vollbild-Vergleich, öffnet sich beim Tap auf das Item-Bild, schließt beim erneuten Antippen -->
+  @if (showCompareMobile()) {
+    <div
+      class="absolute inset-0 z-[10001] bg-black/85 flex flex-wrap content-center justify-center gap-4 p-6 overflow-y-auto cursor-pointer"
+      (click)="closeCompareMobile()"
+    >
+      @for (slot of compareSlots(); track slot.label) {
+        <div class="w-[260px] bg-[rgba(255,255,255,0.97)] border rounded-md border-gray-950 p-3">
+          <div class="text-[10px] text-zinc-500 uppercase tracking-wide font-mono mb-1">{{ slot.label }} (ausgerüstet)</div>
+          @if (slot.item) {
+            <app-item-details [item]="slot.item" [imageSize]="96"></app-item-details>
+          } @else {
+            <div class="text-zinc-500 text-xs italic py-4 text-center">Dieser Slot ist noch leer.</div>
+          }
+        </div>
+      }
+      <div class="w-[260px] bg-[rgba(255,255,255,0.97)] border rounded-md border-amber-500 p-3">
+        <div class="text-[10px] text-amber-700 uppercase tracking-wide font-mono mb-1">Im Shop</div>
+        <app-item-details [item]="currentDisplayedItem()" [imageSize]="96"></app-item-details>
+      </div>
+    </div>
+  }
 }

@@ -11,12 +11,12 @@
   "intro": {
     "path": "imgs/areas/dark-forest/encounter/elf_1/intro/frame_0000.webp",
     "frameBatchCount": 29,
-    "duration": 5000
+    "duration": 3500
   },
   "idle": {
     "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
     "frameBatchCount": 49,
-    "duration": 5000
+    "duration": 5500
   },
   "speak": {
     "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
