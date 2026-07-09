@@ -82,6 +82,7 @@ export class SkillShopPanel {
   public elementColor(spell: any): string {
     if (spell?.effectType === 'PHYSICAL_DAMAGE') return 'text-orange-400';
     if (spell?.effectType === 'HEAL') return 'text-emerald-400';
+    if (spell?.effectType === 'ENERGY_SHIELD_RESTORE') return 'text-sky-400';
     switch (spell?.effectValues?.element) {
       case 'fire': return 'text-red-500';
       case 'cold': return 'text-cyan-400';

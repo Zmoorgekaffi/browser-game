@@ -1,0 +1,21 @@
+[
+  {
+    "id": "energyshield_03",
+    "name": "Arkane Schildwelle",
+    "description": "Eine Welle arkaner Energie füllt das Schild kräftig auf.",
+    "tier": "3",
+    "price": 300,
+    "manaCost": 45,
+    "effectType": "ENERGY_SHIELD_RESTORE",
+    "effectValues": {
+      "value": 65
+    },
+    "resolvePoints": 4,
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 30
+      }
+    ]
+  }
+]

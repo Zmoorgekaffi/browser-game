@@ -204,6 +204,24 @@ export class SpellsEngineService {
         break;
       }
 
+      // 🛡️ Lädt das Energieschild wieder auf — analog zu HEAL, nur auf das
+      // Energieschild statt HP angewendet. Bewusst OHNE requiredWeaponType
+      // in den zugehörigen Spell-JSONs (siehe public/item-data/skills/energy-shield/).
+      case 'ENERGY_SHIELD_RESTORE': {
+        let shieldAmount = Number(spell.effectValues.value);
+        if (casterType === 'player') {
+          shieldAmount = await this.applyResolveChallenge(spell, shieldAmount);
+          fightService.playerEnergyShield.update((es) =>
+            Math.min(fightService.playerMaxEnergyShield(), es + shieldAmount),
+          );
+        } else {
+          fightService.monsterEnergyShield.update((es) =>
+            Math.min(fightService.monsterMaxEnergyShield(), es + shieldAmount),
+          );
+        }
+        break;
+      }
+
       default:
         console.error(`⚠️ Unbekannter Effekt-Typ in Engine: ${spell.effectType}`);
         return false;

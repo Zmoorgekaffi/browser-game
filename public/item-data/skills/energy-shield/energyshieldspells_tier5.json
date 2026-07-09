@@ -1,0 +1,21 @@
+[
+  {
+    "id": "energyshield_05",
+    "name": "Göttlicher Schildwall",
+    "description": "Göttliche Macht lädt das Energieschild nahezu vollständig auf.",
+    "tier": "5",
+    "price": 1400,
+    "manaCost": 100,
+    "effectType": "ENERGY_SHIELD_RESTORE",
+    "effectValues": {
+      "value": 180
+    },
+    "resolvePoints": 7,
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 70
+      }
+    ]
+  }
+]

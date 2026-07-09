@@ -1,0 +1,21 @@
+[
+  {
+    "id": "energyshield_02",
+    "name": "Schild-Verstärkung",
+    "description": "Lädt das Energieschild spürbar auf.",
+    "tier": "2",
+    "price": 120,
+    "manaCost": 25,
+    "effectType": "ENERGY_SHIELD_RESTORE",
+    "effectValues": {
+      "value": 35
+    },
+    "resolvePoints": 3,
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 18
+      }
+    ]
+  }
+]

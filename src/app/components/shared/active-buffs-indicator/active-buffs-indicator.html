@@ -1,0 +1,31 @@
+@if (buffs().length > 0) {
+  <div class="active-buffs-indicator relative inline-block">
+    <div
+      class="w-7 h-7 rounded-full bg-purple-700/90 border border-purple-300/50 flex items-center justify-center cursor-pointer select-none text-sm shadow-md"
+      (pointerenter)="onPointerEnter($event)"
+      (pointerleave)="onPointerLeave($event)"
+      (pointerup)="onPointerUp($event)"
+      role="button"
+      [attr.aria-label]="'Aktive Buffs: ' + buffs().length"
+    >
+      ✨<span class="sr-only">{{ buffs().length }}</span>
+    </div>
+
+    @if (visible()) {
+      <div
+        class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-[rgba(15,15,15,0.95)] border border-purple-400/40 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-30 text-white text-left"
+      >
+        <span class="text-xs font-semibold text-purple-300 uppercase tracking-wide">Aktive Buffs</span>
+        @for (buff of buffs(); track $index) {
+          <div class="text-[11px] leading-tight border-t border-white/10 pt-1.5 first:border-t-0 first:pt-0">
+            <p class="font-semibold text-purple-200">{{ buff.potionName }}</p>
+            <p class="text-zinc-300">
+              +{{ buff.amount }} {{ statLabel(buff.stat) }}
+              <span class="text-zinc-500">· noch {{ buff.roundsLeft }} {{ buff.roundsLeft === 1 ? 'Runde' : 'Runden' }}</span>
+            </p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

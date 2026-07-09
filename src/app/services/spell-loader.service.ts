@@ -43,6 +43,12 @@ import physicalSkillsTier2 from '../../../public/item-data/skills/physical/physi
 import physicalSkillsTier3 from '../../../public/item-data/skills/physical/physicalspells_tier3.json';
 import physicalSkillsTier4 from '../../../public/item-data/skills/physical/physicalspells_tier4.json';
 import physicalSkillsTier5 from '../../../public/item-data/skills/physical/physicalspells_tier5.json';
+// 🛡️ Energieschild-Zauber (ohne Waffentyp-Anforderung, nur Stat-Requirement)
+import energyShieldSkillsTier1 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier1.json';
+import energyShieldSkillsTier2 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier2.json';
+import energyShieldSkillsTier3 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier3.json';
+import energyShieldSkillsTier4 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier4.json';
+import energyShieldSkillsTier5 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier5.json';
 
 // Shrine-exklusive Skills (nur über Levelup-Passives freischaltbar, siehe
 // passives.json / SkillsService.applySkillUnlockEffects). Bewusst in einem
@@ -97,6 +103,7 @@ const SPELL_JSON_MODULES: any[] = [
   fireSkillsTier1, fireSkillsTier2, fireSkillsTier3, fireSkillsTier4, fireSkillsTier5,
   lightningSkillsTier1, lightningSkillsTier2, lightningSkillsTier3, lightningSkillsTier4, lightningSkillsTier5,
   physicalSkillsTier1, physicalSkillsTier2, physicalSkillsTier3, physicalSkillsTier4, physicalSkillsTier5,
+  energyShieldSkillsTier1, energyShieldSkillsTier2, energyShieldSkillsTier3, energyShieldSkillsTier4, energyShieldSkillsTier5,
   healSkillsShrine,
   chaosSkillsShrine,
   coldSkillsShrine,

@@ -29,6 +29,8 @@
               <div class="flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono">
                 @if (spell.effectType === 'HEAL') {
                   <span class="text-emerald-400 font-bold">💚 +{{ spell.effectValues?.value }} HP</span>
+                } @else if (spell.effectType === 'ENERGY_SHIELD_RESTORE') {
+                  <span class="text-sky-400 font-bold">🔷 +{{ spell.effectValues?.value }} ES</span>
                 } @else {
                   <span [class]="'font-bold ' + elementColor(spell)">
                     {{ spell.effectType === 'PHYSICAL_DAMAGE' ? '⚔️' : '💥' }} {{ spell.effectValues?.value }} DMG

@@ -118,7 +118,16 @@ export class FightService {
       carriedHp !== null ? Math.min(carriedHp, playerCombatStats.hp) : playerCombatStats.hp;
     const initialPlayerMana =
       carriedMana !== null ? Math.min(carriedMana, playerCombatStats.mana) : playerCombatStats.mana;
-    const initialPlayerEnergyShield = playerCombatStats['energy-shield'] ?? 0;
+    // 🛡️ Energieschild wird genau wie HP/Mana über den ganzen Run mitgenommen
+    // statt pro Kampf voll aufzuladen — maxPlayerEnergyShield bleibt das echte
+    // Maximum aus den Ausrüstungs-/Attribut-Werten, startingPlayerEnergyShield
+    // ist der tatsächliche Startwert eines NEUEN Kampfes.
+    const maxPlayerEnergyShield = playerCombatStats['energy-shield'] ?? 0;
+    const carriedEnergyShield = this.adventureStateService.currentPlayerEnergyShield();
+    const startingPlayerEnergyShield =
+      carriedEnergyShield !== null
+        ? Math.min(carriedEnergyShield, maxPlayerEnergyShield)
+        : maxPlayerEnergyShield;
     const initialMonsterEnergyShield = fightMonster['energy-shield'] ?? 0;
 
     let fightState = this.activeFight();
@@ -137,7 +146,7 @@ export class FightService {
         monsterEnergyShield: initialMonsterEnergyShield,
         playerHp: initialPlayerHp,
         playerMana: initialPlayerMana,
-        playerEnergyShield: initialPlayerEnergyShield,
+        playerEnergyShield: startingPlayerEnergyShield,
         round: 1,
         turn: startingTurn,
         // Bewusst die Original-Referenz (mit reinen spellIds) speichern,
@@ -150,8 +159,8 @@ export class FightService {
 
     this.playerHp.set(fightState.playerHp);
     this.playerMana.set(fightState.playerMana ?? initialPlayerMana);
-    this.playerEnergyShield.set(fightState.playerEnergyShield ?? initialPlayerEnergyShield);
-    this.playerMaxEnergyShield.set(initialPlayerEnergyShield);
+    this.playerEnergyShield.set(fightState.playerEnergyShield ?? startingPlayerEnergyShield);
+    this.playerMaxEnergyShield.set(maxPlayerEnergyShield);
     this.monsterHp.set(fightState.monsterHp);
     this.monsterMaxHp.set(fightMonster.hp);
     this.monsterEnergyShield.set(fightState.monsterEnergyShield ?? initialMonsterEnergyShield);
@@ -554,6 +563,7 @@ export class FightService {
     // über clearAdventure() (failAdventure) wieder auf null zurückgesetzt.
     this.adventureStateService.currentPlayerHp.set(this.playerHp());
     this.adventureStateService.currentPlayerMana.set(this.playerMana());
+    this.adventureStateService.currentPlayerEnergyShield.set(this.playerEnergyShield());
 
     // 🧪 Buff-Tränke wirken nur für den Kampf, in dem sie getrunken wurden —
     // bei Sieg UND Niederlage werden sie hier immer geleert.

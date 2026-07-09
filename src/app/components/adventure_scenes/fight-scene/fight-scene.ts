@@ -12,6 +12,7 @@ import { AssetPreloaderService } from '../../../services/asset-preloader.service
 import { CharacterFrame } from '../../../classes/adventure/encounter.interface';
 import { FleeButton } from '../../shared/flee-button/flee-button';
 import { PotionPanel } from '../../shared/potion-panel/potion-panel';
+import { ActiveBuffsIndicator } from '../../shared/active-buffs-indicator/active-buffs-indicator';
 import { expandFrameBatch } from '../../../utils/frame-paths.util';
 
 /**
@@ -27,7 +28,7 @@ import { expandFrameBatch } from '../../../utils/frame-paths.util';
 @Component({
   selector: 'app-fight-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen, ResolveChallenge, FleeButton, PotionPanel],
+  imports: [CommonModule, AnimationObject, LoadingScreen, ResolveChallenge, FleeButton, PotionPanel, ActiveBuffsIndicator],
   templateUrl: './fight-scene.html',
   styleUrl: './fight-scene.scss',
 })

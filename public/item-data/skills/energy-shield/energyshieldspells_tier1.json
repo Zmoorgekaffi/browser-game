@@ -1,0 +1,21 @@
+[
+  {
+    "id": "energyshield_01",
+    "name": "Schild-Auffrischung",
+    "description": "Lädt das Energieschild geringfügig auf.",
+    "tier": "1",
+    "price": 40,
+    "manaCost": 15,
+    "effectType": "ENERGY_SHIELD_RESTORE",
+    "effectValues": {
+      "value": 15
+    },
+    "resolvePoints": 2,
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 8
+      }
+    ]
+  }
+]

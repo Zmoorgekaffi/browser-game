@@ -1,0 +1,21 @@
+[
+  {
+    "id": "energyshield_04",
+    "name": "Großer Schildwall",
+    "description": "Errichtet einen mächtigen Energieschild-Wall.",
+    "tier": "4",
+    "price": 650,
+    "manaCost": 70,
+    "effectType": "ENERGY_SHIELD_RESTORE",
+    "effectValues": {
+      "value": 110
+    },
+    "resolvePoints": 5,
+    "requirements": [
+      {
+        "stat": "intelligence",
+        "value": 48
+      }
+    ]
+  }
+]

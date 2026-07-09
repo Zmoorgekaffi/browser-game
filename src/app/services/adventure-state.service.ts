@@ -25,6 +25,8 @@ export interface AdventureSaveState {
   /** 🧪 Über den ganzen Run mitgenommene HP/Mana (null = noch nicht initialisiert → voll). */
   currentPlayerHp?: number | null;
   currentPlayerMana?: number | null;
+  /** 🛡️ Über den ganzen Run mitgenommenes Energieschild (null = noch nicht initialisiert → voll). */
+  currentPlayerEnergyShield?: number | null;
 }
 
 /**
@@ -66,6 +68,7 @@ export class AdventureStateService {
   // füllt dann mit den vollen combatStats() als Startwert für den allerersten Kampf.
   public currentPlayerHp: WritableSignal<number | null> = signal<number | null>(null);
   public currentPlayerMana: WritableSignal<number | null> = signal<number | null>(null);
+  public currentPlayerEnergyShield: WritableSignal<number | null> = signal<number | null>(null);
   /** Die aktive Area-Instanz (z.B. DarkForest) mit Loot-/Intro-Daten. */
   level: WritableSignal<any | null> = signal<any | null>(null);
 
@@ -130,6 +133,7 @@ export class AdventureStateService {
     this.goldEarnedThisRun.set(0);
     this.currentPlayerHp.set(null); // 🧪 nächster Run startet wieder mit voller HP/Mana
     this.currentPlayerMana.set(null);
+    this.currentPlayerEnergyShield.set(null); // 🛡️ nächster Run startet wieder mit vollem Schild
     this.summaryMode.set(null);
     this.summaryNewItems.set([]);
     this.summaryNewGold.set(0);
@@ -353,6 +357,7 @@ export class AdventureStateService {
     this.goldEarnedThisRun.set(0);
     this.currentPlayerHp.set(null); // 🧪 frischer Run = volle HP/Mana beim ersten Kampf
     this.currentPlayerMana.set(null);
+    this.currentPlayerEnergyShield.set(null); // 🛡️ frischer Run = volles Schild beim ersten Kampf
     this.lastSummaryItemCount = 0;
     this.lastSummaryGold = 0;
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
@@ -376,6 +381,7 @@ export class AdventureStateService {
       activeFight: this.activeFight(),
       currentPlayerHp: this.currentPlayerHp(), // 🧪 mit-persistieren
       currentPlayerMana: this.currentPlayerMana(),
+      currentPlayerEnergyShield: this.currentPlayerEnergyShield(), // 🛡️ mit-persistieren
     };
     localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
     console.log('[saveAdventure] gespeichert unter Key:', this.getStorageKey(), state);
@@ -404,6 +410,7 @@ export class AdventureStateService {
     this.goldEarnedThisRun.set(state.goldEarnedThisRun || 0);
     this.currentPlayerHp.set(state.currentPlayerHp ?? null); // 🧪 restoren
     this.currentPlayerMana.set(state.currentPlayerMana ?? null);
+    this.currentPlayerEnergyShield.set(state.currentPlayerEnergyShield ?? null); // 🛡️ restoren
     this.initializeLevel(state.adventureId, state.playerLevel, state.steps);
     return true;
   }
@@ -434,6 +441,7 @@ export class AdventureStateService {
     this.goldEarnedThisRun.set(0);
     this.currentPlayerHp.set(null); // 🧪 frischer Run = volle HP/Mana beim ersten Kampf
     this.currentPlayerMana.set(null);
+    this.currentPlayerEnergyShield.set(null); // 🛡️ frischer Run = volles Schild beim ersten Kampf
     this.lastSummaryItemCount = 0;
     this.lastSummaryGold = 0;
     this.saveAdventure();

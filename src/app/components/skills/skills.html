@@ -82,6 +82,11 @@
                     }}T)</span
                   >
                 }
+                @if (spell.effectType === 'ENERGY_SHIELD_RESTORE') {
+                  <span class="text-sky-400 font-bold"
+                    >🔷 +{{ spell.effectValues?.value }} ES</span
+                  >
+                }
               </div>
             </div>
           </div>

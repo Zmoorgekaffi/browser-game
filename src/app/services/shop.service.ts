@@ -101,6 +101,11 @@ import healspellsTier2 from '../../../public/item-data/skills/heal/healspells_ti
 import healspellsTier3 from '../../../public/item-data/skills/heal/healspells_tier3.json';
 import healspellsTier4 from '../../../public/item-data/skills/heal/healspells_tier4.json';
 import healspellsTier5 from '../../../public/item-data/skills/heal/healspells_tier5.json';
+import energyshieldspellsTier1 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier1.json';
+import energyshieldspellsTier2 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier2.json';
+import energyshieldspellsTier3 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier3.json';
+import energyshieldspellsTier4 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier4.json';
+import energyshieldspellsTier5 from '../../../public/item-data/skills/energy-shield/energyshieldspells_tier5.json';
 
 // Aufwerte-Materialien nach Typ getrennt: beide gehören jetzt (wie Tränke)
 // zum Gemischtwaren-Laden, der reinen Verbrauchsgüter-Shop geworden ist —
@@ -146,6 +151,7 @@ const magicHigherTierPool: any[] = [
 const skillsTier1Pool: any[] = [
   ...firespellsTier1, ...coldspellsTier1, ...lightningspellsTier1,
   ...chaosspellsTier1, ...physicalspellsTier1, ...healspellsTier1,
+  ...energyshieldspellsTier1,
 ];
 const skillsHigherTierPool: any[] = [
   ...firespellsTier2, ...firespellsTier3, ...firespellsTier4, ...firespellsTier5,
@@ -154,6 +160,7 @@ const skillsHigherTierPool: any[] = [
   ...chaosspellsTier2, ...chaosspellsTier3, ...chaosspellsTier4, ...chaosspellsTier5,
   ...physicalspellsTier2, ...physicalspellsTier3, ...physicalspellsTier4, ...physicalspellsTier5,
   ...healspellsTier2, ...healspellsTier3, ...healspellsTier4, ...healspellsTier5,
+  ...energyshieldspellsTier2, ...energyshieldspellsTier3, ...energyshieldspellsTier4, ...energyshieldspellsTier5,
 ];
 
 interface AllShopsData {

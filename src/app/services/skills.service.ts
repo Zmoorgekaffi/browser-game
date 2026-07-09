@@ -576,6 +576,7 @@ export class SkillsService {
       spells: [
         { id: 'strike_01' },
         { id: 'spell_fire_01' },
+        { id: 'energyshield_01' },
       ],
       equipped_spells: {
         spell_1: null,
