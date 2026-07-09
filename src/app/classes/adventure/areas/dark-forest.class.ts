@@ -29,14 +29,78 @@ import glovesTier3 from '../../../../../public/item-data/equipment/gloves/gloves
 import glovesTier4 from '../../../../../public/item-data/equipment/gloves/gloves_tier4.json';
 import glovesTier5 from '../../../../../public/item-data/equipment/gloves/gloves_tier5.json';
 
-// 🎩 HEAD — aktivieren sobald JSONs existieren
-// import headTier1 from '../../../../../public/item-data/equipment/head/head_tier1.json';
-// import headTier2 from '../../../../../public/item-data/equipment/head/head_tier2.json';
-// import headTier3 from '../../../../../public/item-data/equipment/head/head_tier3.json';
-// import headTier4 from '../../../../../public/item-data/equipment/head/head_tier4.json';
-// import headTier5 from '../../../../../public/item-data/equipment/head/head_tier5.json';
+// 🎩 HEAD
+import headTier1 from '../../../../../public/item-data/equipment/head/head_tier1.json';
+import headTier2 from '../../../../../public/item-data/equipment/head/head_tier2.json';
+import headTier3 from '../../../../../public/item-data/equipment/head/head_tier3.json';
+import headTier4 from '../../../../../public/item-data/equipment/head/head_tier4.json';
+import headTier5 from '../../../../../public/item-data/equipment/head/head_tier5.json';
 
-// 🥋 CHEST / 🩳 LEG / 👢 FOOTWEAR / 🧣 NECKLACE / 💍 RING / 🎒 BACK / 🎗️ ACCESSOIRE / ⚔️ WEAPON — TODO
+// 🥋 CHEST
+import chestTier1 from '../../../../../public/item-data/equipment/chest/chest_tier1.json';
+import chestTier2 from '../../../../../public/item-data/equipment/chest/chest_tier2.json';
+import chestTier3 from '../../../../../public/item-data/equipment/chest/chest_tier3.json';
+import chestTier4 from '../../../../../public/item-data/equipment/chest/chest_tier4.json';
+import chestTier5 from '../../../../../public/item-data/equipment/chest/chest_tier5.json';
+
+// 🩳 LEG
+import legTier1 from '../../../../../public/item-data/equipment/leg/leg_tier1.json';
+import legTier2 from '../../../../../public/item-data/equipment/leg/leg_tier2.json';
+import legTier3 from '../../../../../public/item-data/equipment/leg/leg_tier3.json';
+import legTier4 from '../../../../../public/item-data/equipment/leg/leg_tier4.json';
+import legTier5 from '../../../../../public/item-data/equipment/leg/leg_tier5.json';
+
+// 👢 FOOTWEAR
+import footwearTier1 from '../../../../../public/item-data/equipment/footwear/footwear_tier1.json';
+import footwearTier2 from '../../../../../public/item-data/equipment/footwear/footwear_tier2.json';
+import footwearTier3 from '../../../../../public/item-data/equipment/footwear/footwear_tier3.json';
+import footwearTier4 from '../../../../../public/item-data/equipment/footwear/footwear_tier4.json';
+import footwearTier5 from '../../../../../public/item-data/equipment/footwear/footwear_tier5.json';
+
+// 🧣 NECKLACE
+import necklaceTier1 from '../../../../../public/item-data/equipment/necklace/necklace_tier1.json';
+import necklaceTier2 from '../../../../../public/item-data/equipment/necklace/necklace_tier2.json';
+import necklaceTier3 from '../../../../../public/item-data/equipment/necklace/necklace_tier3.json';
+import necklaceTier4 from '../../../../../public/item-data/equipment/necklace/necklace_tier4.json';
+import necklaceTier5 from '../../../../../public/item-data/equipment/necklace/necklace_tier5.json';
+
+// 💍 RING
+import ringTier1 from '../../../../../public/item-data/equipment/ring/ring_tier1.json';
+import ringTier2 from '../../../../../public/item-data/equipment/ring/ring_tier2.json';
+import ringTier3 from '../../../../../public/item-data/equipment/ring/ring_tier3.json';
+import ringTier4 from '../../../../../public/item-data/equipment/ring/ring_tier4.json';
+import ringTier5 from '../../../../../public/item-data/equipment/ring/ring_tier5.json';
+
+// ⚔️ WEAPON
+import weaponTier1 from '../../../../../public/item-data/weapons/weapon_tier1.json';
+import weaponTier2 from '../../../../../public/item-data/weapons/weapon_tier2.json';
+import weaponTier3 from '../../../../../public/item-data/weapons/weapon_tier3.json';
+import weaponTier4 from '../../../../../public/item-data/weapons/weapon_tier4.json';
+import weaponTier5 from '../../../../../public/item-data/weapons/weapon_tier5.json';
+
+// 🎒 BACK / 🎗️ ACCESSOIRE — TODO (Einzeldateien ohne Tier1-5-Ordnerstruktur,
+// passen aktuell nicht ins ITEM_POOLS-Schema unten)
+
+// 🧪 TRÄNKE (Heil/Mana/Buff, Tier 1-5)
+import healthPotionsTier1 from '../../../../../public/item-data/potions/health/healthpotions_t1.json';
+import healthPotionsTier2 from '../../../../../public/item-data/potions/health/healthpotions_t2.json';
+import healthPotionsTier3 from '../../../../../public/item-data/potions/health/healthpotions_t3.json';
+import healthPotionsTier4 from '../../../../../public/item-data/potions/health/healthpotions_t4.json';
+import healthPotionsTier5 from '../../../../../public/item-data/potions/health/healthpotions_t5.json';
+import manaPotionsTier1 from '../../../../../public/item-data/potions/mana/manapotions_t1.json';
+import manaPotionsTier2 from '../../../../../public/item-data/potions/mana/manapotions_t2.json';
+import manaPotionsTier3 from '../../../../../public/item-data/potions/mana/manapotions_t3.json';
+import manaPotionsTier4 from '../../../../../public/item-data/potions/mana/manapotions_t4.json';
+import manaPotionsTier5 from '../../../../../public/item-data/potions/mana/manapotions_t5.json';
+import buffPotionsTier1 from '../../../../../public/item-data/potions/buff/buffpotions_t1.json';
+import buffPotionsTier2 from '../../../../../public/item-data/potions/buff/buffpotions_t2.json';
+import buffPotionsTier3 from '../../../../../public/item-data/potions/buff/buffpotions_t3.json';
+import buffPotionsTier4 from '../../../../../public/item-data/potions/buff/buffpotions_t4.json';
+import buffPotionsTier5 from '../../../../../public/item-data/potions/buff/buffpotions_t5.json';
+
+// 🧴 AUFWERTUNGSMATERIALIEN — nur Tier-2-Bucket befüllt (siehe ITEM_POOLS.material
+// unten), damit sie über TIER_DISTRIBUTION eine feste "Tier-2-Dropchance" bekommen.
+import materials from '../../../../../public/item-data/materials.json';
 
 // 💬 ENCOUNTERS
 import elfEncounter from '../../../../../public/encounters/dark-forest/elf-encounter.json';
@@ -58,8 +122,90 @@ const ITEM_POOLS: Record<string, SlotTierMap> = {
     4: glovesTier4,
     5: glovesTier5,
   },
-  // head: { 1: headTier1, 2: headTier2, 3: headTier3, 4: headTier4, 5: headTier5 },
-  // chest, leg, footwear, necklace, ring, back, accessoire, weapon
+  head: {
+    1: headTier1,
+    2: headTier2,
+    3: headTier3,
+    4: headTier4,
+    5: headTier5,
+  },
+  chest: {
+    1: chestTier1,
+    2: chestTier2,
+    3: chestTier3,
+    4: chestTier4,
+    5: chestTier5,
+  },
+  leg: {
+    1: legTier1,
+    2: legTier2,
+    3: legTier3,
+    4: legTier4,
+    5: legTier5,
+  },
+  footwear: {
+    1: footwearTier1,
+    2: footwearTier2,
+    3: footwearTier3,
+    4: footwearTier4,
+    5: footwearTier5,
+  },
+  necklace: {
+    1: necklaceTier1,
+    2: necklaceTier2,
+    3: necklaceTier3,
+    4: necklaceTier4,
+    5: necklaceTier5,
+  },
+  ring: {
+    1: ringTier1,
+    2: ringTier2,
+    3: ringTier3,
+    4: ringTier4,
+    5: ringTier5,
+  },
+  weapon: {
+    1: weaponTier1,
+    2: weaponTier2,
+    3: weaponTier3,
+    4: weaponTier4,
+    5: weaponTier5,
+  },
+  // 🎒 BACK / 🎗️ ACCESSOIRE bewusst ausgelassen — Einzeldateien ohne
+  // Tier1-5-Ordnerstruktur, passen nicht ins TierNumber-Schema oben.
+
+  // 🧪 Tränke — normale Tier-Skalierung wie Ausrüstung (über TIER_DISTRIBUTION).
+  'potion-health': {
+    1: healthPotionsTier1,
+    2: healthPotionsTier2,
+    3: healthPotionsTier3,
+    4: healthPotionsTier4,
+    5: healthPotionsTier5,
+  },
+  'potion-mana': {
+    1: manaPotionsTier1,
+    2: manaPotionsTier2,
+    3: manaPotionsTier3,
+    4: manaPotionsTier4,
+    5: manaPotionsTier5,
+  },
+  'potion-buff': {
+    1: buffPotionsTier1,
+    2: buffPotionsTier2,
+    3: buffPotionsTier3,
+    4: buffPotionsTier4,
+    5: buffPotionsTier5,
+  },
+  // 🧴 Aufwertungsmaterialien — bewusst NUR im Tier-2-Bucket befüllt (Tier
+  // 1/3/4/5 bleiben leer), damit sie in JEDEM Level-Bracket ausschließlich
+  // über den Tier-2-Anteil von TIER_DISTRIBUTION droppen ("Tier-2-Dropchance").
+  material: {
+    1: [],
+    2: materials,
+    3: [],
+    4: [],
+    5: [],
+  },
 };
 
 /**

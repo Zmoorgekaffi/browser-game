@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 import { getItemTier } from '../../../utils/item-display.util';
+import { PotionPanel } from '../../shared/potion-panel/potion-panel';
 
 /**
  * @component SummaryScene
@@ -17,7 +18,7 @@ import { getItemTier } from '../../../utils/item-display.util';
 @Component({
   selector: 'app-summary-scene',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PotionPanel],
   templateUrl: './summary-scene.html',
   styleUrl: './summary-scene.scss',
 })
@@ -31,6 +32,13 @@ export class SummaryScene {
   totalItems = this.adventure.pendingRewards;
   newItems = this.adventure.summaryNewItems;
   newGold = this.adventure.summaryNewGold;
+
+  // 🧪 HP/Mana werden über den Run mitgenommen — hier sichtbar, damit man vor
+  // dem nächsten Step gezielt einen Trank trinken kann (siehe PotionPanel).
+  maxHp = computed(() => this.gameStateService.skills.combatStats().hp);
+  maxMana = computed(() => this.gameStateService.skills.combatStats().mana);
+  currentHp = computed(() => this.adventure.currentPlayerHp() ?? this.maxHp());
+  currentMana = computed(() => this.adventure.currentPlayerMana() ?? this.maxMana());
 
   get isDeath(): boolean {
     return this.mode() === 'death';

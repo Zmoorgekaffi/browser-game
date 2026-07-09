@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Trank der Stärke",
+    "description": "Erhöht die Stärke um 20 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_strength_t2.webp",
+    "price": 80,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "2",
+    "effect": { "type": "buff", "stat": "strength", "value": 20, "duration": 5 }
+  },
+  {
+    "name": "Trank der Intelligenz",
+    "description": "Erhöht die Intelligenz um 20 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_intelligence_t2.webp",
+    "price": 80,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "2",
+    "effect": { "type": "buff", "stat": "intelligence", "value": 20, "duration": 5 }
+  },
+  {
+    "name": "Trank der Vitalität",
+    "description": "Erhöht die Vitalität um 20 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_vitality_t2.webp",
+    "price": 80,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "2",
+    "effect": { "type": "buff", "stat": "vitality", "value": 20, "duration": 5 }
+  },
+  {
+    "name": "Trank des Glücks",
+    "description": "Erhöht das Glück um 20 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_luck_t2.webp",
+    "price": 80,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "2",
+    "effect": { "type": "buff", "stat": "luck", "value": 20, "duration": 5 }
+  }
+]

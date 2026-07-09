@@ -41,6 +41,23 @@ import weaponTier4 from '../../../public/item-data/weapons/weapon_tier4.json';
 import weaponTier5 from '../../../public/item-data/weapons/weapon_tier5.json';
 import materials from '../../../public/item-data/materials.json';
 
+// 🧪 Tränke: Gemischtwaren wird zum Verbrauchsgüter-Laden (Tränke + Materialien)
+import healthPotionsTier1 from '../../../public/item-data/potions/health/healthpotions_t1.json';
+import healthPotionsTier2 from '../../../public/item-data/potions/health/healthpotions_t2.json';
+import healthPotionsTier3 from '../../../public/item-data/potions/health/healthpotions_t3.json';
+import healthPotionsTier4 from '../../../public/item-data/potions/health/healthpotions_t4.json';
+import healthPotionsTier5 from '../../../public/item-data/potions/health/healthpotions_t5.json';
+import manaPotionsTier1 from '../../../public/item-data/potions/mana/manapotions_t1.json';
+import manaPotionsTier2 from '../../../public/item-data/potions/mana/manapotions_t2.json';
+import manaPotionsTier3 from '../../../public/item-data/potions/mana/manapotions_t3.json';
+import manaPotionsTier4 from '../../../public/item-data/potions/mana/manapotions_t4.json';
+import manaPotionsTier5 from '../../../public/item-data/potions/mana/manapotions_t5.json';
+import buffPotionsTier1 from '../../../public/item-data/potions/buff/buffpotions_t1.json';
+import buffPotionsTier2 from '../../../public/item-data/potions/buff/buffpotions_t2.json';
+import buffPotionsTier3 from '../../../public/item-data/potions/buff/buffpotions_t3.json';
+import buffPotionsTier4 from '../../../public/item-data/potions/buff/buffpotions_t4.json';
+import buffPotionsTier5 from '../../../public/item-data/potions/buff/buffpotions_t5.json';
+
 // 🎒 Gemischtwaren: Head + Gloves (Tier 1-5)
 import headTier1 from '../../../public/item-data/equipment/head/head_tier1.json';
 import headTier2 from '../../../public/item-data/equipment/head/head_tier2.json';
@@ -85,38 +102,44 @@ import healspellsTier3 from '../../../public/item-data/skills/heal/healspells_ti
 import healspellsTier4 from '../../../public/item-data/skills/heal/healspells_tier4.json';
 import healspellsTier5 from '../../../public/item-data/skills/heal/healspells_tier5.json';
 
-// Aufwerte-Materialien nach Typ getrennt: Item-Schleifpapier gehört zum
-// Gemischtwaren-Laden (physische Waffen), Item-UpgradeCreme zum Magie-Laden
-// (magische Waffen) — siehe WeaponUpgradeService.requiredMaterialType.
+// Aufwerte-Materialien nach Typ getrennt: beide gehören jetzt (wie Tränke)
+// zum Gemischtwaren-Laden, der reinen Verbrauchsgüter-Shop geworden ist —
+// siehe WeaponUpgradeService.requiredMaterialType für die Verwendung.
 const grindingMaterials: any[] = materials.filter((m: any) => m['material-type'] === 'grinding');
 const upgradeCremeMaterials: any[] = materials.filter((m: any) => m['material-type'] === 'upgrade-creme');
 
 // Tier-1-Pool und Tier-2+-Pool je Shop — 2 Items im Angebot sind garantiert
 // Tier 2 oder höher, der Rest ist Tier 1 (siehe generateShopSelection()).
-const smitherTier1Pool: any[] = [...chestTier1, ...legTier1, ...footwearTier1, ...weaponTier1];
+// 🛠️ Schmied verkauft jetzt ALLE Ausrüstung (Kopf/Handschuhe sind vom
+// Gemischtwaren-Laden hierher gewandert, der reiner Verbrauchsgüter-Shop wird).
+const smitherTier1Pool: any[] = [
+  ...chestTier1, ...legTier1, ...footwearTier1, ...weaponTier1,
+  ...headTier1, ...glovesTier1,
+];
 const smitherHigherTierPool: any[] = [
   ...chestTier2, ...chestTier3, ...chestTier4, ...chestTier5,
   ...legTier2, ...legTier3, ...legTier4, ...legTier5,
   ...footwearTier2, ...footwearTier3, ...footwearTier4, ...footwearTier5,
   ...weaponTier2, ...weaponTier3, ...weaponTier4, ...weaponTier5,
-];
-
-const generalTier1Pool: any[] = [...headTier1, ...glovesTier1];
-const generalHigherTierPool: any[] = [
   ...headTier2, ...headTier3, ...headTier4, ...headTier5,
   ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
-  // Item-Schleifpapier: wenige Einträge im großen Pool → über die
-  // bestehende Zufallsauswahl automatisch selten im Angebot.
+];
+
+// 🧪 Gemischtwaren: reiner Verbrauchsgüter-Laden — Tränke (Heil/Mana/Buff) +
+// Aufwertungsmaterialien. Keine Ausrüstung mehr (siehe smither-Pools oben).
+const generalTier1Pool: any[] = [...healthPotionsTier1, ...manaPotionsTier1, ...buffPotionsTier1];
+const generalHigherTierPool: any[] = [
+  ...healthPotionsTier2, ...healthPotionsTier3, ...healthPotionsTier4, ...healthPotionsTier5,
+  ...manaPotionsTier2, ...manaPotionsTier3, ...manaPotionsTier4, ...manaPotionsTier5,
+  ...buffPotionsTier2, ...buffPotionsTier3, ...buffPotionsTier4, ...buffPotionsTier5,
   ...grindingMaterials,
+  ...upgradeCremeMaterials,
 ];
 
 const magicTier1Pool: any[] = [...necklaceTier1, ...ringTier1];
 const magicHigherTierPool: any[] = [
   ...necklaceTier2, ...necklaceTier3, ...necklaceTier4, ...necklaceTier5,
   ...ringTier2, ...ringTier3, ...ringTier4, ...ringTier5,
-  // Item-UpgradeCreme: wenige Einträge im großen Pool → über die
-  // bestehende Zufallsauswahl automatisch selten im Angebot.
-  ...upgradeCremeMaterials,
 ];
 
 // ✨ Skill-Shop-Pool: Tier-1-Spells aller 6 Kategorien vs. Tier 2-5.

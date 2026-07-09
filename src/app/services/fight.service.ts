@@ -5,6 +5,7 @@ import { SpellsEngineService } from './spells-engine.service';
 import { SpellLoaderService } from './spell-loader.service';
 import { ProfileService } from './profile.service';
 import { rollBetween, applyArmorMitigation } from '../utils/combat-roll.util';
+import { applyBuffDeltas, PlayerBuff, BuffableStat } from '../utils/potion-buff.util';
 
 /** XP-Vergütung, wenn ein Monster keine eigene `expReward` mitbringt. */
 const DEFAULT_MONSTER_EXP_REWARD = 30;
@@ -27,10 +28,23 @@ export class FightService {
 
   activeFight = this.adventureStateService.activeFight;
 
+  /** 🧪 Aktive Buff-Effekte aus Buff-Tränken — nur Spieler, gelten nur für den laufenden Kampf. */
+  activePlayerBuffs = signal<PlayerBuff[]>([]);
+
+  /**
+   * Spieler-Kampfwerte inkl. aktiver Buff-Tränke — Basis für ALLE spielerseitigen
+   * Kampfberechnungen in diesem Service UND in SpellsEngineService (siehe
+   * getPlayerCombatStats()). Ersetzt skillsService.combatStats() überall dort,
+   * wo Spieler-Werte im Kampf gebraucht werden.
+   */
+  buffedCombatStats = computed(() =>
+    applyBuffDeltas(this.skillsService.combatStats(), this.activePlayerBuffs()),
+  );
+
   playerHp = signal<number>(0);
-  playerMaxHp = signal<number>(0);
+  playerMaxHp = computed(() => this.buffedCombatStats().hp);
   playerMana = signal<number>(0);
-  playerMaxMana = computed(() => this.skillsService.combatStats().mana);
+  playerMaxMana = computed(() => this.buffedCombatStats().mana);
   playerEnergyShield = signal<number>(0);
   playerMaxEnergyShield = signal<number>(0);
 
@@ -94,8 +108,16 @@ export class FightService {
     this.enrichedMonster.set(fightMonster);
 
     const playerCombatStats = this.skillsService.combatStats();
-    const initialPlayerHp = playerCombatStats.hp;
-    const initialPlayerMana = playerCombatStats.mana;
+    // 🧪 HP/Mana werden über den GESAMTEN Run mitgenommen statt pro Kampf voll
+    // regeneriert zu werden — null (allererster Kampf des Runs) fällt auf die
+    // vollen combatStats() zurück, sonst wird auf das aktuelle Maximum geklemmt
+    // (falls sich die Ausrüstung seit dem letzten Kampf geändert hat).
+    const carriedHp = this.adventureStateService.currentPlayerHp();
+    const carriedMana = this.adventureStateService.currentPlayerMana();
+    const initialPlayerHp =
+      carriedHp !== null ? Math.min(carriedHp, playerCombatStats.hp) : playerCombatStats.hp;
+    const initialPlayerMana =
+      carriedMana !== null ? Math.min(carriedMana, playerCombatStats.mana) : playerCombatStats.mana;
     const initialPlayerEnergyShield = playerCombatStats['energy-shield'] ?? 0;
     const initialMonsterEnergyShield = fightMonster['energy-shield'] ?? 0;
 
@@ -127,7 +149,6 @@ export class FightService {
     }
 
     this.playerHp.set(fightState.playerHp);
-    this.playerMaxHp.set(initialPlayerHp);
     this.playerMana.set(fightState.playerMana ?? initialPlayerMana);
     this.playerEnergyShield.set(fightState.playerEnergyShield ?? initialPlayerEnergyShield);
     this.playerMaxEnergyShield.set(initialPlayerEnergyShield);
@@ -181,7 +202,7 @@ export class FightService {
   /** Führt den normalen Angriff des Spielers aus (nur im Spieler-Zug). */
   executePlayerAttack(): void {
     if (this.currentTurn() !== 'player') return;
-    const stats = this.skillsService.combatStats();
+    const stats = this.buffedCombatStats();
     const rawDamage = rollBetween(stats.attackMin, stats.attackMax);
     // Physischer Schadens-Multiplikator aus Stärke (siehe SkillsService.
     // applyAttributeScaling) wirkt erst hier auf den ausgewürfelten Waffenschaden.
@@ -216,6 +237,39 @@ export class FightService {
     return spell ? spell.name : 'Unbekannter Zauber';
   }
 
+  /** 🧪 Spieler-Kampfwerte inkl. aktiver Buff-Tränke — für SpellsEngineService. */
+  public getPlayerCombatStats(): any {
+    return this.buffedCombatStats();
+  }
+
+  /** 🧪 Wendet einen Heiltrank im Kampf an, geklemmt an playerMaxHp(). */
+  public healPlayer(value: number): void {
+    this.playerHp.update((hp) => Math.min(this.playerMaxHp(), hp + value));
+  }
+
+  /** 🧪 Wendet einen Manatrank im Kampf an, geklemmt an playerMaxMana(). */
+  public restoreMana(value: number): void {
+    this.playerMana.update((mana) => Math.min(this.playerMaxMana(), mana + value));
+  }
+
+  /** 🧪 Fügt einen Buff-Trank-Effekt hinzu (siehe activePlayerBuffs/buffedCombatStats). */
+  public addPlayerBuff(stat: BuffableStat, amount: number, duration: number, potionName: string): void {
+    this.activePlayerBuffs.update((buffs) => [
+      ...buffs,
+      { stat, amount, roundsLeft: duration, potionName },
+    ]);
+  }
+
+  /**
+   * 🧪 Verbraucht den Spielzug für das Trinken eines Trankes (nur im Spieler-Zug,
+   * wie ein Angriff oder Zauber — ersetzt den entfernten "Verteidigen (TBD)"-Slot).
+   */
+  public consumePotionTurn(logMessage: string): void {
+    if (this.currentTurn() !== 'player') return;
+    this.addLogMessage(logMessage);
+    this.endTurn();
+  }
+
   /**
    * Zieht dem Monster Schaden ab (nach Ausweich-/Krit-Wurf, siehe
    * `resolveAttack()`); bei 0 HP endet der Kampf mit Sieg.
@@ -228,7 +282,7 @@ export class FightService {
    */
   public applyDamageToMonster(damage: number, damageType: 'physical' | 'elemental' = 'physical'): void {
     const monster = this.enrichedMonster();
-    const playerStats = this.skillsService.combatStats();
+    const playerStats = this.buffedCombatStats();
 
     const { finalDamage, dodged } = this.resolveAttack(damage, {
       attackerLuck: playerStats.luck ?? 0,
@@ -261,7 +315,7 @@ export class FightService {
    */
   public applyDamageToPlayer(damage: number, damageType: 'physical' | 'elemental' = 'physical'): void {
     const monster = this.enrichedMonster();
-    const playerStats = this.skillsService.combatStats();
+    const playerStats = this.buffedCombatStats();
 
     const scaledDamage = Math.round(damage * (0.75 + Math.random() * 0.25));
 
@@ -392,7 +446,15 @@ export class FightService {
       this.currentTurn.set('player');
       this.round.update((r) => r + 1);
 
-      const playerStats = this.skillsService.combatStats();
+      // 🧪 Buff-Tränke laufen über eine feste Rundenzahl — ein voller
+      // Rundenwechsel (Spieler UND Monster haben gezogen) zählt als 1 Runde.
+      this.activePlayerBuffs.update((buffs) =>
+        buffs
+          .map((b) => ({ ...b, roundsLeft: b.roundsLeft - 1 }))
+          .filter((b) => b.roundsLeft > 0),
+      );
+
+      const playerStats = this.buffedCombatStats();
       const manaRegen = 3 + Math.floor((playerStats.intelligence || 0) / 5);
       this.playerMana.update((mana) => Math.min(this.playerMaxMana(), mana + manaRegen));
 
@@ -485,6 +547,17 @@ export class FightService {
   private handleFightEnd(playerWon: boolean): void {
     const defeatedMonster = this.enrichedMonster();
     this.enrichedMonster.set(null); // aufräumen
+
+    // 🧪 HP/Mana am Kampfende in den Run-weiten Träger zurückschreiben, damit
+    // der nächste Kampf-Step NICHT wieder bei voller HP/Mana startet (siehe
+    // initializeFight()). Bei Niederlage wird der Wert kurz danach ohnehin
+    // über clearAdventure() (failAdventure) wieder auf null zurückgesetzt.
+    this.adventureStateService.currentPlayerHp.set(this.playerHp());
+    this.adventureStateService.currentPlayerMana.set(this.playerMana());
+
+    // 🧪 Buff-Tränke wirken nur für den Kampf, in dem sie getrunken wurden —
+    // bei Sieg UND Niederlage werden sie hier immer geleert.
+    this.activePlayerBuffs.set([]);
 
     if (playerWon) {
       console.log('🏆 Sieg!');

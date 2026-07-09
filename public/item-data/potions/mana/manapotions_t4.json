@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Starker Manatrank",
+    "description": "Von Erzmagiern gebraut. Stellt sofort 240 Mana wieder her.",
+    "img-path": "imgs/items/potions/mana/mana_potion_t4.webp",
+    "price": 150,
+    "armor-slot": "potion",
+    "potion-type": "mana",
+    "tier": "4",
+    "effect": { "type": "restore-mana", "value": 240 }
+  }
+]

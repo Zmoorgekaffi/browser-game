@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Kleiner Manatrank",
+    "description": "Ein bitterer, blau schimmernder Sud. Stellt sofort 40 Mana wieder her.",
+    "img-path": "imgs/items/potions/mana/mana_potion_t1.webp",
+    "price": 20,
+    "armor-slot": "potion",
+    "potion-type": "mana",
+    "tier": "1",
+    "effect": { "type": "restore-mana", "value": 40 }
+  }
+]

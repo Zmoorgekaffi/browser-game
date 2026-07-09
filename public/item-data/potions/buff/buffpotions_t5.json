@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Meisterlicher Trank der Stärke",
+    "description": "Erhöht die Stärke um 80 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_strength_t5.webp",
+    "price": 350,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "5",
+    "effect": { "type": "buff", "stat": "strength", "value": 80, "duration": 5 }
+  },
+  {
+    "name": "Meisterlicher Trank der Intelligenz",
+    "description": "Erhöht die Intelligenz um 80 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_intelligence_t5.webp",
+    "price": 350,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "5",
+    "effect": { "type": "buff", "stat": "intelligence", "value": 80, "duration": 5 }
+  },
+  {
+    "name": "Meisterlicher Trank der Vitalität",
+    "description": "Erhöht die Vitalität um 80 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_vitality_t5.webp",
+    "price": 350,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "5",
+    "effect": { "type": "buff", "stat": "vitality", "value": 80, "duration": 5 }
+  },
+  {
+    "name": "Meisterlicher Trank des Glücks",
+    "description": "Erhöht das Glück um 80 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_luck_t5.webp",
+    "price": 350,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "5",
+    "effect": { "type": "buff", "stat": "luck", "value": 80, "duration": 5 }
+  }
+]

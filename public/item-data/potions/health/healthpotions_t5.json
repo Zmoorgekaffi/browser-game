@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Meisterlicher Heiltrank",
+    "description": "Ein legendäres Elixier, in Kristallphiolen abgefüllt. Stellt sofort 900 HP wieder her.",
+    "img-path": "imgs/items/potions/health/health_potion_t5.webp",
+    "price": 220,
+    "armor-slot": "potion",
+    "potion-type": "health",
+    "tier": "5",
+    "effect": { "type": "heal", "value": 900 }
+  }
+]

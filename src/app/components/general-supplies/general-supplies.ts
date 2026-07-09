@@ -9,20 +9,30 @@ import { CraftingPanel } from '../shared/crafting-panel/crafting-panel';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
 import { framePaths } from '../../utils/frame-paths.util';
 
-import headTier1 from '../../../../public/item-data/equipment/head/head_tier1.json';
-import headTier2 from '../../../../public/item-data/equipment/head/head_tier2.json';
-import headTier3 from '../../../../public/item-data/equipment/head/head_tier3.json';
-import headTier4 from '../../../../public/item-data/equipment/head/head_tier4.json';
-import headTier5 from '../../../../public/item-data/equipment/head/head_tier5.json';
-import glovesTier1 from '../../../../public/item-data/equipment/gloves/gloves_tier1.json';
-import glovesTier2 from '../../../../public/item-data/equipment/gloves/gloves_tier2.json';
-import glovesTier3 from '../../../../public/item-data/equipment/gloves/gloves_tier3.json';
-import glovesTier4 from '../../../../public/item-data/equipment/gloves/gloves_tier4.json';
-import glovesTier5 from '../../../../public/item-data/equipment/gloves/gloves_tier5.json';
+import healthPotionsTier1 from '../../../../public/item-data/potions/health/healthpotions_t1.json';
+import healthPotionsTier2 from '../../../../public/item-data/potions/health/healthpotions_t2.json';
+import healthPotionsTier3 from '../../../../public/item-data/potions/health/healthpotions_t3.json';
+import healthPotionsTier4 from '../../../../public/item-data/potions/health/healthpotions_t4.json';
+import healthPotionsTier5 from '../../../../public/item-data/potions/health/healthpotions_t5.json';
+import manaPotionsTier1 from '../../../../public/item-data/potions/mana/manapotions_t1.json';
+import manaPotionsTier2 from '../../../../public/item-data/potions/mana/manapotions_t2.json';
+import manaPotionsTier3 from '../../../../public/item-data/potions/mana/manapotions_t3.json';
+import manaPotionsTier4 from '../../../../public/item-data/potions/mana/manapotions_t4.json';
+import manaPotionsTier5 from '../../../../public/item-data/potions/mana/manapotions_t5.json';
+import buffPotionsTier1 from '../../../../public/item-data/potions/buff/buffpotions_t1.json';
+import buffPotionsTier2 from '../../../../public/item-data/potions/buff/buffpotions_t2.json';
+import buffPotionsTier3 from '../../../../public/item-data/potions/buff/buffpotions_t3.json';
+import buffPotionsTier4 from '../../../../public/item-data/potions/buff/buffpotions_t4.json';
+import buffPotionsTier5 from '../../../../public/item-data/potions/buff/buffpotions_t5.json';
+import materials from '../../../../public/item-data/materials.json';
 
+// 🧪 Gemischtwaren ist der reine Verbrauchsgüter-Laden (Tränke + Materialien) —
+// Ausrüstung (Kopf/Handschuhe) ist zum Schmied gewandert (siehe shop.service.ts).
 const supplies: any[] = [
-  ...headTier1, ...headTier2, ...headTier3, ...headTier4, ...headTier5,
-  ...glovesTier1, ...glovesTier2, ...glovesTier3, ...glovesTier4, ...glovesTier5,
+  ...healthPotionsTier1, ...healthPotionsTier2, ...healthPotionsTier3, ...healthPotionsTier4, ...healthPotionsTier5,
+  ...manaPotionsTier1, ...manaPotionsTier2, ...manaPotionsTier3, ...manaPotionsTier4, ...manaPotionsTier5,
+  ...buffPotionsTier1, ...buffPotionsTier2, ...buffPotionsTier3, ...buffPotionsTier4, ...buffPotionsTier5,
+  ...materials,
 ];
 
 /**

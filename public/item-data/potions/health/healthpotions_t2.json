@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Heiltrank",
+    "description": "Ein solider Alchemisten-Sud. Stellt sofort 130 HP wieder her.",
+    "img-path": "imgs/items/potions/health/health_potion_t2.webp",
+    "price": 50,
+    "armor-slot": "potion",
+    "potion-type": "health",
+    "tier": "2",
+    "effect": { "type": "heal", "value": 130 }
+  }
+]

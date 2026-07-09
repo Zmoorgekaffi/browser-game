@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Kleiner Trank der Stärke",
+    "description": "Erhöht die Stärke um 10 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_strength_t1.webp",
+    "price": 35,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "1",
+    "effect": { "type": "buff", "stat": "strength", "value": 10, "duration": 5 }
+  },
+  {
+    "name": "Kleiner Trank der Intelligenz",
+    "description": "Erhöht die Intelligenz um 10 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_intelligence_t1.webp",
+    "price": 35,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "1",
+    "effect": { "type": "buff", "stat": "intelligence", "value": 10, "duration": 5 }
+  },
+  {
+    "name": "Kleiner Trank der Vitalität",
+    "description": "Erhöht die Vitalität um 10 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_vitality_t1.webp",
+    "price": 35,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "1",
+    "effect": { "type": "buff", "stat": "vitality", "value": 10, "duration": 5 }
+  },
+  {
+    "name": "Kleiner Trank des Glücks",
+    "description": "Erhöht das Glück um 10 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_luck_t1.webp",
+    "price": 35,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "1",
+    "effect": { "type": "buff", "stat": "luck", "value": 10, "duration": 5 }
+  }
+]

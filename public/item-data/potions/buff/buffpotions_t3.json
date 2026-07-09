@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Großer Trank der Stärke",
+    "description": "Erhöht die Stärke um 35 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_strength_t3.webp",
+    "price": 150,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "3",
+    "effect": { "type": "buff", "stat": "strength", "value": 35, "duration": 5 }
+  },
+  {
+    "name": "Großer Trank der Intelligenz",
+    "description": "Erhöht die Intelligenz um 35 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_intelligence_t3.webp",
+    "price": 150,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "3",
+    "effect": { "type": "buff", "stat": "intelligence", "value": 35, "duration": 5 }
+  },
+  {
+    "name": "Großer Trank der Vitalität",
+    "description": "Erhöht die Vitalität um 35 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_vitality_t3.webp",
+    "price": 150,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "3",
+    "effect": { "type": "buff", "stat": "vitality", "value": 35, "duration": 5 }
+  },
+  {
+    "name": "Großer Trank des Glücks",
+    "description": "Erhöht das Glück um 35 für 5 Runden.",
+    "img-path": "imgs/items/potions/buff/buff_luck_t3.webp",
+    "price": 150,
+    "armor-slot": "potion",
+    "potion-type": "buff",
+    "tier": "3",
+    "effect": { "type": "buff", "stat": "luck", "value": 35, "duration": 5 }
+  }
+]

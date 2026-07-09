@@ -1,0 +1,45 @@
+<div class="potion-panel relative inline-block">
+  <button
+    type="button"
+    class="px-6 py-3 bg-emerald-700 rounded-lg shadow-md hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white"
+    [disabled]="triggerDisabled()"
+    (click)="toggle()"
+  >
+    🧪 {{ label }}
+  </button>
+
+  @if (open()) {
+    <div
+      class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 max-h-80 overflow-y-auto bg-[rgba(15,15,15,0.95)] border border-white/10 rounded-lg shadow-lg p-3 flex flex-col gap-2 z-20 text-white"
+    >
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold text-emerald-300">{{ label }}</span>
+        <button type="button" class="text-xs text-zinc-400 hover:text-white" (click)="open.set(false)">✕</button>
+      </div>
+
+      @if (groupedPotions().length === 0) {
+        <div class="text-zinc-500 text-xs text-center py-4">Keine passenden Tränke im Inventar.</div>
+      } @else {
+        @for (group of groupedPotions(); track group.name) {
+          <div class="flex items-center gap-2 bg-black/40 border border-white/10 rounded-md p-2">
+            <div class="w-9 h-9 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
+              <img [src]="group.imgPath" [alt]="group.name" class="w-full h-full object-contain" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-semibold truncate">{{ group.name }} <span class="text-zinc-400">x{{ group.count }}</span></p>
+              <p class="text-[10px] text-zinc-400 truncate">{{ group.description }}</p>
+            </div>
+            <button
+              type="button"
+              class="px-2 py-1 text-[11px] bg-emerald-600 rounded hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+              [disabled]="triggerDisabled()"
+              (click)="usePotion(group)"
+            >
+              Benutzen
+            </button>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

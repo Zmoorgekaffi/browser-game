@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Großer Manatrank",
+    "description": "Dicht mit arkaner Energie gesättigt. Stellt sofort 140 Mana wieder her.",
+    "img-path": "imgs/items/potions/mana/mana_potion_t3.webp",
+    "price": 90,
+    "armor-slot": "potion",
+    "potion-type": "mana",
+    "tier": "3",
+    "effect": { "type": "restore-mana", "value": 140 }
+  }
+]

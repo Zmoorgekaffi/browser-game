@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Manatrank",
+    "description": "Destilliert aus Sternenblütenpollen. Stellt sofort 85 Mana wieder her.",
+    "img-path": "imgs/items/potions/mana/mana_potion_t2.webp",
+    "price": 50,
+    "armor-slot": "potion",
+    "potion-type": "mana",
+    "tier": "2",
+    "effect": { "type": "restore-mana", "value": 85 }
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Meisterlicher Manatrank",
+    "description": "Ein legendäres Elixier reiner arkaner Essenz. Stellt sofort 320 Mana wieder her.",
+    "img-path": "imgs/items/potions/mana/mana_potion_t5.webp",
+    "price": 220,
+    "armor-slot": "potion",
+    "potion-type": "mana",
+    "tier": "5",
+    "effect": { "type": "restore-mana", "value": 320 }
+  }
+]

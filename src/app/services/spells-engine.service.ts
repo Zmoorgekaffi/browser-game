@@ -85,7 +85,9 @@ export class SpellsEngineService {
     }
 
     // --- 3. SCHADENS-BONI BERECHNEN ---
-    const playerStats = this.skillsService.combatStats();
+    // 🧪 Im Kampf fließen aktive Buff-Tränke (STR/INT/VIT/Glück) über
+    // FightService.getPlayerCombatStats() mit ein — siehe FightService.buffedCombatStats().
+    const playerStats = isCombat ? fightService.getPlayerCombatStats() : this.skillsService.combatStats();
 
     // ✅ Monster-Stats aus enrichedMonster holen (vollständiges Objekt, nicht activeFight)
     const enrichedMonster = fightService.getEnrichedMonster();

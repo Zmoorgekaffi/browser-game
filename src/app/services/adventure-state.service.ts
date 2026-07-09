@@ -22,6 +22,9 @@ export interface AdventureSaveState {
     round: number;
     turn: 'player' | 'monster';
   } | null;
+  /** 🧪 Über den ganzen Run mitgenommene HP/Mana (null = noch nicht initialisiert → voll). */
+  currentPlayerHp?: number | null;
+  currentPlayerMana?: number | null;
 }
 
 /**
@@ -57,6 +60,12 @@ export class AdventureStateService {
   adventureId = signal<string | null>(null);
   /** Zustand des aktiven Kampfes oder null, wenn kein Kampf läuft. */
   activeFight = signal<any | null>(null);
+
+  // 🧪 HP/Mana werden über den GESAMTEN Run mitgenommen (nicht mehr pro Kampf voll
+  // regeneriert) — null bedeutet "noch nicht initialisiert", FightService.initializeFight()
+  // füllt dann mit den vollen combatStats() als Startwert für den allerersten Kampf.
+  public currentPlayerHp: WritableSignal<number | null> = signal<number | null>(null);
+  public currentPlayerMana: WritableSignal<number | null> = signal<number | null>(null);
   /** Die aktive Area-Instanz (z.B. DarkForest) mit Loot-/Intro-Daten. */
   level: WritableSignal<any | null> = signal<any | null>(null);
 
@@ -119,6 +128,8 @@ export class AdventureStateService {
     this.level.set(null);
     this.pendingRewards.set([]); // 🎁 verworfen
     this.goldEarnedThisRun.set(0);
+    this.currentPlayerHp.set(null); // 🧪 nächster Run startet wieder mit voller HP/Mana
+    this.currentPlayerMana.set(null);
     this.summaryMode.set(null);
     this.summaryNewItems.set([]);
     this.summaryNewGold.set(0);
@@ -137,6 +148,26 @@ export class AdventureStateService {
     if (amount <= 0) return;
     this.walletService.addGold(amount);
     this.goldEarnedThisRun.update((total) => total + amount);
+    this.saveAdventure();
+  }
+
+  /**
+   * 🧪 Wendet einen Heiltrank AUSSERHALB eines Kampfes an (z.B. im Zwischenstand).
+   * Geklemmt an die volle HP aus combatStats() — falls noch nie initialisiert
+   * (null, allererster Step des Runs), wird von diesem Maximum ausgegangen.
+   */
+  public applyPotionHeal(value: number): void {
+    const maxHp = this.skillsService.combatStats().hp;
+    const current = this.currentPlayerHp() ?? maxHp;
+    this.currentPlayerHp.set(Math.min(maxHp, current + value));
+    this.saveAdventure();
+  }
+
+  /** 🧪 Wendet einen Manatrank AUSSERHALB eines Kampfes an — siehe applyPotionHeal(). */
+  public applyPotionMana(value: number): void {
+    const maxMana = this.skillsService.combatStats().mana;
+    const current = this.currentPlayerMana() ?? maxMana;
+    this.currentPlayerMana.set(Math.min(maxMana, current + value));
     this.saveAdventure();
   }
 
@@ -320,6 +351,8 @@ export class AdventureStateService {
     this.currentStepIndex.set(0);
     this.pendingRewards.set([]);
     this.goldEarnedThisRun.set(0);
+    this.currentPlayerHp.set(null); // 🧪 frischer Run = volle HP/Mana beim ersten Kampf
+    this.currentPlayerMana.set(null);
     this.lastSummaryItemCount = 0;
     this.lastSummaryGold = 0;
     this.initializeLevel('duesterwald', this.profileService.level() || 1, newLevel.eventSteps);
@@ -341,6 +374,8 @@ export class AdventureStateService {
       pendingRewards: this.pendingRewards(), // 🎁 mit-persistieren
       goldEarnedThisRun: this.goldEarnedThisRun(),
       activeFight: this.activeFight(),
+      currentPlayerHp: this.currentPlayerHp(), // 🧪 mit-persistieren
+      currentPlayerMana: this.currentPlayerMana(),
     };
     localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
     console.log('[saveAdventure] gespeichert unter Key:', this.getStorageKey(), state);
@@ -367,6 +402,8 @@ export class AdventureStateService {
     this.activeFight.set(state.activeFight || null);
     this.pendingRewards.set(state.pendingRewards || []); // 🎁 restoren
     this.goldEarnedThisRun.set(state.goldEarnedThisRun || 0);
+    this.currentPlayerHp.set(state.currentPlayerHp ?? null); // 🧪 restoren
+    this.currentPlayerMana.set(state.currentPlayerMana ?? null);
     this.initializeLevel(state.adventureId, state.playerLevel, state.steps);
     return true;
   }
@@ -395,6 +432,8 @@ export class AdventureStateService {
     this.activeFight.set(null);
     this.pendingRewards.set([]); // 🎁 frischer Run = leere Rewards
     this.goldEarnedThisRun.set(0);
+    this.currentPlayerHp.set(null); // 🧪 frischer Run = volle HP/Mana beim ersten Kampf
+    this.currentPlayerMana.set(null);
     this.lastSummaryItemCount = 0;
     this.lastSummaryGold = 0;
     this.saveAdventure();
