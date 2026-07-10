@@ -1,29 +1,29 @@
 /* 1. Für moderne Browser (Firefox / Chrome / Safari / Edge) */
 .small-scrollbar {
-  scrollbar-width: thin;          /* Macht die Scrollbar dünner */
-  scrollbar-color: #4a3a24 #120e0b; /* (Balken-Farbe) (Hintergrund-Farbe) */
+  scrollbar-width: thin !important;          /* Macht die Scrollbar dünner */
+  scrollbar-color: #c9a34d #181310 !important; /* (Balken-Farbe: Grim-Gold) (Hintergrund: Grim-Panel) */
 }
 
 /* 2. Für ältere/Webkit-Browser (Chrome, Safari, Edge) */
 /* Bestimmt die Breite der Scrollbar */
 .small-scrollbar::-webkit-scrollbar {
-  width: 6px;  /* Breite für vertikale Scrollbars */
-  height: 6px; /* Höhe für horizontale Scrollbars */
+  width: 6px !important;  /* Breite für vertikale Scrollbars */
+  height: 6px !important; /* Höhe für horizontale Scrollbars */
 }
 
 /* Bestimmt den Hintergrund (die Spur) */
 .small-scrollbar::-webkit-scrollbar-track {
-  background: blue;
-  border-radius: 10px; /* Macht die Kanten rund */
+  background: #181310 !important;
+  border-radius: 10px !important; /* Macht die Kanten rund */
 }
 
 /* Bestimmt den beweglichen Balken */
 .small-scrollbar::-webkit-scrollbar-thumb {
-  background: blue;
-  border-radius: 10px; /* Macht die Kanten rund */
+  background: #c9a34d !important;
+  border-radius: 10px !important; /* Macht die Kanten rund */
 }
 
 /* Farbe ändern, wenn man mit der Maus darüber fährt */
 .small-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: blue;
+  background: #e8dfc8 !important;
 }
