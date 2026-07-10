@@ -1,6 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ==========================================================================
+   GRIMDARK DESIGN SYSTEM
+   Wiederverwendbare Bausteine für Panels, Buttons und Balken.
+   Zieht sich durch alle Adventure-Scenes (Fight, Summary, Name-Creation, ...).
+   ========================================================================== */
+
+.heading-grim {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.panel-grim {
+  background: linear-gradient(180deg, rgba(24, 19, 16, 0.94), rgba(11, 9, 6, 0.94));
+  border: 1px solid #4a3a24;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 163, 77, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.55);
+}
+
+.btn-grim {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: 0.03em;
+  border-radius: 4px;
+  border: 1px solid #4a3a24;
+  background: linear-gradient(180deg, #2a2118, #171310);
+  color: #e8dfc8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-grim:hover:not(:disabled) {
+  border-color: #c9a34d;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 10px rgba(201, 163, 77, 0.35);
+}
+
+.btn-grim:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-grim:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-grim-primary {
+  border-color: #5a4526;
+  background: linear-gradient(180deg, #3a2e1c, #201a10);
+}
+
+.btn-grim-primary:hover:not(:disabled) {
+  border-color: #c9a34d;
+}
+
+.btn-grim-danger {
+  border-color: #5a2323;
+  background: linear-gradient(180deg, #3a1a1a, #200f0f);
+  color: #e8c8c8;
+}
+
+.btn-grim-danger:hover:not(:disabled) {
+  border-color: #a13a3a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 10px rgba(161, 58, 58, 0.4);
+}
+
+.bar-grim {
+  position: relative;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #120e0b;
+  border: 1px solid #4a3a24;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.bar-grim-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.bar-grim-fill.hp {
+  background: linear-gradient(180deg, #a13a3a, #5a1f1f);
+}
+
+.bar-grim-fill.mp {
+  background: linear-gradient(180deg, #3a6a8a, #1f3a5a);
+}
+
+.panel-grim.panel-grim-death {
+  border-color: #7a1f1f;
+  box-shadow:
+    inset 0 0 0 1px rgba(161, 58, 58, 0.25),
+    0 6px 20px rgba(0, 0, 0, 0.55);
+}
+
+.bar-grim-fill.es {
+  background: linear-gradient(180deg, rgba(90, 200, 220, 0.75), rgba(30, 90, 110, 0.75));
+}
 
 /* 📱 Globales Nicht-Markieren: verhindert das störende Text-/Bild-
    Markieren beim Tippen und Wischen (v.a. auf dem Handy).

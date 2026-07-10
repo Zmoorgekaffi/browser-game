@@ -3,19 +3,18 @@
   [class.bg-black]="!isDeath"
   [class.bg-red-950]="isDeath"
 >
-  <div class="w-full max-w-[640px] max-h-full overflow-y-auto bg-[rgba(15,15,15,0.92)] border rounded-lg p-8 flex flex-col gap-6"
-       [class.border-white/10]="!isDeath"
-       [class.border-red-500/40]="isDeath"
+  <div class="panel-grim w-full max-w-[640px] max-h-full overflow-y-auto p-8 flex flex-col gap-6"
+       [class.panel-grim-death]="isDeath"
   >
     <div class="flex flex-col gap-2 text-center">
       @if (isDeath) {
-        <h2 class="text-3xl font-bold text-red-400">Niederlage</h2>
+        <h2 class="heading-grim text-3xl font-bold text-red-400">Niederlage</h2>
         <p class="text-zinc-300 leading-snug">
           Du wurdest besiegt. Deine gesammelte Beute bleibt im Düsterwald zurück –
           möge ein anderer Abenteurer sie mit mehr Glück finden.
         </p>
       } @else {
-        <h2 class="text-3xl font-bold text-amber-300">Zwischenstand</h2>
+        <h2 class="heading-grim text-3xl font-bold text-grim-gold">Zwischenstand</h2>
         <p class="text-zinc-300 leading-snug">
           Das hast du bisher auf deiner Reise gefunden. Bring es sicher ins Dorf zurück!
         </p>
@@ -90,15 +89,9 @@
 
     <button
       (click)="onContinue()"
-      class="self-center mt-2 rounded-md border px-6 py-3 text-sm font-semibold cursor-pointer transition-colors"
-      [class.border-emerald-500]="!isDeath"
-      [class.bg-emerald-600]="!isDeath"
-      [class.bg-opacity-30]="!isDeath"
-      [class.hover:bg-opacity-50]="!isDeath"
-      [class.border-red-500]="isDeath"
-      [class.bg-red-600]="isDeath"
-      [class.bg-opacity-30]="isDeath"
-      [class.hover:bg-opacity-50]="isDeath"
+      class="btn-grim self-center mt-2 px-6 py-3 text-sm font-semibold"
+      [class.btn-grim-danger]="isDeath"
+      [class.btn-grim-primary]="!isDeath"
     >
       {{ isDeath ? 'Zurück ins Dorf' : 'Weiterziehen →' }}
     </button>
