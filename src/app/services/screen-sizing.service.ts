@@ -14,7 +14,6 @@ export class ScreenSizingService {
 
   public isFullscreen = signal<boolean>(false);
   public scale = signal<number>(1);
-  public headerVisibleInFullscreen = signal<boolean>(false);
 
   // True wenn das Browser-Fenster schmaler als die native Spielbreite ist
   public isScreenTooSmall = signal<boolean>(window.innerWidth < this.BASE_WIDTH);
@@ -23,10 +22,6 @@ export class ScreenSizingService {
     document.addEventListener('fullscreenchange', () => {
       const isFs = !!document.fullscreenElement;
       this.isFullscreen.set(isFs);
-
-      if (isFs) {
-        this.headerVisibleInFullscreen.set(false);
-      }
 
       requestAnimationFrame(() => this.recalculateScale());
     });
@@ -58,11 +53,6 @@ export class ScreenSizingService {
     } else {
       document.exitFullscreen?.();
     }
-  }
-
-  /** Blendet den Header im Vollbild-Modus ein/aus. */
-  public toggleHeader(): void {
-    this.headerVisibleInFullscreen.update((v) => !v);
   }
 
   /** Berechnet den Skalierungsfaktor (nur im Vollbild ≠ 1). */

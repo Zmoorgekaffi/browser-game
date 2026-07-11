@@ -2,26 +2,26 @@ import { Component, Signal, inject, computed, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { GameStateService } from '../../../services/game-state.service';
-import { ScreenSizingService } from '../../../services/screen-sizing.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { SettingsMenu } from '../settings-menu/settings-menu';
 
 /**
  * @component Header
- * @description Kopfleiste mit Charakter-Infos (Name, Level, EXP),
- * Währungen und Menü-Links. Blendet die Navigation in
- * Adventure-Action-Szenen aus (isInAdventureAction).
+ * @description Transparente, permanent sichtbare Kopfleiste mit
+ * Charakter-Infos (Name, Level, EXP), Währungen, Menü-Links und dem
+ * Settings-Button. Blendet die Navigation in Adventure-Action-Szenen
+ * aus (isInAdventureAction).
  */
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, SettingsMenu],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
   private router = inject(Router);
-  public screenSizingService = inject(ScreenSizingService);
 
   gold: Signal<number>;
   rubies: Signal<number>;

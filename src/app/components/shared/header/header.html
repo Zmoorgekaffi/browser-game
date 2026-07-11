@@ -1,47 +1,40 @@
 @if (currentCharId() != null) {
   <header
-    class="w-full h-[3rem] bg-[orange] rounded-[8px] flex justify-between items-center px-4 relative"
+    class="z-20 w-full h-[3rem] bg-black/40 backdrop-blur-sm border-b border-grim-border/60 shadow-[0_2px_12px_rgba(0,0,0,0.5)] flex justify-between items-center px-4 relative font-mono text-sm text-grim-parchment"
   >
     <div class="flex items-center gap-3">
-      @if (screenSizingService.isFullscreen()) {
-        <button
-          (click)="screenSizingService.toggleHeader()"
-          class="px-4 py-1.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-bold rounded-md transition-all select-none cursor-pointer border-2 border-white shadow-lg hover:shadow-xl hover:scale-105"
-        >
-          ✕ Schliessen
-        </button>
-      }
-      <span>Rubine: {{ rubies() }} | Gold: {{ gold() }}</span>
+      <app-settings-menu></app-settings-menu>
+      <span>Rubine: <span class="text-grim-gold">{{ rubies() }}</span> | Gold: <span class="text-grim-gold">{{ gold() }}</span></span>
     </div>
 
-    <div>
+    <div class="heading-grim tracking-wide">
       @if (gameStateService.adventureStateService.level() != null) {
-        <span class="hover:underline cursor-pointer" routerLink="/inventar">Reset Adventure</span>
+        <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/inventar">Reset Adventure</span>
       }
 
       @if (gameStateService.adventureStateService.level() === null) {
-        <span class="hover:underline cursor-pointer" routerLink="/character">Charakter</span>
-        <span> | </span>
-        <span class="hover:underline cursor-pointer" routerLink="/inventar">Inventar</span>
+        <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/character">Charakter</span>
+        <span class="text-grim-border mx-1">|</span>
+        <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/inventar">Inventar</span>
       }
     </div>
 
     <div class="flex flex-col items-end gap-1 py-1">
       <span
-        >Name: <span class="hover:underline cursor-pointer" routerLink="/name-creation">{{ name() }}</span> | Level:
-        {{ lvl() }}</span
+        >Name: <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/name-creation">{{ name() }}</span> | Level:
+        <span class="text-grim-gold">{{ lvl() }}</span></span
       >
       <div
-        class="w-32 h-2 bg-black/30 rounded-full overflow-hidden border border-white/30"
+        class="w-32 h-2 bg-black/50 rounded-full overflow-hidden border border-grim-border"
         [attr.title]="
           isMaxLevel() ? 'Max. Level erreicht' : exp() + ' / ' + expRequiredForNextLevel() + ' XP'
         "
       >
         @if (isMaxLevel()) {
-          <div class="h-full w-full bg-amber-400"></div>
+          <div class="h-full w-full bg-grim-gold"></div>
         } @else {
           <div
-            class="h-full bg-emerald-500 transition-[width] duration-300"
+            class="h-full bg-emerald-600 transition-[width] duration-300"
             [style.width.%]="expProgress() * 100"
           ></div>
         }

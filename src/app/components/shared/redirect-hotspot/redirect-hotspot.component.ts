@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 /**
@@ -26,8 +26,23 @@ export class RedirectHotspotComponent {
   @Input() hoverHighlight = false;
   /** Helligkeit des Hotspot-Bildes, z. B. 0.4 für filter: brightness(0.4). */
   @Input() brightness = 1;
+  /** Titel für den Hover-Tooltip (z. B. Gebäudename). */
+  @Input() tooltipTitle = '';
+  /** Feature-Liste, die im Hover-Tooltip aufgelistet wird. */
+  @Input() tooltipFeatures: string[] = [];
+
+  /** Ob die Maus aktuell über dem Hotspot liegt (steuert den Tooltip). */
+  isHovered = signal(false);
 
   constructor(private router: Router) {}
+
+  onMouseEnter(): void {
+    this.isHovered.set(true);
+  }
+
+  onMouseLeave(): void {
+    this.isHovered.set(false);
+  }
 
   /** Navigiert zum Ziel: http(s)-URLs extern, alles andere per Router. */
   onClick(): void {

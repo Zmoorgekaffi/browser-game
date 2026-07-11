@@ -37,6 +37,9 @@ export class AudioService {
 
   public isMuted = signal<boolean>(false);
 
+  /** Master-Lautstärke (0-1), skaliert alle Kanäle zusätzlich zu ihrer Basis-Lautstärke. */
+  public masterVolume = signal<number>(0.5);
+
   /** Route → Audio-Konfiguration. Routen ohne Eintrag stoppen die Musik. */
   private musicRoutes: Record<string, RouteAudioConfig> = {
     '/login': {
@@ -163,7 +166,9 @@ export class AudioService {
       const activeScene =
         currentScene === '/inventar' ? this.getPlayingRoute() : currentScene || '';
       const routeConfig = this.musicRoutes[activeScene];
-      audio.volume = routeConfig?.[volKey] !== undefined ? routeConfig[volKey]! : defaultVol();
+      const baseVolume =
+        routeConfig?.[volKey] !== undefined ? routeConfig[volKey]! : defaultVol();
+      audio.volume = baseVolume * this.masterVolume();
     });
   }
 
@@ -173,7 +178,7 @@ export class AudioService {
    */
   private resolveVolume(configVol: number | undefined, fallback: number): number {
     if (this.isMuted()) return 0;
-    return configVol !== undefined ? configVol : fallback;
+    return (configVol !== undefined ? configVol : fallback) * this.masterVolume();
   }
 
   /**
@@ -274,7 +279,7 @@ export class AudioService {
 
     try {
       this.sfxAudio = new Audio(soundPath);
-      this.sfxAudio.volume = this.sfxVolume();
+      this.sfxAudio.volume = this.sfxVolume() * this.masterVolume();
       this.sfxAudio.play().catch((err) => console.error('SFX Fehler:', err.message));
     } catch (e) {
       console.error('Fehler beim Erstellen der SFX-Audiodatei:', e);

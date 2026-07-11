@@ -40,20 +40,6 @@
               <app-header></app-header>
             </div>
           }
-
-          @if (
-            screenSizingService.isFullscreen() &&
-            !screenSizingService.headerVisibleInFullscreen() &&
-            loginService.loggedInAs() !== null &&
-            sceneService.currentScene() !== '/login'
-          ) {
-            <button
-              (click)="screenSizingService.toggleHeader()"
-              class="absolute top-2 left-2 z-50 px-3 py-1.5 bg-black/70 hover:bg-black/90 text-white text-sm font-semibold rounded-md backdrop-blur-sm transition-colors select-none cursor-pointer border border-white/20"
-            >
-              ☰ Menu
-            </button>
-          }
         </div>
       </div>
     </div>

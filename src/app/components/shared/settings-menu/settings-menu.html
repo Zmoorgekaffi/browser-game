@@ -1,0 +1,35 @@
+<div class="relative">
+  <button
+    (click)="toggleOpen()"
+    class="w-8 h-8 flex items-center justify-center rounded-md border border-grim-border bg-black/40 text-grim-parchment hover:border-grim-gold hover:text-grim-gold transition-colors cursor-pointer select-none"
+    aria-label="Einstellungen"
+    [attr.aria-expanded]="isOpen()"
+  >
+    ⚙
+  </button>
+
+  @if (isOpen()) {
+    <div class="panel-grim absolute top-[calc(100%+8px)] left-0 z-50 w-56 p-3 flex flex-col gap-3">
+      <button (click)="toggleFullscreen()" class="btn-grim px-3 py-1.5 text-sm text-left">
+        {{ isFullscreen() ? '🗗 Vollbild beenden' : '🗖 Vollbild' }}
+      </button>
+
+      <button (click)="toggleMute()" class="btn-grim px-3 py-1.5 text-sm text-left">
+        {{ isMuted() ? '🔇 Stumm (an)' : '🔊 Stumm (aus)' }}
+      </button>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-mono text-xs text-grim-parchment/70">Lautstärke</label>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          [value]="volume()"
+          (input)="onVolumeChange($event)"
+          class="w-full accent-[#c9a34d] cursor-pointer"
+        />
+      </div>
+    </div>
+  }
+</div>

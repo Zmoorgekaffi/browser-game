@@ -14,6 +14,10 @@ export interface ProfileData {
   level: number;
   exp: number;
   avatar?: string;
+  /** Stummschaltung, persistiert pro Charakter. */
+  muted?: boolean;
+  /** Master-Lautstärke (0-1), persistiert pro Charakter. */
+  volume?: number;
 }
 
 export interface InventarData {

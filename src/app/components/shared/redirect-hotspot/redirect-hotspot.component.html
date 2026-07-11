@@ -9,6 +9,10 @@
   tabindex="0"
   (click)="onClick()"
   (keydown)="onKeydown($event)"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (focus)="onMouseEnter()"
+  (blur)="onMouseLeave()"
   [attr.aria-label]="'Redirect hotspot to ' + redirect"
 >
   @if (image) {
@@ -22,3 +26,18 @@
   }
   <ng-content></ng-content>
 </div>
+
+@if (isHovered() && tooltipTitle) {
+  <div
+    class="panel-grim fixed right-6 bottom-6 z-50 min-w-[220px] max-w-[320px] p-4 pointer-events-none"
+  >
+    <div class="heading-grim text-lg font-semibold text-grim-gold">{{ tooltipTitle }}</div>
+    @if (tooltipFeatures.length) {
+      <ul class="font-mono text-sm text-grim-parchment/80 list-disc pl-5 mt-1 space-y-0.5">
+        @for (feature of tooltipFeatures; track feature) {
+          <li>{{ feature }}</li>
+        }
+      </ul>
+    }
+  </div>
+}

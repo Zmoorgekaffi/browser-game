@@ -32,6 +32,10 @@ export class ProfileService {
   exp = computed(() => this.state().exp);
   /** Fällt auf das Standard-Portrait zurück, falls noch keins gewählt wurde (z.B. Altbestand-Spielstände). */
   avatar = computed(() => this.state().avatar || DEFAULT_PORTRAIT_ID);
+  /** Stummschaltung des Charakters (Fallback: aus). */
+  muted = computed(() => this.state().muted ?? false);
+  /** Master-Lautstärke des Charakters (Fallback: 0.5). */
+  volume = computed(() => this.state().volume ?? 0.5);
   charId: WritableSignal<any | null> = signal(null);
 
   /** True, sobald der Charakter das Levelcap (50) erreicht hat. */
@@ -70,6 +74,15 @@ export class ProfileService {
   updateAvatar(avatar: string): void {
     this.state.update(state => {
       const newState = { ...state, avatar };
+      this.persist(newState);
+      return newState;
+    });
+  }
+
+  /** Speichert Mute-Status und Master-Lautstärke des Charakters. */
+  updateSettings(muted: boolean, volume: number): void {
+    this.state.update(state => {
+      const newState = { ...state, muted, volume };
       this.persist(newState);
       return newState;
     });

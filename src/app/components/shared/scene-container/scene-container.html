@@ -1,18 +1,6 @@
 <section
   class="block overflow-hidden min-w-[1280px] max-w-[1280px] min-h-[720px] max-h-[720px] relative rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl overflow-auto"
 >
-  @if (sceneService.currentScene() !== '/inventar') {
-    <div
-      (click)="audioService.toggleMute()"
-      class="absolute cursor-pointer z-10 flex items-center justify-center right-[2rem] top-[2rem] px-4 w-[auto] h-[3rem] bg-white text-black rounded-xl select-none shadow-md"
-    >
-      @if (audioService.isMuted() == false) {
-        mute
-      } @else {
-        unmute
-      }
-    </div>
-  }
 
   <div class="absolute inset-0 shrink-0">
     <ng-content></ng-content>

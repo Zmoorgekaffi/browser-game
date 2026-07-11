@@ -25,20 +25,11 @@ export class MainFrontendComponent {
 
   /**
    * Header nur zeigen, wenn eingeloggt und nicht auf /login oder /name-creation.
-   * Im Vollbild entscheidet zusätzlich headerVisibleInFullscreen.
+   * Bleibt (auch im Vollbild) permanent sichtbar.
    */
   public showHeader = computed(() => {
     const charId = this.loginService.loggedInAs();
     const currentScene = this.sceneService.currentScene();
-    const baseVisible =
-      charId !== null && currentScene !== '/login' && currentScene !== '/name-creation';
-
-    if (!baseVisible) return false;
-
-    if (this.screenSizingService.isFullscreen()) {
-      return this.screenSizingService.headerVisibleInFullscreen();
-    }
-
-    return true;
+    return charId !== null && currentScene !== '/login' && currentScene !== '/name-creation';
   });
 }
