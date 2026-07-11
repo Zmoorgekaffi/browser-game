@@ -4,53 +4,95 @@
     <app-loading-screen label="Dorf wird geladen..." />
   } @else {
     <img src="imgs/village/village_0.webp" class="w-full h-full object-cover" alt="" />
+
+    <div
+      class="absolute w-[137px] h-[146px] top-[247px] left-[245px] bottom-0 right-0 pointer-events-none"
+    >
+      <img src="imgs/village/buildings/building_0..webp" alt="" />
+    </div>
+
+    <div style="position: absolute; width: 187px; height: 127px; top: 33px; left: 904px">
+      <img src="imgs/village/buildings/building_0..webp" alt="" />
+    </div>
+
+        <div style="position: absolute;
+    width: 187px;
+    height: 127px;
+    top: 137px;
+    left: 1075px;
+    transform: rotateY(180deg) rotateX(26deg);">
+      <img src="imgs/village/buildings/building_0..webp" alt="" />
+    </div>
+
+            <div style="position: absolute;
+    width: 187px;
+    height: 127px;
+    top: 63px;
+    left: 652px;
+    transform: rotateY(180deg) rotateX(26deg);">
+      <img src="imgs/village/buildings/building_0..webp" alt="" />
+    </div>
+
     <app-redirect-hotspot
-      [x]="10"
-      [y]="170"
-      [width]="300"
-      [height]="440"
+      [x]="347"
+      [y]="31"
+      [width]="232"
+      [height]="193"
       redirect="/magic-shop"
+      image="imgs/magic-shop/building/magic-shop-building_0.webp"
       [devMode]="false"
+      [hoverHighlight]="true"
     ></app-redirect-hotspot>
     <app-redirect-hotspot
-      [x]="310"
-      [y]="80"
-      [width]="280"
-      [height]="280"
+      [x]="105"
+      [y]="2"
+      [width]="265"
+      [height]="279"
       redirect="/adventure"
+      image="imgs/adventure/building/burgtor-building_0.png"
       [devMode]="false"
+      [hoverHighlight]="true"
+      [brightness]="0.6"
     ></app-redirect-hotspot>
     <app-redirect-hotspot
-      [x]="595"
-      [y]="160"
-      [width]="250"
-      [height]="220"
+      [x]="184"
+      [y]="362"
+      [width]="237"
+      [height]="246"
       redirect="/general-supplies"
+      image="imgs/general-supplies/building/general-supplies-building_0.webp"
       [devMode]="false"
+      [hoverHighlight]="true"
     ></app-redirect-hotspot>
     <app-redirect-hotspot
-      [x]="870"
-      [y]="110"
-      [width]="290"
-      [height]="320"
+      [x]="523"
+      [y]="165"
+      [width]="247"
+      [height]="264"
       redirect="/tavern"
+      image="imgs/tavern/building/tavern-building_0.PNG"
       [devMode]="false"
+      [hoverHighlight]="true"
     ></app-redirect-hotspot>
     <app-redirect-hotspot
-      [x]="990"
-      [y]="380"
-      [width]="285"
-      [height]="330"
+      [x]="512"
+      [y]="401"
+      [width]="204"
+      [height]="260"
       redirect="/smither"
+      image="imgs/smither/building/smith-building_0.png"
       [devMode]="false"
+      [hoverHighlight]="true"
     ></app-redirect-hotspot>
     <app-redirect-hotspot
-      [x]="540"
-      [y]="410"
-      [width]="195"
-      [height]="270"
+      [x]="999"
+      [y]="234"
+      [width]="87"
+      [height]="120"
       redirect="/shrine"
+      image="imgs/shrine/building/shrine-building_0.PNG"
       [devMode]="false"
+      [hoverHighlight]="true"
     ></app-redirect-hotspot>
   }
 </div>

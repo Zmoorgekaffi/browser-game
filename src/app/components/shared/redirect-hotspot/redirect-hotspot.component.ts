@@ -20,6 +20,12 @@ export class RedirectHotspotComponent {
   @Input() height = 100;
   @Input() redirect = '';
   @Input() devMode = false;
+  /** Optionales Bild (z. B. Gebäude-Sprite), das im Hotspot angezeigt wird. */
+  @Input() image = '';
+  /** Wenn true, leuchtet das Hotspot-Bild beim Hovern auf (siehe .glow-image). */
+  @Input() hoverHighlight = false;
+  /** Helligkeit des Hotspot-Bildes, z. B. 0.4 für filter: brightness(0.4). */
+  @Input() brightness = 1;
 
   constructor(private router: Router) {}
 

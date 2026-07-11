@@ -11,5 +11,14 @@
   (keydown)="onKeydown($event)"
   [attr.aria-label]="'Redirect hotspot to ' + redirect"
 >
+  @if (image) {
+    <img
+      [src]="image"
+      class="hotspot-image"
+      [class.glow-image]="hoverHighlight"
+      [style.--hotspot-brightness]="brightness"
+      alt=""
+    />
+  }
   <ng-content></ng-content>
 </div>

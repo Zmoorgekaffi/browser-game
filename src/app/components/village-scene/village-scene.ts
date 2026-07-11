@@ -33,7 +33,14 @@ export class VillageSceneComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.preloader.preloadImages(['imgs/village/village_0.webp']);
+    await this.preloader.preloadImages([
+      'imgs/village/village_0.webp',
+      'imgs/magic-shop/village-building/magic-shop-building_0.webp',
+      'imgs/general-supplies/general-supplies-building/general-supplies-building_0.webp',
+      'imgs/tavern/tavern-building/tavern-building_0.webp',
+      'imgs/smither/smith-building/smith-building_0.webp',
+      'imgs/shrine/shrine-building/shrine-building_0.webp',
+    ]);
     this.isLoading.set(false);
   }
 
