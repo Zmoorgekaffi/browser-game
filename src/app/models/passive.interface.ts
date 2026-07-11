@@ -27,7 +27,6 @@ export type PassiveStatKey =
   | 'magicDamageFire'
   | 'magicDamageCold'
   | 'magicDamageLightning'
-  | 'charisma'
   | 'magic-find';
 
 /** Die vier Elementar-Schadensarten, gegen die Resistenz-Passives schützen können. */

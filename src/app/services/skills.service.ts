@@ -39,7 +39,6 @@ const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
   ['magic-damage-fire', 'magicDamageFire'],
   ['magic-damage-cold', 'magicDamageCold'],
   ['magic-damage-lightning', 'magicDamageLightning'],
-  ['charisma', 'charisma'],
 ];
 
 /** Die vier Elementar-Resistenzen, die Items mitbringen können. */
@@ -127,7 +126,6 @@ export class SkillsService {
     magicDamageFire: 0,
     magicDamageCold: 0,
     magicDamageLightning: 0,
-    charisma: 1,
     resistances: {
       fire: 0,
       cold: 0,
@@ -170,7 +168,6 @@ export class SkillsService {
   critChance = computed(() => this.state().critChance);
   critDamage = computed(() => this.state().critDamage);
   chaosDamage = computed(() => this.state().chaosDamage);
-  charisma = computed(() => this.state().charisma);
   resistances = computed(() => this.state().resistances);
   spells = computed(() => this.state().spells);
   statPoints = computed(() => this.state().statPoints ?? 0);
@@ -280,7 +277,6 @@ export class SkillsService {
       magicDamageFire: base.magicDamageFire ?? 0,
       magicDamageCold: base.magicDamageCold ?? 0,
       magicDamageLightning: base.magicDamageLightning ?? 0,
-      charisma: base.charisma,
       resistances: { ...base.resistances },
     };
     this.deriveAttackScalars(stats);

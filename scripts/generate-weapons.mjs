@@ -9,7 +9,7 @@ const STATS_TEMPLATE = {
   intelligence: 0, dexterity: 0, strength: 0, vitality: 0, luck: 0,
   'energy-shield': 0, 'magic-find': 0, armor: 0,
   attack: 0, 'magic-attack': 0, initiative: 0, evasion: 0,
-  'crit-chance': 0, 'crit-damage': 0, chaosDamage: 0, charisma: 0,
+  'crit-chance': 0, 'crit-damage': 0, chaosDamage: 0,
   'damage-min': 0, 'damage-max': 0, 'magic-damage-min': 0, 'magic-damage-max': 0,
   resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
 };

@@ -24,7 +24,7 @@ export const DEFAULT_SKILLS = {
   'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, 'hp-regeneration': 0, mana: 20,
   attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
   critChance: 5, critDamage: 150, chaosDamage: 0,
-  magicDamageFire: 0, magicDamageCold: 0, magicDamageLightning: 0, charisma: 1,
+  magicDamageFire: 0, magicDamageCold: 0, magicDamageLightning: 0,
   resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
   spells: [],
   // Shrine-Levelup-System: noch unverteilte Punkte, Investitions-Fortschritt
@@ -51,7 +51,7 @@ export const DEFAULT_INVENTAR = {
       'energy-shield': 0, 'magic-find': 0, armor: 0, attack: 12,
       'magic-attack': 0, initiative: 0, evasion: 0,
       'crit-chance': 0, 'crit-damage': 0, chaosDamage: 0,
-      'magic-damage-fire': 0, 'magic-damage-cold': 0, 'magic-damage-lightning': 0, charisma: 0,
+      'magic-damage-fire': 0, 'magic-damage-cold': 0, 'magic-damage-lightning': 0,
       resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 },
     },
   }],

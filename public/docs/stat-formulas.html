@@ -245,7 +245,7 @@
       <pre><code>intelligence: 5, dexterity: 5, strength: 5, vitality: 5, luck: 5,
 'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, mana: 20,
 attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
-critChance: 5, critDamage: 150, chaosDamage: 0, charisma: 1,
+critChance: 5, critDamage: 150, chaosDamage: 0,
 resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 }</code></pre>
       <p>Zusätzlich verwaltet: <code>statPoints</code> (verfügbare Punkte), <code>investedPoints</code> (pro Attribut investiert, Cap 100), <code>unlockedPassives</code>.</p>
     </section>
@@ -259,7 +259,7 @@ resistances: { fire: 0, cold: 0, lightning: 0, chaos: 0 }</code></pre>
         <table>
           <thead><tr><th>Schritt</th><th>Was passiert</th><th class="num">Formel</th></tr></thead>
           <tbody>
-            <tr><td>Flache Stats</td><td>armor, energy-shield, magic-find, initiative, evasion, critChance, critDamage, chaosDamage, charisma</td><td class="num">stat += item[key]</td></tr>
+            <tr><td>Flache Stats</td><td>armor, energy-shield, magic-find, initiative, evasion, critChance, critDamage, chaosDamage</td><td class="num">stat += item[key]</td></tr>
             <tr><td>Resistenzen</td><td>fire / cold / lightning / chaos, additiv</td><td class="num">res[e] += item.res[e]</td></tr>
             <tr><td>Attribute</td><td>strength, dexterity, intelligence, vitality, luck — 1:1, ohne Skalierung</td><td class="num">attr += item.attr</td></tr>
             <tr><td>Waffenbereich</td><td>Schaden-Min/Max aus Waffe + flacher Angriffswert</td><td class="num">attackMin += dmgMin + flatAtk</td></tr>
@@ -489,7 +489,6 @@ resistances: { fire: 1, cold: 1, lightning: 1, chaos: 1 }</code></pre>
             <tr><td>resistances.*</td><td class="num">0</td><td class="num">linear 1:1, Deckel 75%</td><td><span class="tag ok">aktiv</span> mindert Elementarschaden je Element</td></tr>
             <tr><td>chaosDamage</td><td class="num">0</td><td class="num">—</td><td><span class="tag dead">nicht genutzt</span></td></tr>
             <tr><td>magic-find</td><td class="num">0</td><td class="num">—</td><td>nur Loot-Rolls, kein Kampf</td></tr>
-            <tr><td>charisma</td><td class="num">1</td><td class="num">—</td><td><span class="tag dead">nicht genutzt</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -497,10 +496,9 @@ resistances: { fire: 1, cold: 1, lightning: 1, chaos: 1 }</code></pre>
 
     <section id="totgelegt">
       <h2><span class="num">11</span>Verbleibend totgelegt <span class="tag dead">wirkungslos</span></h2>
-      <p>Nach dem Rüstungs-/Resistenz-Rebalance sind nur noch diese beiden Stats ohne Wirkung im Kampf- oder Zaubercode:</p>
+      <p>Nach dem Rüstungs-/Resistenz-Rebalance ist nur noch dieser Stat ohne Wirkung im Kampf- oder Zaubercode:</p>
       <ul>
         <li><strong>chaosDamage</strong> — additiv aus Items/Passives gesammelt, aber nie ausgelesen.</li>
-        <li><strong>charisma</strong> — vermutlich für ein Dialog-/Sozialsystem vorgesehen, aktuell irrelevant für den Kampf.</li>
       </ul>
       <p><code>armor</code> und <code>resistances.*</code> sind seit dem Rebalance <strong>aktiv</strong> (siehe <a href="#kampf">Kampfauflösung</a> und <a href="#zauber">Zauberschaden</a>) — nicht mehr Teil dieser Liste.</p>
     </section>

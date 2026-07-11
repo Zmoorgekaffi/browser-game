@@ -117,7 +117,6 @@ function flavorAttributes(monster, roleKey) {
     dexterity: roleKey === 'scout' || roleKey === 'beast' ? scale + 2 : scale,
     strength: roleKey === 'brute' || roleKey === 'beast' ? scale + 2 : scale,
     vitality: roleKey === 'brute' || roleKey === 'aberration' ? scale + 2 : scale,
-    charisma: 1,
   };
 }
 
@@ -172,7 +171,6 @@ function buildMonsterJson(bracketKey, roleKey, index) {
     critChance: stats.critChance,
     critDamage: stats.critDamage,
     chaosDamage: 0,
-    charisma: flavor.charisma,
   };
 }
 

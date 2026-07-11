@@ -41,8 +41,7 @@
     "evasion": 12,
     "critChance": 9,
     "critDamage": 160,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_02",
@@ -86,8 +85,7 @@
     "evasion": 19,
     "critChance": 14,
     "critDamage": 176,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_03",
@@ -135,8 +133,7 @@
     "evasion": 12,
     "critChance": 9,
     "critDamage": 160,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_04",
@@ -180,8 +177,7 @@
     "evasion": 13,
     "critChance": 13,
     "critDamage": 240,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_05",
@@ -225,8 +221,7 @@
     "evasion": 10,
     "critChance": 8,
     "critDamage": 160,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_06",
@@ -274,8 +269,7 @@
     "evasion": 13,
     "critChance": 10,
     "critDamage": 184,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   },
   {
     "id": "darkforest_b3140_mob_07",
@@ -323,7 +317,6 @@
     "evasion": 14,
     "critChance": 9,
     "critDamage": 176,
-    "chaosDamage": 0,
-    "charisma": 1
+    "chaosDamage": 0
   }
 ]
