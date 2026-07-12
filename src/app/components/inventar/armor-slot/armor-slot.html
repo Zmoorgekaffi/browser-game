@@ -12,9 +12,14 @@
      (mouseleave)="onLeave()"
      (click)="onClick()">
 
+  <img [src]="defaultImagePath" alt="" class="absolute inset-0 w-full h-full object-contain pointer-events-none" />
+
   @if (inventarService.equippedSlots()[slotName()]) {
-    <img [src]="inventarService.equippedSlots()[slotName()]['img-path']" 
-         [alt]="inventarService.equippedSlots()[slotName()].name" 
-         class="w-full h-full object-contain pointer-events-none bg-[rgba(255,255,255,0.75)]" />
+    <div class="p-[14px] absolute inset-0">
+    <img [src]="inventarService.equippedSlots()[slotName()]['img-path']"
+         [alt]="inventarService.equippedSlots()[slotName()].name"
+         class="w-full h-full object-contain pointer-events-none bg-[radial-gradient(circle,rgba(255,255,255,0.75)_0%,rgba(255,255,255,0)_75%)]" />
+    </div>
   }
+
 </div>

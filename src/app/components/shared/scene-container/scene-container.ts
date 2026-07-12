@@ -59,7 +59,9 @@ export class SceneContainerComponent {
     const charId = this.loginService.loggedInAs();
     const currentScene = this.sceneService.currentScene();
 
-    // Button anzeigen, wenn eingeloggt und nicht im Dorf
-    return charId !== null && currentScene !== '/village';
+    // Button anzeigen, wenn eingeloggt und nicht im Dorf oder im Inventar
+    // (das Inventar hat stattdessen seinen eigenen Schließen-Button).
+    const isInventar = currentScene === '/inventar' || currentScene.startsWith('/inventar/');
+    return charId !== null && currentScene !== '/village' && !isInventar;
   });
 }

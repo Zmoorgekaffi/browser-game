@@ -10,107 +10,93 @@
 
   <app-armor-slot
     [slotName]="'head'"
-    [x]="295"
-    [y]="80"
-    [width]="'95px'"
-    [height]="'94px'"
+    [x]="262"
+    [y]="47"
+    [width]="'140px'"
+    [height]="'135px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'necklace'"
-    [x]="520"
-    [y]="109"
-    [width]="'59px'"
-    [height]="'55px'"
+    [x]="432"
+    [y]="186"
+    [width]="'105px'"
+    [height]="'96px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'ring-right'"
-    [x]="521"
-    [y]="186"
-    [width]="'58px'"
-    [height]="'55px'"
+    [x]="159"
+    [y]="183"
+    [width]="'69px'"
+    [height]="'62px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'ring-left'"
-    [x]="221"
-    [y]="186"
-    [width]="'58px'"
-    [height]="'55px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'ring-left'"
-    [x]="110"
-    [y]="185"
-    [width]="'58px'"
-    [height]="'57px'"
+    [x]="94"
+    [y]="183"
+    [width]="'69px'"
+    [height]="'62px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'chest'"
-    [x]="503"
-    [y]="269"
-    [width]="'81px'"
-    [height]="'163px'"
+    [x]="225"
+    [y]="181"
+    [width]="'209px'"
+    [height]="'200px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'gloves'"
-    [x]="104"
-    [y]="369"
-    [width]="'85px'"
-    [height]="'65px'"
+    [x]="90"
+    [y]="243"
+    [width]="'140px'"
+    [height]="'135px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'leg'"
-    [x]="252"
-    [y]="554"
-    [width]="'77px'"
-    [height]="'76px'"
+    [x]="224"
+    [y]="377"
+    [width]="'212px'"
+    [height]="'201px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'footwear'"
-    [x]="364"
-    [y]="554"
-    [width]="'77px'"
-    [height]="'74px'"
+    [x]="259"
+    [y]="576"
+    [width]="'140px'"
+    [height]="'135px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'weapon-1'"
-    [x]="480"
-    [y]="465"
-    [width]="'108px'"
-    [height]="'165px'"
+    [x]="431"
+    [y]="377"
+    [width]="'156px'"
+    [height]="'154px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
     [slotName]="'weapon-2'"
-    [x]="106"
-    [y]="464"
-    [width]="'105px'"
-    [height]="'166px'"
+    [x]="76"
+    [y]="375"
+    [width]="'156px'"
+    [height]="'156px'"
     [devmode]="false"
   ></app-armor-slot>
-
-  <div
-    (click)="closeInventar()"
-    class="absolute top-[8px] right-[8px] cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
-  ></div>
 
   <!-- Item-Liste mit Rahmen-Banner: Banner oben, Liste darunter (flex-col!).
        top: 46px im Vollbild, 12px auf dem Desktop. -->
@@ -189,6 +175,17 @@
         [hoverHighlight]="true"
         [brightness]="activeCategory() === 'quest' ? 1 : 0.55"
         tooltipTitle="Quest-Items"
+      ></app-redirect-hotspot>
+
+      <!-- Inventar schließen (kein Routen-Redirect, ruft closeInventar() über hotspotClick auf) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        image="imgs/village/back-to-village-icon.png"
+        [hoverHighlight]="true"
+        tooltipTitle="Inventar schließen"
+        (hotspotClick)="closeInventar()"
       ></app-redirect-hotspot>
     </div>
     <div

@@ -27,6 +27,17 @@ export class ArmorSlot {
   public width = input.required<string>();
   public devmode = input<boolean>(false);
 
+  get defaultImagePath(): string {
+    return `imgs/inventar/slots/slot-${this.slotBaseName(this.slotName())}.png`;
+  }
+
+  private slotBaseName(name: string): string {
+    if (name.startsWith('ring')) return 'ring';
+    if (name.startsWith('weapon')) return 'weapon';
+    if (name === 'head') return 'helmet';
+    return name;
+  }
+
   onEnter(): void {
     if (this.deviceService.isTouch()) return;
     const item = this.inventarService.equippedSlots()[this.slotName()];

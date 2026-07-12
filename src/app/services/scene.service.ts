@@ -29,10 +29,12 @@ export class SceneService {
       .subscribe((event: NavigationEnd) => {
         const newUrl = event.urlAfterRedirects;
         const menuPages = ['/inventar', '/skills', '/character', '/login'];
-        
-        // Logik: Wir merken uns die neue URL als "Rückkehr-Ziel" NUR, 
-        // wenn es KEIN Menü ist.
-        if (!menuPages.includes(newUrl)) {
+
+        // Logik: Wir merken uns die neue URL als "Rückkehr-Ziel" NUR,
+        // wenn es KEIN Menü ist. '/inventar/:category' (z.B. '/inventar/waffen')
+        // zählt dabei genauso als Menü wie das reine '/inventar'.
+        const isMenuPage = menuPages.some((page) => newUrl === page || newUrl.startsWith(`${page}/`));
+        if (!isMenuPage) {
           this._previousScene.set(newUrl);
           console.log(`📌 Neue Rückkehr-Route gespeichert: ${newUrl}`);
         }

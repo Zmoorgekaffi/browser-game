@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 /**
@@ -33,6 +33,9 @@ export class RedirectHotspotComponent {
   /** Feature-Liste, die im Hover-Tooltip aufgelistet wird. */
   @Input() tooltipFeatures: string[] = [];
 
+  /** Feuert bei jedem Klick/Enter/Leertaste, egal ob 'redirect' gesetzt ist — für Hotspots, die statt einer Route eine Komponenten-Aktion auslösen sollen (z.B. Inventar schließen). */
+  @Output() hotspotClick = new EventEmitter<void>();
+
   /** Ob die Maus aktuell über dem Hotspot liegt (steuert den Tooltip). */
   isHovered = signal(false);
 
@@ -46,8 +49,10 @@ export class RedirectHotspotComponent {
     this.isHovered.set(false);
   }
 
-  /** Navigiert zum Ziel: http(s)-URLs extern, alles andere per Router. */
+  /** Navigiert zum Ziel: http(s)-URLs extern, alles andere per Router. Feuert daneben immer 'hotspotClick'. */
   onClick(): void {
+    this.hotspotClick.emit();
+
     if (!this.redirect) {
       return;
     }
