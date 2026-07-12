@@ -21,7 +21,7 @@ export function createDefaultProfile(charId: string) {
 /** Basis-Attribute und Kampfwerte eines Level-1-Charakters. */
 export const DEFAULT_SKILLS = {
   intelligence: 5, dexterity: 5, strength: 5, vitality: 5, luck: 5,
-  'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, 'hp-regeneration': 0, mana: 20,
+  'energy-shield': 0, 'magic-find': 0, armor: 0, hp: 100, 'hp-regeneration': 0, mana: 20, 'mana-regeneration': 3,
   attack: 5, magicAttack: 5, initiative: 10, evasion: 5,
   critChance: 5, critDamage: 150, chaosDamage: 0,
   magicDamageFire: 0, magicDamageCold: 0, magicDamageLightning: 0,

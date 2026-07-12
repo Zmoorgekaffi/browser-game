@@ -464,8 +464,13 @@ export class FightService {
       );
 
       const playerStats = this.buffedCombatStats();
-      const manaRegen = 3 + Math.floor((playerStats.intelligence || 0) / 5);
-      this.playerMana.update((mana) => Math.min(this.playerMaxMana(), mana + manaRegen));
+
+      // Mana-Regeneration: skaliert mit Intelligenz (+0.2/Punkt, siehe SkillsService.
+      // applyAttributeScaling), erst hier beim tatsächlichen Anwenden abgerundet.
+      const manaRegen = Math.floor(playerStats['mana-regeneration'] ?? 0);
+      if (manaRegen > 0) {
+        this.playerMana.update((mana) => Math.min(this.playerMaxMana(), mana + manaRegen));
+      }
 
       // HP-Regeneration: skaliert mit Vitalität (+0.5/Punkt, siehe SkillsService.
       // applyAttributeScaling), erst hier beim tatsächlichen Anwenden abgerundet.

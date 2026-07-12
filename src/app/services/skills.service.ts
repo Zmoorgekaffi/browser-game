@@ -30,6 +30,7 @@ const FLAT_STAT_MAP: ReadonlyArray<[itemKey: string, statsKey: string]> = [
   ['armor', 'armor'],
   ['energy-shield', 'energy-shield'],
   ['hp-regeneration', 'hp-regeneration'],
+  ['mana-regeneration', 'mana-regeneration'],
   ['magic-find', 'magic-find'],
   ['initiative', 'initiative'],
   ['evasion', 'evasion'],
@@ -116,6 +117,7 @@ export class SkillsService {
     hp: 100,
     'hp-regeneration': 0,
     mana: 20,
+    'mana-regeneration': 3,
     attack: 5,
     magicAttack: 5,
     initiative: 10,
@@ -161,6 +163,7 @@ export class SkillsService {
   hp = computed(() => this.state().hp);
   hpRegeneration = computed(() => this.state()['hp-regeneration']);
   mana = computed(() => this.state().mana);
+  manaRegeneration = computed(() => this.state()['mana-regeneration']);
   attack = computed(() => this.state().attack);
   magicAttack = computed(() => this.state().magicAttack);
   initiative = computed(() => this.state().initiative);
@@ -250,6 +253,7 @@ export class SkillsService {
       hp: base.hp,
       'hp-regeneration': base['hp-regeneration'] ?? 0,
       mana: base.mana,
+      'mana-regeneration': base['mana-regeneration'] ?? 0,
       attack: base.attack,
       magicAttack: base.magicAttack,
       // Basis-Range ohne Waffe: min = max = Flat-Basiswert (siehe deriveAttackScalars).
@@ -406,7 +410,11 @@ export class SkillsService {
    *  - Geschick:    Initiative +2/Punkt
    *  - Intelligenz: Magischer Schadens-Multiplikator +0.1%/Punkt (1000 Punkte
    *                 Gesamt-Intelligenz = +100%; bewusst NICHT mehr analog zu
-   *                 Stärke, siehe unten), Mana +5/Punkt, Energieschild +2/Punkt
+   *                 Stärke, siehe unten), Mana +5/Punkt, Energieschild +2/Punkt,
+   *                 Mana-Regeneration +0.2/Punkt (Rest wird erst beim Anwenden
+   *                 pro Runde abgerundet, siehe FightService.endTurn — entspricht
+   *                 der alten festen Formel "3 + Intelligenz/5", jetzt aber als
+   *                 echter Stat statt hartcodiert)
    *  - Vitalität:   HP +3/Punkt, HP-Regeneration +0.5/Punkt (Rest wird erst beim
    *                 Anwenden pro Runde abgerundet, siehe FightService.endTurn)
    *  - Glück:       Krit-Chance +0.2/Punkt, Magic-Find +0.5/Punkt (abgerundet)
@@ -429,6 +437,7 @@ export class SkillsService {
     finalStats.initiative += finalStats.dexterity * 2;
     finalStats.magicDamageMultiplier = 1 + finalStats.intelligence / 1000;
     finalStats.mana += finalStats.intelligence * 5;
+    finalStats['mana-regeneration'] += finalStats.intelligence * 0.2;
     finalStats['energy-shield'] += finalStats.intelligence * 2;
     finalStats.hp += finalStats.vitality * 3;
     finalStats['hp-regeneration'] += finalStats.vitality * 0.5;

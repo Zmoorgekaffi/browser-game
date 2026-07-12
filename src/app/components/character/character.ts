@@ -122,32 +122,82 @@ export class Character {
     'imgs/character/character-look-around/frame (1).png',
   ];
 
-  /** Anzeige-Reihenfolge + deutsche Labels für die Stats-Liste im Template. */
-  public displayStats = [
-    { key: 'strength', name: 'Stärke' },
-    { key: 'intelligence', name: 'Intelligenz' },
-    { key: 'dexterity', name: 'Geschick' },
-    { key: 'vitality', name: 'Vitalität' },
-    { key: 'luck', name: 'Glück' },
-    { key: 'hp', name: 'Lebenspunkte (HP)' },
-    { key: 'hp-regeneration', name: 'Lebensregeneration' },
-    { key: 'mana', name: 'Mana' },
-    { key: 'attack', name: 'Physischer Angriff' },
-    { key: 'magicAttack', name: 'Magischer Angriff' },
-    { key: 'armor', name: 'Rüstung' },
-    { key: 'energy-shield', name: 'Energieschild' },
-    { key: 'initiative', name: 'Initiative' },
-    { key: 'evasion', name: 'Ausweichen' },
-    { key: 'critChance', name: 'Krit. Chance' },
-    { key: 'critDamage', name: 'Krit. Schaden' },
-    { key: 'magic-find', name: 'Magic Find' },
-    { key: 'resistances.fire', name: 'Feuerresistenz' },
-    { key: 'resistances.cold', name: 'Kälteresistenz' },
-    { key: 'resistances.lightning', name: 'Blitzresistenz' },
-    { key: 'resistances.chaos', name: 'Chaosresistenz' },
-    { key: 'magicDamageFire', name: 'Feuerschaden' },
-    { key: 'magicDamageCold', name: 'Kälteschaden' },
-    { key: 'magicDamageLightning', name: 'Blitzschaden' },
-    { key: 'chaosDamage', name: 'Chaosschaden' },
+  /**
+   * Stats in Klammer-Gruppen (Bracket-Blöcke), wie vom User vorgegeben.
+   * Wird als 2 nebeneinanderliegende Spalten dargestellt (siehe statColumns),
+   * damit alle Gruppen ohne Scrollen auf einmal sichtbar sind.
+   */
+  public statGroups: { key: string; stats: { key: string; name: string }[] }[] = [
+    {
+      key: 'vital',
+      stats: [
+        { key: 'hp', name: 'Lebenspunkte (HP)' },
+        { key: 'hp-regeneration', name: 'Lebensregeneration' },
+        { key: 'energy-shield', name: 'Energieschild' },
+      ],
+    },
+    {
+      key: 'mana',
+      stats: [
+        { key: 'mana', name: 'Mana' },
+        { key: 'mana-regeneration', name: 'Manaregeneration' },
+      ],
+    },
+    {
+      key: 'attributes',
+      stats: [
+        { key: 'vitality', name: 'Vitalität' },
+        { key: 'strength', name: 'Stärke' },
+        { key: 'dexterity', name: 'Geschick' },
+        { key: 'luck', name: 'Glück' },
+        { key: 'intelligence', name: 'Intelligenz' },
+      ],
+    },
+    {
+      key: 'offense',
+      stats: [
+        { key: 'attack', name: 'Physischer Angriff' },
+        { key: 'magicAttack', name: 'Magischer Angriff' },
+        { key: 'critChance', name: 'Krit. Chance' },
+        { key: 'critDamage', name: 'Krit. Schaden' },
+      ],
+    },
+    {
+      key: 'elemental-damage',
+      stats: [
+        { key: 'magicDamageCold', name: 'Kälteschaden' },
+        { key: 'magicDamageFire', name: 'Feuerschaden' },
+        { key: 'magicDamageLightning', name: 'Blitzschaden' },
+        { key: 'chaosDamage', name: 'Chaosschaden' },
+      ],
+    },
+    {
+      // Rüstung ist ein defensiver Mitigations-Stat wie die Resistenzen, daher hier gemeinsam gruppiert.
+      key: 'mitigation',
+      stats: [
+        { key: 'armor', name: 'Rüstung' },
+        { key: 'resistances.fire', name: 'Feuerresistenz' },
+        { key: 'resistances.cold', name: 'Kälteresistenz' },
+        { key: 'resistances.lightning', name: 'Blitzresistenz' },
+        { key: 'resistances.chaos', name: 'Chaosresistenz' },
+      ],
+    },
+    {
+      key: 'utility',
+      stats: [
+        { key: 'initiative', name: 'Initiative' },
+        { key: 'evasion', name: 'Ausweichen' },
+      ],
+    },
+    {
+      key: 'magic-find',
+      stats: [{ key: 'magic-find', name: 'Magisches Gespür' }],
+    },
   ];
+
+  /** Flache Liste aller Stats (für getStatName-Lookup im Tooltip-Titel). */
+  public displayStats = this.statGroups.flatMap((group) => group.stats);
+
+  /** Teilt statGroups in 2 Spalten (erste/zweite Hälfte der Bracket-Reihenfolge). */
+  public statColumns = [this.statGroups.slice(0, 4), this.statGroups.slice(4)];
 }

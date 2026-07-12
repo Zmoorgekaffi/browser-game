@@ -37,6 +37,7 @@ export function applyBuffDeltas(baseStats: any, buffs: PlayerBuff[]): any {
       case 'intelligence':
         stats.magicDamageMultiplier = (stats.magicDamageMultiplier ?? 1) + buff.amount / 1000;
         stats.mana = (stats.mana ?? 0) + buff.amount * 5;
+        stats['mana-regeneration'] = (stats['mana-regeneration'] ?? 0) + buff.amount * 0.2;
         break;
       case 'vitality':
         stats.hp = (stats.hp ?? 0) + buff.amount * 3;
