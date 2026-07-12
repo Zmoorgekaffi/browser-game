@@ -1,6 +1,7 @@
 import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { PersonalItemsService } from './personal-items.service';
+import { isEquippableItem } from '../utils/item-category.util';
 
 // Definition der verfügbaren Slots zur Typsicherheit (ear-right entfernt)
 export interface EquippedSlots {
@@ -127,7 +128,7 @@ export class InventarService {
       const targetItem = updatedItems[itemIndex];
       const baseSlot = targetItem['armor-slot'];
 
-      if (!baseSlot) return currentInv;
+      if (!baseSlot || !isEquippableItem(targetItem)) return currentInv;
 
       const isEquipping = !targetItem.equipped;
 
@@ -157,7 +158,7 @@ export class InventarService {
     const items = this.personalItemsService.personalItems()?.items ?? [];
     const targetItem = items[itemIndex];
     const baseSlot = targetItem?.['armor-slot'];
-    if (!targetItem || !baseSlot) return;
+    if (!targetItem || !baseSlot || !isEquippableItem(targetItem)) return;
 
     const isEquipping = !targetItem.equipped;
 

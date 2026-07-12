@@ -31,7 +31,8 @@
         "lightning": 36,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Nachtwandler-Kollier",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 24
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Unvergängliches Drachen-Amulett",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Kosmischer Zeit-Talisman",
@@ -133,7 +136,8 @@
         "lightning": 24,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Antiker Schicksals-Anhänger",
@@ -167,6 +171,7 @@
         "lightning": -36,
         "chaos": 48
       }
-    }
+    },
+    "category": "armor"
   }
 ]

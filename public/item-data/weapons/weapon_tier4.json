@@ -46,7 +46,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Großschwert der Legion",
@@ -95,7 +96,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Titanstreitkolben",
@@ -144,7 +146,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Erdbrecher-Hammer",
@@ -193,7 +196,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Schattendolch",
@@ -242,7 +246,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Kompositbogen der Elite",
@@ -291,7 +296,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Arkaner Stab",
@@ -341,7 +347,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Chaosstab",
@@ -391,6 +398,7 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   }
 ]

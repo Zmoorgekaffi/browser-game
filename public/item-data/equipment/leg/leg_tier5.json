@@ -31,7 +31,8 @@
         "lightning": 36,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Nachtwandler-Hose",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 24
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Unvergängliche Drachenbeinschienen",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Kosmische Beinhülle",
@@ -133,7 +136,8 @@
         "lightning": 24,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Antiker Schicksals-Beinschutz",
@@ -167,6 +171,7 @@
         "lightning": -36,
         "chaos": 48
       }
-    }
+    },
+    "category": "armor"
   }
 ]

@@ -46,7 +46,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Zweihandschwert des Rekruten",
@@ -95,7 +96,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Holzknüppel",
@@ -144,7 +146,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Kriegshammer des Lehrlings",
@@ -193,7 +196,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Rostiger Dolch",
@@ -242,7 +246,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Jagdspeer",
@@ -291,7 +296,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Lehrlingsstab",
@@ -341,7 +347,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Runenstab der Novizen",
@@ -391,6 +398,7 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   }
 ]

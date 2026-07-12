@@ -31,7 +31,8 @@
         "lightning": 12,
         "chaos": 1
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Schattenläufer-Band",
@@ -65,7 +66,8 @@
         "lightning": 1,
         "chaos": 8
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Ritterlicher Festungsring",
@@ -99,7 +101,8 @@
         "lightning": 6,
         "chaos": 1
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Ring des Falkenauges",
@@ -133,7 +136,8 @@
         "lightning": 10,
         "chaos": 1
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Zersplitterter Prora-Siegelring",
@@ -167,6 +171,7 @@
         "lightning": -10,
         "chaos": 16
       }
-    }
+    },
+    "category": "armor"
   }
 ]

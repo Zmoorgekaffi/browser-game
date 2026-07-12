@@ -31,7 +31,8 @@
         "lightning": 25,
         "chaos": 3
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Reif des Meisterdiebs",
@@ -65,7 +66,8 @@
         "lightning": 3,
         "chaos": 18
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Titanisches Juggernaut-Band",
@@ -99,7 +101,8 @@
         "lightning": 12,
         "chaos": 3
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Ring der unendlichen Weite",
@@ -133,7 +136,8 @@
         "lightning": 22,
         "chaos": 3
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Lich-König-Knochenreif",
@@ -167,6 +171,7 @@
         "lightning": -20,
         "chaos": 34
       }
-    }
+    },
+    "category": "armor"
   }
 ]

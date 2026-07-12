@@ -31,7 +31,8 @@
         "lightning": 21,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Schattenmeister-Gewand",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 14
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Prunkvoller Obsidianpanzer",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Sturmbringer-Harnisch",
@@ -133,7 +136,8 @@
         "lightning": 14,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Dämonenhaut-Kürass",
@@ -167,6 +171,7 @@
         "lightning": -21,
         "chaos": 28
       }
-    }
+    },
+    "category": "armor"
   }
 ]

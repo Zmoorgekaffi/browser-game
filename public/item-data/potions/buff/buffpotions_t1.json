@@ -7,7 +7,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "1",
-    "effect": { "type": "buff", "stat": "strength", "value": 10, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "strength",
+      "value": 10,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Kleiner Trank der Intelligenz",
@@ -17,7 +23,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "1",
-    "effect": { "type": "buff", "stat": "intelligence", "value": 10, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "intelligence",
+      "value": 10,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Kleiner Trank der Vitalität",
@@ -27,7 +39,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "1",
-    "effect": { "type": "buff", "stat": "vitality", "value": 10, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "vitality",
+      "value": 10,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Kleiner Trank des Glücks",
@@ -37,6 +55,12 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "1",
-    "effect": { "type": "buff", "stat": "luck", "value": 10, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "luck",
+      "value": 10,
+      "duration": 5
+    },
+    "category": "potion"
   }
 ]

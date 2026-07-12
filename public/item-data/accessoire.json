@@ -28,7 +28,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Geflochtenes Glücksarmband",
@@ -59,7 +60,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Gläserner Fläschchenhalter",
@@ -90,7 +92,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Beschlagener schwerer Koppel",
@@ -121,7 +124,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Diebeswerkzeug-Etui",
@@ -152,7 +156,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Eisernes Wappen von Oakhaven",
@@ -183,7 +188,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Fokus-Sash des Bannworters",
@@ -214,7 +220,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Malachit-Schnallenschützer",
@@ -245,7 +252,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Pulsierende Kristall-Monokel",
@@ -276,7 +284,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Sanduhr des Ewigen Nexus",
@@ -307,6 +316,7 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   }
 ]

@@ -7,7 +7,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "5",
-    "effect": { "type": "buff", "stat": "strength", "value": 80, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "strength",
+      "value": 80,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Meisterlicher Trank der Intelligenz",
@@ -17,7 +23,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "5",
-    "effect": { "type": "buff", "stat": "intelligence", "value": 80, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "intelligence",
+      "value": 80,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Meisterlicher Trank der Vitalität",
@@ -27,7 +39,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "5",
-    "effect": { "type": "buff", "stat": "vitality", "value": 80, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "vitality",
+      "value": 80,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Meisterlicher Trank des Glücks",
@@ -37,6 +55,12 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "5",
-    "effect": { "type": "buff", "stat": "luck", "value": 80, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "luck",
+      "value": 80,
+      "duration": 5
+    },
+    "category": "potion"
   }
 ]

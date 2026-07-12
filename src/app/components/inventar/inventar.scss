@@ -1,0 +1,28 @@
+/* Scrollbar der Item-Liste bleibt unsichtbar, bis man mit der Maus über die
+   Liste hovert — vermeidet einen dauerhaft sichtbaren Balken neben dem
+   Rahmen-Banner. */
+.hover-scrollbar {
+  scrollbar-color: transparent transparent !important;
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border-color: transparent !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &:hover {
+    scrollbar-color: #c9a34d #181310 !important;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #c9a34d, #6a5530) !important;
+    border-color: #181310 !important;
+  }
+
+  &:hover::-webkit-scrollbar-track {
+    background: #181310 !important;
+  }
+}

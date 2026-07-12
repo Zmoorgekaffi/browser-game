@@ -31,7 +31,8 @@
         "lightning": 3,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Abgewetzte Lederhandschuhe",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 2
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Rostige Eisenhandschuhe",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Wilderer-Griffe",
@@ -133,7 +136,8 @@
         "lightning": 2,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Splitternde Knochenstulpen",
@@ -167,6 +171,7 @@
         "lightning": -3,
         "chaos": 4
       }
-    }
+    },
+    "category": "armor"
   }
 ]

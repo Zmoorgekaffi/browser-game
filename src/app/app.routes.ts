@@ -26,6 +26,7 @@ export const routes: Routes = [
   { path: 'shrine', component: Shrine },
   { path: 'smither', component: Smither },
   { path: 'inventar', component: Inventar },
+  { path: 'inventar/:category', component: Inventar },
   { path: 'character', component: Character },
   { path: 'skills', component: Skills },
   { path: 'adventure/intro', component: IntroScene },

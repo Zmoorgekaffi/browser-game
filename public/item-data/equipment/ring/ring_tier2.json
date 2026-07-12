@@ -31,7 +31,8 @@
         "lightning": 6,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Geschliffener Banditen-Ring",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 4
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Verstärkter Stahlring",
@@ -99,7 +101,8 @@
         "lightning": 2,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Ring des Fährtensuchers",
@@ -133,7 +136,8 @@
         "lightning": 5,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Grabesknochen-Siegel",
@@ -167,6 +171,7 @@
         "lightning": -5,
         "chaos": 8
       }
-    }
+    },
+    "category": "armor"
   }
 ]

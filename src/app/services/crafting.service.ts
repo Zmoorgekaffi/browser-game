@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { InventarService } from './inventar.service';
 import { PersonalItemsService } from './personal-items.service';
 import { ItemRequirement, getItemRequirements } from '../utils/item-requirements.util';
+import { isEquippableItem } from '../utils/item-category.util';
 
 interface StatPoolEntry {
   path: string[];
@@ -48,12 +49,15 @@ export class CraftingService {
     this.craftingPanelShow.set(false);
   }
 
-  /** Alle Inventar-Items, die ins Crafting-Feld gezogen werden dürfen. */
+  /** Alle Inventar-Items, die ins Crafting-Feld gezogen werden dürfen (nur Rüstung und Waffen). */
   public get craftableItems(): { item: any; index: number }[] {
     const items = this.inventarService.inventar()?.items ?? [];
     return items
       .map((item: any, index: number) => ({ item, index }))
-      .filter((entry: { item: any; index: number }) => !entry.item.equipped && !entry.item.soulbound);
+      .filter(
+        (entry: { item: any; index: number }) =>
+          !entry.item.equipped && !entry.item.soulbound && isEquippableItem(entry.item),
+      );
   }
 
   /**

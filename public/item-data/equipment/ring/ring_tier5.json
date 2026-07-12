@@ -31,7 +31,8 @@
         "lightning": 55,
         "chaos": 10
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Ring der flüsternden Klingen",
@@ -65,7 +66,8 @@
         "lightning": 10,
         "chaos": 40
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Götterdämmerungs-Siegel",
@@ -99,7 +101,8 @@
         "lightning": 30,
         "chaos": 10
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Auge des Weltenwanderers",
@@ -133,7 +136,8 @@
         "lightning": 48,
         "chaos": 10
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Abgrundtiefer Seelenschlinger",
@@ -167,6 +171,7 @@
         "lightning": -40,
         "chaos": 75
       }
-    }
+    },
+    "category": "armor"
   }
 ]

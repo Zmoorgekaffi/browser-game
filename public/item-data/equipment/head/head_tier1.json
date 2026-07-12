@@ -31,7 +31,8 @@
         "lightning": 3,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Abgewetzte Lederkappe",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 2
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Rostiger Eisenhut",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Wilderer-Maske",
@@ -133,7 +136,8 @@
         "lightning": 2,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Splitterndes Knochenband",
@@ -167,6 +171,7 @@
         "lightning": -3,
         "chaos": 4
       }
-    }
+    },
+    "category": "armor"
   }
 ]

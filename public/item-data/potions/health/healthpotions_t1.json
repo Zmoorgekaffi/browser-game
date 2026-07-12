@@ -7,6 +7,10 @@
     "armor-slot": "potion",
     "potion-type": "health",
     "tier": "1",
-    "effect": { "type": "heal", "value": 60 }
+    "effect": {
+      "type": "heal",
+      "value": 60
+    },
+    "category": "potion"
   }
 ]

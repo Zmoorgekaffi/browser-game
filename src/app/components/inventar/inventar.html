@@ -1,32 +1,19 @@
-<section id="inventarRoot" class="w-full h-full relative bg-black" (mousemove)="onMouseMove($event)">
+<section
+  id="inventarRoot"
+  class="w-full h-full relative bg-black"
+  (mousemove)="onMouseMove($event)"
+>
   <div class="absolute inset-0 z-0">
     <img src="imgs/inventar/inventar.webp" alt="" class="w-full h-full object-cover" />
+    <!-- Kategorie-Button: Rüstung (x=20, y=0) -->
   </div>
 
-<app-armor-slot
+  <app-armor-slot
     [slotName]="'head'"
     [x]="295"
     [y]="80"
     [width]="'95px'"
     [height]="'94px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'accessoire-left'"
-    [x]="200"
-    [y]="109"
-    [width]="'63px'"
-    [height]="'60px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'accessoire-right'"
-    [x]="424"
-    [y]="109"
-    [width]="'63px'"
-    [height]="'59px'"
     [devmode]="false"
   ></app-armor-slot>
 
@@ -49,47 +36,29 @@
   ></app-armor-slot>
 
   <app-armor-slot
+    [slotName]="'ring-left'"
+    [x]="221"
+    [y]="186"
+    [width]="'58px'"
+    [height]="'55px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'ring-left'"
+    [x]="110"
+    [y]="185"
+    [width]="'58px'"
+    [height]="'57px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
     [slotName]="'chest'"
     [x]="503"
     [y]="269"
     [width]="'81px'"
     [height]="'163px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'weapon-1'"
-    [x]="480"
-    [y]="465"
-    [width]="'108px'"
-    [height]="'165px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'footwear'"
-    [x]="364"
-    [y]="554"
-    [width]="'77px'"
-    [height]="'74px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'leg'"
-    [x]="252"
-    [y]="554"
-    [width]="'77px'"
-    [height]="'76px'"
-    [devmode]="false"
-  ></app-armor-slot>
-
-  <app-armor-slot
-    [slotName]="'weapon-2'"
-    [x]="106"
-    [y]="464"
-    [width]="'105px'"
-    [height]="'166px'"
     [devmode]="false"
   ></app-armor-slot>
 
@@ -103,38 +72,138 @@
   ></app-armor-slot>
 
   <app-armor-slot
-    [slotName]="'back'"
-    [x]="105"
-    [y]="268"
-    [width]="'83px'"
-    [height]="'80px'"
+    [slotName]="'leg'"
+    [x]="252"
+    [y]="554"
+    [width]="'77px'"
+    [height]="'76px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <app-armor-slot
-    [slotName]="'ring-left'"
-    [x]="110"
-    [y]="185"
-    [width]="'58px'"
-    [height]="'57px'"
+    [slotName]="'footwear'"
+    [x]="364"
+    [y]="554"
+    [width]="'77px'"
+    [height]="'74px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'weapon-1'"
+    [x]="480"
+    [y]="465"
+    [width]="'108px'"
+    [height]="'165px'"
+    [devmode]="false"
+  ></app-armor-slot>
+
+  <app-armor-slot
+    [slotName]="'weapon-2'"
+    [x]="106"
+    [y]="464"
+    [width]="'105px'"
+    [height]="'166px'"
     [devmode]="false"
   ></app-armor-slot>
 
   <div
     (click)="closeInventar()"
-    class="absolute top-4 right-4 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
-  >
-    Schließen ✕
-  </div>
+    class="absolute top-[8px] right-[8px] cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md z-50 select-none"
+  ></div>
 
+  <!-- Item-Liste mit Rahmen-Banner: Banner oben, Liste darunter (flex-col!).
+       top: 46px im Vollbild, 12px auf dem Desktop. -->
   <div
-    class="absolute overflow-y-auto z-10 min-w-[509px] max-w-[509px] min-h-[464px] max-h-[464px] top-[185px] left-[678px] p-4 flex flex-col items-start justify-start gap-2"
+    class="w-[600px] gap-1 min-w-[600px] h-[auto] absolute left-[646px] flex flex-col items-center justify-center"
+    [style.top.px]="screenSizingService.isFullscreen() ? 46 : 12"
   >
-    @for (entry of displayedItems; track entry.source + '-' + entry.index) {
-      <app-inventar-item [item]="entry.item" [index]="entry.index" [source]="entry.source"></app-inventar-item>
-    } @empty {
-      <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
-    }
+    <div class="min-h-[108px] w-full flex items-center justify-between px-16">
+      <img src="imgs/shared/input/input_0.webp" alt="" class="w-full absolute inset-0 h-auto" />
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/ruestung"
+        image="imgs/items/weapon/knight_sword.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'armor' ? 1 : 0.55"
+        tooltipTitle="Rüstung"
+      ></app-redirect-hotspot>
+
+      <!-- Kategorie-Button: Waffen (x=90, y=0) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/waffen"
+        image="imgs/items/weapon/bastard_sword.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'weapon' ? 1 : 0.55"
+        tooltipTitle="Waffen"
+      ></app-redirect-hotspot>
+
+      <!-- Kategorie-Button: Tränke (x=160, y=0) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/traenke"
+        image="imgs/items/weapon/rusty_dagger.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'potion' ? 1 : 0.55"
+        tooltipTitle="Tränke"
+      ></app-redirect-hotspot>
+
+      <!-- Kategorie-Button: Materialien (x=230, y=0) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/materialien"
+        image="imgs/items/weapon/iron_mace.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'material' ? 1 : 0.55"
+        tooltipTitle="Materialien"
+      ></app-redirect-hotspot>
+
+      <!-- Kategorie-Button: Zutaten (x=300, y=0) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/zutaten"
+        image="imgs/items/weapon/hunting_spear.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'ingredient' ? 1 : 0.55"
+        tooltipTitle="Zutaten"
+      ></app-redirect-hotspot>
+
+      <!-- Kategorie-Button: Quest-Items (x=370, y=0) -->
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="52"
+        [height]="52"
+        redirect="/inventar/quest"
+        image="imgs/items/weapon/champion_blade.webp"
+        [hoverHighlight]="true"
+        [brightness]="activeCategory() === 'quest' ? 1 : 0.55"
+        tooltipTitle="Quest-Items"
+      ></app-redirect-hotspot>
+    </div>
+    <div
+      class="hover-scrollbar overflow-y-auto z-10 min-w-[600px] max-w-[600px] min-h-[547px] max-h-[538px] p-4 flex flex-col items-start justify-start gap-2"
+    >
+      @for (entry of displayedItems; track entry.source + '-' + entry.index) {
+        <app-inventar-item
+          [item]="entry.item"
+          [index]="entry.index"
+          [source]="entry.source"
+        ></app-inventar-item>
+      } @empty {
+        <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
+      }
+    </div>
   </div>
 
   <!-- Tooltip für angelegte Items: nur Name, Tier und Stats (keine Beschreibung).
@@ -162,7 +231,9 @@
             <div class="flex flex-wrap gap-x-3 gap-y-0.5">
               @for (stat of statDefs; track stat.key) {
                 @if (getStatValue(item.stats, stat.key) > 0) {
-                  <span [class]="statColor(stat.key)">+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                  <span [class]="statColor(stat.key)"
+                    >+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span
+                  >
                 }
               }
             </div>
@@ -174,7 +245,9 @@
             <div class="flex flex-wrap gap-x-3 gap-y-0.5">
               @for (stat of statDefs; track stat.key) {
                 @if (getStatValue(item.stats, stat.key) < 0) {
-                  <span [class]="statColor(stat.key)">{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                  <span [class]="statColor(stat.key)"
+                    >{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span
+                  >
                 }
               }
             </div>
@@ -190,7 +263,9 @@
        sichtbar waren. -->
   @if (unequipConfirmSlot()) {
     <div class="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60">
-      <div class="bg-black/90 border border-white/10 rounded-lg p-6 w-[320px] flex flex-col gap-4 items-center">
+      <div
+        class="bg-black/90 border border-white/10 rounded-lg p-6 w-[320px] flex flex-col gap-4 items-center"
+      >
         @if (deviceService.isTouch() && unequipConfirmItem; as item) {
           <div class="w-full bg-black/40 border border-white/10 rounded-md p-3 text-sm">
             <div class="flex justify-between items-baseline gap-3 mb-1">
@@ -211,7 +286,9 @@
                   <div class="flex flex-wrap gap-x-3 gap-y-0.5">
                     @for (stat of statDefs; track stat.key) {
                       @if (getStatValue(item.stats, stat.key) > 0) {
-                        <span [class]="statColor(stat.key)">+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                        <span [class]="statColor(stat.key)"
+                          >+{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span
+                        >
                       }
                     }
                   </div>
@@ -223,7 +300,9 @@
                   <div class="flex flex-wrap gap-x-3 gap-y-0.5">
                     @for (stat of statDefs; track stat.key) {
                       @if (getStatValue(item.stats, stat.key) < 0) {
-                        <span [class]="statColor(stat.key)">{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span>
+                        <span [class]="statColor(stat.key)"
+                          >{{ getStatValue(item.stats, stat.key) }} {{ stat.label }}</span
+                        >
                       }
                     }
                   </div>

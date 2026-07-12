@@ -31,7 +31,8 @@
         "lightning": 3,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Abgewetzte Lederhose",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 2
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Rostige Beinschienen",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Wilderer-Hose",
@@ -133,7 +136,8 @@
         "lightning": 2,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Splitternde Knochenschienen",
@@ -167,6 +171,7 @@
         "lightning": -3,
         "chaos": 4
       }
-    }
+    },
+    "category": "armor"
   }
 ]

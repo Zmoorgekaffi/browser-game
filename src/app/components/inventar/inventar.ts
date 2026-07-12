@@ -1,12 +1,16 @@
-import { Component, ElementRef, Signal, inject } from '@angular/core';
+import { Component, ElementRef, Signal, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { GameStateService } from '../../services/game-state.service';
 import { InventarItem } from './inventar-item/inventar-item';
 import { CommonModule } from '@angular/common';
 import { ArmorSlot } from './armor-slot/armor-slot';
+import { RedirectHotspotComponent } from '../shared/redirect-hotspot/redirect-hotspot.component';
 import { ScreenSizingService } from '../../services/screen-sizing.service';
 import { DeviceService } from '../../services/device.service';
 import { getItemTier } from '../../utils/item-display.util';
 import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../utils/stat-color.util';
+import { ItemCategory, categoryFromRouteSlug, getItemCategory } from '../../utils/item-category.util';
 
 /**
  * @component Inventar
@@ -17,33 +21,36 @@ import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DE
 @Component({
   selector: 'app-inventar',
   standalone: true,
-  imports: [InventarItem, CommonModule, ArmorSlot],
+  imports: [InventarItem, CommonModule, ArmorSlot, RedirectHotspotComponent],
   templateUrl: './inventar.html',
   styleUrl: './inventar.scss',
 })
 export class Inventar {
   public gameStateService = inject(GameStateService);
   public deviceService = inject(DeviceService);
-  private screenSizingService = inject(ScreenSizingService);
+  public screenSizingService = inject(ScreenSizingService);
   private el = inject(ElementRef);
+  private route = inject(ActivatedRoute);
 
   inventar: Signal<any> = this.gameStateService.inventar.inventar;
   personalItems: Signal<any> = this.gameStateService.personalItems.personalItems;
   public hoveredEquippedItem = this.gameStateService.inventar.hoveredEquippedItem;
   public unequipConfirmSlot = this.gameStateService.inventar.unequipConfirmSlot;
 
-  /** Normale Inventar-Items und persönliche (soulbound) Items in einer gemeinsamen Liste. */
+  /** Kategorien-Tabs (Rüstung/Waffen/Tränke/Materialien/Zutaten/Quest) — Standard: Rüstung. */
+  private paramMap = toSignal(this.route.paramMap);
+  public activeCategory: Signal<ItemCategory> = computed(() => categoryFromRouteSlug(this.paramMap()?.get('category')));
+
+  /** Normale Inventar-Items und persönliche (soulbound) Items in einer gemeinsamen Liste, gefiltert nach aktiver Kategorie. */
   public get displayedItems(): { item: any; index: number; source: 'inventar' | 'personal' }[] {
-    const fromInventar = (this.inventar()?.items ?? []).map((item: any, index: number) => ({
-      item,
-      index,
-      source: 'inventar' as const,
-    }));
-    const fromPersonal = (this.personalItems()?.items ?? []).map((item: any, index: number) => ({
-      item,
-      index,
-      source: 'personal' as const,
-    }));
+    const category = this.activeCategory();
+
+    const fromInventar = (this.inventar()?.items ?? [])
+      .map((item: any, index: number) => ({ item, index, source: 'inventar' as const }))
+      .filter((entry: { item: any }) => getItemCategory(entry.item) === category);
+    const fromPersonal = (this.personalItems()?.items ?? [])
+      .map((item: any, index: number) => ({ item, index, source: 'personal' as const }))
+      .filter((entry: { item: any }) => getItemCategory(entry.item) === category);
     return [...fromInventar, ...fromPersonal];
   }
 

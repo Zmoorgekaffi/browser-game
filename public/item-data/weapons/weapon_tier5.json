@@ -46,7 +46,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Weltenspalter",
@@ -95,7 +96,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Kriegsgott-Streitkolben",
@@ -144,7 +146,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Apokalypsenhammer",
@@ -193,7 +196,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Todesstachel",
@@ -242,7 +246,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Himmelsbogen",
@@ -291,7 +296,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Stab der Urgewalt",
@@ -341,7 +347,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   },
   {
     "name": "Zepter des Weltuntergangs",
@@ -391,6 +398,7 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "weapon"
   }
 ]

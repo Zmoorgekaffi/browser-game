@@ -31,7 +31,8 @@
         "lightning": 6,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Verstärkte Lederhose",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 4
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Solide Kettenbeinschienen",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Pirscher-Hose",
@@ -133,7 +136,8 @@
         "lightning": 4,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Runenbeschriebene Beinkleider",
@@ -167,6 +171,7 @@
         "lightning": -6,
         "chaos": 8
       }
-    }
+    },
+    "category": "armor"
   }
 ]

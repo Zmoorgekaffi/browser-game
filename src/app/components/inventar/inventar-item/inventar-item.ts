@@ -4,6 +4,7 @@ import { GameStateService } from '../../../services/game-state.service';
 import { getSellPrice, getItemTier } from '../../../utils/item-display.util';
 import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS, getElementLabel } from '../../../utils/stat-color.util';
 import { getItemRequirements, meetsAllRequirements, formatRequirements } from '../../../utils/item-requirements.util';
+import { isEquippableItem } from '../../../utils/item-category.util';
 
 /**
  * @component InventarItem
@@ -47,6 +48,11 @@ export class InventarItem implements OnChanges {
 
   public get sellValue(): number {
     return getSellPrice(this.item?.price);
+  }
+
+  /** Nur Rüstung und Waffen sind ausrüstbar — Tränke/Materialien/Zutaten/Quest-Items nicht. */
+  public get isEquippable(): boolean {
+    return isEquippableItem(this.item);
   }
 
   public statDefs = STAT_DEFINITIONS;

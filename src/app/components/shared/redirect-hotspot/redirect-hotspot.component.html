@@ -1,8 +1,9 @@
 <div
   class="redirect-hotspot"
   [class.dev-mode]="devMode"
-  [style.left.px]="x"
-  [style.top.px]="y"
+  [style.position]="absolute ? 'absolute' : 'static'"
+  [style.left.px]="absolute ? x : null"
+  [style.top.px]="absolute ? y : null"
   [style.width.px]="width"
   [style.height.px]="height"
   role="button"

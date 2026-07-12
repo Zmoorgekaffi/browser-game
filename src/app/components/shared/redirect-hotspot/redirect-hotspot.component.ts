@@ -18,6 +18,8 @@ export class RedirectHotspotComponent {
   @Input() y = 0;
   @Input() width = 100;
   @Input() height = 100;
+  /** true (Default) = position:absolute mit x/y wie bisher; false = normaler Dokumentenfluss (z.B. als Flex-/Grid-Kind), x/y werden dann ignoriert. */
+  @Input() absolute = true;
   @Input() redirect = '';
   @Input() devMode = false;
   /** Optionales Bild (z. B. Gebäude-Sprite), das im Hotspot angezeigt wird. */

@@ -7,6 +7,10 @@
     "armor-slot": "potion",
     "potion-type": "mana",
     "tier": "4",
-    "effect": { "type": "restore-mana", "value": 240 }
+    "effect": {
+      "type": "restore-mana",
+      "value": 240
+    },
+    "category": "potion"
   }
 ]

@@ -7,7 +7,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "3",
-    "effect": { "type": "buff", "stat": "strength", "value": 35, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "strength",
+      "value": 35,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Großer Trank der Intelligenz",
@@ -17,7 +23,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "3",
-    "effect": { "type": "buff", "stat": "intelligence", "value": 35, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "intelligence",
+      "value": 35,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Großer Trank der Vitalität",
@@ -27,7 +39,13 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "3",
-    "effect": { "type": "buff", "stat": "vitality", "value": 35, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "vitality",
+      "value": 35,
+      "duration": 5
+    },
+    "category": "potion"
   },
   {
     "name": "Großer Trank des Glücks",
@@ -37,6 +55,12 @@
     "armor-slot": "potion",
     "potion-type": "buff",
     "tier": "3",
-    "effect": { "type": "buff", "stat": "luck", "value": 35, "duration": 5 }
+    "effect": {
+      "type": "buff",
+      "stat": "luck",
+      "value": 35,
+      "duration": 5
+    },
+    "category": "potion"
   }
 ]

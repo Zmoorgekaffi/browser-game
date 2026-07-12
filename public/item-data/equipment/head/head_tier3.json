@@ -31,7 +31,8 @@
         "lightning": 12,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Schlangenhaut-Maske",
@@ -65,7 +66,8 @@
         "lightning": 0,
         "chaos": 8
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Visierhelm des Wächters",
@@ -99,7 +101,8 @@
         "lightning": 0,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Falkenaugen-Helm",
@@ -133,7 +136,8 @@
         "lightning": 8,
         "chaos": 0
       }
-    }
+    },
+    "category": "armor"
   },
   {
     "name": "Gequältes Antlitz",
@@ -167,6 +171,7 @@
         "lightning": -12,
         "chaos": 16
       }
-    }
+    },
+    "category": "armor"
   }
 ]
