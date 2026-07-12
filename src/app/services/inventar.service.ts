@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { PersonalItemsService } from './personal-items.service';
-import { isEquippableItem } from '../utils/item-category.util';
+import { isEquippableItem, isItemCompatibleWithSlot } from '../utils/item-category.util';
 
 // Definition der verfügbaren Slots zur Typsicherheit (ear-right entfernt)
 export interface EquippedSlots {
@@ -56,6 +56,12 @@ export class InventarService {
 
   /** Slot-Name, für den gerade der "Ausziehen?"-Bestätigungsdialog offen ist. */
   public unequipConfirmSlot: WritableSignal<string | null> = signal<string | null>(null);
+
+  /** Item, das gerade per Drag & Drop aus der Inventarliste auf einen Slot gezogen wird. */
+  public draggingItem: WritableSignal<any | null> = signal<any | null>(null);
+
+  /** Slot-Name, über dem der Pointer beim Ziehen gerade schwebt (für Grün/Rot-Highlight). */
+  public dragHoveredSlot: WritableSignal<string | null> = signal<string | null>(null);
 
   private activeCharId: string | null = null;
 
@@ -178,6 +184,69 @@ export class InventarService {
       this.personalItemsService.setEquippedAt(itemIndex, false, null);
     }
 
+    this.updateEquippedSlotsSignal();
+  }
+
+  /**
+   * Rüstet ein Item explizit auf `targetSlot` an (Drag & Drop aus der
+   * Item-Liste). Anders als `toggleEquipItem` kein Toggle: legt immer an
+   * (auch wenn das Item schon in einem anderen Slot steckt) und ersetzt ein
+   * ggf. dort sitzendes Item. Ring/Accessoire/Waffen-Slots werden dabei
+   * weiterhin automatisch verteilt (`resolveTargetSlot`) — `targetSlot`
+   * bestimmt nur, ob die Slot-Familie passt (siehe `isItemCompatibleWithSlot`).
+   *
+   * @param itemIndex  Index des Items in der jeweiligen Quell-Liste.
+   * @param source     'inventar' oder 'personal'.
+   * @param targetSlot Slot, über dem das Item losgelassen wurde.
+   */
+  public equipItemToSlot(itemIndex: number, source: 'inventar' | 'personal', targetSlot: string): void {
+    if (source === 'personal') {
+      this.equipPersonalItemToSlot(itemIndex, targetSlot);
+      return;
+    }
+
+    let latestItems: any[] = [];
+
+    this.inventar.update(currentInv => {
+      if (!currentInv?.items || !currentInv.items[itemIndex]) return currentInv;
+
+      const updatedItems = JSON.parse(JSON.stringify(currentInv.items));
+      const targetItem = updatedItems[itemIndex];
+
+      if (!isItemCompatibleWithSlot(targetItem, targetSlot)) return currentInv;
+
+      const finalSlot = this.resolveTargetSlot(targetItem['armor-slot'], targetItem);
+      targetItem['assigned-slot'] = finalSlot;
+      this.clearSlotEverywhere(finalSlot, 'inventar', itemIndex, updatedItems);
+      this.enforceTwoHandedExclusivity(targetItem, finalSlot, 'inventar', itemIndex, updatedItems);
+      targetItem.equipped = true;
+      updatedItems[itemIndex] = targetItem;
+
+      const newInventar = { ...currentInv, items: updatedItems };
+      this.saveToLocalStorage(newInventar);
+      latestItems = updatedItems;
+      return newInventar;
+    });
+
+    this.updateEquippedSlotsSignal(latestItems);
+  }
+
+  /** Wie equipItemToSlot, nur für ein Item aus den persönlichen (soulbound) Items. */
+  private equipPersonalItemToSlot(itemIndex: number, targetSlot: string): void {
+    const items = this.personalItemsService.personalItems()?.items ?? [];
+    const targetItem = items[itemIndex];
+    if (!targetItem || !isItemCompatibleWithSlot(targetItem, targetSlot)) return;
+
+    const finalSlot = this.resolveTargetSlot(targetItem['armor-slot'], targetItem);
+
+    const workingInventarItems = JSON.parse(JSON.stringify(this.inventar()?.items ?? []));
+    this.clearSlotEverywhere(finalSlot, 'personal', itemIndex, workingInventarItems);
+    this.enforceTwoHandedExclusivity(targetItem, finalSlot, 'personal', itemIndex, workingInventarItems);
+    const newInventar = { ...this.inventar(), items: workingInventarItems };
+    this.inventar.set(newInventar);
+    this.saveToLocalStorage(newInventar);
+
+    this.personalItemsService.setEquippedAt(itemIndex, true, finalSlot);
     this.updateEquippedSlotsSignal();
   }
 

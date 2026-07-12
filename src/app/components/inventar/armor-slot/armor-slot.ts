@@ -2,6 +2,7 @@ import { Component, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventarService } from '../../../services/inventar.service';
 import { DeviceService } from '../../../services/device.service';
+import { isItemCompatibleWithSlot } from '../../../utils/item-category.util';
 
 /**
  * @component ArmorSlot
@@ -36,6 +37,13 @@ export class ArmorSlot {
     if (name.startsWith('weapon')) return 'weapon';
     if (name === 'head') return 'helmet';
     return name;
+  }
+
+  /** Grün/Rot-Highlight während ein Item aus der Liste über diesen Slot gezogen wird. */
+  get dragState(): 'none' | 'valid' | 'invalid' {
+    const dragging = this.inventarService.draggingItem();
+    if (!dragging || this.inventarService.dragHoveredSlot() !== this.slotName()) return 'none';
+    return isItemCompatibleWithSlot(dragging, this.slotName()) ? 'valid' : 'invalid';
   }
 
   onEnter(): void {

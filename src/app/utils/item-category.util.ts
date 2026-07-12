@@ -48,3 +48,22 @@ export function getItemCategory(item: any): ItemCategory {
 export function isEquippableItem(item: any): boolean {
   return EQUIPPABLE_CATEGORIES.includes(getItemCategory(item));
 }
+
+/** Fasst Doppel-Slots zu einer gemeinsamen Familie zusammen (z. B. 'ring-left'/'ring-right' -> 'ring'). */
+function slotFamily(slot: string): string {
+  if (slot.startsWith('ring')) return 'ring';
+  if (slot.startsWith('accessoire')) return 'accessoire';
+  if (slot.startsWith('weapon')) return 'weapon';
+  return slot;
+}
+
+/**
+ * Prüft, ob ein Item per Drag & Drop auf `slotName` abgelegt werden darf.
+ * Ringe/Accessoires/Waffen passen auf beide ihrer jeweiligen Slots, alle
+ * anderen Slots müssen exakt zum 'armor-slot' des Items passen.
+ */
+export function isItemCompatibleWithSlot(item: any, slotName: string): boolean {
+  const baseSlot = item?.['armor-slot'];
+  if (!baseSlot || !isEquippableItem(item)) return false;
+  return slotFamily(baseSlot) === slotFamily(slotName);
+}

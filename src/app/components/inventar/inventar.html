@@ -196,6 +196,10 @@
           [item]="entry.item"
           [index]="entry.index"
           [source]="entry.source"
+          (equipDragStart)="onEquipDragStart($event)"
+          (equipDragMove)="onEquipDragMove($event)"
+          (equipDragEnd)="onEquipDragEnd($event)"
+          (equipDragCancel)="onEquipDragCancel()"
         ></app-inventar-item>
       } @empty {
         <div class="text-white text-center w-full mt-4 opacity-50">Dein Inventar ist leer.</div>
@@ -325,5 +329,16 @@
         </div>
       </div>
     </div>
+  }
+
+  <!-- Ghost-Vorschau während ein Item per Drag&Drop auf einen Slot gezogen wird -->
+  @if (draggingEntry() !== null && dragGhostImg) {
+    <img
+      [src]="dragGhostImg"
+      class="absolute z-[10000] w-14 h-14 object-contain pointer-events-none opacity-90 drop-shadow-lg"
+      [style.left.px]="dragGhostX"
+      [style.top.px]="dragGhostY"
+      style="transform: translate(-50%, -50%);"
+    />
   }
 </section>

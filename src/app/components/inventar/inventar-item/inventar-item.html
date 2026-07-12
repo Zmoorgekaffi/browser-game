@@ -3,9 +3,31 @@
      [class.border-[#c9a34d]]="itemSignal()?.equipped"
      [class.bg-[#000000cc]]="!itemSignal()?.equipped"
      [class.border-zinc-700]="!itemSignal()?.equipped"
+     [class.opacity-40]="isDragging()"
+     [class.cursor-grab]="isEquippable && !deviceService.isTouch()"
+     [class.active:cursor-grabbing]="isEquippable && !deviceService.isTouch()"
+     (pointerdown)="onCardPointerDown($event)"
+     (pointermove)="onItemPointerMove($event)"
+     (pointerup)="onItemPointerUp($event)"
+     (pointercancel)="onItemPointerCancel()"
      >
 
   <div class="flex items-start gap-3">
+    @if (isEquippable && deviceService.isTouch()) {
+      <!-- Grabber: einziges Element mit touch-action:none, damit die Liste
+           selbst auf dem Handy weiter scrollbar bleibt. Nur mobil sichtbar —
+           auf dem Desktop ist stattdessen die ganze Karte ziehbar. -->
+      <div
+        (pointerdown)="onGrabPointerDown($event)"
+        (pointermove)="onItemPointerMove($event)"
+        (pointerup)="onItemPointerUp($event)"
+        (pointercancel)="onItemPointerCancel()"
+        style="touch-action: none;"
+        class="w-5 shrink-0 self-stretch flex items-center justify-center text-zinc-500 hover:text-white cursor-grab active:cursor-grabbing text-lg leading-none select-none"
+        aria-label="Ziehen zum Ausrüsten"
+      >⠿</div>
+    }
+
     <div class="w-16 h-16 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
       <img [src]="itemSignal()?.['img-path']" [alt]="itemSignal()?.name" class="w-full h-full object-contain" />
     </div>

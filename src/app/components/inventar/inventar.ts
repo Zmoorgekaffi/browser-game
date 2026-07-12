@@ -1,4 +1,4 @@
-import { Component, ElementRef, Signal, computed, inject } from '@angular/core';
+import { Component, ElementRef, Signal, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { GameStateService } from '../../services/game-state.service';
@@ -10,7 +10,8 @@ import { ScreenSizingService } from '../../services/screen-sizing.service';
 import { DeviceService } from '../../services/device.service';
 import { getItemTier } from '../../utils/item-display.util';
 import { getStatColor, getStatValue, hasPositiveStats, hasNegativeStats, STAT_DEFINITIONS } from '../../utils/stat-color.util';
-import { ItemCategory, categoryFromRouteSlug, getItemCategory } from '../../utils/item-category.util';
+import { ItemCategory, categoryFromRouteSlug, getItemCategory, isItemCompatibleWithSlot } from '../../utils/item-category.util';
+import { meetsAllRequirements } from '../../utils/item-requirements.util';
 
 /**
  * @component Inventar
@@ -52,6 +53,70 @@ export class Inventar {
       .map((item: any, index: number) => ({ item, index, source: 'personal' as const }))
       .filter((entry: { item: any }) => getItemCategory(entry.item) === category);
     return [...fromInventar, ...fromPersonal];
+  }
+
+  /** Eintrag, der gerade per Drag&Drop auf einen ArmorSlot gezogen wird. */
+  public draggingEntry = signal<{ index: number; source: 'inventar' | 'personal' } | null>(null);
+  public dragGhostImg: string | null = null;
+  public dragGhostX = 0;
+  public dragGhostY = 0;
+
+  private findEntryItem(index: number, source: 'inventar' | 'personal'): any {
+    const items = source === 'personal' ? this.personalItems()?.items : this.inventar()?.items;
+    return items?.[index] ?? null;
+  }
+
+  /** Findet den Slot (per data-slot-name) unter den angegebenen Viewport-Koordinaten. */
+  private slotNameAt(clientX: number, clientY: number): string | null {
+    const target = document.elementFromPoint(clientX, clientY)?.closest('[data-slot-name]');
+    return target?.getAttribute('data-slot-name') ?? null;
+  }
+
+  /** Ghost-Position relativ zu #inventarRoot, kompensiert um ScreenSizingService.scale() (siehe onMouseMove). */
+  private updateDragGhostPosition(clientX: number, clientY: number): void {
+    const rect = this.el.nativeElement.querySelector('#inventarRoot')?.getBoundingClientRect();
+    if (!rect) return;
+    const scale = this.screenSizingService.scale() || 1;
+    this.dragGhostX = (clientX - rect.left) / scale;
+    this.dragGhostY = (clientY - rect.top) / scale;
+  }
+
+  private resetDrag(): void {
+    this.draggingEntry.set(null);
+    this.dragGhostImg = null;
+    this.gameStateService.inventar.draggingItem.set(null);
+    this.gameStateService.inventar.dragHoveredSlot.set(null);
+  }
+
+  public onEquipDragStart(payload: { index: number; source: 'inventar' | 'personal'; imgPath: string; clientX: number; clientY: number }): void {
+    this.draggingEntry.set({ index: payload.index, source: payload.source });
+    this.dragGhostImg = payload.imgPath;
+    this.updateDragGhostPosition(payload.clientX, payload.clientY);
+    this.gameStateService.inventar.draggingItem.set(this.findEntryItem(payload.index, payload.source));
+  }
+
+  public onEquipDragMove(payload: { clientX: number; clientY: number }): void {
+    this.updateDragGhostPosition(payload.clientX, payload.clientY);
+    this.gameStateService.inventar.dragHoveredSlot.set(this.slotNameAt(payload.clientX, payload.clientY));
+  }
+
+  public onEquipDragEnd(payload: { clientX: number; clientY: number }): void {
+    const entry = this.draggingEntry();
+    const slotName = this.slotNameAt(payload.clientX, payload.clientY);
+
+    if (entry && slotName) {
+      const item = this.findEntryItem(entry.index, entry.source);
+      const currentStats = this.gameStateService.skills.combatStats() as any;
+      if (isItemCompatibleWithSlot(item, slotName) && meetsAllRequirements(item, currentStats)) {
+        this.gameStateService.inventar.equipItemToSlot(entry.index, entry.source, slotName);
+      }
+    }
+
+    this.resetDrag();
+  }
+
+  public onEquipDragCancel(): void {
+    this.resetDrag();
   }
 
   public tooltipX = 0;
