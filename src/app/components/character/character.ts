@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
 import { ScreenSizingService } from '../../services/screen-sizing.service';
 import { DeviceService } from '../../services/device.service';
-import { RouterLink } from '@angular/router';
 import { AnimationObject } from '../shared/animation-object/animation-object';
 import { framePaths } from '../../utils/frame-paths.util';
 import { getStatColor } from '../../utils/stat-color.util';
+import { SkillSlot } from './skill-slot/skill-slot';
+import { RedirectHotspotComponent } from '../shared/redirect-hotspot/redirect-hotspot.component';
+import { EquippedSpells } from '../../services/skills.service';
 
 /**
  * @component Character
@@ -16,7 +18,7 @@ import { getStatColor } from '../../utils/stat-color.util';
 @Component({
   selector: 'app-character',
   standalone: true,
-  imports: [CommonModule, RouterLink, AnimationObject],
+  imports: [CommonModule, AnimationObject, SkillSlot, RedirectHotspotComponent],
   templateUrl: './character.html',
   styleUrl: './character.scss',
 })
@@ -34,6 +36,11 @@ export class Character {
   public baseStats = this.gameStateService.skills.state;
   /** Herkunfts-Aufschlüsselung (Basis/Ausrüstung/Hauptstats/Passives) für den Hover-Tooltip. */
   public statBreakdown = this.gameStateService.skills.statBreakdown;
+
+  /** Anzeige-Reihenfolge der vier Skill-Slots unter der Charakter-Anzeige. */
+  public skillSlotKeys: (keyof EquippedSpells)[] = ['spell_1', 'spell_2', 'spell_3', 'spell_4'];
+  public hoveredEquippedSpell = this.gameStateService.skills.hoveredEquippedSpell;
+  public unequipConfirmSlot = this.gameStateService.skills.unequipConfirmSlot;
 
   /** Stat-Key der aktuell gehoverten Zeile, oder null (kein Tooltip). */
   public hoveredStat = signal<string | null>(null);
@@ -97,6 +104,22 @@ export class Character {
 
   public statColor(key: string): string {
     return getStatColor(key, 'dark');
+  }
+
+  /** Spell, für den gerade der Ablegen-Dialog offen ist (siehe SkillSlot.onClick). */
+  public get unequipConfirmSpell(): any {
+    const slot = this.unequipConfirmSlot();
+    return slot ? this.gameStateService.skills.spells().find((s: any) => s.id === this.gameStateService.skills.equippedSpells()[slot]) ?? null : null;
+  }
+
+  public confirmUnequipSkill(): void {
+    const slot = this.unequipConfirmSlot();
+    if (slot) this.gameStateService.skills.unequipSpellSlot(slot);
+    this.unequipConfirmSlot.set(null);
+  }
+
+  public cancelUnequipSkill(): void {
+    this.unequipConfirmSlot.set(null);
   }
 
   /**

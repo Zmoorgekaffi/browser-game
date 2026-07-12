@@ -151,6 +151,12 @@ export class SkillsService {
     spell_4: null,
   });
 
+  /** Spell, das gerade in einem Skill-Slot gehovert wird (für den Tooltip, siehe SkillSlot). */
+  public hoveredEquippedSpell = signal<any | null>(null);
+
+  /** Slot-Key, für den gerade der "Ablegen?"-Bestätigungsdialog offen ist (siehe SkillSlot/Character). */
+  public unequipConfirmSlot = signal<keyof EquippedSpells | null>(null);
+
   // Basis-Selektoren (Read-Only) für das UI
   intelligence = computed(() => this.state().intelligence);
   dexterity = computed(() => this.state().dexterity);
@@ -699,6 +705,13 @@ export class SkillsService {
       this.syncSpellsToLocalStorage(newState, action, spell, slotKey);
       return newState;
     });
+  }
+
+  /** Legt den Spell in `slotKey` ab (Klick auf einen belegten Skill-Slot, siehe SkillSlot). */
+  public unequipSpellSlot(slotKey: keyof EquippedSpells): void {
+    const spellId = this.equippedSpells()[slotKey];
+    const spell = this.state().spells.find((s: any) => s.id === spellId);
+    if (spell) this.updateSpells('unequip', spell, slotKey);
   }
 
   /**

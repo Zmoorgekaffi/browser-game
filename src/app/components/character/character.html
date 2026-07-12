@@ -7,6 +7,32 @@
   <div class="justify-center flex items-center absolute left-[45%] right-0">
 
     <img src="imgs/shared/input/input_0.webp" alt="" class="w-[607px] h-[109px] mt-[12px]" />
+
+    <div class="absolute inset-0 mt-[12px] flex items-center justify-center gap-16">
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="180"
+        [height]="52"
+        redirect="/character"
+        [hoverHighlight]="false"
+      >
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="text-white font-bold uppercase tracking-wide text-sm">Charakterwerte</span>
+        </div>
+      </app-redirect-hotspot>
+
+      <app-redirect-hotspot
+        [absolute]="false"
+        [width]="180"
+        [height]="52"
+        redirect="/skills"
+        [hoverHighlight]="false"
+      >
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="text-white/55 font-bold uppercase tracking-wide text-sm">Skills</span>
+        </div>
+      </app-redirect-hotspot>
+    </div>
   </div>
       </div >
 
@@ -109,5 +135,57 @@
     </div>
   </div>
 
-  <div class="absolute" routerLink="/skills">Skills</div>
+  <!-- Ausgerüstete Skills: 4 Slots unter der Charakter-Anzeige, Design und
+       Verhalten angelehnt an app-armor-slot aus /inventar (siehe SkillSlot). -->
+  @for (slotKey of skillSlotKeys; track slotKey; let i = $index) {
+    <app-skill-slot
+      [slotKey]="slotKey"
+      [x]="12 + i * 144"
+      [y]="495"
+      [width]="'120px'"
+      [height]="'120px'"
+      [devmode]="false"
+    ></app-skill-slot>
+  }
+
+  <!-- Tooltip für einen gehoverten, ausgerüsteten Skill (Desktop) — analog zum
+       Ausrüstungs-Tooltip in /inventar. -->
+  @if (!deviceService.isTouch() && hoveredEquippedSpell(); as spell) {
+    <div
+      class="absolute z-[10000] pointer-events-none p-3 bg-black border border-white/10 rounded-md text-sm min-w-[220px]"
+      [style.left.px]="tooltipX"
+      [style.top.px]="tooltipY"
+    >
+      <div class="font-bold text-amber-400 mb-1">{{ spell.name }}</div>
+      @if (spell.manaCost !== undefined) {
+        <div class="text-cyan-400 text-xs font-mono">Kosten: {{ spell.manaCost }} Mana</div>
+      }
+    </div>
+  }
+
+  <!-- Bestätigungsdialog: auf einen belegten Skill-Slot geklickt -> ablegen?
+       Analog zum Ausziehen-Dialog in /inventar. -->
+  @if (unequipConfirmSlot()) {
+    <div class="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60">
+      <div
+        class="bg-black/90 border border-white/10 rounded-lg p-6 w-[320px] flex flex-col gap-4 items-center"
+      >
+        <p class="text-white text-center">Skill ablegen?</p>
+        <div class="flex gap-3 w-full">
+          <button
+            (click)="confirmUnequipSkill()"
+            class="flex-1 rounded-md border border-red-500 bg-red-600/30 px-3 py-2 text-sm cursor-pointer hover:bg-red-600/50 transition-colors text-white"
+          >
+            Ablegen
+          </button>
+          <button
+            (click)="cancelUnequipSkill()"
+            class="flex-1 rounded-md border border-white/20 px-3 py-2 text-sm cursor-pointer hover:bg-white/10 transition-colors text-white"
+          >
+            Anbehalten
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

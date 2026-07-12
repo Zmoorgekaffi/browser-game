@@ -1,0 +1,25 @@
+<div class="absolute select-none flex items-center justify-center overflow-hidden transition-colors"
+     [attr.data-slot-name]="slotKey()"
+     [ngStyle]="{
+       'left.px': x(),
+       'top.px': y(),
+       'width': width(),
+       'height': height()
+     }"
+     [class.border-2]="devmode()"
+     [class.border-blue-500]="devmode()"
+     [class.cursor-pointer]="equippedSpell()"
+     (mouseenter)="onEnter()"
+     (mouseleave)="onLeave()"
+     (click)="onClick()">
+
+  <img [src]="defaultImagePath" alt="" class="absolute inset-0 w-full h-full object-contain pointer-events-none" />
+
+  @if (equippedSpell(); as spell) {
+    <div class="p-[14px] absolute inset-0">
+    <img [src]="spell['img-path'] || '/imgs/spells/' + spell.id + '.png'"
+         [alt]="spell.name"
+         class="w-full h-full object-contain pointer-events-none bg-[radial-gradient(circle,rgba(255,255,255,0.75)_0%,rgba(255,255,255,0)_75%)]" />
+    </div>
+  }
+</div>
