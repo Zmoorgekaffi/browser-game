@@ -68,7 +68,11 @@ export class AudioService {
       music: 'audio/village/village-music_0.mp3',
       musicVol: 0.12,
     },
-    '/skills': {
+    '/character/stats': {
+      music: 'audio/village/village-music_0.mp3',
+      musicVol: 0.12,
+    },
+    '/character/skills': {
       music: 'audio/village/village-music_0.mp3',
       musicVol: 0.12,
     },

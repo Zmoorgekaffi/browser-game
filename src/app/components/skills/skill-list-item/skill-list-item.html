@@ -1,10 +1,33 @@
 <div
-  class="w-full h-20 border-2 rounded-md flex items-center p-2 gap-3 transition-colors cursor-pointer select-none hover:bg-[rgba(0,0,0,0.75)]"
-  [class.bg-[#00000080]]="spell?.equipped"
-  [class.equipped-hover]="spell?.equipped"
-  [class.bg-[#000000cc]]="!spell?.equipped"
+  class="w-full h-20 border-2 rounded-md flex items-center p-2 gap-3 transition-colors select-none hover:bg-grim-panel2/70"
+  [class.bg-grim-panel2]="spell?.equipped"
+  [class.border-grim-gold]="spell?.equipped"
+  [class.bg-grim-panel]="!spell?.equipped"
+  [class.border-grim-border]="!spell?.equipped"
+  [class.opacity-40]="isDragging()"
+  [class.cursor-grab]="!deviceService.isTouch()"
+  [class.active:cursor-grabbing]="!deviceService.isTouch()"
+  (pointerdown)="onCardPointerDown($event)"
+  (pointermove)="onItemPointerMove($event)"
+  (pointerup)="onItemPointerUp($event)"
+  (pointercancel)="onItemPointerCancel()"
 >
-  <div class="w-16 h-16 bg-slate-100 border border-zinc-700 rounded flex items-center justify-center p-1 shrink-0">
+  @if (deviceService.isTouch()) {
+    <!-- Grabber: einziges Element mit touch-action:none, damit die Liste
+         selbst auf dem Handy weiter scrollbar bleibt. Nur mobil sichtbar —
+         auf dem Desktop ist stattdessen die ganze Karte ziehbar. -->
+    <div
+      (pointerdown)="onGrabPointerDown($event)"
+      (pointermove)="onItemPointerMove($event)"
+      (pointerup)="onItemPointerUp($event)"
+      (pointercancel)="onItemPointerCancel()"
+      style="touch-action: none;"
+      class="w-5 shrink-0 self-stretch flex items-center justify-center text-grim-parchment/40 hover:text-grim-gold cursor-grab active:cursor-grabbing text-lg leading-none select-none"
+      aria-label="Ziehen zum Ausrüsten"
+    >⠿</div>
+  }
+
+  <div class="w-16 h-16 bg-slate-100 border border-grim-border rounded flex items-center justify-center p-1 shrink-0">
     <img
       [src]="spell?.['img-path'] || '/imgs/spells/' + spell?.id + '.png'"
       [alt]="spell?.name"
@@ -14,14 +37,14 @@
 
   <div class="flex flex-col flex-grow min-w-0">
     <div class="flex justify-between items-baseline">
-      <h4 class="text-amber-400 font-semibold text-sm truncate">
+      <h4 class="heading-grim text-grim-gold font-semibold text-sm truncate">
         {{ spell?.name }}
       </h4>
     </div>
 
-    <p class="text-zinc-400 text-xs line-clamp-2 leading-tight mt-0.5 pr-2">
+    <p class="text-grim-parchment/60 text-xs line-clamp-2 leading-tight mt-0.5 pr-2">
       Kosten:
-      <span class="text-cyan-400 font-medium">
+      <span class="text-sky-400 font-medium">
         {{ spell?.manaCost }} Mana
       </span>
     </p>
@@ -79,4 +102,13 @@
       </span>
     }
   </div>
+
+  <button
+    (click)="interact()"
+    class="btn-grim shrink-0 px-2 py-1 text-[11px] cursor-pointer"
+    [class.btn-grim-danger]="spell?.equipped"
+    [class.btn-grim-primary]="!spell?.equipped"
+  >
+    {{ spell?.equipped ? 'Ablegen' : 'Ausrüsten' }}
+  </button>
 </div>

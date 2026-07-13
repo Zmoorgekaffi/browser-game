@@ -10,7 +10,6 @@ import { Login } from './components/login/login';
 import { NameCreation } from './components/name-creation/name-creation';
 import { Inventar } from './components/inventar/inventar';
 import { Character } from './components/character/character';
-import { Skills } from './components/skills/skills';
 import { IntroScene } from './components/adventure_scenes/intro-scene/intro-scene';
 import { FightScene } from './components/adventure_scenes/fight-scene/fight-scene';
 import { LootScene } from './components/adventure_scenes/loot-scene/loot-scene';
@@ -28,13 +27,13 @@ export const routes: Routes = [
   { path: 'inventar', component: Inventar },
   { path: 'inventar/:category', component: Inventar },
   { path: 'character', component: Character },
-  { path: 'skills', component: Skills },
+  { path: 'character/:category', component: Character },
   { path: 'adventure/intro', component: IntroScene },
   { path: 'adventure/dialog', component: DialogScene },
   { path: 'adventure/loot', component: LootScene },
   { path: 'adventure/fight', component: FightScene },
   { path: 'adventure/summary', component: SummaryScene },
   { path: 'login', component: Login },
-  { path: 'name-creation', component: NameCreation },
+  { path: 'profile', component: NameCreation },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

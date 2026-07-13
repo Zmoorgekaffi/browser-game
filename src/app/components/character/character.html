@@ -8,75 +8,123 @@
 
     <img src="imgs/shared/input/input_0.webp" alt="" class="w-[607px] h-[109px] mt-[12px]" />
 
-    <div class="absolute inset-0 mt-[12px] flex items-center justify-center gap-16">
+    <div class="absolute inset-0 mt-[12px] flex items-center justify-center gap-10">
+
+
+
+            <app-redirect-hotspot
+        [absolute]="false"
+        [width]="150"
+        [height]="52"
+        redirect="/character/skills"
+        [hoverHighlight]="false"
+      >
+        <div class="text-center w-full h-full flex items-center justify-center">
+          <span
+            class="font-bold uppercase tracking-wide text-sm"
+            [class.text-white]="activeView() === 'skills'"
+            [class.text-white/55]="activeView() !== 'skills'"
+            >Skills</span
+          >
+        </div>
+      </app-redirect-hotspot>
       <app-redirect-hotspot
         [absolute]="false"
-        [width]="180"
+        [width]="150"
         [height]="52"
-        redirect="/character"
+        redirect="/character/stats"
         [hoverHighlight]="false"
       >
         <div class="w-full h-full flex items-center justify-center">
-          <span class="text-white font-bold uppercase tracking-wide text-sm">Charakterwerte</span>
+          <span
+            class="text-center font-bold uppercase tracking-wide text-sm"
+            [class.text-white]="activeView() === 'stats'"
+            [class.text-white/55]="activeView() !== 'stats'"
+            >Charakterwerte</span
+          >
         </div>
       </app-redirect-hotspot>
 
+
+
       <app-redirect-hotspot
         [absolute]="false"
-        [width]="180"
+        [width]="150"
         [height]="52"
-        redirect="/skills"
         [hoverHighlight]="false"
+        (hotspotClick)="goBack()"
       >
-        <div class="w-full h-full flex items-center justify-center">
-          <span class="text-white/55 font-bold uppercase tracking-wide text-sm">Skills</span>
+        <div class="text-center w-full h-full flex items-center justify-center">
+          <span class="font-bold uppercase tracking-wide text-sm text-white/55 hover:text-white transition-colors"
+            >Zurück</span
+          >
         </div>
       </app-redirect-hotspot>
     </div>
   </div>
       </div >
 
-  <div
-    id="statList"
-    class="absolute top-[180px] right-[32px] left-[45%] bottom-[32px] p-5 flex gap-6 overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
-  >
-    @for (column of statColumns; track $index) {
-      <div class="flex-1 min-w-0 flex flex-col gap-1">
-        <div
-          class="w-full flex justify-between items-center text-white text-xs uppercase border-b pb-2 font-semibold"
-        > 
-          <span class="w-[45%] text-left">Attribut</span>
-          <span class="w-[25%] text-center">Gesamt</span>
-          <span class="w-[30%] text-right">Basis</span>
-        </div>
-
-        @for (group of column; track group.key) {
-          <div class="w-full flex flex-col mb-2">
-            @for (stat of group.stats; track stat.key) {
-              <div
-                class="w-full flex justify-between items-center text-sm py-1 border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
-                (mouseenter)="onStatEnter(stat.key)"
-                (mouseleave)="onStatLeave()"
-                (click)="onStatClick($event, stat.key)"
-              >
-                <span class="w-[45%] text-left text-gray-200 font-medium truncate">
-                  {{ stat.name }}
-                </span>
-
-                <span class="w-[25%] text-center font-bold" [class]="statColor(stat.key)">
-                  {{ getStatValue(combatStats(), stat.key) }}
-                </span>
-
-                <span class="w-[30%] text-right text-[rgba(255,255,255,0.8)] text-sm font-mono">
-                  {{ getStatValue(baseStats(), stat.key) }}
-                </span>
-              </div>
-            }
+  @if (activeView() === 'stats') {
+    <div
+      id="statList"
+      class="absolute top-[180px] right-[32px] left-[45%] bottom-[32px] p-5 flex gap-6 overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
+    >
+      @for (column of statColumns; track $index) {
+        <div class="flex-1 min-w-0 flex flex-col gap-1">
+          <div
+            class="w-full flex justify-between items-center text-white text-xs uppercase border-b pb-2 font-semibold"
+          >
+            <span class="w-[45%] text-left">Attribut</span>
+            <span class="w-[25%] text-center">Gesamt</span>
+            <span class="w-[30%] text-right">Basis</span>
           </div>
-        }
-      </div>
-    }
-  </div>
+
+          @for (group of column; track group.key) {
+            <div class="w-full flex flex-col mb-2">
+              @for (stat of group.stats; track stat.key) {
+                <div
+                  class="w-full flex justify-between items-center text-sm py-1 border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
+                  (mouseenter)="onStatEnter(stat.key)"
+                  (mouseleave)="onStatLeave()"
+                  (click)="onStatClick($event, stat.key)"
+                >
+                  <span class="w-[45%] text-left text-gray-200 font-medium truncate">
+                    {{ stat.name }}
+                  </span>
+
+                  <span class="w-[25%] text-center font-bold" [class]="statColor(stat.key)">
+                    {{ getStatValue(combatStats(), stat.key) }}
+                  </span>
+
+                  <span class="w-[30%] text-right text-[rgba(255,255,255,0.8)] text-sm font-mono">
+                    {{ getStatValue(baseStats(), stat.key) }}
+                  </span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  } @else {
+    <div
+      id="skillList"
+      class="absolute top-[180px] right-[32px] left-[45%] bottom-[32px] p-5 flex flex-col gap-2 overflow-y-auto bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm"
+    >
+      @for (spell of spells(); track spell.id) {
+        <app-skill-list-item
+          [spell]="spell"
+          [index]="$index"
+          (skillDragStart)="onSkillDragStart($event)"
+          (skillDragMove)="onSkillDragMove($event)"
+          (skillDragEnd)="onSkillDragEnd($event)"
+          (skillDragCancel)="onSkillDragCancel()"
+        ></app-skill-list-item>
+      } @empty {
+        <div class="text-white text-center w-full mt-4 opacity-50">Noch keine Skills gelernt.</div>
+      }
+    </div>
+  }
 
   <!-- Tooltip lebt bewusst AUSSERHALB von #statList: position:absolute
        relativ zu #characterRoot (nicht :fixed — die App skaliert ihre Szenen
@@ -122,16 +170,10 @@
   />
 
   <div class="top-0 left-0 right-[55%] bottom-0 flex items-center justify-center absolute mt-[-118px]">
-    <div class="w-[420px] h-[420px]">
-
-    <app-animation-object
-      [spritePaths]="characterLookAraoundAnimation"
-      [Duration]="2500"
-      Name="Character Look Around Animation"
-      [Delay]="7000"
-      [Loop]="false"
-      [contain]="false"
-    ></app-animation-object>
+    <div class="w-[420px] h-[420px] mt-[-64px]">
+      @if (avatarFullBodyImage(); as fullBodyImage) {
+        <img [src]="fullBodyImage" alt="Charakter" class="w-full h-full object-contain" />
+      }
     </div>
   </div>
 
@@ -187,5 +229,16 @@
         </div>
       </div>
     </div>
+  }
+
+  <!-- Ghost-Vorschau während ein Skill per Drag&Drop auf einen Slot gezogen wird. -->
+  @if (draggingSpell() !== null && dragGhostImg) {
+    <img
+      [src]="dragGhostImg"
+      class="absolute z-[10000] w-14 h-14 object-contain pointer-events-none opacity-90 drop-shadow-lg"
+      [style.left.px]="dragGhostX"
+      [style.top.px]="dragGhostY"
+      style="transform: translate(-50%, -50%);"
+    />
   }
 </div>

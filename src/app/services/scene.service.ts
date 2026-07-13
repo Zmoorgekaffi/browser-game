@@ -28,7 +28,7 @@ export class SceneService {
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const newUrl = event.urlAfterRedirects;
-        const menuPages = ['/inventar', '/skills', '/character', '/login'];
+        const menuPages = ['/inventar', '/character', '/login'];
 
         // Logik: Wir merken uns die neue URL als "Rückkehr-Ziel" NUR,
         // wenn es KEIN Menü ist. '/inventar/:category' (z.B. '/inventar/waffen')

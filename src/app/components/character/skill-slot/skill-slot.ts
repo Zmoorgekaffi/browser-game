@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 import { DeviceService } from '../../../services/device.service';
 import { EquippedSpells } from '../../../services/skills.service';
+import { meetsAllSpellRequirements } from '../../../utils/spell-requirements.util';
 
 /**
  * @component SkillSlot
@@ -53,5 +54,17 @@ export class SkillSlot {
     if (this.equippedSpell()) {
       this.gameStateService.skills.unequipConfirmSlot.set(this.slotKey());
     }
+  }
+
+  /** Grün/Rot-Highlight während ein Skill aus der Liste über diesen Slot gezogen wird. */
+  get dragState(): 'none' | 'valid' | 'invalid' {
+    const dragging = this.gameStateService.skills.draggingSpell();
+    if (!dragging || this.gameStateService.skills.dragHoveredSlot() !== this.slotKey()) return 'none';
+    const meetsRequirements = meetsAllSpellRequirements(
+      dragging,
+      this.gameStateService.skills.combatStats(),
+      (type) => this.gameStateService.skills.hasEquippedWeaponType(type),
+    );
+    return meetsRequirements ? 'valid' : 'invalid';
   }
 }

@@ -5,6 +5,7 @@ import { GameStateService } from '../../../services/game-state.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SettingsMenu } from '../settings-menu/settings-menu';
+import { AVATARS } from '../../../models/avatars.data';
 
 /**
  * @component Header
@@ -32,6 +33,8 @@ export class Header {
   expRequiredForNextLevel: Signal<number>;
   expProgress: Signal<number>;
   isMaxLevel: Signal<boolean>;
+  /** Portrait-Bild des aktuell gewählten Avatars (siehe avatars.data), fürs kleine Icon im Header. */
+  portrait: Signal<string | undefined>;
   currentUrl = signal<string>(this.router.url);
   isInAdventureAction = computed(() => {
     const url = this.currentUrl();
@@ -52,6 +55,9 @@ export class Header {
     this.expRequiredForNextLevel = this.gameStateService.profile.expRequiredForNextLevel;
     this.expProgress = this.gameStateService.profile.expProgress;
     this.isMaxLevel = this.gameStateService.profile.isMaxLevel;
+    this.portrait = computed(
+      () => AVATARS.find((avatar) => avatar.id === this.gameStateService.profile.avatar())?.portrait,
+    );
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.currentUrl.set(this.router.url);

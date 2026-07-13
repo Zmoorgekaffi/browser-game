@@ -177,16 +177,20 @@
         tooltipTitle="Quest-Items"
       ></app-redirect-hotspot>
 
-      <!-- Inventar schließen (kein Routen-Redirect, ruft closeInventar() über hotspotClick auf) -->
+      <!-- Zurück (kein Routen-Redirect, ruft closeInventar() -> SceneService.goBack() über hotspotClick auf) -->
       <app-redirect-hotspot
         [absolute]="false"
-        [width]="52"
+        [width]="70"
         [height]="52"
-        image="imgs/village/back-to-village-icon.png"
-        [hoverHighlight]="true"
-        tooltipTitle="Inventar schließen"
+        [hoverHighlight]="false"
         (hotspotClick)="closeInventar()"
-      ></app-redirect-hotspot>
+      >
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="text-white/55 font-bold uppercase tracking-wide text-sm hover:text-white z-0 transition-colors"
+            >Zurück</span
+          >
+        </div>
+      </app-redirect-hotspot>
     </div>
     <div
       class="hover-scrollbar overflow-y-auto z-10 min-w-[600px] max-w-[600px] min-h-[547px] max-h-[538px] p-4 flex flex-col items-start justify-start gap-2"

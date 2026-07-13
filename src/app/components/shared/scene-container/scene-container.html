@@ -8,15 +8,9 @@
 
 
   @if (showBackToVillageButton() && gameStateService.adventureStateService.level() === null) {
-    <app-redirect-hotspot [x]="1135" [y]="580" [width]="128" [height]="128" redirect="/village">
-      <div
-        class="absolute inset-0 p-4 bg-[radial-gradient(circle,_rgba(255,255,255,0.5)_0%,_rgba(0,0,0,0.2)_100%)] rounded-[50%] flex items-center justify-center"
-      >
-        <img
-          class="w-full h-full object-contain"
-          src="imgs/village/back-to-village-icon.png"
-          alt="Zurück zum Dorf"
-        />
+    <app-redirect-hotspot [x]="1113" [y]="660" [width]="140" [height]="44" redirect="/village">
+      <div class="btn-grim btn-grim-primary w-full h-full flex items-center justify-center text-center text-sm">
+        Zurück ins Dorf
       </div>
     </app-redirect-hotspot>
   }

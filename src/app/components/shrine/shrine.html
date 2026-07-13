@@ -3,25 +3,16 @@
   @if (isLoading()) {
     <app-loading-screen label="Schrein wird geladen..." />
   } @else {
-    <div class="absolute w-[400px] h-[400px] left-[850px] top-[200px]">
-      <app-animation-object
-        [Name]="'pilgrim-pray'"
-        [Duration]="3000"
-        [spritePaths]="pilgrimPrayPaths"
-      ></app-animation-object>
-    </div>
+
+
+    <!-- //#crystalContainer -->
 
     <div
-      #crystalContainer
-      class="absolute w-[480px] h-[410px] left-[428px] top-[132px] cursor-pointer"
+      
+      class="absolute w-[480px] h-[500px] left-[402px] top-[42px] cursor-pointer"
       (click)="gameStateService.levelUpPanel.open()"
     >
-      <app-animation-object
-        [Name]="'crystal-spin'"
-        [Duration]="2500"
-        [spritePaths]="shrineCrystalPath"
-        [Loop]="true"
-      ></app-animation-object>
+
     </div>
 
     <img

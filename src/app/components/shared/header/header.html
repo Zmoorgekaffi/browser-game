@@ -19,26 +19,36 @@
       }
     </div>
 
-    <div class="flex flex-col items-end gap-1 py-1">
-      <span
-        >Name: <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/name-creation">{{ name() }}</span> | Level:
-        <span class="text-grim-gold">{{ lvl() }}</span></span
-      >
-      <div
-        class="w-32 h-2 bg-black/50 rounded-full overflow-hidden border border-grim-border"
-        [attr.title]="
-          isMaxLevel() ? 'Max. Level erreicht' : exp() + ' / ' + expRequiredForNextLevel() + ' XP'
-        "
-      >
-        @if (isMaxLevel()) {
-          <div class="h-full w-full bg-grim-gold"></div>
-        } @else {
-          <div
-            class="h-full bg-emerald-600 transition-[width] duration-300"
-            [style.width.%]="expProgress() * 100"
-          ></div>
-        }
+    <div class="flex items-center gap-2">
+      <div class="flex flex-col items-end gap-1 py-1">
+        <span
+          >Name: <span class="hover:text-grim-gold cursor-pointer transition-colors" routerLink="/profile">{{ name() }}</span> | Level:
+          <span class="text-grim-gold">{{ lvl() }}</span></span
+        >
+        <div
+          class="w-32 h-2 bg-black/50 rounded-full overflow-hidden border border-grim-border"
+          [attr.title]="
+            isMaxLevel() ? 'Max. Level erreicht' : exp() + ' / ' + expRequiredForNextLevel() + ' XP'
+          "
+        >
+          @if (isMaxLevel()) {
+            <div class="h-full w-full bg-grim-gold"></div>
+          } @else {
+            <div
+              class="h-full bg-emerald-600 transition-[width] duration-300"
+              [style.width.%]="expProgress() * 100"
+            ></div>
+          }
+        </div>
       </div>
+
+      @if (portrait(); as portraitSrc) {
+        <img
+          [src]="portraitSrc"
+          alt=""
+          class="w-9 h-9 rounded-md object-cover bg-black/40 border border-grim-border shrink-0"
+        />
+      }
     </div>
   </header>
 }

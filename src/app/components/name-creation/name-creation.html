@@ -5,17 +5,16 @@
   <div class="absolute inset-0">
     <img
       class="object-cover w-full h-full"
-      src="imgs/login/login-bg.webp"
+      src="imgs/inventar/inventar.webp"
       alt="Name Creation Background"
     />
   </div>
 
   <!-- Name creation card -->
   <div class="absolute inset-0 flex items-center justify-center">
-    <img class="w-[80%] h-[80%]" src="imgs/login/login-card.webp" alt="Name creation card" />
     <div class="absolute inset-0 flex items-center justify-center">
-      <div class="w-full max-w-[16rem] mt-[-12.5rem] flex flex-col items-center justify-center gap-6">
-        <span class="heading-grim text-lg font-bold text-grim-parchment">Wähle deinen Namen</span>
+      <div class="w-full max-w-[26rem] flex flex-col items-center justify-center gap-6">
+        <span class="heading-grim text-lg font-bold text-grim-parchment">Name ändern</span>
         <input
           type="text"
           id="characterName"
@@ -28,23 +27,21 @@
           <span class="text-red-400 text-sm -mt-4">{{ error }}</span>
         }
 
-        <div class="w-full flex flex-col items-center gap-2">
-          <span class="heading-grim text-sm font-bold text-grim-parchment">Wähle dein Portrait</span>
-          <div class="grid grid-cols-2 gap-3">
-            @for (portrait of portraits; track portrait.id) {
-              <button
-                type="button"
-                (click)="selectPortrait(portrait.id)"
-                class="w-[5.5rem] h-[7.5rem] rounded-md overflow-hidden border-2 bg-black/40 transition duration-150"
-                [class.border-grim-gold]="selectedPortraitId === portrait.id"
-                [class.border-grim-border]="selectedPortraitId !== portrait.id"
-                [attr.aria-pressed]="selectedPortraitId === portrait.id"
-              >
-                <img [src]="portrait.src" class="w-full h-full object-contain" [alt]="portrait.id" />
-              </button>
-            }
-          </div>
+        <div class="grid grid-cols-2 gap-4">
+          @for (avatar of avatars; track avatar.id) {
+            <button
+              type="button"
+              (click)="selectAvatar(avatar.id)"
+              class="w-[9rem] h-[11rem] rounded-md overflow-hidden border-2 bg-black/40 transition duration-150"
+              [class.border-grim-gold]="selectedAvatarId === avatar.id"
+              [class.border-grim-border]="selectedAvatarId !== avatar.id"
+              [attr.aria-pressed]="selectedAvatarId === avatar.id"
+            >
+              <img [src]="avatar.portrait" class="w-full h-full object-contain" [alt]="avatar.id" />
+            </button>
+          }
         </div>
+
         <button
           (click)="onConfirm()"
           class="btn-grim btn-grim-primary w-full py-2 px-4"

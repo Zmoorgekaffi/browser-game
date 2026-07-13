@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject, WritableSignal } from '@angular/core';
 import { ProfileData } from '../models/game-state.interface';
 import { SkillsService } from './skills.service';
-import { DEFAULT_PORTRAIT_ID } from '../models/portraits.data';
+import { DEFAULT_AVATAR_ID } from '../models/avatars.data';
 
 /** Anzahl der Attributspunkte, die pro Level-up am Schrein verteilt werden können. */
 const STAT_POINTS_PER_LEVEL = 5;
@@ -30,8 +30,8 @@ export class ProfileService {
   name = computed(() => this.state().name);
   level = computed(() => this.state().level);
   exp = computed(() => this.state().exp);
-  /** Fällt auf das Standard-Portrait zurück, falls noch keins gewählt wurde (z.B. Altbestand-Spielstände). */
-  avatar = computed(() => this.state().avatar || DEFAULT_PORTRAIT_ID);
+  /** Fällt auf den Standard-Avatar zurück, falls noch keiner gewählt wurde (z.B. Altbestand-Spielstände). */
+  avatar = computed(() => this.state().avatar || DEFAULT_AVATAR_ID);
   /** Stummschaltung des Charakters (Fallback: aus). */
   muted = computed(() => this.state().muted ?? false);
   /** Master-Lautstärke des Charakters (Fallback: 0.5). */

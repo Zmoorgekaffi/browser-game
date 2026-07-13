@@ -22,4 +22,12 @@
          class="w-full h-full object-contain pointer-events-none bg-[radial-gradient(circle,rgba(255,255,255,0.75)_0%,rgba(255,255,255,0)_75%)]" />
     </div>
   }
+
+  @if (dragState !== 'none') {
+    <div class="p-[14px] absolute inset-0 pointer-events-none">
+      <div class="w-full h-full rounded-sm"
+           [class.bg-emerald-500/40]="dragState === 'valid'"
+           [class.bg-red-500/40]="dragState === 'invalid'"></div>
+    </div>
+  }
 </div>

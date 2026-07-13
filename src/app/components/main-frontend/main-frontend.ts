@@ -24,12 +24,12 @@ export class MainFrontendComponent {
   screenSizingService = inject(ScreenSizingService);
 
   /**
-   * Header nur zeigen, wenn eingeloggt und nicht auf /login oder /name-creation.
+   * Header nur zeigen, wenn eingeloggt und nicht auf /login oder /profile.
    * Bleibt (auch im Vollbild) permanent sichtbar.
    */
   public showHeader = computed(() => {
     const charId = this.loginService.loggedInAs();
     const currentScene = this.sceneService.currentScene();
-    return charId !== null && currentScene !== '/login' && currentScene !== '/name-creation';
+    return charId !== null && currentScene !== '/login' && currentScene !== '/profile';
   });
 }

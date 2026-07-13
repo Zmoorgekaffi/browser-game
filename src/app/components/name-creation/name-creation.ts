@@ -2,14 +2,15 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameStateService } from '../../services/game-state.service';
-import { PORTRAITS } from '../../models/portraits.data';
+import { AVATARS } from '../../models/avatars.data';
 
 /**
  * @component NameCreation
- * @description Namens- und Portrait-Wahl für den Charakter. Wird beim ersten
- * Login eines neuen Charakters (leerer Name im Profil) automatisch angezeigt,
- * und erneut, wenn der Spieler im Header auf seinen Namen klickt. Name und
- * Portrait lassen sich hier jederzeit unabhängig voneinander ändern.
+ * @description Namens- und Avatar-Wahl für den Charakter (Route: /profile).
+ * Wird beim ersten Login eines neuen Charakters (leerer Name im Profil)
+ * automatisch angezeigt, und erneut, wenn der Spieler im Header auf seinen
+ * Namen klickt. Name und Avatar lassen sich hier jederzeit unabhängig
+ * voneinander ändern.
  */
 @Component({
   selector: 'app-name-creation',
@@ -25,14 +26,16 @@ export class NameCreation {
   name = this.gameStateService.profile.name() || '';
   error = '';
 
-  portraits = PORTRAITS;
-  selectedPortraitId = this.gameStateService.profile.avatar();
+  avatars = AVATARS;
+  selectedAvatarId = this.gameStateService.profile.avatar();
 
-  selectPortrait(id: string): void {
-    this.selectedPortraitId = id;
+  /** Wählt den Avatar aus und speichert ihn sofort im Profil (LocalStorage). */
+  selectAvatar(id: string): void {
+    this.selectedAvatarId = id;
+    this.gameStateService.profile.updateAvatar(id);
   }
 
-  /** Übernimmt Namen und Portrait und geht weiter ins Dorf. */
+  /** Übernimmt den Namen und geht weiter ins Dorf (Avatar ist bereits gespeichert, siehe selectAvatar). */
   onConfirm(): void {
     const trimmed = this.name.trim();
     if (!trimmed) {
@@ -41,7 +44,6 @@ export class NameCreation {
     }
 
     this.gameStateService.profile.updateName(trimmed);
-    this.gameStateService.profile.updateAvatar(this.selectedPortraitId);
     this.router.navigate(['/village']);
   }
 }

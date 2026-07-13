@@ -124,8 +124,8 @@ export class GameStateService {
 
     // Neuer Charakter (oder Namensänderung angefordert) -> erst einen Namen
     // wählen lassen, bevor der Rest des Spielzustands geladen wird.
-    if (!this.profile.name() && this.router.url !== '/name-creation') {
-      this.router.navigate(['/name-creation']);
+    if (!this.profile.name() && this.router.url !== '/profile') {
+      this.router.navigate(['/profile']);
       return;
     }
 

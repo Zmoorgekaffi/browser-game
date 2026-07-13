@@ -157,6 +157,12 @@ export class SkillsService {
   /** Slot-Key, für den gerade der "Ablegen?"-Bestätigungsdialog offen ist (siehe SkillSlot/Character). */
   public unequipConfirmSlot = signal<keyof EquippedSpells | null>(null);
 
+  /** Spell, das gerade per Drag & Drop aus der Skill-Liste auf einen Slot gezogen wird. */
+  public draggingSpell = signal<any | null>(null);
+
+  /** Slot-Key, über dem der Pointer beim Ziehen gerade schwebt (für Grün/Rot-Highlight, siehe SkillSlot). */
+  public dragHoveredSlot = signal<keyof EquippedSpells | null>(null);
+
   // Basis-Selektoren (Read-Only) für das UI
   intelligence = computed(() => this.state().intelligence);
   dexterity = computed(() => this.state().dexterity);
@@ -712,6 +718,41 @@ export class SkillsService {
     const spellId = this.equippedSpells()[slotKey];
     const spell = this.state().spells.find((s: any) => s.id === spellId);
     if (spell) this.updateSpells('unequip', spell, slotKey);
+  }
+
+  /**
+   * Rüstet `spell` explizit auf `targetSlot` aus (Drag & Drop aus der
+   * Skill-Liste, siehe SkillListItem/Character). Anders als
+   * `updateSpells('equip', ...)` mit einem automatisch ermittelten freien
+   * Slot: ersetzt IMMER den Inhalt von `targetSlot` UND räumt einen ggf.
+   * anderen, bereits von diesem Spell belegten Slot mit frei — ein Spell
+   * kann sonst nicht gleichzeitig in zwei Slots stecken, wenn man ihn per
+   * Drag von einem Slot in einen anderen zieht.
+   */
+  public equipSpellToSlot(spell: any, targetSlot: keyof EquippedSpells): void {
+    this.state.update((currentState) => {
+      const slots = this.equippedSpells();
+      const previousSpellId = slots[targetSlot] ?? null;
+      const oldSlotOfSpell = (Object.keys(slots) as (keyof EquippedSpells)[]).find(
+        (key) => slots[key] === spell.id && key !== targetSlot,
+      ) ?? null;
+
+      const updatedSpells = currentState.spells.map((s: any) => {
+        if (s.id === spell.id) return { ...s, equipped: true };
+        if (s.id === previousSpellId) return { ...s, equipped: false };
+        return s;
+      });
+
+      this.equippedSpells.update((current) => {
+        const next = { ...current, [targetSlot]: spell.id };
+        if (oldSlotOfSpell) next[oldSlotOfSpell] = null;
+        return next;
+      });
+
+      const newState = { ...currentState, spells: updatedSpells };
+      this.syncSpellsToLocalStorage(newState, 'equip', spell, targetSlot);
+      return newState;
+    });
   }
 
   /**
