@@ -1,0 +1,128 @@
+[
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Goblin",
+    "winRate": 0.9346666666666666,
+    "avgRounds": 6.146
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Waldläufer-Kobold",
+    "winRate": 0.9443333333333334,
+    "avgRounds": 5.723
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Wurzelhexe",
+    "winRate": 0.9926666666666667,
+    "avgRounds": 4.129666666666667
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Dornwolf",
+    "winRate": 0.698,
+    "avgRounds": 5.789333333333333
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Zyklop",
+    "winRate": 0.2986666666666667,
+    "avgRounds": 9.090333333333334
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Zyklopen-Stammeswächter",
+    "winRate": 0.051,
+    "avgRounds": 9.341
+  },
+  {
+    "character": "Blutiger Anfänger (0 Punkte, nur Start-Schwert)",
+    "monster": "Moosschrecken",
+    "winRate": 0.06966666666666667,
+    "avgRounds": 9.338
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Goblin",
+    "winRate": 0.9993333333333333,
+    "avgRounds": 5.634666666666667
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Waldläufer-Kobold",
+    "winRate": 0.9996666666666667,
+    "avgRounds": 4.537333333333334
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Wurzelhexe",
+    "winRate": 1,
+    "avgRounds": 3.83
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Dornwolf",
+    "winRate": 0.9826666666666667,
+    "avgRounds": 5.372
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Zyklop",
+    "winRate": 0.9456666666666667,
+    "avgRounds": 10.861333333333333
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Zyklopen-Stammeswächter",
+    "winRate": 0.7436666666666667,
+    "avgRounds": 13.899
+  },
+  {
+    "character": "Halbwegs ausgerüstet (4 von 8 Slots T1, 15 Punkte)",
+    "monster": "Moosschrecken",
+    "winRate": 0.7563333333333333,
+    "avgRounds": 13.467
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Goblin",
+    "winRate": 1,
+    "avgRounds": 6.674
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Waldläufer-Kobold",
+    "winRate": 1,
+    "avgRounds": 6.425
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Wurzelhexe",
+    "winRate": 1,
+    "avgRounds": 4.573666666666667
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Dornwolf",
+    "winRate": 0.9936666666666667,
+    "avgRounds": 6.983333333333333
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Zyklop",
+    "winRate": 0.9936666666666667,
+    "avgRounds": 12.407
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Zyklopen-Stammeswächter",
+    "winRate": 0.909,
+    "avgRounds": 17.330666666666666
+  },
+  {
+    "character": "Voll T1 ausgerüstet (alle 8 Slots + 1H/1H-Waffen, 30 Punkte)",
+    "monster": "Moosschrecken",
+    "winRate": 0.927,
+    "avgRounds": 16.843333333333334
+  }
+]

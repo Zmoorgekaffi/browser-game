@@ -17,9 +17,8 @@ export type EquippedSpells = {
 
 /** Alle Ausrüstungs-Slots, deren Item-Stats in die combatStats einfließen. */
 const EQUIPMENT_SLOTS = [
-  'head', 'chest', 'leg', 'gloves', 'footwear',
-  'accessoire-left', 'accessoire-right', 'necklace',
-  'ring-left', 'ring-right', 'weapon-1', 'weapon-2', 'back',
+  'head', 'chest', 'leg', 'gloves', 'footwear', 'necklace',
+  'ring-left', 'ring-right', 'weapon-1', 'weapon-2',
 ] as const;
 
 /**

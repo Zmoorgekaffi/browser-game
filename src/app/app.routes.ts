@@ -15,8 +15,10 @@ import { FightScene } from './components/adventure_scenes/fight-scene/fight-scen
 import { LootScene } from './components/adventure_scenes/loot-scene/loot-scene';
 import { DialogScene } from './components/adventure_scenes/dialog-scene/dialog-scene';
 import { SummaryScene } from './components/adventure_scenes/summary-scene/summary-scene';
+import { FightTool } from './components/fight-tool/fight-tool';
 
 export const routes: Routes = [
+  { path: 'fight-tool', component: FightTool },
   { path: 'village', component: VillageSceneComponent },
   { path: 'magic-shop', component: MagicShop },
   { path: 'adventure', component: Adventure },

@@ -3,21 +3,18 @@ import { Router } from '@angular/router';
 import { PersonalItemsService } from './personal-items.service';
 import { isEquippableItem, isItemCompatibleWithSlot } from '../utils/item-category.util';
 
-// Definition der verfügbaren Slots zur Typsicherheit (ear-right entfernt)
+// Definition der verfügbaren Slots zur Typsicherheit (ear-right, accessoire-left/-right, back entfernt)
 export interface EquippedSlots {
   head: any | null;
   chest: any | null;
   leg: any | null;
   gloves: any | null;
   footwear: any | null;
-  'accessoire-left': any | null;
-  'accessoire-right': any | null;
   necklace: any | null;
   'ring-left': any | null;
   'ring-right': any | null;
   'weapon-1': any | null;
   'weapon-2': any | null;
-  back: any | null;
 
   [key: string]: any;
 }
@@ -26,9 +23,8 @@ export interface EquippedSlots {
 function createEmptySlots(): EquippedSlots {
   return {
     head: null, chest: null, leg: null, gloves: null, footwear: null,
-    'accessoire-left': null, 'accessoire-right': null,
     necklace: null, 'ring-left': null, 'ring-right': null,
-    'weapon-1': null, 'weapon-2': null, back: null,
+    'weapon-1': null, 'weapon-2': null,
   };
 }
 
@@ -348,8 +344,8 @@ export class InventarService {
 
   /**
    * Ermittelt den konkreten Ziel-Slot für ein Item.
-   * Ringe und Accessoires haben je zwei Slots: erst links versuchen,
-   * ist der belegt, rechts nehmen. Alle anderen Slots bleiben 1:1.
+   * Ringe haben zwei Slots: erst links versuchen, ist der belegt, rechts
+   * nehmen. Alle anderen Slots bleiben 1:1.
    *
    * @param baseSlot Der 'armor-slot' des Items (z.B. 'ring', 'head').
    */
@@ -358,9 +354,6 @@ export class InventarService {
 
     if (baseSlot === 'ring') {
       return !slots['ring-left'] ? 'ring-left' : 'ring-right';
-    }
-    if (baseSlot === 'accessoire') {
-      return !slots['accessoire-left'] ? 'accessoire-left' : 'accessoire-right';
     }
     if (baseSlot === 'weapon-1') {
       const isTwoHanded = String(item?.hands) === '2';

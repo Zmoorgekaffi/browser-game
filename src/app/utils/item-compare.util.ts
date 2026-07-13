@@ -13,14 +13,13 @@ const SLOT_LABELS: Record<string, string> = {
   gloves: 'Handschuhe',
   footwear: 'Schuhe',
   necklace: 'Halskette',
-  back: 'Rücken',
 };
 
 /**
  * Ermittelt, welche(r) angelegte(n) Slot(s) einem Shop-Item zum Vergleich
- * gegenübergestellt werden. Ringe/Accessoires/Waffen haben je zwei Slots und
- * liefern entsprechend bis zu zwei Einträge (Ausnahme: eine angelegte
- * 2-Hand-Waffe belegt beide Waffen-Slots gleichzeitig -> nur ein Eintrag).
+ * gegenübergestellt werden. Ringe/Waffen haben je zwei Slots und liefern
+ * entsprechend bis zu zwei Einträge (Ausnahme: eine angelegte 2-Hand-Waffe
+ * belegt beide Waffen-Slots gleichzeitig -> nur ein Eintrag).
  *
  * @param item Das im Shop angezeigte Item (liefert `armor-slot`).
  * @param equippedSlots Aktuell angelegte Items pro Slot.
@@ -35,13 +34,6 @@ export function getCompareSlots(item: any, equippedSlots: EquippedSlots): Compar
     return [
       { label: 'Ring (links)', item: equippedSlots['ring-left'] ?? null },
       { label: 'Ring (rechts)', item: equippedSlots['ring-right'] ?? null },
-    ];
-  }
-
-  if (baseSlot === 'accessoire') {
-    return [
-      { label: 'Accessoire (links)', item: equippedSlots['accessoire-left'] ?? null },
-      { label: 'Accessoire (rechts)', item: equippedSlots['accessoire-right'] ?? null },
     ];
   }
 

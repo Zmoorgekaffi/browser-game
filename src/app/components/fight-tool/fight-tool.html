@@ -1,0 +1,388 @@
+<div class="w-full h-full overflow-y-auto bg-neutral-900 text-neutral-100 p-6 flex flex-col gap-6">
+  <div>
+    <h1 class="text-2xl font-bold">⚔️ Fight-Tool</h1>
+    <p class="text-sm text-neutral-400">
+      Sandbox-Charakter — Equip/Spells hier haben KEINE Auswirkung auf deinen echten Spielstand.
+    </p>
+  </div>
+
+  <!-- 📊 Live-Kampfwerte -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <h2 class="text-lg font-semibold mb-3">Kampfwerte (live)</h2>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">Attribute</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm mb-3">
+      <div>Stärke: <span class="font-mono">{{ combatStats().strength }}</span></div>
+      <div>Geschick: <span class="font-mono">{{ combatStats().dexterity }}</span></div>
+      <div>Intelligenz: <span class="font-mono">{{ combatStats().intelligence }}</span></div>
+      <div>Vitalität: <span class="font-mono">{{ combatStats().vitality }}</span></div>
+      <div>Glück: <span class="font-mono">{{ combatStats().luck }}</span></div>
+    </div>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">Ressourcen</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm mb-3">
+      <div>HP: <span class="font-mono">{{ combatStats().hp }}</span></div>
+      <div>HP-Regen: <span class="font-mono">{{ combatStats()['hp-regeneration'] }}</span>/Runde</div>
+      <div>Mana: <span class="font-mono">{{ combatStats().mana }}</span></div>
+      <div>Mana-Regen: <span class="font-mono">{{ combatStats()['mana-regeneration'] }}</span>/Runde</div>
+      <div>Energieschild: <span class="font-mono">{{ combatStats()['energy-shield'] }}</span></div>
+    </div>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">Angriff</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm mb-3">
+      <div>Waffenschaden: <span class="font-mono">{{ combatStats().attackMin }}-{{ combatStats().attackMax }}</span></div>
+      <div>Physischer Bonus: <span class="font-mono">+{{ ((combatStats().physicalDamageMultiplier - 1) * 100).toFixed(1) }}%</span></div>
+      <div>Magie (generisch): <span class="font-mono">{{ combatStats().magicAttackMin }}-{{ combatStats().magicAttackMax }}</span></div>
+      <div>Magie-Bonus: <span class="font-mono">+{{ ((combatStats().magicDamageMultiplier - 1) * 100).toFixed(1) }}%</span></div>
+      <div>Krit-Chance: <span class="font-mono">{{ combatStats().critChance }}</span></div>
+      <div>Krit-Schaden: <span class="font-mono">{{ combatStats().critDamage }}</span></div>
+      <div>Chaos-Schaden (flat): <span class="font-mono">{{ combatStats().chaosDamage }}</span></div>
+      <div>Chaos-Bonus: <span class="font-mono">+{{ ((combatStats().chaosDamageMultiplier - 1) * 100).toFixed(1) }}%</span></div>
+    </div>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">
+      Elementarschaden (Waffenbonus je Element — nur aktiv bei passender "magie"-Waffe)
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm mb-3">
+      <div>
+        🔥 Feuer: <span class="font-mono">{{ combatStats().magicAttackByElement.fire.min }}-{{ combatStats().magicAttackByElement.fire.max }}</span>
+        (+{{ ((combatStats().fireDamageMultiplier - 1) * 100).toFixed(1) }}%)
+      </div>
+      <div>
+        ❄️ Kälte: <span class="font-mono">{{ combatStats().magicAttackByElement.cold.min }}-{{ combatStats().magicAttackByElement.cold.max }}</span>
+        (+{{ ((combatStats().coldDamageMultiplier - 1) * 100).toFixed(1) }}%)
+      </div>
+      <div>
+        ⚡ Blitz: <span class="font-mono">{{ combatStats().magicAttackByElement.lightning.min }}-{{ combatStats().magicAttackByElement.lightning.max }}</span>
+        (+{{ ((combatStats().lightningDamageMultiplier - 1) * 100).toFixed(1) }}%)
+      </div>
+      <div>
+        💀 Chaos: <span class="font-mono">{{ combatStats().magicAttackByElement.chaos.min }}-{{ combatStats().magicAttackByElement.chaos.max }}</span>
+        (+{{ ((combatStats().chaosDamageMultiplier - 1) * 100).toFixed(1) }}%)
+      </div>
+    </div>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">Verteidigung</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm mb-3">
+      <div>Rüstung: <span class="font-mono">{{ combatStats().armor }}</span></div>
+      <div>Ausweichen: <span class="font-mono">{{ combatStats().evasion }}</span></div>
+      <div>Feuer-Res.: <span class="font-mono">{{ combatStats().resistances.fire }}%</span></div>
+      <div>Kälte-Res.: <span class="font-mono">{{ combatStats().resistances.cold }}%</span></div>
+      <div>Blitz-Res.: <span class="font-mono">{{ combatStats().resistances.lightning }}%</span></div>
+      <div>Chaos-Res.: <span class="font-mono">{{ combatStats().resistances.chaos }}%</span></div>
+    </div>
+
+    <h3 class="text-xs uppercase tracking-wide text-neutral-500 mb-1">Sonstiges</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
+      <div>Initiative: <span class="font-mono">{{ combatStats().initiative }}</span></div>
+      <div>Magic-Find: <span class="font-mono">{{ combatStats()['magic-find'] }}</span></div>
+    </div>
+  </section>
+
+  <!-- 🕯️ Attribute & Passives (Schrein) -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <h2 class="text-lg font-semibold mb-1">Attribute & Passives (Schrein)</h2>
+    <p class="text-xs text-neutral-400 mb-1">
+      Frei einstellbar 0-100 pro Stat, unabhängig von deinem echten Statpunkte-Guthaben. Bei jeder 10er-Schwelle
+      wird automatisch das passende Schrein-Passive freigeschaltet und in die Kampfwerte oben eingerechnet.
+    </p>
+    <p class="text-xs text-neutral-400 mb-3">
+      Insgesamt max. <span class="font-mono">{{ maxTotalInvestedPoints }}</span> Punkte über alle 4 Stats — noch
+      verfügbar: <span class="font-mono text-amber-400">{{ remainingInvestedPoints() }}</span>
+      (<span class="font-mono">{{ totalInvestedPoints() }}</span> / {{ maxTotalInvestedPoints }} vergeben). Ein Feld
+      wird automatisch gekappt, wenn das Gesamtbudget nicht mehr reicht.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+      @for (stat of investableStats; track stat) {
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-neutral-400">{{ investableStatLabels[stat] }}</label>
+          <input
+            type="number"
+            class="bg-neutral-700 rounded px-2 py-1 text-sm"
+            min="0"
+            max="100"
+            [ngModel]="investedPoints()[stat]"
+            (ngModelChange)="onInvestedPointChange(stat, $event)"
+          />
+        </div>
+      }
+    </div>
+    @if (activePassives().length) {
+      <div class="flex flex-col gap-1 text-xs">
+        <span class="text-neutral-400">Aktive Passives:</span>
+        @for (passive of activePassives(); track passive.id) {
+          <div class="bg-neutral-700 rounded px-2 py-1">
+            <span class="text-amber-400 font-semibold">{{ passive.name }}</span>
+            <span class="text-neutral-400"> — {{ passive.description }}</span>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="text-xs text-neutral-500">Noch keine Passives freigeschaltet (erste Schwelle: 10 Punkte).</p>
+    }
+  </section>
+
+  <!-- 🎒 Ausrüstung -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <h2 class="text-lg font-semibold mb-1">Ausrüstung</h2>
+    <p class="text-xs text-neutral-400 mb-3">
+      Waffen: entweder eine 2H-Waffe (Hauptangriff) ODER bis zu zwei 1H-Waffen — wird automatisch erzwungen (die
+      jeweils andere Hand wird geleert, wenn nötig).
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      @for (slot of equipSlotKeys; track slot) {
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-neutral-400">{{ equipSlotLabels[slot] }}</label>
+          <select
+            class="bg-neutral-700 rounded px-2 py-1 text-sm"
+            [value]="selectedItemIndex(slot)"
+            (change)="onEquipChange(slot, $any($event.target).value)"
+          >
+            <option value="">— leer —</option>
+            @for (item of catalogForSlot(slot); track $index) {
+              <option [value]="$index">{{ itemLabel(item) }}</option>
+            }
+          </select>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ✨ Spells -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <h2 class="text-lg font-semibold mb-3">Spells (Cast-Priorität = Reihenfolge unten)</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      @for (slotIndex of [0, 1, 2, 3]; track slotIndex) {
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-neutral-400">Slot {{ slotIndex + 1 }}</label>
+          <select
+            class="bg-neutral-700 rounded px-2 py-1 text-sm"
+            (change)="onSpellSlotChange(slotIndex, $any($event.target).value)"
+          >
+            <option value="">— leer —</option>
+            @for (spell of allSpells; track spell.id) {
+              <option [value]="spell.id">{{ spellLabel(spell) }}</option>
+            }
+          </select>
+        </div>
+      }
+    </div>
+
+    <!-- ⚔️ Welche Waffe verstärkt welchen Schadenstyp -->
+    <div class="mt-3 pt-3 border-t border-neutral-700 text-xs">
+      <span class="text-neutral-400">
+        Wichtig: der Schadensbonus einer "magie"-Waffe zählt NUR für Zauber DESSELBEN Elements
+        (ein Chaos-Stab verstärkt z.B. keinen Blitz-Zauber). Physische Waffen bringen keinen Element-Bonus,
+        zählen aber für PHYSICAL_DAMAGE-Zauber und den Grundangriff.
+      </span>
+      <div class="flex flex-wrap gap-2 mt-2">
+        @if (equippedWeaponInfo().length === 0) {
+          <div class="bg-neutral-700 rounded px-2 py-1 text-neutral-500">Keine Waffe ausgerüstet.</div>
+        }
+        @for (w of equippedWeaponInfo(); track w.slot) {
+          <div class="bg-neutral-700 rounded px-2 py-1">
+            <span class="text-neutral-300">{{ w.slot === 'weapon-1' ? 'Haupthand' : 'Nebenhand' }}: {{ w.name }}</span>
+            @if (w.magicDamageType) {
+              <span class="text-amber-400"> → verstärkt nur {{ elementLabel(w.magicDamageType) }}-Zauber</span>
+            } @else {
+              <span class="text-neutral-500"> → physisch, kein Element-Bonus</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 👹 Monster-Steps -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <h2 class="text-lg font-semibold mb-3">Monster-Steps (ein Run = alle Steps nacheinander, HP/Mana/Schild bleiben erhalten)</h2>
+    <div class="flex flex-col gap-2">
+      @for (step of steps(); track $index) {
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-neutral-400 w-14">Step {{ $index + 1 }}</span>
+          <select
+            class="bg-neutral-700 rounded px-2 py-1 text-sm flex-1"
+            (change)="onStepMonsterChange($index, $any($event.target).value)"
+          >
+            <option value="">— Monster wählen —</option>
+            @for (bracket of ['1-10', '11-20', '21-30', '31-40', '41-50']; track bracket) {
+              <optgroup [label]="'Bracket ' + bracket">
+                @for (entry of allMonsters; track entry.monster.id) {
+                  @if (entry.bracket === bracket) {
+                    <option [value]="entry.monster.id">{{ entry.monster.name }} (HP {{ entry.monster.hp }})</option>
+                  }
+                }
+              </optgroup>
+            }
+          </select>
+          <button
+            class="text-red-400 hover:text-red-300 text-sm px-2"
+            (click)="removeStep($index)"
+            [disabled]="steps().length <= 1"
+          >
+            entfernen
+          </button>
+        </div>
+      }
+      <button class="self-start bg-neutral-700 hover:bg-neutral-600 rounded px-3 py-1 text-sm mt-1" (click)="addStep()">
+        + Step hinzufügen
+      </button>
+    </div>
+  </section>
+
+  <!-- 🎲 Batch & Go -->
+  <section class="bg-neutral-800 rounded-lg p-4">
+    <div class="flex items-end gap-4 flex-wrap">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs text-neutral-400">Anzahl simulierter Durchläufe</label>
+        <input
+          type="number"
+          class="bg-neutral-700 rounded px-2 py-1 text-sm w-32"
+          min="1"
+          max="5000"
+          [ngModel]="numberOfRuns()"
+          (ngModelChange)="numberOfRuns.set($event)"
+        />
+      </div>
+      <button
+        class="bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 rounded px-4 py-2 font-semibold"
+        (click)="runBatch()"
+        [disabled]="isRunning()"
+      >
+        {{ isRunning() ? 'Simuliere…' : '▶ Go' }}
+      </button>
+      @if (configError()) {
+        <span class="text-red-400 text-sm">{{ configError() }}</span>
+      }
+    </div>
+  </section>
+
+  <!-- 📈 Ergebnisse -->
+  @if (results(); as res) {
+    <section class="bg-neutral-800 rounded-lg p-4">
+      <h2 class="text-lg font-semibold mb-1">Ergebnisse</h2>
+      <p class="text-xs text-neutral-400 mb-3">
+        Ein Run gilt als "Sieg", wenn ALLE Steps hintereinander geschafft wurden (HP/Mana/Schild bleiben zwischen
+        den Steps erhalten — kein Reset). Stirbt der Charakter unterwegs, endet der Run sofort an diesem Step.
+      </p>
+
+      <!-- 🏆 Winrate -->
+      <div class="flex items-center gap-4 mb-4">
+        <div
+          class="text-3xl font-bold font-mono"
+          [class.text-emerald-400]="res.runsWon / res.totalRuns >= 0.5"
+          [class.text-red-400]="res.runsWon / res.totalRuns < 0.5"
+        >
+          {{ (res.runsWon / res.totalRuns * 100).toFixed(1) }}%
+        </div>
+        <div class="text-sm text-neutral-300">
+          Winrate — <span class="font-mono">{{ res.runsWon }}</span> von
+          <span class="font-mono">{{ res.totalRuns }}</span> Runs komplett überlebt.
+        </div>
+      </div>
+
+      <!-- 💀 Wann ist der Run zu Ende gegangen? -->
+      <h3 class="text-sm font-semibold mb-2">Wann ist der Run zu Ende gegangen?</h3>
+      <div class="flex flex-wrap gap-2 mb-4 text-xs">
+        <div class="bg-neutral-700 rounded px-2 py-1">
+          ✅ Sieg (alle Steps geschafft): <span class="font-mono text-emerald-400">{{ res.runsWon }}</span>
+        </div>
+        @for (d of res.deathDistribution; track d.stepIndex) {
+          @if (d.died > 0) {
+            <div class="bg-neutral-700 rounded px-2 py-1">
+              💀 Tod bei Step {{ d.stepIndex + 1 }}: <span class="font-mono text-red-400">{{ d.died }}</span>
+            </div>
+          }
+          @if (d.timedOut > 0) {
+            <div class="bg-neutral-700 rounded px-2 py-1">
+              ⏱ Unentschieden bei Step {{ d.stepIndex + 1 }}: <span class="font-mono text-yellow-400">{{ d.timedOut }}</span>
+            </div>
+          }
+        }
+      </div>
+
+      <!-- 📋 Pro-Step-Übersicht -->
+      <h3 class="text-sm font-semibold mb-2">Pro Step (Durchschnitt über alle Runs, die diesen Step erreicht haben)</h3>
+      <div class="overflow-x-auto mb-2">
+        <table class="w-full text-sm text-left">
+          <thead class="text-neutral-400 border-b border-neutral-700">
+            <tr>
+              <th class="py-1 pr-4">Step</th>
+              <th class="py-1 pr-4">Monster</th>
+              <th class="py-1 pr-4" title="Wie viele der Runs haben diesen Step überhaupt erreicht (also die vorherigen überlebt)?">Erreicht</th>
+              <th class="py-1 pr-4" title="Monster in diesem Step tatsächlich besiegt (nicht Tod, nicht Unentschieden)">Gewonnen</th>
+              <th class="py-1 pr-4">Win-Rate</th>
+              <th class="py-1 pr-4">Ø Runden</th>
+              <th class="py-1 pr-4" title="Relativ zum HP-Stand, mit dem der Charakter in DIESEN Step gestartet ist">Ø HP-Verlust</th>
+              <th class="py-1 pr-4" title="Weder Spieler noch Monster nach 100 Runden besiegt — siehe Erklärung unten">Unentschieden</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (stepStats of res.perStep; track $index) {
+              <tr class="border-b border-neutral-800">
+                <td class="py-1 pr-4">{{ $index + 1 }}</td>
+                <td class="py-1 pr-4">{{ stepStats.monsterName }}</td>
+                <td class="py-1 pr-4 font-mono">{{ stepStats.attempts }} / {{ res.totalRuns }}</td>
+                <td class="py-1 pr-4 font-mono">{{ stepStats.wins }}</td>
+                <td class="py-1 pr-4 font-mono">
+                  {{ stepStats.attempts ? (stepStats.wins / stepStats.attempts * 100).toFixed(1) : '–' }}%
+                </td>
+                <td class="py-1 pr-4 font-mono">{{ stepStats.avgRounds.toFixed(1) }}</td>
+                <td class="py-1 pr-4 font-mono">{{ stepStats.avgHpLostPercent.toFixed(1) }}%</td>
+                <td class="py-1 pr-4 font-mono">{{ stepStats.timeouts }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-neutral-500 mb-4">
+        <strong>Unentschieden</strong> heißt: In diesem Kampf hat nach 100 Runden weder du noch das Monster genug
+        Schaden gemacht, um die/den anderen zu besiegen (Sicherheitsabbruch gegen Endlos-Kämpfe). Praktisch bedeutet
+        das meist "dein Loadout kann dieses Monster nicht töten" (z.B. zu wenig Schaden gegen seine Rüstung/Resistenz)
+        — schau dir dafür am besten die Kampfwerte oben im Vergleich zum Monster an.
+      </p>
+
+      <!-- 🔍 Einzelne Runs im Detail -->
+      <h3 class="text-sm font-semibold mb-2">
+        Einzelne Durchläufe im Detail (erste {{ res.sampleRuns.length }} von {{ res.totalRuns }})
+      </h3>
+      <div class="overflow-auto max-h-64 border border-neutral-700 rounded">
+        <table class="w-full text-sm text-left">
+          <thead class="text-neutral-400 border-b border-neutral-700 sticky top-0 bg-neutral-800">
+            <tr>
+              <th class="py-1 px-2">Run</th>
+              <th class="py-1 px-2">Ergebnis</th>
+              @for (stepStats of res.perStep; track $index) {
+                <th class="py-1 px-2">Step {{ $index + 1 }} HP-Verlust</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (run of res.sampleRuns; track $index) {
+              <tr class="border-b border-neutral-800">
+                <td class="py-1 px-2 font-mono">{{ $index + 1 }}</td>
+                <td class="py-1 px-2">
+                  @if (run.outcome === 'won') {
+                    <span class="text-emerald-400">✅ Sieg</span>
+                  }
+                  @if (run.outcome === 'died') {
+                    <span class="text-red-400">💀 Tod bei Step {{ run.stoppedAtStepIndex! + 1 }}</span>
+                  }
+                  @if (run.outcome === 'timedOut') {
+                    <span class="text-yellow-400">⏱ Unentschieden bei Step {{ run.stoppedAtStepIndex! + 1 }}</span>
+                  }
+                </td>
+                @for (stepOutcome of run.steps; track $index) {
+                  <td class="py-1 px-2 font-mono">-{{ stepOutcome.playerHpLostPercent.toFixed(0) }}%</td>
+                }
+                @for (i of placeholderColumns(run, res.perStep.length); track i) {
+                  <td class="py-1 px-2 text-neutral-600">–</td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
+</div>
