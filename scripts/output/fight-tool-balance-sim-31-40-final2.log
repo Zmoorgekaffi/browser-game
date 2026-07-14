@@ -1,0 +1,85 @@
+🎲 Generiere 1000 zufällige Bracket-31-40-Builds (Level 31-40, T2-4-Gear-Mix), je 10000 Runs, 6 Kämpfe/Abenteuer...
+  ... 50/1000 Builds simuliert (15.3s)
+  ... 100/1000 Builds simuliert (27.4s)
+  ... 150/1000 Builds simuliert (39.7s)
+  ... 200/1000 Builds simuliert (51.2s)
+  ... 250/1000 Builds simuliert (62.2s)
+  ... 300/1000 Builds simuliert (76.0s)
+  ... 350/1000 Builds simuliert (88.5s)
+  ... 400/1000 Builds simuliert (100.1s)
+  ... 450/1000 Builds simuliert (113.4s)
+  ... 500/1000 Builds simuliert (125.1s)
+  ... 550/1000 Builds simuliert (138.0s)
+  ... 600/1000 Builds simuliert (150.7s)
+  ... 650/1000 Builds simuliert (163.4s)
+  ... 700/1000 Builds simuliert (176.3s)
+  ... 750/1000 Builds simuliert (188.0s)
+  ... 800/1000 Builds simuliert (200.1s)
+  ... 850/1000 Builds simuliert (212.2s)
+  ... 900/1000 Builds simuliert (223.4s)
+  ... 950/1000 Builds simuliert (237.9s)
+  ... 1000/1000 Builds simuliert (251.8s)
+
+✅ Fertig in 251.8s (1000 Builds x 10000 Runs x 6 Kämpfe).
+
+📊 WINRATE-VERTEILUNG ÜBER ALLE BUILDS
+──────────────────────────────────────────────────
+0% (nie gewonnen)         700 Builds (70.0%)
+1-20%                     124 Builds (12.4%)
+21-40%                     22 Builds (2.2%)
+41-60%                     27 Builds (2.7%)
+61-80%                     18 Builds (1.8%)
+81-99%                     75 Builds (7.5%)
+100% (immer gewonnen)      34 Builds (3.4%)
+──────────────────────────────────────────────────
+Ø Winrate über alle Builds: 14.4%
+Ø Tod-Rate über alle Builds: 69.6%
+Ø Unentschieden-Rate über alle Builds: 16.0%
+
+📈 WINRATE NACH LEVEL-BUCKET (innerhalb Bracket 31-40)
+  Level 31-33: Ø Winrate 15.3% (293 Builds)
+  Level 34-37: Ø Winrate 13.2% (395 Builds)
+  Level 38-40: Ø Winrate 15.2% (312 Builds)
+
+👹 PRO-MONSTER-AUSWERTUNG (über alle Einzelkämpfe, nicht ganze Runs)
+──────────────────────────────────────────────────────────────────────────────────────────
+  [NAT] Seelenfresser                Winrate  27.6%  Tod-Anteil  71.8%  Ø Runden  11.1  (1737565 Kämpfe)
+  [NAT] Grabmalwächter               Winrate  31.0%  Tod-Anteil  66.5%  Ø Runden  14.7  (1791969 Kämpfe)
+  [VET] Blutmoor-Schrecken (Veteran) Winrate  39.3%  Tod-Anteil  58.8%  Ø Runden  18.7  (1795528 Kämpfe)
+  [VET] Orc-Kriegshäuptling (Veteran) Winrate  45.2%  Tod-Anteil  52.3%  Ø Runden  19.1  (1836282 Kämpfe)
+  [NAT] Verfluchter Magier           Winrate  48.0%  Tod-Anteil  50.2%  Ø Runden  12.4  (1732503 Kämpfe)
+  [VET] Nekromanten-Lehrling (Veteran) Winrate  61.5%  Tod-Anteil  36.3%  Ø Runden  17.9  (1839916 Kämpfe)
+  [VET] Steinriese (Veteran)         Winrate  71.3%  Tod-Anteil  17.6%  Ø Runden  33.8  (1798991 Kämpfe)
+  [VET] Klauenpanther (Veteran)      Winrate  76.5%  Tod-Anteil  14.7%  Ø Runden  25.3  (1570154 Kämpfe)
+  [NAT] Knochenkoloss                Winrate  77.2%  Tod-Anteil  15.9%  Ø Runden  30.0  (1686324 Kämpfe)
+  [NAT] Geisterklinge                Winrate  85.6%  Tod-Anteil   1.7%  Ø Runden  31.1  (1890934 Kämpfe)
+  [VET] Nachtklingen-Assassine (Veteran) Winrate  87.6%  Tod-Anteil   0.6%  Ø Runden  26.4  (1867232 Kämpfe)
+  [NAT] Schattenluchs                Winrate  87.7%  Tod-Anteil   3.1%  Ø Runden  30.6  (1638388 Kämpfe)
+  [VET] Orc-Plünderer (Veteran)      Winrate  88.1%  Tod-Anteil   3.0%  Ø Runden  27.8  (1924260 Kämpfe)
+  [NAT] Untoter Legionär             Winrate  91.4%  Tod-Anteil   0.0%  Ø Runden  25.8  (1782521 Kämpfe)
+
+💀 TOP 10 SCHWÄCHSTE BUILDS
+  #6 Lv33 (160pts) winrate=0.0% died=100% timeout=0% avgRounds=6.6 | head=Dämonen-Visier, chest=Dämonenhaut-Kürass, leg=Pirscher-Hose, footwear=Falkenaugen-Stiefel, necklace=Topas-Talisman, ring-left=Ring des Falkenauges, ring-right=Ritterlicher Festungsring, weapon-1=Titanstreitkolben, weapon-2=Klinge des Champions | Spells: Frostnova, Meteor, Wirbelhieb
+  #7 Lv32 (155pts) winrate=0.0% died=100% timeout=0% avgRounds=20.5 | head=Verstärkte Lederkappe, leg=Magister-Hose, gloves=Sturmbringer-Griffe, footwear=Falkenaugen-Stiefel, necklace=Magister-Medaillon, ring-left=Grabesknochen-Siegel, ring-right=Ring der unendlichen Weite | Spells: keine
+  #10 Lv31 (150pts) winrate=0.0% died=0% timeout=100% avgRounds=101.0 | head=Prunkvoller Obsidianhelm, chest=Dämonenhaut-Kürass, leg=Gequälter Beinschutz, gloves=Prunkvolle Obsidianstulpen, footwear=Prunkvolle Obsidianstiefel, ring-left=Platinreif des Erzzauberers, ring-right=Reif des Meisterdiebs | Spells: Verband anlegen, Donnerkeil, Klingensturm, Kettenblitz
+  #11 Lv33 (160pts) winrate=0.0% died=100% timeout=0% avgRounds=12.7 | head=Reif der arkanen Erleuchtung, chest=Falkenaugen-Harnisch, leg=Pirscher-Hose, gloves=Gequälte Klauen, footwear=Eisenstiefel des Wächters, necklace=Rubin-Medaillon, ring-left=Ritterlicher Festungsring, ring-right=Lich-König-Knochenreif, weapon-1=Adeptenstab | Spells: Großer Schildwall
+  #12 Lv34 (165pts) winrate=0.0% died=29% timeout=71% avgRounds=79.6 | head=Sturmbringer-Krone, chest=Gequälter Kürass, leg=Pirscher-Hose, gloves=Magister-Manschetten, footwear=Schuhe der arkanen Erleuchtung, necklace=Topas-Talisman, ring-left=Silberreif des Adepten, weapon-1=Erdbrecher-Hammer | Spells: Arkane Schildwelle
+  #13 Lv36 (175pts) winrate=0.0% died=100% timeout=0% avgRounds=7.6 | head=Pirscher-Haube, leg=Schlangenhaut-Beinschienen, gloves=Schlangenhaut-Griffe, necklace=Novizen-Amulett, ring-left=Zersplitterter Prora-Siegelring, ring-right=Platinreif des Erzzauberers, weapon-1=Kristallstab, weapon-2=Klinge des Veteranen | Spells: keine
+  #14 Lv33 (160pts) winrate=0.0% died=100% timeout=0% avgRounds=15.6 | head=Novizen-Kapuze, chest=Verstärktes Lederwams, leg=Sturmbringer-Beinschutz, gloves=Prunkvolle Obsidianstulpen, necklace=Gequälter Splitter, ring-right=Verstärkter Stahlring, weapon-1=Langbogen der Waldläufer | Spells: Chaoswoge, Lichtwelle, Frostnova
+  #15 Lv34 (165pts) winrate=0.0% died=0% timeout=100% avgRounds=101.0 | chest=Sturmbringer-Harnisch, leg=Pirscher-Hose, footwear=Solide Kettenstiefel, ring-left=Zersplitterter Prora-Siegelring, ring-right=Platinreif des Erzzauberers, weapon-1=Zepter der Elemente | Spells: Lichtwelle, Verzerrung, Donnerkeil
+  #17 Lv32 (155pts) winrate=0.0% died=64% timeout=36% avgRounds=87.8 | head=Gequältes Antlitz, chest=Runenbeschriebene Robe, leg=Schlangenhaut-Beinschienen, gloves=Sturmbringer-Griffe, footwear=Novizen-Schuhe, necklace=Novizen-Amulett, ring-left=Ring des Falkenauges, ring-right=Lich-König-Knochenreif, weapon-1=Langbogen der Waldläufer | Spells: Gletschersturz, Verband anlegen, Klingensturm
+  #18 Lv34 (165pts) winrate=0.0% died=0% timeout=100% avgRounds=101.0 | head=Dämonen-Visier, chest=Gequälter Kürass, leg=Runenbeschriebene Beinkleider, gloves=Gequälte Klauen, footwear=Falkenaugen-Stiefel, weapon-1=Titanstreitkolben, weapon-2=Klinge des Champions | Spells: Feuerball, Lichtwelle, Entropiewelle
+
+🏆 TOP 10 STÄRKSTE BUILDS
+  #971 Lv33 (160pts) winrate=100.0% avgRounds=24.6 | head=Novizen-Kapuze, chest=Prunkvoller Obsidianpanzer, leg=Beinkleider der Erleuchtung, gloves=Magister-Manschetten, footwear=Sturmbringer-Stiefel, necklace=Kette der Erleuchtung, ring-left=Schattenläufer-Band, ring-right=Geschliffener Banditen-Ring, weapon-1=Söldnerklinge, weapon-2=Stahlmorgenstern | Spells: Chaoswoge, Arkane Schildwelle, Kettenblitz
+  #951 Lv40 (195pts) winrate=100.0% avgRounds=20.3 | chest=Schattenmeister-Gewand, gloves=Schattenmeister-Griffe, footwear=Schlangenhaut-Stiefel, necklace=Schlangenhaut-Talisman, ring-left=Schattenläufer-Band, ring-right=Platinreif des Erzzauberers, weapon-1=Ritterschwert | Spells: Arkane Schildwelle, Eislanze, Feuerball, Lichtwelle
+  #936 Lv39 (190pts) winrate=100.0% avgRounds=25.8 | head=Dämonen-Visier, leg=Schattenmeister-Hose, gloves=Schlangenhaut-Griffe, footwear=Schlangenhaut-Stiefel, ring-left=Reif des Meisterdiebs, ring-right=Reif des Meisterdiebs, weapon-1=Chaosstab | Spells: Klingensturm
+  #929 Lv39 (190pts) winrate=100.0% avgRounds=21.3 | head=Novizen-Kapuze, chest=Novizen-Gewand, leg=Verstärkte Lederhose, gloves=Pirscher-Handschuhe, footwear=Pirscher-Stiefel, ring-left=Titanisches Juggernaut-Band, ring-right=Verstärkter Stahlring, weapon-1=Titanstreitkolben, weapon-2=Titanstreitkolben | Spells: Schild-Verstärkung, Chaoswoge, Großer Schildwall
+  #916 Lv34 (165pts) winrate=100.0% avgRounds=12.0 | chest=Solides Kettenhemd, leg=Solide Kettenbeinschienen, gloves=Prunkvolle Obsidianstulpen, footwear=Magister-Stiefel, necklace=Magister-Medaillon, ring-left=Ritterlicher Festungsring, ring-right=Titanisches Juggernaut-Band, weapon-1=Giftdolch, weapon-2=Kristallstab | Spells: Verheerender Schlag, Funkenbogen, Wirbelhieb
+  #895 Lv40 (195pts) winrate=100.0% avgRounds=9.2 | head=Gequältes Antlitz, chest=Schattenmeister-Gewand, leg=Beinkleider der Erleuchtung, gloves=Manschetten der Erleuchtung, footwear=Schattenmeister-Stiefel, necklace=Rubin-Medaillon, ring-left=Ritterlicher Festungsring, ring-right=Platinreif des Erzzauberers, weapon-1=Zepter der Elemente | Spells: Klingensturm, Funkenbogen
+  #845 Lv37 (180pts) winrate=100.0% avgRounds=9.2 | head=Prunkvoller Obsidianhelm, chest=Schlangenhaut-Rüstung, leg=Schlangenhaut-Beinschienen, gloves=Schattenmeister-Griffe, footwear=Schattenmeister-Stiefel, necklace=Schlangenhaut-Talisman, ring-left=Schattenläufer-Band, ring-right=Geschliffener Banditen-Ring, weapon-1=Klinge des Champions, weapon-2=Kristallstab | Spells: Funkenbogen, Entropiewelle, Flammenwand
+  #818 Lv39 (190pts) winrate=100.0% avgRounds=4.8 | head=Gequältes Antlitz, chest=Schattenmeister-Gewand, leg=Pirscher-Hose, gloves=Schattenmeister-Griffe, footwear=Schattenmeister-Stiefel, necklace=Magister-Medaillon, ring-left=Reif des Meisterdiebs, ring-right=Zersplitterter Prora-Siegelring, weapon-1=Stahlmorgenstern, weapon-2=Stahlmorgenstern | Spells: Lichtwelle
+  #817 Lv34 (165pts) winrate=100.0% avgRounds=11.6 | head=Sturmbringer-Krone, chest=Robe der arkanen Erleuchtung, leg=Schlangenhaut-Beinschienen, gloves=Magister-Manschetten, footwear=Verstärkte Lederstiefel, necklace=Sturmbringer-Anhänger, ring-left=Ring des Fährtensuchers, ring-right=Geschliffener Banditen-Ring, weapon-1=Schattendolch, weapon-2=Söldnerklinge | Spells: Chaoswoge, Großer Schildwall, Große Genesung
+  #795 Lv37 (180pts) winrate=100.0% avgRounds=27.1 | chest=Prunkvoller Obsidianpanzer, leg=Solide Kettenbeinschienen, gloves=Dämonen-Klauen, footwear=Pirscher-Stiefel, ring-left=Schattenläufer-Band, ring-right=Reif des Meisterdiebs, weapon-1=Klinge des Veteranen | Spells: Chaoswoge, Großer Schildwall, Schild-Verstärkung, Donnerkeil
+
+💾 Volle Rohdaten gespeichert unter: scripts\output\fight-tool-balance-report-31-40.json

@@ -8,7 +8,7 @@
     "manaCost": 36,
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": {
-      "value": 78
+      "value": 148
     },
     "resolvePoints": 4,
     "requiredWeaponType": "schnitt",

@@ -1,0 +1,10 @@
+@if (newBracket(); as bracket) {
+  <div
+    class="panel-grim heading-grim absolute top-4 left-1/2 -translate-x-1/2 z-40 px-5 py-3 text-center text-grim-parchment transition-opacity duration-[400ms] pointer-events-none"
+    [class.opacity-0]="fading()"
+    [class.opacity-100]="!fading()"
+  >
+    <span class="text-grim-gold">⚔️ Neues Gebiet erreicht!</span>
+    <div class="text-sm font-mono mt-1">Monster der Stufe {{ bracket }} warten jetzt im Düsterwald.</div>
+  </div>
+}

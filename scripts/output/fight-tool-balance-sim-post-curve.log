@@ -1,0 +1,63 @@
+🎲 Generiere 1000 zufällige T1-Builds, je 5000 Runs, 30 Attributpunkte...
+  ... 50/1000 Builds simuliert (4.2s)
+  ... 100/1000 Builds simuliert (8.1s)
+  ... 150/1000 Builds simuliert (12.0s)
+  ... 200/1000 Builds simuliert (16.1s)
+  ... 250/1000 Builds simuliert (19.7s)
+  ... 300/1000 Builds simuliert (23.7s)
+  ... 350/1000 Builds simuliert (27.7s)
+  ... 400/1000 Builds simuliert (31.6s)
+  ... 450/1000 Builds simuliert (35.8s)
+  ... 500/1000 Builds simuliert (39.3s)
+  ... 550/1000 Builds simuliert (43.4s)
+  ... 600/1000 Builds simuliert (46.8s)
+  ... 650/1000 Builds simuliert (50.2s)
+  ... 700/1000 Builds simuliert (54.1s)
+  ... 750/1000 Builds simuliert (57.8s)
+  ... 800/1000 Builds simuliert (61.8s)
+  ... 850/1000 Builds simuliert (66.3s)
+  ... 900/1000 Builds simuliert (70.2s)
+  ... 950/1000 Builds simuliert (74.1s)
+  ... 1000/1000 Builds simuliert (78.4s)
+
+✅ Fertig in 78.4s (1000 Builds x 5000 Runs).
+
+📊 WINRATE-VERTEILUNG ÜBER ALLE BUILDS
+──────────────────────────────────────────────────
+0% (nie gewonnen)          29 Builds (2.9%)
+1-20%                     191 Builds (19.1%)
+21-40%                     83 Builds (8.3%)
+41-60%                     94 Builds (9.4%)
+61-80%                    117 Builds (11.7%)
+81-99%                    429 Builds (42.9%)
+100% (immer gewonnen)      57 Builds (5.7%)
+──────────────────────────────────────────────────
+Ø Winrate über alle Builds: 63.1%
+Ø Tod-Rate über alle Builds: 36.8%
+Ø Unentschieden-Rate über alle Builds: 0.1%
+
+💀 TOP 10 SCHWÄCHSTE BUILDS
+  #19 winrate=0.0% died=100% timeout=0% avgRounds=11.6 steps=1 | head=Rostiger Eisenhut, chest=Wilderer-Mantel, leg=Flicken-Stoffhose, gloves=Abgewetzte Lederhandschuhe, footwear=Splitternde Knochenschreiter, necklace=Splitternder Knochen-Anhänger, ring-left=Pfadfinder-Kordelring, ring-right=Pfadfinder-Kordelring, weapon-1=Runenstab der Novizen | Spells: keine | Stats: {"strength":8,"dexterity":9,"intelligence":6,"vitality":7}
+  #99 winrate=0.0% died=100% timeout=0% avgRounds=10.8 steps=3 | head=Rostiger Eisenhut, chest=Splitternder Knochenpanzer, leg=Wilderer-Hose, gloves=Rostige Eisenhandschuhe, footwear=Flicken-Stoffschuhe, necklace=Splitternder Knochen-Anhänger, ring-left=Abgewetzter Siegelring | Spells: Minderwertige Heilung, Frostpfeil, Präziser Stoß | Stats: {"strength":6,"dexterity":8,"intelligence":10,"vitality":6}
+  #103 winrate=0.0% died=100% timeout=0% avgRounds=21.3 steps=1 | head=Flicken-Stoffhaube, chest=Splitternder Knochenpanzer, leg=Wilderer-Hose, footwear=Splitternde Knochenschreiter, ring-left=Pfadfinder-Kordelring, ring-right=Kupferreif des Novizen | Spells: Präziser Stoß, Minderwertige Heilung, Schild-Auffrischung | Stats: {"strength":5,"dexterity":8,"intelligence":9,"vitality":8}
+  #106 winrate=0.0% died=100% timeout=0% avgRounds=6.5 steps=3 | head=Splitterndes Knochenband, chest=Flicken-Stoffrobe, leg=Rostige Beinschienen, gloves=Wilderer-Griffe, footwear=Wilderer-Schuhe, necklace=Splitternder Knochen-Anhänger, ring-right=Kupferreif des Novizen | Spells: Minderwertige Heilung, Frostpfeil, Blitzschlag, Präziser Stoß | Stats: {"strength":10,"dexterity":8,"intelligence":11,"vitality":1}
+  #138 winrate=0.0% died=100% timeout=0% avgRounds=18.9 steps=3 | head=Rostiger Eisenhut, leg=Splitternde Knochenschienen, footwear=Wilderer-Schuhe, necklace=Splitternder Knochen-Anhänger, ring-left=Abgewetzter Siegelring, ring-right=Pfadfinder-Kordelring, weapon-1=Runenstab der Novizen | Spells: keine | Stats: {"strength":4,"dexterity":8,"intelligence":11,"vitality":7}
+  #174 winrate=0.0% died=100% timeout=0% avgRounds=10.5 steps=3 | head=Splitterndes Knochenband, chest=Flicken-Stoffrobe, leg=Wilderer-Hose, gloves=Splitternde Knochenstulpen, footwear=Splitternde Knochenschreiter, ring-left=Kupferreif des Novizen, ring-right=Splitternder Knochenring | Spells: Funke, Frostpfeil, Chaosbolt, Blitzschlag | Stats: {"strength":11,"dexterity":8,"intelligence":2,"vitality":9}
+  #186 winrate=0.0% died=100% timeout=0% avgRounds=11.6 steps=3 | leg=Splitternde Knochenschienen, gloves=Abgewetzte Lederhandschuhe, footwear=Splitternde Knochenschreiter, necklace=Einfache Saphir-Halskette, ring-left=Abgewetzter Siegelring, ring-right=Kupferreif des Novizen, weapon-1=Runenstab der Novizen | Spells: keine | Stats: {"strength":9,"dexterity":8,"intelligence":9,"vitality":4}
+  #215 winrate=0.0% died=100% timeout=0% avgRounds=13.1 steps=3 | head=Splitterndes Knochenband, chest=Flicken-Stoffrobe, leg=Flicken-Stoffhose, footwear=Splitternde Knochenschreiter, necklace=Einfache Saphir-Halskette, ring-left=Schwerer Eisenbandring, ring-right=Pfadfinder-Kordelring | Spells: keine | Stats: {"strength":7,"dexterity":8,"intelligence":6,"vitality":9}
+  #235 winrate=0.0% died=100% timeout=0% avgRounds=9.9 steps=3 | head=Abgewetzte Lederkappe, chest=Wilderer-Mantel, leg=Wilderer-Hose, gloves=Wilderer-Griffe, footwear=Splitternde Knochenschreiter, necklace=Schweres Kupfer-Medaillon, ring-left=Splitternder Knochenring, ring-right=Splitternder Knochenring | Spells: Präziser Stoß, Chaosbolt | Stats: {"strength":9,"dexterity":7,"intelligence":8,"vitality":6}
+  #240 winrate=0.0% died=100% timeout=0% avgRounds=10.5 steps=3 | head=Wilderer-Maske, chest=Rostiger Brustpanzer, leg=Splitternde Knochenschienen, gloves=Splitternde Knochenstulpen, footwear=Rostige Eisenstiefel, necklace=Splitternder Knochen-Anhänger | Spells: keine | Stats: {"strength":6,"dexterity":9,"intelligence":11,"vitality":4}
+
+🏆 TOP 10 STÄRKSTE BUILDS
+  #974 winrate=100.0% avgRounds=6.5 steps=1 | head=Rostiger Eisenhut, chest=Abgewetztes Lederwams, leg=Flicken-Stoffhose, footwear=Flicken-Stoffschuhe, necklace=Schweres Kupfer-Medaillon, ring-left=Splitternder Knochenring, ring-right=Schwerer Eisenbandring, weapon-1=Kriegshammer des Lehrlings | Spells: Frostpfeil | Stats: {"strength":8,"dexterity":10,"intelligence":5,"vitality":7}
+  #945 winrate=100.0% avgRounds=3.4 steps=1 | head=Rostiger Eisenhut, chest=Abgewetztes Lederwams, gloves=Flicken-Stoffwickel, footwear=Flicken-Stoffschuhe, necklace=Schweres Kupfer-Medaillon, ring-left=Abgewetzter Siegelring, ring-right=Abgewetzter Siegelring, weapon-1=Holzknüppel | Spells: Frostpfeil, Funke | Stats: {"strength":7,"dexterity":11,"intelligence":6,"vitality":6}
+  #911 winrate=100.0% avgRounds=17.0 steps=1 | head=Flicken-Stoffhaube, chest=Wilderer-Mantel, leg=Wilderer-Hose, gloves=Abgewetzte Lederhandschuhe, footwear=Rostige Eisenstiefel, ring-left=Pfadfinder-Kordelring, ring-right=Abgewetzter Siegelring, weapon-1=Zweihandschwert des Rekruten | Spells: Schild-Auffrischung, Chaosbolt, Funke | Stats: {"strength":8,"dexterity":4,"intelligence":9,"vitality":9}
+  #893 winrate=100.0% avgRounds=5.6 steps=2 | head=Rostiger Eisenhut, chest=Wilderer-Mantel, gloves=Abgewetzte Lederhandschuhe, ring-left=Abgewetzter Siegelring, ring-right=Schwerer Eisenbandring, weapon-1=Rostiger Dolch, weapon-2=Holzknüppel | Spells: Chaosbolt, Blitzschlag, Frostpfeil, Funke | Stats: {"strength":4,"dexterity":11,"intelligence":6,"vitality":9}
+  #880 winrate=100.0% avgRounds=1.7 steps=3 | head=Wilderer-Maske, chest=Abgewetztes Lederwams, leg=Wilderer-Hose, gloves=Wilderer-Griffe, footwear=Splitternde Knochenschreiter, necklace=Abgewetztes Smaragd-Band, ring-left=Abgewetzter Siegelring, ring-right=Abgewetzter Siegelring, weapon-1=Kurzschwert der Wache, weapon-2=Rostiger Dolch | Spells: Frostpfeil, Präziser Stoß | Stats: {"strength":11,"dexterity":4,"intelligence":5,"vitality":10}
+  #877 winrate=100.0% avgRounds=7.0 steps=1 | head=Flicken-Stoffhaube, chest=Flicken-Stoffrobe, leg=Rostige Beinschienen, gloves=Splitternde Knochenstulpen, footwear=Splitternde Knochenschreiter, necklace=Abgewetztes Smaragd-Band, ring-left=Schwerer Eisenbandring, ring-right=Kupferreif des Novizen, weapon-1=Lehrlingsstab, weapon-2=Lehrlingsstab | Spells: Blitzschlag, Funke | Stats: {"strength":6,"dexterity":10,"intelligence":8,"vitality":6}
+  #833 winrate=100.0% avgRounds=3.2 steps=3 | head=Abgewetzte Lederkappe, leg=Abgewetzte Lederhose, gloves=Rostige Eisenhandschuhe, footwear=Flicken-Stoffschuhe, necklace=Splitternder Knochen-Anhänger, ring-left=Schwerer Eisenbandring, ring-right=Abgewetzter Siegelring, weapon-1=Holzknüppel, weapon-2=Kurzschwert der Wache | Spells: Blitzschlag | Stats: {"strength":3,"dexterity":6,"intelligence":7,"vitality":14}
+  #832 winrate=100.0% avgRounds=4.8 steps=3 | head=Rostiger Eisenhut, chest=Abgewetztes Lederwams, leg=Wilderer-Hose, gloves=Wilderer-Griffe, footwear=Wilderer-Schuhe, necklace=Abgewetztes Smaragd-Band, ring-left=Schwerer Eisenbandring, ring-right=Kupferreif des Novizen, weapon-1=Lehrlingsstab, weapon-2=Holzknüppel | Spells: keine | Stats: {"strength":5,"dexterity":10,"intelligence":8,"vitality":7}
+  #829 winrate=100.0% avgRounds=17.0 steps=1 | head=Wilderer-Maske, leg=Flicken-Stoffhose, gloves=Rostige Eisenhandschuhe, footwear=Rostige Eisenstiefel, necklace=Splitternder Knochen-Anhänger, ring-left=Pfadfinder-Kordelring, ring-right=Schwerer Eisenbandring, weapon-1=Rostiger Dolch, weapon-2=Holzknüppel | Spells: Präziser Stoß, Minderwertige Heilung, Schild-Auffrischung | Stats: {"strength":3,"dexterity":11,"intelligence":7,"vitality":9}
+  #821 winrate=100.0% avgRounds=4.0 steps=1 | head=Rostiger Eisenhut, chest=Rostiger Brustpanzer, leg=Flicken-Stoffhose, gloves=Splitternde Knochenstulpen, footwear=Abgewetzte Lederstiefel, necklace=Wilderer-Glücksbringer, weapon-1=Kurzschwert der Wache, weapon-2=Holzknüppel | Spells: keine | Stats: {"strength":5,"dexterity":10,"intelligence":6,"vitality":9}
+
+💾 Volle Rohdaten gespeichert unter: scripts\output\fight-tool-balance-report.json

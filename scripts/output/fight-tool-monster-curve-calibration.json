@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Wurzelhexe",
+    "hp": 32,
+    "checkpointPoints": 0,
+    "checkpointGearSlots": 0,
+    "originalAttack": 12,
+    "newAttack": 34,
+    "finalWinRate": 0.898,
+    "iterations": 20
+  },
+  {
+    "name": "Waldläufer-Kobold",
+    "hp": 27,
+    "checkpointPoints": 8,
+    "checkpointGearSlots": 1,
+    "originalAttack": 18,
+    "newAttack": 30,
+    "finalWinRate": 0.8195,
+    "iterations": 12
+  },
+  {
+    "name": "Goblin",
+    "hp": 49,
+    "checkpointPoints": 17,
+    "checkpointGearSlots": 3,
+    "originalAttack": 23,
+    "newAttack": 42,
+    "finalWinRate": 0.7915,
+    "iterations": 15
+  },
+  {
+    "name": "Dornwolf",
+    "hp": 42,
+    "checkpointPoints": 25,
+    "checkpointGearSlots": 4,
+    "originalAttack": 29,
+    "newAttack": 40,
+    "finalWinRate": 0.819,
+    "iterations": 10
+  },
+  {
+    "name": "Zyklop",
+    "hp": 113,
+    "checkpointPoints": 33,
+    "checkpointGearSlots": 5,
+    "originalAttack": 30,
+    "newAttack": 34,
+    "finalWinRate": 0.814,
+    "iterations": 4
+  },
+  {
+    "name": "Moosschrecken",
+    "hp": 127,
+    "checkpointPoints": 42,
+    "checkpointGearSlots": 7,
+    "originalAttack": 28,
+    "newAttack": 64,
+    "finalWinRate": 0.819,
+    "iterations": 17
+  },
+  {
+    "name": "Zyklopen-Stammeswächter",
+    "hp": 132,
+    "checkpointPoints": 50,
+    "checkpointGearSlots": 8,
+    "originalAttack": 31,
+    "newAttack": 75,
+    "finalWinRate": 0.808,
+    "iterations": 19
+  }
+]

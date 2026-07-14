@@ -1,0 +1,884 @@
+[
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 8.568666666666667
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 9.099
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 0.015,
+    "died": 0.985,
+    "timedOut": 0,
+    "avgRounds": 9.363
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.320333333333333
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 6.811
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.542666666666666
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.835333333333334
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.6036666666666667,
+    "died": 0.3963333333333333,
+    "timedOut": 0,
+    "avgRounds": 21.282666666666668
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.16466666666666666,
+    "died": 0.8353333333333334,
+    "timedOut": 0,
+    "avgRounds": 29.660666666666668
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.001,
+    "died": 0.999,
+    "timedOut": 0,
+    "avgRounds": 14.910333333333334
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.0003333333333333333,
+    "died": 0.9996666666666667,
+    "timedOut": 0,
+    "avgRounds": 11.951666666666666
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 18.97833333333333
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 7.108666666666666
+  },
+  {
+    "checkpoint": "Level 21 (Bracket-Einstieg, 100 Pkt, T1-Reste, 0 Slots)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.917333333333334
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 8.746
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0.0003333333333333333,
+    "died": 0.9996666666666667,
+    "timedOut": 0,
+    "avgRounds": 9.238666666666667
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 0.020666666666666667,
+    "died": 0.9793333333333333,
+    "timedOut": 0,
+    "avgRounds": 9.484
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.439333333333333
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 6.959333333333333
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.631666666666667
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.915
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.627,
+    "died": 0.373,
+    "timedOut": 0,
+    "avgRounds": 21.30666666666667
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.185,
+    "died": 0.815,
+    "timedOut": 0,
+    "avgRounds": 29.978666666666665
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.0036666666666666666,
+    "died": 0.9963333333333333,
+    "timedOut": 0,
+    "avgRounds": 15.229666666666667
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.001,
+    "died": 0.999,
+    "timedOut": 0,
+    "avgRounds": 12.152333333333333
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 19.257
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 7.252
+  },
+  {
+    "checkpoint": "Level 22 (108 Pkt, T1-Gear, 1 Slot)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 5.984666666666667
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0.015666666666666666,
+    "died": 0.9843333333333333,
+    "timedOut": 0,
+    "avgRounds": 11.327
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0.037,
+    "died": 0.963,
+    "timedOut": 0,
+    "avgRounds": 11.858333333333333
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 0.33366666666666667,
+    "died": 0.6663333333333333,
+    "timedOut": 0,
+    "avgRounds": 12.288333333333334
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0.0016666666666666668,
+    "died": 0.9983333333333333,
+    "timedOut": 0,
+    "avgRounds": 7.185666666666667
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 9.166333333333334
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 7.976333333333334
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 8.291333333333334
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.9626666666666667,
+    "died": 0.037333333333333336,
+    "timedOut": 0,
+    "avgRounds": 17.86766666666667
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.7703333333333333,
+    "died": 0.22966666666666666,
+    "timedOut": 0,
+    "avgRounds": 30.357333333333333
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.25933333333333336,
+    "died": 0.7406666666666667,
+    "timedOut": 0,
+    "avgRounds": 19.263
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.142,
+    "died": 0.858,
+    "timedOut": 0,
+    "avgRounds": 15.722333333333333
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.010666666666666666,
+    "died": 0.9893333333333333,
+    "timedOut": 0,
+    "avgRounds": 25.988666666666667
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 9.897333333333334
+  },
+  {
+    "checkpoint": "Level 24 (T2-Gear, 3 Slots)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 8.014666666666667
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0.033666666666666664,
+    "died": 0.9663333333333334,
+    "timedOut": 0,
+    "avgRounds": 12.702333333333334
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0.06066666666666667,
+    "died": 0.9393333333333334,
+    "timedOut": 0,
+    "avgRounds": 13.281666666666666
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 0.5666666666666667,
+    "died": 0.43333333333333335,
+    "timedOut": 0,
+    "avgRounds": 14.61
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0.003,
+    "died": 0.997,
+    "timedOut": 0,
+    "avgRounds": 7.843333333333334
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 10.198333333333334
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 9.523666666666667
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 10.060333333333332
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.9993333333333333,
+    "died": 0.0006666666666666666,
+    "timedOut": 0,
+    "avgRounds": 18.185333333333332
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.904,
+    "died": 0.096,
+    "timedOut": 0,
+    "avgRounds": 32.563
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.391,
+    "died": 0.609,
+    "timedOut": 0,
+    "avgRounds": 21.34
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.22733333333333333,
+    "died": 0.7726666666666666,
+    "timedOut": 0,
+    "avgRounds": 17.538666666666668
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.029,
+    "died": 0.971,
+    "timedOut": 0,
+    "avgRounds": 30.406666666666666
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 12.024333333333333
+  },
+  {
+    "checkpoint": "Level 25 (T2-Gear, 4 Slots)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 9.494333333333334
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0.527,
+    "died": 0.473,
+    "timedOut": 0,
+    "avgRounds": 16.019
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0.368,
+    "died": 0.632,
+    "timedOut": 0,
+    "avgRounds": 17.203666666666667
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 12.756666666666666
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0.16033333333333333,
+    "died": 0.8396666666666667,
+    "timedOut": 0,
+    "avgRounds": 11.034666666666666
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0.001,
+    "died": 0.999,
+    "timedOut": 0,
+    "avgRounds": 14.625333333333334
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 17.183
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0,
+    "died": 1,
+    "timedOut": 0,
+    "avgRounds": 18.655
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 12.733333333333333
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.9986666666666667,
+    "died": 0.001,
+    "timedOut": 0.0003333333333333333,
+    "avgRounds": 25.932
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.9453333333333334,
+    "died": 0.05466666666666667,
+    "timedOut": 0,
+    "avgRounds": 19.412666666666667
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.828,
+    "died": 0.172,
+    "timedOut": 0,
+    "avgRounds": 18.108
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.6883333333333334,
+    "died": 0.31166666666666665,
+    "timedOut": 0,
+    "avgRounds": 37.31333333333333
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.0003333333333333333,
+    "died": 0.9996666666666667,
+    "timedOut": 0,
+    "avgRounds": 20.926666666666666
+  },
+  {
+    "checkpoint": "Level 27 (T2/T3-Mix, 5 Slots)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.0003333333333333333,
+    "died": 0.9996666666666667,
+    "timedOut": 0,
+    "avgRounds": 15.864666666666666
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 0.9966666666666667,
+    "died": 0.0033333333333333335,
+    "timedOut": 0,
+    "avgRounds": 18.359
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 0.978,
+    "died": 0.022,
+    "timedOut": 0,
+    "avgRounds": 23.447666666666667
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 12.341
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0.6923333333333334,
+    "died": 0.30766666666666664,
+    "timedOut": 0,
+    "avgRounds": 15.976333333333333
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0.2866666666666667,
+    "died": 0.7133333333333334,
+    "timedOut": 0,
+    "avgRounds": 28.800333333333334
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0.4493333333333333,
+    "died": 0.5506666666666666,
+    "timedOut": 0,
+    "avgRounds": 47.684333333333335
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0.6823333333333333,
+    "died": 0.31433333333333335,
+    "timedOut": 0.0033333333333333335,
+    "avgRounds": 57.72566666666667
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 12.345
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 23.386
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 18.669666666666668
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 18.043
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 37.675666666666665
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.7766666666666666,
+    "died": 0.221,
+    "timedOut": 0.0023333333333333335,
+    "avgRounds": 54.46966666666667
+  },
+  {
+    "checkpoint": "Level 29 (T3-Gear, 7 Slots)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.16766666666666666,
+    "died": 0.8323333333333334,
+    "timedOut": 0,
+    "avgRounds": 35.54666666666667
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Orc-Plünderer",
+    "origin": "nativ",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 16.033
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Nachtklingen-Assassine",
+    "origin": "nativ",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 18.024333333333335
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Nekromanten-Lehrling",
+    "origin": "nativ",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 10.783
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Klauenpanther",
+    "origin": "nativ",
+    "winRate": 0.963,
+    "died": 0.037,
+    "timedOut": 0,
+    "avgRounds": 14.857666666666667
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Steinriese",
+    "origin": "nativ",
+    "winRate": 0.9706666666666667,
+    "died": 0.029333333333333333,
+    "timedOut": 0,
+    "avgRounds": 31.597666666666665
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Orc-Kriegshäuptling",
+    "origin": "nativ",
+    "winRate": 0.9856666666666667,
+    "died": 0.014333333333333333,
+    "timedOut": 0,
+    "avgRounds": 48.211666666666666
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Blutmoor-Schrecken",
+    "origin": "nativ",
+    "winRate": 0.999,
+    "died": 0.0006666666666666666,
+    "timedOut": 0.0003333333333333333,
+    "avgRounds": 52.96966666666667
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Sumpfhexe (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 10.725
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Schattenläufer (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 18.159333333333333
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Goblin-Plünderer (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 15.933333333333334
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Klingenspinne (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 15.498
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Höhlentroll (Veteran)",
+    "origin": "veteran",
+    "winRate": 1,
+    "died": 0,
+    "timedOut": 0,
+    "avgRounds": 32.095
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Trollwächter (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.998,
+    "died": 0.0016666666666666668,
+    "timedOut": 0.0003333333333333333,
+    "avgRounds": 48.274
+  },
+  {
+    "checkpoint": "Level 30 (Bracket-Ende, 145 Pkt, volles T3-Gear)",
+    "monster": "Wurzelschrecken (Veteran)",
+    "origin": "veteran",
+    "winRate": 0.8156666666666667,
+    "died": 0.18433333333333332,
+    "timedOut": 0,
+    "avgRounds": 43.394666666666666
+  }
+]

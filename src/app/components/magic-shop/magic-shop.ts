@@ -48,8 +48,8 @@ export class MagicShop implements OnInit {
    * für einen sauberen Loop-Übergang.
    */
   greetAnimationPaths: any[] = [
-    ...framePaths(15, (i) => `imgs/magic-shop/merchant/greet/frame-${pad(i, 3)}-Photoroom.webp`, 1),
-    'imgs/magic-shop/merchant/greet/frame-001-Photoroom.webp',
+    ...framePaths(37, (i) => `imgs/magic-shop/merchant/greet/frame_0${pad(i, 3)}.webp`, 1),
+    'imgs/magic-shop/merchant/greet/frame_0001.webp',
   ];
 
   // Direkt das Signal binden!

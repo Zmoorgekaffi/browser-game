@@ -36,9 +36,11 @@
     @if (!currentShopItems()[0].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="126"
-        [y]="321"
+        [x]="207"
+        [y]="407"
         [itemObject]="currentShopItems()[0]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 0)"
       ></app-shop-item>
     }
@@ -46,9 +48,11 @@
     @if (!currentShopItems()[1].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="302"
-        [y]="321"
+        [x]="341"
+        [y]="407"
         [itemObject]="currentShopItems()[1]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 1)"
       ></app-shop-item>
     }
@@ -56,9 +60,11 @@
     @if (!currentShopItems()[2].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="485"
-        [y]="321"
+        [x]="469"
+        [y]="407"
         [itemObject]="currentShopItems()[2]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 2)"
       ></app-shop-item>
     }
@@ -66,9 +72,11 @@
     @if (!currentShopItems()[3].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="669"
-        [y]="321"
+        [x]="619"
+        [y]="407"
         [itemObject]="currentShopItems()[3]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 3)"
       ></app-shop-item>
     }
@@ -76,9 +84,11 @@
     @if (!currentShopItems()[4].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="845"
-        [y]="321"
+        [x]="753"
+        [y]="407"
         [itemObject]="currentShopItems()[4]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 4)"
       ></app-shop-item>
     }
@@ -86,9 +96,11 @@
     @if (!currentShopItems()[5].isSold) {
       <app-shop-item
         [devmode]="true"
-        [x]="1016"
-        [y]="321"
+        [x]="881"
+        [y]="407"
         [itemObject]="currentShopItems()[5]"
+        [width]="86"
+        [height]="86"
         (click)="gameStateService.shop.selectItemForPreview('magic', 5)"
       ></app-shop-item>
     }
@@ -101,7 +113,7 @@
   }
 
     <!-- merchant -->
-  <div class="absolute w-[360px] h-[480px] left-[350px] top-[6px]">
+  <div class="absolute w-[360px] h-[480px] left-[439px] top-[63px]">
     <app-animation-object
       [Name]="'magic-shop-merchant'"
       [Duration]="2200"

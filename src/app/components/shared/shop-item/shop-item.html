@@ -1,5 +1,13 @@
 @if(itemObject) {
-<div (click)="showInfoCard(itemObject)" class="object-center z-10 shop-item cursor-pointer" [ngStyle]="{'left.px': x, 'top.px': y}">
+<div 
+  (click)="showInfoCard(itemObject)" 
+  class="object-center z-10 shop-item cursor-pointer" 
+  [ngStyle]="{
+    'left.px': x, 
+    'top.px': y,
+    'width.px': width,
+    'height.px': height
+  }">
   <img [src]="itemObject['img-path']" [alt]="itemObject.name" class="item-image">
 </div>
 }

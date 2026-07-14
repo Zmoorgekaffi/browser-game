@@ -9,7 +9,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": {
       "element": "chaos",
-      "value": 48
+      "value": 91
     },
     "resolvePoints": 3,
     "requiredWeaponType": "magie",

@@ -8,7 +8,7 @@
     "manaCost": 62,
     "effectType": "PHYSICAL_DAMAGE",
     "effectValues": {
-      "value": 135
+      "value": 257
     },
     "resolvePoints": 5,
     "requiredWeaponType": "stumpf",

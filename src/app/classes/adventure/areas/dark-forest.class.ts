@@ -5,16 +5,30 @@ import { framePaths, pad } from '../../../utils/frame-paths.util';
 import { getLevelBracket, LevelBracket } from '../../../utils/level-bracket.util';
 import monsterData1o10 from '../../../../../public/mosters/dark-forest/dark-forest.1-10.json'
 import monsterData11o20 from '../../../../../public/mosters/dark-forest/dark-forest.11-20.json';
+import monsterData11o20Veteran from '../../../../../public/mosters/dark-forest/dark-forest.11-20.veteran.json';
 import monsterData21o30 from '../../../../../public/mosters/dark-forest/dark-forest.21-30.json';
+import monsterData21o30Veteran from '../../../../../public/mosters/dark-forest/dark-forest.21-30.veteran.json';
 import monsterData31o40 from '../../../../../public/mosters/dark-forest/dark-forest.31-40.json';
+import monsterData31o40Veteran from '../../../../../public/mosters/dark-forest/dark-forest.31-40.veteran.json';
 import monsterData41o50 from '../../../../../public/mosters/dark-forest/dark-forest.41-50.json';
 
-/** Monster-Pool je Level-Bracket — analog zur LootTable, aber für Kämpfe. */
+/**
+ * Monster-Pool je Level-Bracket — analog zur LootTable, aber für Kämpfe.
+ *
+ * 🆕 Bracket 11-20, 21-30 und 31-40 enthalten zusätzlich zu ihren 7 nativen
+ * Monstern auch die 7 Monster aus dem UNMITTELBAR vorherigen Bracket (1-10,
+ * 11-20 bzw. 21-30) als hochskalierte "Veteran"-Varianten (siehe
+ * scripts/monster-carry-over.mjs) — vertraute Gegner, aber auf's neue
+ * Bracket-Niveau gebracht, statt beim Bracket-Wechsel komplett zu
+ * verschwinden. NICHT kumulativ (31-40 bekommt nur 21-30 mit, nicht
+ * zusätzlich 11-20/1-10) — siehe fight-tool-balance-report.md Abschnitt 7-8
+ * (11-20) bzw. 11+ (21-30/31-40).
+ */
 const MONSTER_POOLS: Record<LevelBracket, any[]> = {
   '1-10': monsterData1o10,
-  '11-20': monsterData11o20,
-  '21-30': monsterData21o30,
-  '31-40': monsterData31o40,
+  '11-20': [...monsterData11o20, ...monsterData11o20Veteran],
+  '21-30': [...monsterData21o30, ...monsterData21o30Veteran],
+  '31-40': [...monsterData31o40, ...monsterData31o40Veteran],
   '41-50': monsterData41o50,
 };
 

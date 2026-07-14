@@ -9,7 +9,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": {
       "element": "lightning",
-      "value": 70
+      "value": 133
     },
     "resolvePoints": 4,
     "requiredWeaponType": "magie",

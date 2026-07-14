@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Nekromanten-Lehrling",
+    "hp": 182,
+    "checkpointPoints": 100,
+    "checkpointGearTier": 1,
+    "checkpointGearSlots": 0,
+    "originalAttack": 31,
+    "newAttack": 29,
+    "finalWinRate": 0.7825,
+    "iterations": 1
+  },
+  {
+    "name": "Nachtklingen-Assassine",
+    "hp": 154,
+    "checkpointPoints": 105,
+    "checkpointGearTier": 1,
+    "checkpointGearSlots": 1,
+    "originalAttack": 50,
+    "newAttack": 21,
+    "finalWinRate": 0.7425,
+    "iterations": 4
+  },
+  {
+    "name": "Orc-Plünderer",
+    "hp": 280,
+    "checkpointPoints": 115,
+    "checkpointGearTier": 2,
+    "checkpointGearSlots": 3,
+    "originalAttack": 62,
+    "newAttack": 33,
+    "finalWinRate": 0.7655,
+    "iterations": 4
+  },
+  {
+    "name": "Klauenpanther",
+    "hp": 238,
+    "checkpointPoints": 120,
+    "checkpointGearTier": 2,
+    "checkpointGearSlots": 4,
+    "originalAttack": 78,
+    "newAttack": 30,
+    "finalWinRate": 0.7745,
+    "iterations": 6
+  },
+  {
+    "name": "Steinriese",
+    "hp": 644,
+    "checkpointPoints": 130,
+    "checkpointGearTier": 3,
+    "checkpointGearSlots": 5,
+    "originalAttack": 81,
+    "newAttack": 39,
+    "finalWinRate": 0.7535,
+    "iterations": 4
+  },
+  {
+    "name": "Orc-Kriegshäuptling",
+    "hp": 756,
+    "checkpointPoints": 140,
+    "checkpointGearTier": 3,
+    "checkpointGearSlots": 7,
+    "originalAttack": 84,
+    "newAttack": 54,
+    "finalWinRate": 0.785,
+    "iterations": 4
+  },
+  {
+    "name": "Blutmoor-Schrecken",
+    "hp": 728,
+    "checkpointPoints": 145,
+    "checkpointGearTier": 3,
+    "checkpointGearSlots": 8,
+    "originalAttack": 74,
+    "newAttack": 68,
+    "finalWinRate": 0.817,
+    "iterations": 1
+  }
+]

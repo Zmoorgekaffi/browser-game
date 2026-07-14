@@ -9,7 +9,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": {
       "element": "cold",
-      "value": 128
+      "value": 243
     },
     "resolvePoints": 5,
     "requiredWeaponType": "magie",

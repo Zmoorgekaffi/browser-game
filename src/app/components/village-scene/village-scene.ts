@@ -1,8 +1,10 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RedirectHotspotComponent } from '../shared/redirect-hotspot/redirect-hotspot.component';
 import { LoadingScreen } from '../shared/loading-screen/loading-screen';
+import { BracketChangeToast } from '../shared/bracket-change-toast/bracket-change-toast';
 import { GameStateService } from '../../services/game-state.service';
 import { AssetPreloaderService } from '../../services/asset-preloader.service';
+import { BracketNotificationService } from '../../services/bracket-notification.service';
 
 /**
  * @component VillageSceneComponent
@@ -16,7 +18,7 @@ import { AssetPreloaderService } from '../../services/asset-preloader.service';
 @Component({
   selector: 'app-village-scene',
   standalone: true,
-  imports: [RedirectHotspotComponent, LoadingScreen],
+  imports: [RedirectHotspotComponent, LoadingScreen, BracketChangeToast],
   templateUrl: './village-scene.html',
   styleUrls: ['./village-scene.scss'],
 })
@@ -24,6 +26,7 @@ export class VillageSceneComponent implements OnInit {
 
   public gameStateService = inject(GameStateService);
   private preloader = inject(AssetPreloaderService);
+  private bracketNotificationService = inject(BracketNotificationService);
 
   /** Solange true zeigt das Template nur den Ladebildschirm. */
   public isLoading = signal<boolean>(true);
@@ -42,6 +45,7 @@ export class VillageSceneComponent implements OnInit {
       'imgs/shrine/shrine-building/shrine-building_0.webp',
     ]);
     this.isLoading.set(false);
+    this.bracketNotificationService.checkForBracketChange();
   }
 
   /** Übernimmt die Charakter-ID aus der Session in den GameState. */

@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Untoter Legionär",
+    "newHp": 800,
+    "newEvasion": 2,
+    "checkpointPoints": 150,
+    "checkpointGearTier": 2,
+    "checkpointGearSlots": 0,
+    "originalAttack": 116,
+    "newAttack": 28,
+    "finalWinRate": 0.748,
+    "avgRounds": 49.7895
+  },
+  {
+    "name": "Geisterklinge",
+    "newHp": 900,
+    "newEvasion": 2,
+    "checkpointPoints": 155,
+    "checkpointGearTier": 2,
+    "checkpointGearSlots": 1,
+    "originalAttack": 93,
+    "newAttack": 32,
+    "finalWinRate": 0.7475,
+    "avgRounds": 24.5885
+  },
+  {
+    "name": "Verfluchter Magier",
+    "newHp": 1000,
+    "newEvasion": 3,
+    "checkpointPoints": 165,
+    "checkpointGearTier": 3,
+    "checkpointGearSlots": 3,
+    "originalAttack": 58,
+    "newAttack": 48,
+    "finalWinRate": 0.777,
+    "avgRounds": 18.7115
+  },
+  {
+    "name": "Schattenluchs",
+    "newHp": 1100,
+    "newEvasion": 3,
+    "checkpointPoints": 170,
+    "checkpointGearTier": 3,
+    "checkpointGearSlots": 5,
+    "originalAttack": 145,
+    "newAttack": 46,
+    "finalWinRate": 0.788,
+    "avgRounds": 21.1125
+  },
+  {
+    "name": "Knochenkoloss",
+    "newHp": 1200,
+    "newEvasion": 4,
+    "checkpointPoints": 180,
+    "checkpointGearTier": 4,
+    "checkpointGearSlots": 6,
+    "originalAttack": 151,
+    "newAttack": 73,
+    "finalWinRate": 0.7775,
+    "avgRounds": 20.8325
+  },
+  {
+    "name": "Grabmalwächter",
+    "newHp": 1300,
+    "newEvasion": 4,
+    "checkpointPoints": 190,
+    "checkpointGearTier": 4,
+    "checkpointGearSlots": 8,
+    "originalAttack": 157,
+    "newAttack": 191,
+    "finalWinRate": 0.793,
+    "avgRounds": 15.6115
+  },
+  {
+    "name": "Seelenfresser",
+    "newHp": 1400,
+    "newEvasion": 5,
+    "checkpointPoints": 195,
+    "checkpointGearTier": 4,
+    "checkpointGearSlots": 10,
+    "originalAttack": 139,
+    "newAttack": 283,
+    "finalWinRate": 0.7755,
+    "avgRounds": 9.932
+  }
+]

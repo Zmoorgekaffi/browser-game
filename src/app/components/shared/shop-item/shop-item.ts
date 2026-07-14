@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { GameStateService } from '../../../services/game-state.service';
 
-
 /**
  * @component ShopItem
  * @description Einzelnes Item im Shop-Regal (absolut positioniert über
@@ -18,12 +17,14 @@ export class ShopItem {
   @Input() itemObject: any = {};
   @Input() x: number = 0;
   @Input() y: number = 0;
+  @Input() width: number = 128; // Neuer Input für Breite
+  @Input() height: number = 128; // Neuer Input für Höhe
   @Input() devmode: boolean = false;
 
   constructor(public gameStateService: GameStateService) {}
 
   /** Zeigt die Info-Card für das angeklickte Item an. */
-  showInfoCard(item:any) {
+  showInfoCard(item: any) {
     this.gameStateService.shop.currentDisplayedItem.set(item);
     this.gameStateService.shop.itemInfoCardShow.set(true);
   }

@@ -1,0 +1,86 @@
+⚙️  --calibrated aktiv: native Monster-attack-Werte aus fight-tool-monster-curve-calibration-21-30.json übernommen.
+🎲 Generiere 1000 zufällige Bracket-21-30-Builds (Level 21-30, T1-3-Gear-Mix), je 10000 Runs, 6 Kämpfe/Abenteuer...
+  ... 50/1000 Builds simuliert (16.1s)
+  ... 100/1000 Builds simuliert (30.3s)
+  ... 150/1000 Builds simuliert (43.9s)
+  ... 200/1000 Builds simuliert (58.9s)
+  ... 250/1000 Builds simuliert (74.3s)
+  ... 300/1000 Builds simuliert (88.8s)
+  ... 350/1000 Builds simuliert (101.8s)
+  ... 400/1000 Builds simuliert (115.3s)
+  ... 450/1000 Builds simuliert (129.7s)
+  ... 500/1000 Builds simuliert (144.6s)
+  ... 550/1000 Builds simuliert (158.4s)
+  ... 600/1000 Builds simuliert (171.6s)
+  ... 650/1000 Builds simuliert (185.8s)
+  ... 700/1000 Builds simuliert (200.0s)
+  ... 750/1000 Builds simuliert (216.3s)
+  ... 800/1000 Builds simuliert (234.2s)
+  ... 850/1000 Builds simuliert (248.5s)
+  ... 900/1000 Builds simuliert (262.8s)
+  ... 950/1000 Builds simuliert (278.0s)
+  ... 1000/1000 Builds simuliert (292.5s)
+
+✅ Fertig in 292.5s (1000 Builds x 10000 Runs x 6 Kämpfe).
+
+📊 WINRATE-VERTEILUNG ÜBER ALLE BUILDS
+──────────────────────────────────────────────────
+0% (nie gewonnen)         606 Builds (60.6%)
+1-20%                     161 Builds (16.1%)
+21-40%                     30 Builds (3.0%)
+41-60%                     22 Builds (2.2%)
+61-80%                     20 Builds (2.0%)
+81-99%                    128 Builds (12.8%)
+100% (immer gewonnen)      33 Builds (3.3%)
+──────────────────────────────────────────────────
+Ø Winrate über alle Builds: 19.4%
+Ø Tod-Rate über alle Builds: 51.3%
+Ø Unentschieden-Rate über alle Builds: 29.4%
+
+📈 WINRATE NACH LEVEL-BUCKET (innerhalb Bracket 21-30)
+  Level 21-23: Ø Winrate 18.1% (290 Builds)
+  Level 24-27: Ø Winrate 16.7% (402 Builds)
+  Level 28-30: Ø Winrate 24.2% (308 Builds)
+
+👹 PRO-MONSTER-AUSWERTUNG (über alle Einzelkämpfe, nicht ganze Runs)
+──────────────────────────────────────────────────────────────────────────────────────────
+  [NAT] Blutmoor-Schrecken           Winrate  32.8%  Tod-Anteil  60.2%  Ø Runden  31.6  (1894666 Kämpfe)
+  [VET] Wurzelschrecken (Veteran)    Winrate  36.8%  Tod-Anteil  59.1%  Ø Runden  29.6  (2048794 Kämpfe)
+  [NAT] Orc-Kriegshäuptling          Winrate  40.9%  Tod-Anteil  52.4%  Ø Runden  34.1  (1706192 Kämpfe)
+  [VET] Trollwächter (Veteran)       Winrate  43.0%  Tod-Anteil  47.8%  Ø Runden  38.8  (2001019 Kämpfe)
+  [VET] Höhlentroll (Veteran)        Winrate  73.1%  Tod-Anteil   5.2%  Ø Runden  53.9  (1699693 Kämpfe)
+  [NAT] Steinriese                   Winrate  77.9%  Tod-Anteil   1.3%  Ø Runden  51.2  (1852938 Kämpfe)
+  [VET] Schattenläufer (Veteran)     Winrate  78.0%  Tod-Anteil   1.9%  Ø Runden  40.3  (1798523 Kämpfe)
+  [NAT] Nekromanten-Lehrling         Winrate  79.9%  Tod-Anteil  16.8%  Ø Runden  18.8  (1987107 Kämpfe)
+  [VET] Klingenspinne (Veteran)      Winrate  81.7%  Tod-Anteil  11.1%  Ø Runden  27.7  (1938327 Kämpfe)
+  [NAT] Nachtklingen-Assassine       Winrate  82.0%  Tod-Anteil   0.1%  Ø Runden  39.2  (2120062 Kämpfe)
+  [NAT] Klauenpanther                Winrate  86.4%  Tod-Anteil   2.9%  Ø Runden  33.9  (1920192 Kämpfe)
+  [VET] Sumpfhexe (Veteran)          Winrate  86.7%  Tod-Anteil   3.2%  Ø Runden  26.2  (1587715 Kämpfe)
+  [VET] Goblin-Plünderer (Veteran)   Winrate  87.2%  Tod-Anteil   4.4%  Ø Runden  28.5  (1896034 Kämpfe)
+  [NAT] Orc-Plünderer                Winrate  88.2%  Tod-Anteil   2.0%  Ø Runden  32.6  (1952831 Kämpfe)
+
+💀 TOP 10 SCHWÄCHSTE BUILDS
+  #1 Lv23 (110pts) winrate=0.0% died=100% timeout=0% avgRounds=17.2 | head=Abgewetzte Lederkappe, chest=Splitternder Knochenpanzer, leg=Runenbeschriebene Beinkleider, gloves=Solide Kettenhandschuhe, footwear=Eisenstiefel des Wächters, necklace=Einfache Saphir-Halskette, ring-left=Verstärkter Stahlring, ring-right=Geschliffener Banditen-Ring, weapon-1=Kurzschwert der Wache, weapon-2=Rostiger Dolch | Spells: Funke, Frostnova, Klingensturm, Kettenblitz
+  #2 Lv23 (110pts) winrate=0.0% died=67% timeout=33% avgRounds=55.4 | head=Magister-Hut, leg=Beinplatten des Wächters, footwear=Splitternde Knochenschreiter, necklace=Splitternder Knochen-Anhänger, ring-left=Splitternder Knochenring, ring-right=Splitternder Knochenring, weapon-1=Söldnerklinge, weapon-2=Holzknüppel | Spells: Funke
+  #4 Lv30 (145pts) winrate=0.0% died=74% timeout=26% avgRounds=67.0 | head=Gequältes Antlitz, chest=Pirscher-Mantel, leg=Splitternde Knochenschienen, gloves=Rostige Eisenhandschuhe, necklace=Novizen-Amulett, ring-left=Geschliffener Banditen-Ring, ring-right=Splitternder Knochenring, weapon-1=Kriegshammer der Garde | Spells: Blitzschlag, Funke, Eislanze
+  #6 Lv21 (100pts) winrate=0.0% died=100% timeout=0% avgRounds=22.7 | head=Gequältes Antlitz, chest=Magister-Gewand, leg=Splitternde Knochenschienen, gloves=Runenbeschriebene Fäustlinge, footwear=Splitternde Knochenschreiter, necklace=Abgewetztes Smaragd-Band, ring-right=Silberreif des Adepten, weapon-1=Assassinendolch, weapon-2=Lehrlingsstab | Spells: keine
+  #7 Lv23 (110pts) winrate=0.0% died=67% timeout=33% avgRounds=58.4 | head=Schlangenhaut-Maske, chest=Gequälter Kürass, leg=Verstärkte Lederhose, gloves=Splitternde Knochenstulpen, footwear=Abgewetzte Lederstiefel, necklace=Novizen-Amulett, ring-left=Ritterlicher Festungsring, ring-right=Abgewetzter Siegelring, weapon-1=Runenstab der Novizen | Spells: Funke, Eislanze
+  #9 Lv25 (120pts) winrate=0.0% died=100% timeout=0% avgRounds=8.1 | head=Gequältes Antlitz, chest=Runenbeschriebene Robe, leg=Falkenaugen-Beinschutz, gloves=Rostige Eisenhandschuhe, footwear=Splitternde Knochenschreiter, ring-right=Ring des Fährtensuchers, weapon-1=Langbogen der Waldläufer | Spells: Chaosbolt, Funke
+  #11 Lv28 (135pts) winrate=0.0% died=99% timeout=1% avgRounds=29.4 | head=Solider Kettenhelm, chest=Flicken-Stoffrobe, gloves=Abgewetzte Lederhandschuhe, footwear=Magister-Stiefel, ring-left=Pfadfinder-Kordelring, ring-right=Schwerer Eisenbandring, weapon-1=Kurzschwert der Wache | Spells: keine
+  #14 Lv29 (140pts) winrate=0.0% died=69% timeout=31% avgRounds=56.9 | head=Wilderer-Maske, chest=Solides Kettenhemd, leg=Splitternde Knochenschienen, footwear=Wilderer-Schuhe, necklace=Wilderer-Glücksbringer, ring-right=Schattenläufer-Band, weapon-1=Zepter der Elemente | Spells: keine
+  #15 Lv30 (145pts) winrate=0.0% died=100% timeout=0% avgRounds=12.7 | head=Gequältes Antlitz, chest=Runenbeschriebene Robe, leg=Solide Kettenbeinschienen, gloves=Wilderer-Griffe, footwear=Falkenaugen-Stiefel, necklace=Gequälter Splitter, ring-left=Geschliffener Banditen-Ring, ring-right=Splitternder Knochenring, weapon-1=Stahlmorgenstern | Spells: Blitzschlag
+  #16 Lv28 (135pts) winrate=0.0% died=100% timeout=0% avgRounds=24.5 | head=Wilderer-Maske, chest=Abgewetztes Lederwams, leg=Gequälter Beinschutz, gloves=Schlangenhaut-Griffe, footwear=Splitternde Knochenschreiter, necklace=Runenbeschriebenes Onyx-Amulett, ring-left=Verstärkter Stahlring, ring-right=Kupferreif des Novizen, weapon-1=Zepter der Elemente | Spells: keine
+
+🏆 TOP 10 STÄRKSTE BUILDS
+  #964 Lv25 (120pts) winrate=100.0% avgRounds=16.8 | head=Novizen-Kapuze, chest=Wilderer-Mantel, leg=Verstärkte Lederhose, gloves=Schlangenhaut-Griffe, footwear=Eisenstiefel des Wächters, necklace=Novizen-Amulett, ring-right=Kupferreif des Novizen, weapon-1=Stahlmorgenstern, weapon-2=Kristallstab | Spells: Lichtwelle
+  #943 Lv25 (120pts) winrate=100.0% avgRounds=13.0 | head=Falkenaugen-Helm, chest=Falkenaugen-Harnisch, leg=Beinplatten des Wächters, footwear=Pirscher-Stiefel, necklace=Smaragd-Auge, ring-left=Schattenläufer-Band, ring-right=Goldring des Gelehrten, weapon-1=Assassinendolch, weapon-2=Kristallstab | Spells: keine
+  #941 Lv25 (120pts) winrate=100.0% avgRounds=10.3 | head=Falkenaugen-Helm, chest=Schlangenhaut-Rüstung, leg=Magister-Hose, gloves=Solide Kettenhandschuhe, footwear=Falkenaugen-Stiefel, necklace=Rubin-Medaillon, ring-left=Silberreif des Adepten, ring-right=Schattenläufer-Band, weapon-1=Klinge des Veteranen | Spells: Frostpfeil
+  #919 Lv28 (135pts) winrate=100.0% avgRounds=25.1 | head=Pirscher-Haube, chest=Solides Kettenhemd, leg=Magister-Hose, gloves=Verstärkte Lederhandschuhe, footwear=Novizen-Schuhe, necklace=Topas-Talisman, ring-left=Geschliffener Banditen-Ring, ring-right=Grabesknochen-Siegel, weapon-1=Adeptenstab, weapon-2=Adeptenstab | Spells: Flammenwand
+  #913 Lv25 (120pts) winrate=100.0% avgRounds=8.1 | head=Verstärkte Lederkappe, chest=Wilderer-Mantel, leg=Novizen-Robe (Unterteil), gloves=Verstärkte Lederhandschuhe, footwear=Rostige Eisenstiefel, necklace=Schlangenhaut-Talisman, ring-left=Goldring des Gelehrten, ring-right=Schwerer Eisenbandring, weapon-1=Kristallstab | Spells: Verzerrung, Blitzschlag, Chaosbolt
+  #840 Lv25 (120pts) winrate=100.0% avgRounds=25.5 | head=Falkenaugen-Helm, chest=Rostiger Brustpanzer, leg=Schlangenhaut-Beinschienen, gloves=Schlangenhaut-Griffe, footwear=Wilderer-Schuhe, necklace=Wilderer-Glücksbringer, ring-left=Kupferreif des Novizen, ring-right=Schwerer Eisenbandring, weapon-1=Kriegslanze | Spells: Arkane Schildwelle, Minderwertige Heilung
+  #780 Lv30 (145pts) winrate=100.0% avgRounds=26.9 | head=Pirscher-Haube, chest=Falkenaugen-Harnisch, leg=Rostige Beinschienen, gloves=Pirscher-Handschuhe, footwear=Pirscher-Stiefel, necklace=Schlangenhaut-Talisman, ring-left=Ritterlicher Festungsring, ring-right=Ring des Falkenauges, weapon-1=Jagdspeer | Spells: Chaoswoge, Funkenbogen, Blitzschlag, Flammenwand
+  #756 Lv26 (125pts) winrate=100.0% avgRounds=11.8 | head=Schlangenhaut-Maske, chest=Schlangenhaut-Rüstung, leg=Flicken-Stoffhose, gloves=Magister-Manschetten, footwear=Schlangenhaut-Stiefel, ring-left=Grabesknochen-Siegel, ring-right=Goldring des Gelehrten, weapon-1=Stahlmorgenstern | Spells: Chaosbolt, Funke, Verband anlegen
+  #725 Lv23 (110pts) winrate=100.0% avgRounds=16.8 | head=Solider Kettenhelm, chest=Schlangenhaut-Rüstung, leg=Verstärkte Lederhose, gloves=Schlangenhaut-Griffe, footwear=Verstärkte Lederstiefel, necklace=Abgewetztes Smaragd-Band, ring-left=Schattenläufer-Band, ring-right=Schwerer Eisenbandring, weapon-1=Kriegshammer der Garde | Spells: Funke, Lichtwelle, Schild-Auffrischung
+  #720 Lv21 (100pts) winrate=100.0% avgRounds=14.3 | chest=Novizen-Gewand, leg=Falkenaugen-Beinschutz, gloves=Verstärkte Lederhandschuhe, footwear=Rostige Eisenstiefel, necklace=Topas-Talisman, ring-left=Ring des Falkenauges, ring-right=Ritterlicher Festungsring, weapon-1=Eisenkeule, weapon-2=Kurzschwert der Wache | Spells: Präziser Stoß, Lichtwelle
+
+💾 Volle Rohdaten gespeichert unter: scripts\output\fight-tool-balance-report-21-30-calibrated.json

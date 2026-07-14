@@ -459,3 +459,64 @@ export function simulateRun(playerStats, equippedSpells, monsterSteps, hasWeapon
 
   return { outcome: 'won', stoppedAtStepIndex: null, steps };
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// 🎯 Monster-Kalibrierung — geteilte Zwei-Hebel-Logik für alle Curve-
+// Calibration-/Carry-Over-Skripte (attack als primärer Hebel, HP als
+// Fallback wenn selbst attack=1 die Ziel-Winrate nicht erreicht, weil der
+// Kampf ins 100-Runden-Timeout statt in einen Sieg läuft -- passiert bei
+// höheren Brackets, wo die verhältnis-skalierte HP für die zugeordnete
+// Checkpoint-Figur schlicht zu viel ist).
+// ─────────────────────────────────────────────────────────────────────────
+
+export function winRateAgainst(monster, character, passivesList, runs, spellsById = new Map()) {
+  const playerStats = computeCombatStats(character.slots, character.investedPoints, passivesList);
+  const hasWeaponType = (wt) => hasEquippedWeaponType(character.slots, wt);
+  let won = 0;
+  for (let i = 0; i < runs; i++) {
+    const result = simulateRun(playerStats, [], [monster], hasWeaponType, spellsById);
+    if (result.outcome === 'won') won++;
+  }
+  return won / runs;
+}
+
+/**
+ * Kalibriert `attack` (primär) und, falls nötig, `hp` (Fallback) eines
+ * Monsters so, dass `character` eine Ziel-Winrate erreicht.
+ * @returns { hp, attack, winRate, hpReductions }
+ */
+export function calibrateMonsterAttackAndHp(monster, character, passivesList, opts) {
+  const {
+    targetWinRate = 0.78, tolerance = 0.04, runsPerIteration = 2000, maxIterations = 20,
+    minHpFraction = 0.5, hpStepFraction = 0.85, maxHpReductions = 12, spellsById = new Map(),
+  } = opts ?? {};
+
+  let hp = monster.hp;
+  const minHp = Math.max(1, Math.round(monster.hp * minHpFraction));
+  let hpReductions = 0;
+
+  while (true) {
+    let attack = monster.attack;
+    let winRate = winRateAgainst({ ...monster, hp, attack }, character, passivesList, runsPerIteration, spellsById);
+    let iterations = 0;
+    while (Math.abs(winRate - targetWinRate) > tolerance && iterations < maxIterations) {
+      const gap = winRate - targetWinRate;
+      const step = Math.max(1, Math.round(attack * 0.15 * Math.abs(gap) * 2));
+      attack = Math.max(1, attack + (gap > 0 ? step : -step));
+      winRate = winRateAgainst({ ...monster, hp, attack }, character, passivesList, runsPerIteration, spellsById);
+      iterations++;
+    }
+
+    const withinTolerance = Math.abs(winRate - targetWinRate) <= tolerance;
+    // Winrate bleibt trotz Attack-Anpassung zu NIEDRIG -> meist kein
+    // Schadens-, sondern ein Zeit-Problem (zu viel HP, Kampf läuft ins
+    // Timeout statt in einen Sieg). attack allein löst das nicht (senkt nur
+    // den Schaden GEGEN den Spieler, nicht die Zeit bis zum Sieg) -> HP senken.
+    const strugglingOnHp = winRate < targetWinRate - tolerance;
+    if (withinTolerance || !strugglingOnHp || hp <= minHp || hpReductions >= maxHpReductions) {
+      return { hp, attack, winRate, hpReductions };
+    }
+    hp = Math.max(minHp, Math.round(hp * hpStepFraction));
+    hpReductions++;
+  }
+}

@@ -9,7 +9,7 @@
     "effectType": "ELEMENTAL_DAMAGE",
     "effectValues": {
       "element": "fire",
-      "value": 130
+      "value": 247
     },
     "resolvePoints": 5,
     "requiredWeaponType": "magie",
