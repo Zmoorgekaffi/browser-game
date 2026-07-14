@@ -5,7 +5,6 @@ import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { CharacterFrame, EncounterAnimation } from '../../../classes/adventure/encounter.interface';
-import { FleeButton } from '../../shared/flee-button/flee-button';
 import { expandFrameBatch } from '../../../utils/frame-paths.util';
 
 type DialogPhase = 'intro' | 'dialog' | 'reaction';
@@ -30,7 +29,7 @@ type DialogPhase = 'intro' | 'dialog' | 'reaction';
 @Component({
   selector: 'app-dialog-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen, FleeButton],
+  imports: [CommonModule, AnimationObject, LoadingScreen],
   templateUrl: './dialog-scene.html',
   styleUrl: './dialog-scene.scss',
 })

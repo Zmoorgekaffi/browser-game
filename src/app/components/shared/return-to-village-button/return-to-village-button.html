@@ -1,0 +1,31 @@
+@if (inAdventure() && hasWonAnyFight()) {
+  @if (!confirming()) {
+    <button
+      class="btn-grim btn-grim-danger self-center px-6 py-3 text-sm font-semibold"
+      (click)="requestReturn()"
+    >
+      Zurück ins Dorf
+    </button>
+  } @else {
+    <div class="panel-grim p-4 flex flex-col gap-3 items-center max-w-[280px] text-center">
+      <p class="text-sm text-zinc-200">
+        Abenteuer jetzt vorzeitig beenden? Du behältst deine bisherige Beute &amp; dein Gold,
+        verpasst aber weitere Steps auf dieser Reise.
+      </p>
+      <div class="flex gap-2">
+        <button
+          class="btn-grim btn-grim-danger px-4 py-1.5 text-sm font-semibold"
+          (click)="confirmReturn()"
+        >
+          Ja, zurück ins Dorf
+        </button>
+        <button
+          class="btn-grim px-4 py-1.5 text-sm font-semibold"
+          (click)="cancelReturn()"
+        >
+          Abbrechen
+        </button>
+      </div>
+    </div>
+  }
+}

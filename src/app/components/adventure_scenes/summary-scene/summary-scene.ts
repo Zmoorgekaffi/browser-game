@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../services/game-state.service';
 import { getItemTier } from '../../../utils/item-display.util';
 import { PotionPanel } from '../../shared/potion-panel/potion-panel';
+import { ReturnToVillageButton } from '../../shared/return-to-village-button/return-to-village-button';
 
 /**
  * @component SummaryScene
@@ -18,7 +19,7 @@ import { PotionPanel } from '../../shared/potion-panel/potion-panel';
 @Component({
   selector: 'app-summary-scene',
   standalone: true,
-  imports: [CommonModule, PotionPanel],
+  imports: [CommonModule, PotionPanel, ReturnToVillageButton],
   templateUrl: './summary-scene.html',
   styleUrl: './summary-scene.scss',
 })

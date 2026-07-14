@@ -1,5 +1,5 @@
 // src/app/services/adventure-state.service.ts
-import { Injectable, signal, inject, effect, WritableSignal } from '@angular/core';
+import { Injectable, signal, inject, effect, computed, WritableSignal } from '@angular/core';
 import { DarkForest } from '../classes/adventure/areas/dark-forest.class';
 import { ProfileService } from './profile.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,13 @@ import { ShopService } from './shop.service';
 import { WalletService } from './wallet.service';
 import { InventarService } from './inventar.service';
 import { SkillsService } from './skills.service';
+import materials from '../../../public/item-data/materials.json';
+
+// 🏆 Abschluss-Bonus, den es NUR gibt, wenn wirklich alle Steps eines Runs
+// geschafft wurden (completeAdventure) — nicht beim vorzeitigen Rückzug
+// über returnToVillageEarly().
+const COMPLETION_BONUS_GOLD = 50;
+const COMPLETION_BONUS_MATERIAL_CHANCE = 0.05;
 
 /** Persistiertes Adventure-Savegame (LocalStorage-Format). */
 export interface AdventureSaveState {
@@ -90,6 +97,18 @@ export class AdventureStateService {
   // Items/Gold, die seit dem LETZTEN Zwischenstand neu dazugekommen sind (fürs Hervorheben).
   public summaryNewItems: WritableSignal<any[]> = signal<any[]>([]);
   public summaryNewGold: WritableSignal<number> = signal<number>(0);
+
+  // 🏠 Gate für returnToVillageEarly(): true, sobald mindestens EIN fight-Step
+  // im laufenden Run erfolgreich abgeschlossen wurde (steps bis inkl.
+  // currentStepIndex, da der Index beim Anzeigen der Summary noch auf dem
+  // gerade beendeten Step steht — siehe showStepSummary()). Verhindert, dass
+  // man direkt nach einer aufwandslosen Loot-/Dialog-Scene ohne jeden Kampf
+  // sofort mit der Beute zurück ins Dorf geht.
+  public hasWonAnyFight = computed(() =>
+    this.steps()
+      .slice(0, this.currentStepIndex() + 1)
+      .some((step) => step.type === 'fight'),
+  );
 
   // Merkt sich den Stand von pendingRewards/goldEarnedThisRun beim letzten
   // Zwischenstand, um beim nächsten den Diff ("neu seit letztem Mal") zu bilden.
@@ -192,13 +211,44 @@ export class AdventureStateService {
   }
 
   /**
-   * 🎁 Abenteuer erfolgreich beendet — alle gesammelten Rewards
-   * werden ins Inventar überführt, danach State leeren und ins Dorf.
+   * 🎁 Abenteuer erfolgreich beendet (ALLE Steps geschafft) — alle
+   * gesammelten Rewards werden ins Inventar überführt, dazu gibt's den
+   * Abschluss-Bonus (50 Gold + 5% Chance auf ein Upgrade-Material) —
+   * danach State leeren und ins Dorf.
+   *
+   * Der Bonus gibt's NUR hier, nicht bei returnToVillageEarly() (vorzeitiger
+   * freiwilliger Rückzug mit dem bisher gesammelten Loot).
    */
   public completeAdventure(): void {
+    this.walletService.addGold(COMPLETION_BONUS_GOLD);
+    console.log(`🏆 [completeAdventure] Abschluss-Bonus: ${COMPLETION_BONUS_GOLD} Gold.`);
+
+    if (Math.random() < COMPLETION_BONUS_MATERIAL_CHANCE) {
+      const material = materials[Math.floor(Math.random() * materials.length)];
+      if (material) {
+        this.inventarService.addItemToInventar(JSON.parse(JSON.stringify(material)));
+        console.log('🏆 [completeAdventure] Bonus-Material gedroppt:', material.name);
+      }
+    }
+
+    this.finishAdventureKeepingRewards();
+  }
+
+  /**
+   * 🏠 Spieler beendet das Abenteuer freiwillig VORZEITIG, behält aber alles
+   * bisher gesammelte Loot & Gold — im Gegensatz zu failAdventure() (Kampf
+   * verloren, zählt wie eine Niederlage und verwirft alles). Kein
+   * Abschluss-Bonus, den gibt's nur bei completeAdventure().
+   */
+  public returnToVillageEarly(): void {
+    this.finishAdventureKeepingRewards();
+  }
+
+  /** Gemeinsame Logik für completeAdventure/returnToVillageEarly: Rewards ins Inventar, aufräumen, heim. */
+  private finishAdventureKeepingRewards(): void {
     const rewards = this.pendingRewards();
     console.log(
-      `🏆 [completeAdventure] ${rewards.length} Items werden ins Inventar gepackt:`,
+      `🎁 [finishAdventureKeepingRewards] ${rewards.length} Items werden ins Inventar gepackt:`,
       rewards,
     );
 
@@ -449,24 +499,15 @@ export class AdventureStateService {
   }
 
   /**
-   * 💀 Abenteuer gescheitert (Kampf verloren). Verhält sich wie fleeAdventure():
-   * kein Loot, kein Gold aus dem Run — nur die bereits vergebene EXP bleibt
-   * (die wird sofort bei Kampf-Sieg vergeben, ist also nie Teil von pendingRewards).
+   * 💀 Abenteuer gescheitert (Kampf verloren): kein Loot, kein Gold aus dem
+   * Run — nur die bereits vergebene EXP bleibt (die wird sofort bei
+   * Kampf-Sieg vergeben, ist also nie Teil von pendingRewards).
    */
   public failAdventure(): void {
     this.finishFailedRun('💀 Niederlage');
   }
 
-  /**
-   * 🏃 Spieler bricht das Abenteuer freiwillig ab. Zählt exakt wie eine
-   * Niederlage — "so, als wäre man gestorben": kein Loot, kein Gold aus
-   * diesem Run, EXP bleibt erhalten.
-   */
-  public fleeAdventure(): void {
-    this.finishFailedRun('🏃 Flucht');
-  }
-
-  /** Gemeinsame Logik für Niederlage & Flucht (siehe failAdventure/fleeAdventure). */
+  /** Gemeinsame Logik für eine Niederlage (siehe failAdventure). */
   private finishFailedRun(logPrefix: string): void {
     const lostGold = this.goldEarnedThisRun();
     if (lostGold > 0) {

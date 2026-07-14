@@ -5,7 +5,6 @@ import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { getItemTier } from '../../../utils/item-display.util';
-import { FleeButton } from '../../shared/flee-button/flee-button';
 
 /**
  * @component LootScene
@@ -24,7 +23,7 @@ import { FleeButton } from '../../shared/flee-button/flee-button';
 @Component({
   selector: 'app-loot-scene',
   standalone: true,
-  imports: [CommonModule, AnimationObject, LoadingScreen, FleeButton],
+  imports: [CommonModule, AnimationObject, LoadingScreen],
   templateUrl: './loot-scene.html',
   styleUrl: './loot-scene.scss',
 })

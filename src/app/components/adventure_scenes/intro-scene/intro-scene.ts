@@ -5,7 +5,6 @@ import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
 import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
 import { ADVENTURE_STEP_ROUTES } from '../../../services/adventure-state.service';
-import { FleeButton } from '../../shared/flee-button/flee-button';
 
 /**
  * @component IntroScene
@@ -20,7 +19,7 @@ import { FleeButton } from '../../shared/flee-button/flee-button';
  */
 @Component({
   selector: 'app-intro-scene',
-  imports: [AnimationObject, LoadingScreen, FleeButton],
+  imports: [AnimationObject, LoadingScreen],
   templateUrl: './intro-scene.html',
   styleUrl: './intro-scene.scss',
 })
