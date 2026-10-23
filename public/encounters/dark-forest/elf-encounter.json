@@ -34,9 +34,9 @@
       "reactionType": "gold",
       "responseText": "Deine Ehrlichkeit gefällt mir. Nimm etwas Gold aus dem Waldschatz mit.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     },
     {
@@ -44,9 +44,9 @@
       "reactionType": "nothing",
       "responseText": "So spricht also ein Held? Zieh weiter — ohne meinen Segen.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     },
     {
@@ -54,9 +54,9 @@
       "reactionType": "item",
       "responseText": "Ein weiser Wanderer verdient ein weises Geschenk. Nimm dies mit.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     }
   ]

@@ -1,0 +1,50 @@
+<div class="w-full h-full relative bg-black">
+  @if (isLoading()) {
+    <app-loading-screen [label]="scene()?.loadingLabel ?? 'Wird geladen...'" />
+  } @else if (scene(); as s) {
+    @if (s.background.type === 'static') {
+      <img [src]="s.background.path" alt="" class="w-full h-full object-cover" />
+    } @else {
+      <app-animation-object
+        Name="world-scene-background"
+        [Duration]="s.background.duration"
+        [spritePaths]="s.background.frames"
+        [Loop]="s.background.type === 'loop'"
+        [contain]="false"
+      ></app-animation-object>
+    }
+
+    @if (objectsVisible()) {
+      @for (obj of s.getInteractiveObjects(); track obj) {
+        @if (obj.visual.type === 'static') {
+          <app-redirect-hotspot
+            [x]="obj.x"
+            [y]="obj.y"
+            [width]="obj.width"
+            [height]="obj.height"
+            [image]="obj.visual.path"
+            [hoverHighlight]="true"
+            [hideImage]="obj.hideImage"
+            [tooltipTitle]="obj.tooltipTitle"
+            tooltipPosition="left"
+            (hotspotClick)="onInteract(obj)"
+          ></app-redirect-hotspot>
+        } @else {
+          <app-redirect-hotspot
+            [x]="obj.x"
+            [y]="obj.y"
+            [width]="obj.width"
+            [height]="obj.height"
+            [frames]="obj.visual.frames"
+            [frameDuration]="obj.visual.duration"
+            [loopAnimation]="obj.visual.type === 'loop'"
+            [hoverHighlight]="true"
+            [tooltipTitle]="obj.tooltipTitle"
+            tooltipPosition="left"
+            (hotspotClick)="onInteract(obj)"
+          ></app-redirect-hotspot>
+        }
+      }
+    }
+  }
+</div>

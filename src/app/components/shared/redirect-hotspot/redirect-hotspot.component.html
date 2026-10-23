@@ -16,7 +16,30 @@
   (blur)="onMouseLeave()"
   [attr.aria-label]="'Redirect hotspot to ' + redirect"
 >
-  @if (image) {
+  @if (frames.length) {
+    <app-animation-object
+      class="hotspot-image"
+      [class.glow-image]="hoverHighlight"
+      [style.--hotspot-brightness]="brightness"
+      [spritePaths]="frames"
+      [Duration]="frameDuration"
+      [Loop]="loopAnimation"
+      [contain]="true"
+    ></app-animation-object>
+  } @else if (image && hideImage) {
+    <!-- SVG-Filter: dilatiert die Alpha-Silhouette, blurrt sie, füllt mit der Glow-Farbe und
+         schneidet per operator="out" die Original-Fläche wieder heraus — übrig bleibt NUR der Rand. -->
+    <svg width="0" height="0" style="position: absolute">
+      <filter [attr.id]="outlineFilterId" x="-50%" y="-50%" width="200%" height="200%">
+        <feMorphology in="SourceAlpha" operator="dilate" [attr.radius]="outlineGlowRadius" result="dilated" />
+        <feGaussianBlur in="dilated" [attr.stdDeviation]="outlineGlowBlur" result="blurred" />
+        <feFlood [attr.flood-color]="outlineGlowColor" result="glow-color" />
+        <feComposite in="glow-color" in2="blurred" operator="in" result="glow" />
+        <feComposite in="glow" in2="SourceGraphic" operator="out" />
+      </filter>
+    </svg>
+    <img [src]="image" class="hotspot-image hotspot-outline-glow" [style.--hotspot-outline-filter]="'url(#' + outlineFilterId + ')'" alt="" />
+  } @else if (image) {
     <img
       [src]="image"
       class="hotspot-image"
@@ -30,7 +53,9 @@
 
 @if (isHovered() && tooltipTitle) {
   <div
-    class="panel-grim fixed right-6 bottom-6 z-50 min-w-[220px] max-w-[320px] p-4 pointer-events-none"
+    class="panel-grim fixed bottom-6 z-50 min-w-[220px] max-w-[320px] p-4 pointer-events-none"
+    [class.right-6]="tooltipPosition === 'right'"
+    [class.left-6]="tooltipPosition === 'left'"
   >
     <div class="heading-grim text-lg font-semibold text-grim-gold">{{ tooltipTitle }}</div>
     @if (tooltipFeatures.length) {

@@ -1,3 +1,20 @@
+@if (screenSizingService.isScreenTooSmall() && !screenSizingService.isFullscreen()) {
+  <div
+    class="fixed top-0 left-0 w-screen h-dvh z-[9999] bg-black flex flex-col items-center justify-center gap-3 px-4 text-center overflow-hidden"
+  >
+    <p class="text-sm sm:text-base text-amber-200 leading-snug max-w-md">
+      Bildschirm zu klein – Pixel Quest benötigt mindestens
+      <span class="font-bold text-amber-300">1280px Breite</span>.
+      Aktiviere den Vollbildmodus, dann wird das Spiel auf deinen Bildschirm skaliert.
+    </p>
+    <button
+      (click)="screenSizingService.toggleFullscreen()"
+      class="px-5 py-2 bg-amber-500 active:bg-amber-600 text-amber-950 font-black text-base sm:text-lg rounded-xl border-2 border-amber-300 cursor-pointer select-none"
+    >
+      Vollbild
+    </button>
+  </div>
+} @else {
 <section
   class="min-h-screen w-full flex flex-col items-center justify-between gap-8 bg-gradient-to-b from-amber-100 to-amber-200 text-amber-950 px-6 pt-10 pb-6 relative"
 >
@@ -46,30 +63,5 @@
   </section>
 
   <div></div>
-
-  @if (screenSizingService.isScreenTooSmall() && !screenSizingService.isFullscreen()) {
-    <div
-      class="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-md flex items-center justify-center p-6"
-    >
-      <div
-        class="max-w-md w-full bg-gradient-to-br from-amber-900 to-amber-950 border-2 border-amber-400 rounded-2xl shadow-2xl p-8 text-center flex flex-col items-center gap-5"
-      >
-        <div class="text-6xl">📱</div>
-        <h2 class="text-2xl font-bold text-amber-100 tracking-wide">Bildschirm zu klein</h2>
-        <p class="text-amber-200/90 leading-relaxed">
-          Pixel Quest benötigt mindestens <span class="font-bold text-amber-300">1280px Breite</span>.
-          Aktiviere den Vollbildmodus, um trotzdem zu spielen — das Spiel wird dann passgenau auf deinen Bildschirm skaliert.
-        </p>
-        <button
-          (click)="screenSizingService.toggleFullscreen()"
-          class="mt-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-amber-950 font-black text-lg rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 border-2 border-amber-300 cursor-pointer select-none"
-        >
-          🖥️ Vollbild aktivieren
-        </button>
-        <p class="text-xs text-amber-300/60 italic mt-1">
-          Tipp: Drehe dein Gerät ins Querformat für die beste Erfahrung
-        </p>
-      </div>
-    </div>
-  }
 </section>
+}

@@ -7,7 +7,7 @@
     "width": "960px",
     "height": "673px"
   },
-"scene-background": "imgs/areas/dark-forest/encounter/elf_1/background/frame_0000.webp",
+  "scene-background": "imgs/areas/dark-forest/encounter/elf_1/background/frame_0000.webp",
   "intro": {
     "path": "imgs/areas/dark-forest/encounter/elf_1/intro/frame_0000.webp",
     "frameBatchCount": 29,
@@ -34,9 +34,9 @@
       "reactionType": "gold",
       "responseText": "Ihre Eltern überschütten dich vor Dankbarkeit mit allem, was sie entbehren können.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     },
     {
@@ -44,9 +44,9 @@
       "reactionType": "item",
       "responseText": "\"Danke!\" Sie drückt dir zum Abschied etwas in die Hand, das sie selbst gefunden hatte.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     },
     {
@@ -54,9 +54,9 @@
       "reactionType": "nothing",
       "responseText": "Ihre Augen füllen sich erneut mit Tränen, als du weitergehst.",
       "reactionAnimation": {
-        "path": "imgs/areas/dark-forest/encounter/elf/intro/frame_0000.webp",
-        "frameBatchCount": 31,
-        "duration": 2500
+        "path": "imgs/areas/dark-forest/encounter/elf_1/idle/frame_0000.webp",
+        "frameBatchCount": 49,
+        "duration": 5000
       }
     }
   ]

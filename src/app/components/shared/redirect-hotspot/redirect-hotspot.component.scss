@@ -26,4 +26,22 @@
     filter: brightness(var(--hotspot-brightness, 1)) drop-shadow(0px 0px 4px #fda40080)
       drop-shadow(0px 0px 12px #fdec004d);
   }
+
+  // 🌟 Kontur-Glow für hideImage: der SVG-Outline-Filter (schneidet die
+  // Original-Fläche per operator="out" heraus) ist IMMER aktiv, nicht nur
+  // bei :hover — sonst springt `filter` beim Verlassen sofort auf "kein
+  // Filter" zurück, während `opacity` noch runterfadet, und für den Bruchteil
+  // dieser Transition blitzt kurz das echte Originalbild auf. Da der Filter
+  // permanent das Original bereits unsichtbar macht (nur die Kontur bleibt
+  // übrig), toggelt ausschließlich `opacity` den Hover-Effekt — das
+  // ungefilterte Bild existiert dadurch visuell nie.
+  .hotspot-outline-glow {
+    filter: var(--hotspot-outline-filter);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover .hotspot-outline-glow {
+    opacity: 1;
+  }
 }

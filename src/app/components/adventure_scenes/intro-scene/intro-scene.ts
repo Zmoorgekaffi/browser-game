@@ -1,21 +1,25 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AnimationObject } from '../../shared/animation-object/animation-object';
 import { LoadingScreen } from '../../shared/loading-screen/loading-screen';
-import { GameStateService } from '../../../services/game-state.service';
 import { AssetPreloaderService } from '../../../services/asset-preloader.service';
-import { ADVENTURE_STEP_ROUTES } from '../../../services/adventure-state.service';
+import { INTRO_REGISTRY, IntroSceneConfig } from '../../../classes/world/intro-registry';
 
 /**
  * @component IntroScene
- * @description Spielt die Intro-Animation der Area ab und navigiert nach
- * Ablauf von introDuration automatisch zur Szene des ersten Steps.
+ * @description Generische Intro-Szene der neuen, festen Welt: liest ihre
+ * Konfiguration (Frames/Duration/nächste Route) anhand der `:introId` aus
+ * der Route aus `INTRO_REGISTRY`, preloadet die Frames, spielt sie ab und
+ * navigiert danach automatisch weiter — zu einem weiteren Intro ODER direkt
+ * zu einer WorldScene. Eine einzige Komponente für JEDEN Intro-Clip im
+ * Spiel statt einer eigenen Komponente pro Übergang.
  *
- * 🆕 Vorher startete der Navigations-Timer sofort in ngAfterViewInit —
- * auf dem Webserver waren die Frames dann noch gar nicht geladen und die
- * Animation ruckelte (bzw. war schon vorbei, bevor Bilder ankamen).
- * Jetzt werden erst ALLE Intro-Frames vorgeladen (Ladebildschirm),
- * dann starten Animation und Timer gemeinsam.
+ * 🐛 Läuft NICHT über ngOnInit allein: navigiert man von einem Intro direkt
+ * zum nächsten (gleiche Route, nur anderer `:introId`), behält Angular die
+ * Komponenten-Instanz bei — ngOnInit feuert dann kein zweites Mal. Deshalb
+ * wird stattdessen `route.paramMap` abonniert, das bei JEDEM Params-Wechsel
+ * (auch bei reiner Instanz-Wiederverwendung) erneut auslöst.
  */
 @Component({
   selector: 'app-intro-scene',
@@ -23,46 +27,45 @@ import { ADVENTURE_STEP_ROUTES } from '../../../services/adventure-state.service
   templateUrl: './intro-scene.html',
   styleUrl: './intro-scene.scss',
 })
-export class IntroScene implements OnInit {
-  gameStateService = inject(GameStateService);
+export class IntroScene implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute);
   private router = inject(Router);
   private preloader = inject(AssetPreloaderService);
 
-  /** Solange true zeigt das Template nur den Ladebildschirm. */
   public isLoading = signal<boolean>(true);
+  public config = signal<IntroSceneConfig | null>(null);
 
-  async ngOnInit(): Promise<void> {
-    const level = this.gameStateService.adventureStateService.level();
-    if (!level) {
-      console.error('IntroScene: kein Level gefunden!');
-      return;
-    }
+  private paramSub?: Subscription;
+  private navigateTimeoutId?: ReturnType<typeof setTimeout>;
 
-    // 🆕 Alle Intro-Frames vorladen, DANN Animation + Navigations-Timer starten
-    await this.preloader.preloadImages(level.introPaths ?? []);
-    this.isLoading.set(false);
-
-    setTimeout(() => {
-      console.log('intro finished');
-      this.navigateToNextStep();
-    }, level.introDuration);
+  ngOnInit(): void {
+    this.paramSub = this.route.paramMap.subscribe((params) => {
+      void this.loadIntro(params.get('introId'));
+    });
   }
 
-  /** Navigiert anhand des Step-Typs zur passenden Adventure-Szene. */
-  private navigateToNextStep(): void {
-    const adventure = this.gameStateService.adventureStateService;
-    const currentStep = adventure.steps()[adventure.currentStepIndex()];
+  ngOnDestroy(): void {
+    this.paramSub?.unsubscribe();
+    if (this.navigateTimeoutId) clearTimeout(this.navigateTimeoutId);
+  }
 
-    if (!currentStep) {
-      console.error('Kein Step gefunden!');
+  private async loadIntro(introId: string | null): Promise<void> {
+    if (this.navigateTimeoutId) clearTimeout(this.navigateTimeoutId);
+
+    const config = introId ? INTRO_REGISTRY[introId] : undefined;
+    if (!config) {
+      console.error('IntroScene: unbekannte introId:', introId);
       return;
     }
 
-    const route = ADVENTURE_STEP_ROUTES[currentStep.type];
-    if (route) {
-      this.router.navigate([route]);
-    } else {
-      console.warn('Unbekannter Step-Typ:', currentStep.type);
-    }
+    this.isLoading.set(true);
+    this.config.set(config);
+
+    await this.preloader.preloadImages(config.frames);
+    this.isLoading.set(false);
+
+    this.navigateTimeoutId = setTimeout(() => {
+      this.router.navigateByUrl(config.nextRoute);
+    }, config.duration);
   }
 }

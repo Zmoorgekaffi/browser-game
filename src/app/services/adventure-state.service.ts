@@ -466,8 +466,10 @@ export class AdventureStateService {
   }
 
   /**
-   * Startet einen frischen Run in der angegebenen Area und
-   * navigiert zur Intro-Szene.
+   * 🎲 Startet einen frischen Run des ALTEN Zufalls-Step-Systems (fight/loot/
+   * dialog) in der angegebenen Area und navigiert zur RandomIntroScene.
+   * Koexistiert mit startStoryAdventure() — Auswahl passiert auf der
+   * Adventure-Seite ("🎲 Zufalls-Abenteuer" vs. "📖 Story-Modus").
    *
    * @param areaId ID der Area (aktuell nur 'duesterwald').
    */
@@ -495,7 +497,17 @@ export class AdventureStateService {
     this.lastSummaryItemCount = 0;
     this.lastSummaryGold = 0;
     this.saveAdventure();
-    this.router.navigate(['/adventure/intro']);
+    this.router.navigate(['/adventure/random-intro']);
+  }
+
+  /**
+   * 📖 Startet die NEUE, feste Welt (Story-Modus): fester Intro-Ketten-
+   * Einstieg statt Area-getriebener Route (siehe classes/world/intro-
+   * registry.ts). Nutzt aktuell noch KEIN Area/Steps/Run-State — WorldScene
+   * hat noch keine Fights/Rewards, die davon abhängen würden.
+   */
+  startStoryAdventure(): void {
+    this.router.navigate(['/adventure/scene-intro/village-exit']);
   }
 
   /**

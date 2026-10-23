@@ -11,10 +11,12 @@ import { NameCreation } from './components/name-creation/name-creation';
 import { Inventar } from './components/inventar/inventar';
 import { Character } from './components/character/character';
 import { IntroScene } from './components/adventure_scenes/intro-scene/intro-scene';
+import { RandomIntroScene } from './components/adventure_scenes/random-intro-scene/random-intro-scene';
 import { FightScene } from './components/adventure_scenes/fight-scene/fight-scene';
 import { LootScene } from './components/adventure_scenes/loot-scene/loot-scene';
 import { DialogScene } from './components/adventure_scenes/dialog-scene/dialog-scene';
 import { SummaryScene } from './components/adventure_scenes/summary-scene/summary-scene';
+import { WorldScene } from './components/adventure_scenes/world-scene/world-scene';
 import { FightTool } from './components/fight-tool/fight-tool';
 
 export const routes: Routes = [
@@ -30,7 +32,9 @@ export const routes: Routes = [
   { path: 'inventar/:category', component: Inventar },
   { path: 'character', component: Character },
   { path: 'character/:category', component: Character },
-  { path: 'adventure/intro', component: IntroScene },
+  { path: 'adventure/random-intro', component: RandomIntroScene },
+  { path: 'adventure/scene-intro/:introId', component: IntroScene },
+  { path: 'adventure/scene/:sceneId', component: WorldScene },
   { path: 'adventure/dialog', component: DialogScene },
   { path: 'adventure/loot', component: LootScene },
   { path: 'adventure/fight', component: FightScene },

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { AnimationObject } from '../animation-object/animation-object';
 
 /**
  * @component RedirectHotspotComponent
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-redirect-hotspot',
   standalone: true,
+  imports: [AnimationObject],
   templateUrl: './redirect-hotspot.component.html',
   styleUrl: './redirect-hotspot.component.scss'
 })
@@ -22,22 +24,46 @@ export class RedirectHotspotComponent {
   @Input() absolute = true;
   @Input() redirect = '';
   @Input() devMode = false;
-  /** Optionales Bild (z. B. Gebäude-Sprite), das im Hotspot angezeigt wird. */
+  /** Optionales Bild (z. B. Gebäude-Sprite), das im Hotspot angezeigt wird. Ignoriert, wenn `frames` gesetzt ist. */
   @Input() image = '';
+  /** Optionale Sprite-Animation statt eines statischen Bildes (z.B. für InteractiveObject.visual vom Typ 'loop'/'once'). */
+  @Input() frames: string[] = [];
+  @Input() frameDuration = 1000;
+  /** true = Animation läuft endlos, false = läuft einmal durch und bleibt auf dem letzten Frame stehen. */
+  @Input() loopAnimation = false;
   /** Wenn true, leuchtet das Hotspot-Bild beim Hovern auf (siehe .glow-image). */
   @Input() hoverHighlight = false;
+  /**
+   * Wenn true, bleibt `image` selbst IMMER unsichtbar — beim Hovern leuchtet
+   * NUR die Kontur der PNG-Alpha-Silhouette auf (echter Rand-Glow via
+   * SVG-Filter, keine gefüllte Fläche). Nur für `image` (statisch), nicht
+   * für `frames`.
+   */
+  @Input() hideImage = false;
+  /** Wie weit die Kontur-Glow-Linie über den Bildrand hinausragt (SVG feMorphology radius). */
+  @Input() outlineGlowRadius = 3;
+  /** Weichzeichnung der Kontur-Glow-Linie (SVG feGaussianBlur stdDeviation). */
+  @Input() outlineGlowBlur = 5;
+  /** Farbe der Kontur-Glow-Linie. */
+  @Input() outlineGlowColor = '#fdec00';
   /** Helligkeit des Hotspot-Bildes, z. B. 0.4 für filter: brightness(0.4). */
   @Input() brightness = 1;
   /** Titel für den Hover-Tooltip (z. B. Gebäudename). */
   @Input() tooltipTitle = '';
   /** Feature-Liste, die im Hover-Tooltip aufgelistet wird. */
   @Input() tooltipFeatures: string[] = [];
+  /** Ecke, in der die Tooltip-Card erscheint — 'right' (Default, z.B. Dorf-Gebäude) oder 'left' (z.B. WorldScene-Objekte). */
+  @Input() tooltipPosition: 'left' | 'right' = 'right';
 
   /** Feuert bei jedem Klick/Enter/Leertaste, egal ob 'redirect' gesetzt ist — für Hotspots, die statt einer Route eine Komponenten-Aktion auslösen sollen (z.B. Inventar schließen). */
   @Output() hotspotClick = new EventEmitter<void>();
 
   /** Ob die Maus aktuell über dem Hotspot liegt (steuert den Tooltip). */
   isHovered = signal(false);
+
+  /** Eindeutige SVG-Filter-ID pro Instanz — bei `hideImage` dürfen IDs im DOM nicht kollidieren. */
+  private static nextOutlineFilterId = 0;
+  public readonly outlineFilterId = `hotspot-outline-glow-${RedirectHotspotComponent.nextOutlineFilterId++}`;
 
   constructor(private router: Router) {}
 
